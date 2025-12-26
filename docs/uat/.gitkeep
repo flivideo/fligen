@@ -1,0 +1,10 @@
+# UAT Directory
+
+User acceptance testing results will be stored here.
+
+Each UAT should reference the FR it tests and include:
+- Test date
+- Test results (pass/fail for each acceptance criterion)
+- Screenshots or evidence where applicable
+- Issues found
+- Sign-off status

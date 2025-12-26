@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+/* Scan all TypeScript/JavaScript files recursively */
+@source "./**/*.{js,ts,jsx,tsx}";
+
+/* Safelist dialog classes for conditionally rendered modal */
+@source inline("m-auto w-96 p-0 backdrop:bg-black/50");

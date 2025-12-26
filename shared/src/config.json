@@ -1,0 +1,162 @@
+{
+  "meta": {
+    "id": "fligen-config",
+    "version": "1.0.0",
+    "source": "claudemas-12-days",
+    "lastUpdated": "2025-12-26"
+  },
+  "days": [
+    {
+      "day": 1,
+      "name": "FliGen Harness",
+      "shortName": "Harness",
+      "icon": "🏗️",
+      "status": "complete",
+      "route": "#day-1",
+      "purpose": "Foundation scaffold",
+      "apisTech": ["React 19", "Vite 6", "Express 5", "Socket.io"]
+    },
+    {
+      "day": 2,
+      "name": "Primary Brain",
+      "shortName": "Brain",
+      "icon": "🧠",
+      "status": "next",
+      "route": "#day-2",
+      "purpose": "Master Agent/Orchestrator",
+      "apisTech": ["Claude Agent SDK"]
+    },
+    {
+      "day": 3,
+      "name": "Second Brain",
+      "shortName": "Memory",
+      "icon": "💾",
+      "status": "pending",
+      "route": "#day-3",
+      "purpose": "Smart Memory",
+      "apisTech": ["Kybernesis"]
+    },
+    {
+      "day": 4,
+      "name": "Image Generator",
+      "shortName": "Image",
+      "icon": "🖼️",
+      "status": "pending",
+      "route": "#day-4",
+      "purpose": "Image creation",
+      "apisTech": ["FAL.AI", "KIE.AI", "Flux", "Nano Banana"]
+    },
+    {
+      "day": 5,
+      "name": "Text-to-Speech",
+      "shortName": "TTS",
+      "icon": "🔊",
+      "status": "pending",
+      "route": "#day-5",
+      "purpose": "Voice generation",
+      "apisTech": ["11 Labs"]
+    },
+    {
+      "day": 6,
+      "name": "Video Animation",
+      "shortName": "Video",
+      "icon": "🎬",
+      "status": "pending",
+      "route": "#day-6",
+      "purpose": "Video creation",
+      "apisTech": ["KIE.AI (VO3)", "ComfyUI"]
+    },
+    {
+      "day": 7,
+      "name": "Music Generator",
+      "shortName": "Music",
+      "icon": "🎵",
+      "status": "pending",
+      "route": "#day-7",
+      "purpose": "Music creation",
+      "apisTech": ["Suno", "FAL.AI", "KIE.AI"]
+    },
+    {
+      "day": 8,
+      "name": "Thumbnail Generator",
+      "shortName": "Thumb",
+      "icon": "🎨",
+      "status": "pending",
+      "route": "#day-8",
+      "purpose": "Compound tool",
+      "apisTech": ["Layout composition", "Image generation", "Text overlays"]
+    },
+    {
+      "day": 9,
+      "name": "Interop",
+      "shortName": "Interop",
+      "icon": "🔗",
+      "status": "pending",
+      "route": "#day-9",
+      "purpose": "System connectors",
+      "apisTech": ["FliHub", "DAM", "FliDeck"]
+    },
+    {
+      "day": 10,
+      "name": "N8N/ComfyUI",
+      "shortName": "N8N",
+      "icon": "⚙️",
+      "status": "pending",
+      "route": "#day-10",
+      "purpose": "Orchestration",
+      "apisTech": ["N8N", "ComfyUI", "Workflow patterns"]
+    },
+    {
+      "day": 11,
+      "name": "Story Builder",
+      "shortName": "Story",
+      "icon": "📖",
+      "status": "pending",
+      "route": "#day-11",
+      "purpose": "Narrative tool",
+      "apisTech": ["Storyline patterns", "A day in the life narrative structure"]
+    },
+    {
+      "day": 12,
+      "name": "12 Days Song",
+      "shortName": "Song",
+      "icon": "🎄",
+      "status": "pending",
+      "route": "#day-12",
+      "purpose": "Final integration",
+      "apisTech": ["All previous tools", "Music generation", "Voice synthesis", "Video creation"]
+    }
+  ],
+  "settings": [
+    {
+      "name": "showDayIcons",
+      "label": "Show Day Icons",
+      "type": "toggle",
+      "defaultValue": true
+    },
+    {
+      "name": "falAi",
+      "label": "FAL.AI",
+      "type": "password",
+      "placeholder": "Enter FAL.AI API key"
+    },
+    {
+      "name": "kieAi",
+      "label": "KIE.AI",
+      "type": "password",
+      "placeholder": "Enter KIE.AI API key"
+    },
+    {
+      "name": "elevenLabs",
+      "label": "11 Labs",
+      "type": "password",
+      "placeholder": "Enter 11 Labs API key"
+    },
+    {
+      "name": "suno",
+      "label": "Suno",
+      "type": "password",
+      "placeholder": "Enter Suno API key"
+    }
+  ]
+}
