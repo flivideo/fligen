@@ -1,27 +1,27 @@
 # 12 Days of Claude-mas - Index
 
-**Status**: Day 1 starting (December 25, 2025)
+**Status**: Day 3 starting (December 27, 2025)
 **Hook**: "Imagine if you could build 12 applications or tools in 12 days using a large language model. Well, on the first day of Claude-mas, my code bot said to me... it's probably possible. I'm AppyDave. Let's see if Claude is correct."
 
 ---
 
-## Day Structure (Revised)
+## Day Structure
 
-| Day | Tool/Focus | APIs/Tech |
-|-----|-----------|-----------|
-| 1 | **FliGen Harness** - Scaffolding + Intro | React/Vite, Express, Socket.io |
-| 2 | **Kybernesis** - Second Brain | Claude Agent SDK |
-| 3 | **Claude Agent SDK** - AI Integration | Claude Agent SDK patterns from 007 |
-| 4 | **Image Generator** | FAL.AI, KIE.AI (Flux, Nano Banana) |
-| 5 | **Text-to-Speech** | 11 Labs |
-| 6 | **Video Animation** | KIE.AI (VO3), ComfyUI patterns |
-| 7 | **Music Generator** | Suno via FAL/KIE |
-| 8 | **Thumbnail Generator** | Compound (layout + imagery + text) |
-| 9 | **Interop** | FliHub, DAM, FliDeck connectors |
-| 10 | **N8N/ComfyUI** | Orchestration patterns |
-| 11 | **Story Builder** | "A day in the life of..." narrative |
-| 12 | **12 Days Song** | Final visual story + generated song |
-| 13 | **Wrap-up** | Overview video of all 12 tools |
+| Day | Tool/Focus | Status | APIs/Tech |
+|-----|-----------|--------|-----------|
+| 1 | **FliGen Harness** - Scaffolding + Intro | ✅ | React/Vite, Express, Socket.io |
+| 2 | **Primary Brain** - Claude Agent SDK | ✅ | Claude Agent SDK, Chat UI |
+| 3 | **Second Brain** - Kybernesis | ⏳ | Smart memory/knowledge |
+| 4 | **Image Generator** | | FAL.AI, KIE.AI (Flux, Nano Banana) |
+| 5 | **Text-to-Speech** | | 11 Labs |
+| 6 | **Video Animation** | | KIE.AI (VO3), ComfyUI patterns |
+| 7 | **Music Generator** | | Suno via FAL/KIE |
+| 8 | **Thumbnail Generator** | | Compound (layout + imagery + text) |
+| 9 | **Interop** | | FliHub, DAM, FliDeck connectors |
+| 10 | **N8N/ComfyUI** | | Orchestration patterns |
+| 11 | **Story Builder** | | "A day in the life of..." narrative |
+| 12 | **12 Days Song** | | Final visual story + generated song |
+| 13 | **Wrap-up** | | Overview video of all 12 tools |
 
 ---
 
@@ -43,8 +43,10 @@
 
 | File | Purpose | Status |
 |------|---------|--------|
-| `fr-01-initial-harness.md` | Day 1: Foundation harness setup | Complete |
-| `fr-02-layout-and-navigation.md` | Day 1: Layout shell and sidebar navigation | Pending |
+| `fr-01-initial-harness.md` | Day 1: Foundation harness setup | ✅ Complete |
+| `fr-02-layout-and-navigation.md` | Day 1: Layout shell and sidebar navigation | ✅ Complete |
+| `fr-03-claude-agent-sdk-integration.md` | Day 2: Claude Agent SDK server integration | ✅ Complete |
+| `fr-04-frontend-chat-ui.md` | Day 2: React chat UI for Claude interaction | ✅ Complete |
 
 ### Other Docs
 
@@ -111,4 +113,4 @@ If using ShadCN:
 
 ---
 
-**Last updated**: 2025-12-26
+**Last updated**: 2025-12-27

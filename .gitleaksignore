@@ -1,0 +1,7 @@
+# Gitleaks ignore file
+# Add patterns or specific findings to ignore false positives
+# Format: <rule-id>:<file-path>:<line-number>
+# Or just the finding fingerprint
+
+# Example:
+# generic-api-key:config/example.json:10

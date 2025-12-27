@@ -21,6 +21,28 @@ Any important context or decisions made during implementation.
 
 ---
 
+## 2025-12-27 - NFR-1: Git Leak Detection
+
+**Reference:** [NFR-1: Git Leak Detection](prd/nfr-01-git-leak-detection.md)
+
+### Changes
+- Created `.gitleaksignore` file for false positive suppression
+- Created pre-commit hook at `.git/hooks/pre-commit`
+- Hook runs `gitleaks protect --staged --verbose` on every commit
+- Added gitleaks documentation section to CLAUDE.md
+
+### Files Created/Modified
+```
+.gitleaksignore              - false positive patterns (new)
+.git/hooks/pre-commit        - gitleaks pre-commit hook (new)
+CLAUDE.md                    - added gitleaks section
+```
+
+### Notes
+Adopted from FliDeck reference implementation. This prevents accidental commits of API keys, tokens, and other secrets. Requires gitleaks installed via `brew install gitleaks` (already installed system-wide as v8.28.0).
+
+---
+
 ## 2025-12-26 - FR-4: Frontend Chat UI
 
 **Reference:** [FR-4: Frontend Chat UI](prd/fr-04-frontend-chat-ui.md)
@@ -172,4 +194,4 @@ This is Day 1 of the "12 Days of Claudemas" series. The FliGen harness will serv
 
 ---
 
-**Last updated:** 2025-12-26
+**Last updated:** 2025-12-27

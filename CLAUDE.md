@@ -27,20 +27,20 @@ FliGen is the foundational harness for the "12 Days of Claudemas" tool building 
 
 ## The 12 Days
 
-| Day | Tool/Focus | APIs/Tech |
-|-----|-----------|-----------|
-| 1 | **FliGen Harness** | React/Vite, Express, Socket.io |
-| 2 | **Kybernesis** (Second Brain) | Claude Agent SDK |
-| 3 | **Claude Agent SDK** | Patterns from 007 |
-| 4 | **Image Generator** | FAL.AI, KIE.AI |
-| 5 | **Text-to-Speech** | 11 Labs |
-| 6 | **Video Animation** | KIE.AI (VO3), ComfyUI |
-| 7 | **Music Generator** | Suno |
-| 8 | **Thumbnail Generator** | Compound tool |
-| 9 | **Interop** | FliHub, DAM, FliDeck |
-| 10 | **N8N/ComfyUI** | Orchestration |
-| 11 | **Story Builder** | Narrative tool |
-| 12 | **Final Song** | All tools unite |
+| Day | Tool/Focus | Status | APIs/Tech |
+|-----|-----------|--------|-----------|
+| 1 | **FliGen Harness** | ✅ | React/Vite, Express, Socket.io |
+| 2 | **Primary Brain** (Claude Agent SDK) | ✅ | Claude Agent SDK, Chat UI |
+| 3 | **Second Brain** (Kybernesis) | ⏳ | Smart memory/knowledge |
+| 4 | **Image Generator** | | FAL.AI, KIE.AI |
+| 5 | **Text-to-Speech** | | 11 Labs |
+| 6 | **Video Animation** | | KIE.AI (VO3), ComfyUI |
+| 7 | **Music Generator** | | Suno |
+| 8 | **Thumbnail Generator** | | Compound tool |
+| 9 | **Interop** | | FliHub, DAM, FliDeck |
+| 10 | **N8N/ComfyUI** | | Orchestration |
+| 11 | **Story Builder** | | Narrative tool |
+| 12 | **Final Song** | | All tools unite |
 
 **Full details**: See `docs/index.md` and `docs/planning/`
 
@@ -80,6 +80,14 @@ docs/
 ```
 
 **Key Planning Doc**: `docs/planning/claude-agent-sdk-integration.md` - Covers authentication, authorization, server patterns, frontend options (simple vs full React), and links to 007 reference project.
+
+## Current Status
+
+**Completed:** Days 1-2 (FR-01 through FR-04)
+- Harness, layout, navigation, Claude Agent SDK integration, chat UI
+
+**Next:** Day 3 - Second Brain (Kybernesis)
+- Smart memory/knowledge system building on Claude Agent SDK foundation
 
 ## Slash Commands
 
@@ -201,6 +209,25 @@ export function SettingsProvider({ children }) {
 ```
 
 This ensures state changes propagate to all consumers immediately.
+
+### Git Leak Detection (gitleaks)
+
+Pre-commit hook prevents accidental commits of secrets (API keys, tokens, passwords).
+
+**Prerequisites:** `brew install gitleaks`
+
+**How it works:**
+- Hook runs `gitleaks protect --staged --verbose` on every commit
+- Blocks commits containing detected secrets
+- Shows clear error message with remediation options
+
+**False positives:** Add patterns to `.gitleaksignore`:
+```
+# Format: <rule-id>:<file-path>:<line-number>
+generic-api-key:config/example.json:10
+```
+
+**Emergency bypass:** `git commit --no-verify` (not recommended)
 
 ### Port Allocation
 
