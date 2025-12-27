@@ -10,6 +10,7 @@ Requirements index for FliGen.
 | 2 | [FR-2: Layout and Navigation](prd/fr-02-layout-and-navigation.md) | 2025-12-25 | Complete |
 | 3 | [FR-3: Claude Agent SDK Integration](prd/fr-03-claude-agent-sdk-integration.md) | 2025-12-26 | Implemented |
 | 4 | [FR-4: Frontend Chat UI](prd/fr-04-frontend-chat-ui.md) | 2025-12-26 | Implemented |
+| 5 | [FR-5: Local Documentation Reader](prd/fr-05-local-docs.md) | 2025-12-27 | Implemented |
 
 ## Non-Functional Requirements
 
@@ -27,4 +28,4 @@ Requirements index for FliGen.
 
 ---
 
-**Last updated:** 2025-12-26
+**Last updated:** 2025-12-27

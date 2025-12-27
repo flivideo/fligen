@@ -9,12 +9,25 @@ import {
   setSession,
   getAbortController,
 } from './session.js';
+import { createLocalDocsServer } from '../tools/local-docs/index.js';
 
 type TypedSocket = Socket<ClientToServerEvents, ServerToClientEvents>;
 
+// Create LocalDocs MCP server (singleton - created once and reused)
+const localDocsServer = createLocalDocsServer();
+
 const SYSTEM_PROMPT = `You are a helpful assistant for FliGen, a tool-building harness.
 You help users with coding tasks, file operations, and general questions.
-Be concise and helpful.`;
+Be concise and helpful.
+
+## Local Documentation
+
+You have access to the project's local documentation via LocalDocs tools:
+- **local_docs_index**: List all markdown files in the docs folder with metadata
+- **local_docs_content**: Read contents of a specific markdown file (supports chunking for large files)
+
+Use these tools to understand project context, requirements, and planning documents.
+When users ask about the project, its features, or documentation, use LocalDocs first.`;
 
 export async function handleAgentQuery(
   socket: TypedSocket,
@@ -27,7 +40,14 @@ export async function handleAgentQuery(
     const options: Options = {
       systemPrompt: SYSTEM_PROMPT,
       model: 'claude-sonnet-4-5-20250929',
-      allowedTools: ['Read', 'Write', 'Bash', 'Glob', 'Grep'],
+      allowedTools: [
+        'Read', 'Write', 'Bash', 'Glob', 'Grep',
+        'mcp__local_docs__local_docs_index',
+        'mcp__local_docs__local_docs_content',
+      ],
+      mcpServers: {
+        local_docs: localDocsServer,
+      },
       permissionMode: 'acceptEdits',
       maxTurns: 10,
       resume: getSession(socket.id),
