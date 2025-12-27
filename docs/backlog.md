@@ -11,6 +11,7 @@ Requirements index for FliGen.
 | 3 | [FR-3: Claude Agent SDK Integration](prd/fr-03-claude-agent-sdk-integration.md) | 2025-12-26 | Implemented |
 | 4 | [FR-4: Frontend Chat UI](prd/fr-04-frontend-chat-ui.md) | 2025-12-26 | Implemented |
 | 5 | [FR-5: Local Documentation Reader](prd/fr-05-local-docs.md) | 2025-12-27 | Implemented |
+| 6 | [FR-6: Kybernesis Memory Integration](prd/fr-06-kybernesis-memory.md) | 2025-12-27 | Pending |
 
 ## Non-Functional Requirements
 

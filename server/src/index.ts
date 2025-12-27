@@ -5,6 +5,7 @@ import { Server } from 'socket.io';
 import cors from 'cors';
 import type { HealthResponse, ServerToClientEvents, ClientToServerEvents } from '@fligen/shared';
 import { handleAgentQuery, clearSession, cancelQuery } from './agent/index.js';
+import { isKybernesisConfigured } from './tools/kybernesis/index.js';
 
 const PORT = parseInt(process.env.PORT || '5401', 10);
 const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5400';
@@ -66,6 +67,10 @@ io.on('connection', (socket) => {
 
 // Start server
 httpServer.listen(PORT, () => {
+  const kybernesisStatus = isKybernesisConfigured()
+    ? '✓ Kybernesis configured'
+    : '⚠ Kybernesis not configured (set KYBERNESIS_API_KEY)';
+
   console.log(`
 ┌─────────────────────────────────────┐
 │  FliGen Server                      │
@@ -73,6 +78,8 @@ httpServer.listen(PORT, () => {
 │  HTTP:      http://localhost:${PORT}  │
 │  Socket.io: ws://localhost:${PORT}    │
 │  Health:    http://localhost:${PORT}/health │
+├─────────────────────────────────────┤
+│  ${kybernesisStatus.padEnd(35)} │
 └─────────────────────────────────────┘
   `);
 });

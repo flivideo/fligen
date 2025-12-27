@@ -10,11 +10,13 @@ import {
   getAbortController,
 } from './session.js';
 import { createLocalDocsServer } from '../tools/local-docs/index.js';
+import { createKybernesisServer, isKybernesisConfigured } from '../tools/kybernesis/index.js';
 
 type TypedSocket = Socket<ClientToServerEvents, ServerToClientEvents>;
 
-// Create LocalDocs MCP server (singleton - created once and reused)
+// Create MCP servers (singletons - created once and reused)
 const localDocsServer = createLocalDocsServer();
+const kybernesisServer = createKybernesisServer();
 
 const SYSTEM_PROMPT = `You are a helpful assistant for FliGen, a tool-building harness.
 You help users with coding tasks, file operations, and general questions.
@@ -27,7 +29,16 @@ You have access to the project's local documentation via LocalDocs tools:
 - **local_docs_content**: Read contents of a specific markdown file (supports chunking for large files)
 
 Use these tools to understand project context, requirements, and planning documents.
-When users ask about the project, its features, or documentation, use LocalDocs first.`;
+When users ask about the project, its features, or documentation, use LocalDocs first.
+
+## Second Brain (Kybernesis)
+
+You have access to persistent memory via Kybernesis "second brain" tools:
+- **kybernesis_search**: Search for relevant memories, learnings, and context from past sessions
+- **kybernesis_store**: Store important insights, user preferences, or learnings for future reference
+
+Use kybernesis_search when users ask about their preferences, past decisions, or when you need broader context beyond local docs.
+Use kybernesis_store when users share important information worth remembering across sessions.`;
 
 export async function handleAgentQuery(
   socket: TypedSocket,
@@ -44,9 +55,12 @@ export async function handleAgentQuery(
         'Read', 'Write', 'Bash', 'Glob', 'Grep',
         'mcp__local_docs__local_docs_index',
         'mcp__local_docs__local_docs_content',
+        'mcp__kybernesis__kybernesis_search',
+        'mcp__kybernesis__kybernesis_store',
       ],
       mcpServers: {
         local_docs: localDocsServer,
+        kybernesis: kybernesisServer,
       },
       permissionMode: 'acceptEdits',
       maxTurns: 10,
