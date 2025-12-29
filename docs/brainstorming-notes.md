@@ -87,4 +87,4 @@ The "Primary Brain" name communicates the orchestrator role better than a specif
 
 ---
 
-**Last updated:** 2025-12-26
+**Last updated:** 2025-12-28

@@ -4,6 +4,7 @@ import { ConfigModal } from './components/ui/ConfigModal';
 import { SettingsProvider, useSettings } from './contexts/SettingsContext';
 import { useSocket } from './hooks/useSocket';
 import { Day2AgentSDK } from './components/tools/Day2AgentSDK';
+import { Day4ImageGen } from './components/tools/Day4ImageGen';
 
 function AppContent() {
   const { connected: socketConnected } = useSocket();
@@ -65,6 +66,8 @@ function AppContent() {
         <main className="flex-1 overflow-hidden bg-slate-900">
           {currentDay === 2 ? (
             <Day2AgentSDK />
+          ) : currentDay === 4 ? (
+            <Day4ImageGen />
           ) : (
             <div className="h-full overflow-auto p-4">
               <div className="max-w-2xl mx-auto">

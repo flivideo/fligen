@@ -21,6 +21,135 @@ Any important context or decisions made during implementation.
 
 ---
 
+## 2025-12-28 - FR-8: Image Generation Comparison
+
+**Reference:** [FR-8: Image Generation Comparison](prd/fr-08-image-comparison.md)
+
+### Changes
+- Extended image API types with `CompareResult`, `CompareRequest`, `CompareResponse` types
+- Added `MODELS` configuration mapping providers to model tiers (advanced/midrange)
+- Implemented `generateForComparison()` in FAL client (Flux Pro v1.1 + Flux Schnell)
+- Implemented `generateForComparison()` in KIE client (Flux Kontext Max + Flux Kontext Pro)
+- Added `compareImages()` function using `Promise.allSettled()` for parallel 4-image generation
+- Created `POST /api/image/compare` endpoint accepting prompt, returning all 4 results
+- Refactored Day4ImageGen.tsx with tab navigation (Comparison + API Status)
+- Created 2×2 comparison grid UI (FAL vs KIE columns, Advanced vs Midrange rows)
+- Added summary stats showing success rate, total cost, and duration
+
+### Files Modified
+```
+server/src/tools/image/types.ts        - Added comparison types and MODELS config
+server/src/tools/image/fal-client.ts   - Added generateForComparison()
+server/src/tools/image/kie-client.ts   - Added generateForComparison()
+server/src/tools/image/index.ts        - Added compareImages() export
+server/src/index.ts                    - Added POST /api/image/compare endpoint
+client/src/components/tools/Day4ImageGen.tsx - Complete rewrite with tabs
+```
+
+### Models
+| Provider | Tier | Model ID | Resolution | Cost |
+|----------|------|----------|------------|------|
+| FAL.AI | Advanced | fal-ai/flux-pro/v1.1 | 1024×1024 | $0.04/MP |
+| FAL.AI | Mid-range | fal-ai/flux/schnell | 512×512 | $0.003/MP |
+| KIE.AI | Advanced | flux-kontext-max | 1024×1024 | $0.025/image |
+| KIE.AI | Mid-range | flux-kontext-pro | 512×512 | $0.004/image |
+
+### Notes
+Day 4 of "12 Days of Claudemas" - Image comparison feature complete. Users can enter a prompt and generate 4 images in parallel across 2 providers and 2 quality tiers. Results display with timing, cost, and resolution info. FR-07 API status UI moved to second tab.
+
+---
+
+## 2025-12-28 - FR-7: Image API Connectivity
+
+**Reference:** [FR-7: Image API Connectivity](prd/fr-07-api-connectivity.md)
+
+### Changes
+- Created image API client modules in `server/src/tools/image/`
+- Implemented FAL.AI client using `@fal-ai/client` npm package (Flux Schnell model)
+- Implemented KIE.AI client using REST API with async polling pattern (Flux Kontext Pro model)
+- Added `/api/image/health` endpoint that checks both providers
+- Added `/api/image/test` endpoint that generates test images in parallel
+- Created Day 4 UI component with provider cards, status indicators, and test buttons
+- Updated server startup to show FAL.AI and KIE.AI configuration status
+- Integrated Day 4 UI into App.tsx routing
+
+### Files Created/Modified
+```
+server/src/tools/image/types.ts        - Type definitions (new)
+server/src/tools/image/fal-client.ts   - FAL.AI client (new)
+server/src/tools/image/kie-client.ts   - KIE.AI client (new)
+server/src/tools/image/index.ts        - Module exports (new)
+client/src/components/tools/Day4ImageGen.tsx - Day 4 UI (new)
+server/src/index.ts                    - Added image API endpoints
+client/src/App.tsx                     - Added Day 4 routing
+server/package.json                    - Added @fal-ai/client dependency
+```
+
+### Notes
+Day 4 of "12 Days of Claudemas" - Image API connectivity verification complete. Both FAL.AI and KIE.AI integrations working with health checks and test image generation. FAL.AI generates in ~2s, KIE.AI in ~24s (async polling). Foundation ready for FR-08 full image generation feature.
+
+---
+
+## 2025-12-27 - FR-6: Kybernesis Memory Integration
+
+**Reference:** [FR-6: Kybernesis Memory Integration](prd/fr-06-kybernesis-memory.md)
+
+### Changes
+- Created Kybernesis MCP server module following FR-05 LocalDocs pattern
+- Implemented `kybernesis_search` tool (hybrid search across memories)
+- Implemented `kybernesis_store` tool (store new memories)
+- Added HTTP client with proper timeout and error handling
+- Integrated with Claude Agent SDK via mcpServers
+- Updated system prompt with Kybernesis usage guidance
+- Added startup status indicator for API key configuration
+
+### Files Created/Modified
+```
+server/src/tools/kybernesis/types.ts   - API response type definitions (new)
+server/src/tools/kybernesis/client.ts  - HTTP client for Kybernesis API (new)
+server/src/tools/kybernesis/index.ts   - MCP tool definitions and server (new)
+server/src/agent/handler.ts            - Added Kybernesis tools and updated system prompt
+server/src/index.ts                    - Added startup configuration status
+server/.env.example                    - Added KYBERNESIS_API_KEY placeholder
+server/scratch/test-kybernesis.ts      - Test script (new)
+```
+
+### Notes
+Day 3 of "12 Days of Claudemas" - Second Brain integration complete. Enables the Claude agent to search and store memories via Kybernesis API. Gracefully handles missing API key with config error message. Combined with LocalDocs (FR-05), the agent now has access to both local project docs and cloud-based memory.
+
+---
+
+## 2025-12-27 - FR-5: Local Documentation Reader
+
+**Reference:** [FR-5: Local Documentation Reader](prd/fr-05-local-docs.md)
+
+### Changes
+- Created LocalDocs MCP server module in `server/src/tools/local-docs/`
+- Implemented `local_docs_index` tool that scans docs/ folder recursively
+- Implemented `local_docs_content` tool with 500-line chunking support
+- Added comprehensive security layer:
+  - Path traversal prevention
+  - Symlink escape protection
+  - Extension validation (.md only)
+  - Absolute path blocking
+- Integrated with Claude Agent SDK via in-process MCP server
+- Updated agent system prompt to describe LocalDocs tools
+
+### Files Created/Modified
+```
+server/src/tools/local-docs/security.ts  - Path validation utilities (new)
+server/src/tools/local-docs/scanner.ts   - Directory scanning logic (new)
+server/src/tools/local-docs/reader.ts    - File reading with chunking (new)
+server/src/tools/local-docs/index.ts     - MCP tool definitions (new)
+server/src/agent/handler.ts              - Added local-docs server integration
+server/scratch/test-local-docs.ts        - Test script (new)
+```
+
+### Notes
+Day 3 of "12 Days of Claudemas" - Local documentation reader complete. The agent can now list and read all .md files in the docs/ folder. Security-hardened against path traversal and symlink escape attacks. Returns 18 documentation files with metadata.
+
+---
+
 ## 2025-12-27 - NFR-1: Git Leak Detection
 
 **Reference:** [NFR-1: Git Leak Detection](prd/nfr-01-git-leak-detection.md)
@@ -194,4 +323,4 @@ This is Day 1 of the "12 Days of Claudemas" series. The FliGen harness will serv
 
 ---
 
-**Last updated:** 2025-12-27
+**Last updated:** 2025-12-28

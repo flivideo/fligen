@@ -31,7 +31,7 @@ FliGen is the foundational harness for the "12 Days of Claudemas" tool building 
 |-----|-----------|--------|-----------|
 | 1 | **FliGen Harness** | ✅ | React/Vite, Express, Socket.io |
 | 2 | **Primary Brain** (Claude Agent SDK) | ✅ | Claude Agent SDK, Chat UI |
-| 3 | **Second Brain** (Kybernesis) | ⏳ | Smart memory/knowledge |
+| 3 | **Second Brain** (Kybernesis) | ✅ | LocalDocs + Kybernesis MCP |
 | 4 | **Image Generator** | | FAL.AI, KIE.AI |
 | 5 | **Text-to-Speech** | | 11 Labs |
 | 6 | **Video Animation** | | KIE.AI (VO3), ComfyUI |
@@ -83,11 +83,13 @@ docs/
 
 ## Current Status
 
-**Completed:** Days 1-2 (FR-01 through FR-04)
-- Harness, layout, navigation, Claude Agent SDK integration, chat UI
+**Completed:** Days 1-3 (FR-01 through FR-06, NFR-01)
+- Day 1: Harness, layout, navigation
+- Day 2: Claude Agent SDK integration, chat UI
+- Day 3: LocalDocs reader, Kybernesis memory integration, git leak detection
 
-**Next:** Day 3 - Second Brain (Kybernesis)
-- Smart memory/knowledge system building on Claude Agent SDK foundation
+**Next:** Day 4 - Image Generator
+- FAL.AI and/or KIE.AI image generation APIs
 
 ## Slash Commands
 
