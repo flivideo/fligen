@@ -5,6 +5,7 @@ import { SettingsProvider, useSettings } from './contexts/SettingsContext';
 import { useSocket } from './hooks/useSocket';
 import { Day2AgentSDK } from './components/tools/Day2AgentSDK';
 import { Day4ImageGen } from './components/tools/Day4ImageGen';
+import { Day5TTS } from './components/tools/Day5TTS';
 
 function AppContent() {
   const { connected: socketConnected } = useSocket();
@@ -68,6 +69,8 @@ function AppContent() {
             <Day2AgentSDK />
           ) : currentDay === 4 ? (
             <Day4ImageGen />
+          ) : currentDay === 5 ? (
+            <Day5TTS />
           ) : (
             <div className="h-full overflow-auto p-4">
               <div className="max-w-2xl mx-auto">

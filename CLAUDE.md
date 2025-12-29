@@ -32,8 +32,8 @@ FliGen is the foundational harness for the "12 Days of Claudemas" tool building 
 | 1 | **FliGen Harness** | ✅ | React/Vite, Express, Socket.io |
 | 2 | **Primary Brain** (Claude Agent SDK) | ✅ | Claude Agent SDK, Chat UI |
 | 3 | **Second Brain** (Kybernesis) | ✅ | LocalDocs + Kybernesis MCP |
-| 4 | **Image Generator** | | FAL.AI, KIE.AI |
-| 5 | **Text-to-Speech** | | 11 Labs |
+| 4 | **Image Generator** | ✅ | FAL.AI, KIE.AI |
+| 5 | **Text-to-Speech** | ✅ | 11 Labs (ElevenLabs API) |
 | 6 | **Video Animation** | | KIE.AI (VO3), ComfyUI |
 | 7 | **Music Generator** | | Suno |
 | 8 | **Thumbnail Generator** | | Compound tool |
@@ -83,13 +83,16 @@ docs/
 
 ## Current Status
 
-**Completed:** Days 1-3 (FR-01 through FR-06, NFR-01)
+**Completed:** Days 1-5 (FR-01 through FR-09, NFR-01)
 - Day 1: Harness, layout, navigation
 - Day 2: Claude Agent SDK integration, chat UI
 - Day 3: LocalDocs reader, Kybernesis memory integration, git leak detection
+- Day 4: FAL.AI and KIE.AI image generation with comparison UI
+- Day 5: ElevenLabs Text-to-Speech with voice selection and audio playback
 
-**Next:** Day 4 - Image Generator
-- FAL.AI and/or KIE.AI image generation APIs
+**Next:** Day 6 - Video Animation
+- KIE.AI (VO3), ComfyUI for image-to-video generation
+- See `docs/planning/fox-and-lazy-dog-story.md` for story context
 
 ## Slash Commands
 

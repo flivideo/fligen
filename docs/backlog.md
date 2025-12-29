@@ -14,6 +14,7 @@ Requirements index for FliGen.
 | 6 | [FR-6: Kybernesis Memory Integration](prd/fr-06-kybernesis-memory.md) | 2025-12-27 | Complete |
 | 7 | [FR-7: Image API Connectivity](prd/fr-07-api-connectivity.md) | 2025-12-28 | Complete |
 | 8 | [FR-08: Image Generation Comparison](prd/fr-08-image-comparison.md) | 2025-12-28 | Complete |
+| 9 | [FR-09: 11 Labs Text-to-Speech](prd/fr-09-elevenlabs-tts.md) | 2025-12-29 | Complete |
 
 ## Non-Functional Requirements
 
@@ -31,4 +32,4 @@ Requirements index for FliGen.
 
 ---
 
-**Last updated:** 2025-12-28
+**Last updated:** 2025-12-29

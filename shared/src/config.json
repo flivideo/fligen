@@ -3,7 +3,7 @@
     "id": "fligen-config",
     "version": "1.0.0",
     "source": "claudemas-12-days",
-    "lastUpdated": "2025-12-27"
+    "lastUpdated": "2025-12-29"
   },
   "days": [
     {
@@ -31,7 +31,7 @@
       "name": "Second Brain",
       "shortName": "Memory",
       "icon": "💾",
-      "status": "next",
+      "status": "complete",
       "route": "#day-3",
       "purpose": "Smart Memory",
       "apisTech": ["Kybernesis"]
@@ -41,7 +41,7 @@
       "name": "Image Generator",
       "shortName": "Image",
       "icon": "🖼️",
-      "status": "pending",
+      "status": "complete",
       "route": "#day-4",
       "purpose": "Image creation",
       "apisTech": ["FAL.AI", "KIE.AI", "Flux", "Nano Banana"]
@@ -51,10 +51,10 @@
       "name": "Text-to-Speech",
       "shortName": "TTS",
       "icon": "🔊",
-      "status": "pending",
+      "status": "next",
       "route": "#day-5",
       "purpose": "Voice generation",
-      "apisTech": ["11 Labs"]
+      "apisTech": ["ElevenLabs"]
     },
     {
       "day": 6,

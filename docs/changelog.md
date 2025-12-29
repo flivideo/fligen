@@ -21,6 +21,43 @@ Any important context or decisions made during implementation.
 
 ---
 
+## 2025-12-29 - FR-09: 11 Labs Text-to-Speech
+
+**Reference:** [FR-09: 11 Labs Text-to-Speech](prd/fr-09-elevenlabs-tts.md)
+
+### Changes
+- Created ElevenLabs module at `server/src/tools/elevenlabs/`
+- Implemented `GET /api/tts/voices` - Returns 4 curated voices (Rachel, Bella, Antoni, Elli)
+- Implemented `POST /api/tts/generate` - Converts text to MP3 audio (base64 encoded)
+- Server startup shows ElevenLabs configuration status
+- Created Day5TTS.tsx component with voice selection, text input, audio player, download
+- Default text pre-populated with Fox and Lazy Dog narration
+- Added ELEVENLABS_API_KEY to .env.example
+
+### Files Created
+```
+server/src/tools/elevenlabs/types.ts    - Type definitions
+server/src/tools/elevenlabs/client.ts   - ElevenLabs API client
+server/src/tools/elevenlabs/index.ts    - Module exports
+client/src/components/tools/Day5TTS.tsx - Day 5 UI component
+assets/fox-story/audio/narration.mp3    - Generated narration audio
+assets/fox-story/images/                - Directory for future images
+assets/fox-story/video/                 - Directory for future video
+```
+
+### Files Modified
+```
+server/src/index.ts      - Added TTS API endpoints
+server/.env.example      - Added ELEVENLABS_API_KEY
+client/src/App.tsx       - Added Day 5 routing
+shared/src/config.json   - Updated day status
+```
+
+### Notes
+Day 5 of "12 Days of Claudemas" - Text-to-Speech integration complete. Users can select from 4 voices, enter narration text, generate audio with ElevenLabs API, play it back in browser, and download as MP3. First Fox story narration asset generated and stored.
+
+---
+
 ## 2025-12-28 - FR-8: Image Generation Comparison
 
 **Reference:** [FR-8: Image Generation Comparison](prd/fr-08-image-comparison.md)

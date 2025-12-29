@@ -8,6 +8,8 @@ import { handleAgentQuery, clearSession, cancelQuery } from './agent/index.js';
 import { isKybernesisConfigured } from './tools/kybernesis/index.js';
 import { checkHealth as checkImageHealth, generateTestImages, compareImages, isFalConfigured, isKieConfigured } from './tools/image/index.js';
 import type { CompareRequest } from './tools/image/index.js';
+import { isConfigured as isElevenLabsConfigured, getVoices, generateSpeech } from './tools/elevenlabs/index.js';
+import type { GenerateSpeechRequest } from './tools/elevenlabs/index.js';
 
 const PORT = parseInt(process.env.PORT || '5401', 10);
 const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5400';
@@ -85,6 +87,42 @@ app.post('/api/image/compare', async (req, res) => {
   }
 });
 
+// TTS voices endpoint - list available voices
+app.get('/api/tts/voices', (_req, res) => {
+  try {
+    const voices = getVoices();
+    res.json({ voices });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    res.status(500).json({ error: message, voices: [] });
+  }
+});
+
+// TTS generate endpoint - convert text to speech
+app.post('/api/tts/generate', async (req, res) => {
+  try {
+    const { text, voiceId } = req.body as GenerateSpeechRequest;
+
+    if (!text || typeof text !== 'string') {
+      res.status(400).json({ success: false, error: 'Missing or invalid text' });
+      return;
+    }
+
+    if (!voiceId || typeof voiceId !== 'string') {
+      res.status(400).json({ success: false, error: 'Missing or invalid voiceId' });
+      return;
+    }
+
+    console.log(`[API] /api/tts/generate - voiceId: "${voiceId}", text length: ${text.length}`);
+    const result = await generateSpeech(text, voiceId);
+    res.json(result);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error(`[API] /api/tts/generate - error: ${message}`);
+    res.status(500).json({ success: false, error: message });
+  }
+});
+
 // Socket.io connection handling
 io.on('connection', (socket) => {
   console.log(`[Socket.io] Client connected: ${socket.id}`);
@@ -129,6 +167,10 @@ httpServer.listen(PORT, () => {
     ? '✓ KIE.AI configured'
     : '⚠ KIE.AI not configured';
 
+  const elevenLabsStatus = isElevenLabsConfigured()
+    ? '✓ ElevenLabs configured'
+    : '⚠ ElevenLabs not configured';
+
   console.log(`
 ┌─────────────────────────────────────┐
 │  FliGen Server                      │
@@ -140,6 +182,7 @@ httpServer.listen(PORT, () => {
 │  ${kybernesisStatus.padEnd(35)} │
 │  ${falStatus.padEnd(35)} │
 │  ${kieStatus.padEnd(35)} │
+│  ${elevenLabsStatus.padEnd(35)} │
 └─────────────────────────────────────┘
   `);
 });
