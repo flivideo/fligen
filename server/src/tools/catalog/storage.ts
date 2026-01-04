@@ -2,7 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import type { Asset, AssetCatalog } from '@fligen/shared';
 
-// Assets directory is one level up from server workspace
+// Resolve assets directory (one level up from server workspace)
 const ASSETS_DIR = path.resolve(process.cwd(), '..', 'assets');
 const CATALOG_DIR = path.join(ASSETS_DIR, 'catalog');
 const INDEX_FILE = path.join(CATALOG_DIR, 'index.json');
@@ -11,8 +11,10 @@ const INDEX_FILE = path.join(CATALOG_DIR, 'index.json');
 export async function initCatalog(): Promise<void> {
   await fs.mkdir(path.join(CATALOG_DIR, 'images'), { recursive: true });
   await fs.mkdir(path.join(CATALOG_DIR, 'videos'), { recursive: true });
-  await fs.mkdir(path.join(CATALOG_DIR, 'audio'), { recursive: true });
+  await fs.mkdir(path.join(CATALOG_DIR, 'music'), { recursive: true });
+  await fs.mkdir(path.join(CATALOG_DIR, 'narration'), { recursive: true });
   await fs.mkdir(path.join(CATALOG_DIR, 'thumbnails'), { recursive: true });
+  await fs.mkdir(path.join(CATALOG_DIR, 'n8n'), { recursive: true });
 
   const exists = await fs.access(INDEX_FILE).then(() => true).catch(() => false);
   if (!exists) {
@@ -119,4 +121,20 @@ export function generateFilename(type: Asset['type'], provider: string, model: s
   const id = Date.now();
   const modelSlug = model.toLowerCase().replace(/\s+/g, '-');
   return `${type}-${id}-${provider}-${modelSlug}.${extension}`;
+}
+
+// Get next N8N workflow number
+export async function getNextWorkflowNumber(): Promise<string> {
+  const catalog = await loadCatalog();
+
+  // Find all N8N workflow IDs in metadata
+  const workflowNumbers = catalog.assets
+    .filter(asset => asset.metadata?.workflowId)
+    .map(asset => parseInt(asset.metadata.workflowId, 10))
+    .filter(num => !isNaN(num));
+
+  const maxNumber = workflowNumbers.length > 0 ? Math.max(...workflowNumbers) : 0;
+  const nextNumber = maxNumber + 1;
+
+  return nextNumber.toString().padStart(4, '0'); // 0001, 0002, etc.
 }

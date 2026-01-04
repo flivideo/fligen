@@ -11,32 +11,69 @@
 
 ## User Story
 
-As a user, I want every asset I generate (images, audio, videos, thumbnails, N8N results) to be automatically saved with complete metadata, so that I can review my work history, compare results, and reuse assets in stories.
+As a user, I want every asset I generate (images, audio, videos, thumbnails, N8N results) to be automatically saved with complete metadata AND displayed as a history list in each tool, so that I can review my work history, compare results, reuse prompts, and select assets for stories.
 
 ---
 
 ## Problem
 
 **Current state:**
-- Day 4 (Images): Generated images disappear on page refresh
-- Day 5 (TTS): One hard-coded file, no metadata about voice/text
-- Day 10 (N8N): Workflow results (2 images + 1 video) lost immediately
-- Day 6 (Videos): Filename collisions cause overwriting
-- Day 7 (Music): 8.5MB JSON with base64 audio, "Track 1" naming
+- Day 4 (Images): Generated images disappear on page refresh, no history list
+- Day 5 (TTS): One hard-coded file, no metadata about voice/text, no history list
+- Day 10 (N8N): Workflow results (2 images + 1 video) lost immediately, no history list
+- Day 6 (Videos): Filename collisions cause overwriting, partial history exists
+- Day 7 (Music): 8.5MB JSON with base64 audio, "Track 1" naming, library exists but broken
 
-**Impact:** No historical data for Day 11 Story Builder. Cannot compare results, track costs, or reuse work.
+**Impact:**
+- No historical data for Day 11 Story Builder
+- Cannot compare results across generations
+- Cannot reuse successful prompts
+- Cannot track costs over time
+- Users don't trust that their work is being saved
 
 ---
 
 ## Solution
 
-Implement asset catalog persistence across all generation tools:
+Implement asset catalog persistence AND tool-specific history UI across all generation tools:
 
-1. **Day 4 (Images)**: Save every generated image
-2. **Day 5 (TTS)**: Save every generated audio with voice metadata
-3. **Day 10 (N8N)**: Save workflow results (images + video + prompts)
-4. **Day 6 (Videos)**: Fix filename collisions, add animation prompts
-5. **Day 7 (Music)**: Remove base64, normalize metadata, fix naming
+**For each tool:**
+1. Auto-save every generated asset to catalog with full metadata
+2. Display history list of past generations within the tool UI
+3. Enable reusing prompts from history
+4. Enable selecting assets for use in other tools (Day 11)
+
+**Tool-specific changes:**
+1. **Day 4 (Images)**: Save + show history of all generated images
+2. **Day 5 (TTS)**: Save + show history of all generated audio
+3. **Day 10 (N8N)**: Save + show history of all workflow results
+4. **Day 6 (Videos)**: Fix filename collisions, add animation prompts, enhance existing video list
+5. **Day 7 (Music)**: Remove base64, normalize metadata, fix naming, enhance existing library
+
+---
+
+## Scope Clarification
+
+### ✅ INCLUDED in FR-17 (This Ticket)
+- **Persistence**: Auto-save all generated assets to catalog
+- **Tool-Specific History UI**: Each tool displays its own past work
+  - Day 4: Image generation history
+  - Day 5: Audio generation history
+  - Day 10: Workflow run history
+  - Day 6: Enhanced video list (catalog-backed)
+  - Day 7: Enhanced music library (catalog-backed)
+- **Reuse Functionality**: "Reuse Prompt" buttons in each tool
+- **Data Migration**: Move existing data to catalog
+
+### ❌ NOT in FR-17 (See FR-18)
+- **Unified Asset Browser**: Separate page showing ALL assets across all tools
+- **Cross-tool Search**: Search for assets across different types
+- **Advanced Filtering**: Complex filters, tags, date ranges in dedicated UI
+- **Asset Management**: Bulk operations, tagging, organizing
+
+**Key Difference:**
+- **FR-17 = In-context history** (when generating images, see past images)
+- **FR-18 = Cross-tool library** (browse everything in one place)
 
 ---
 
@@ -180,9 +217,84 @@ const handleGenerate = async (provider: 'fal' | 'kie') => {
 };
 ```
 
-**Optional UI Enhancement:**
-- Add "View History" button to show past generations
-- Add "Reuse Prompt" button to load previous prompts
+#### Client Side - History UI (MANDATORY)
+
+Add history list component to Day4ImageGen.tsx:
+
+```typescript
+// Add state for history
+const [imageHistory, setImageHistory] = useState<Asset[]>([]);
+
+// Load history on mount
+useEffect(() => {
+  async function loadHistory() {
+    const response = await fetch(`${SERVER_URL}/api/catalog/filter?type=image`);
+    const data = await response.json();
+    setImageHistory(data.assets.sort((a, b) =>
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    ));
+  }
+  loadHistory();
+}, []);
+
+// Refresh history after generation
+const handleGenerate = async () => {
+  // ... existing generation code ...
+
+  // After successful generation, reload history
+  const response = await fetch(`${SERVER_URL}/api/catalog/filter?type=image`);
+  const data = await response.json();
+  setImageHistory(data.assets.sort((a, b) =>
+    new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  ));
+};
+```
+
+**UI Layout:**
+
+```tsx
+<div className="space-y-6">
+  {/* Generation Form (existing) */}
+  <div>
+    <input value={prompt} onChange={...} />
+    <button onClick={handleGenerate}>Generate</button>
+  </div>
+
+  {/* History Section (NEW) */}
+  <div className="border-t pt-6">
+    <h3 className="text-lg font-semibold mb-4">Generation History</h3>
+
+    {imageHistory.length === 0 ? (
+      <p className="text-slate-400">No images generated yet</p>
+    ) : (
+      <div className="grid grid-cols-2 gap-4">
+        {imageHistory.map(asset => (
+          <div key={asset.id} className="border rounded-lg p-4">
+            <img src={asset.url} alt={asset.prompt} className="w-full rounded" />
+            <p className="text-sm mt-2 truncate">{asset.prompt}</p>
+            <p className="text-xs text-slate-400">
+              {new Date(asset.createdAt).toLocaleString()}
+            </p>
+            <button
+              onClick={() => setPrompt(asset.prompt)}
+              className="text-xs text-blue-400 mt-2"
+            >
+              Reuse Prompt
+            </button>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+</div>
+```
+
+**Required Features:**
+- ✅ Display all past images in reverse chronological order
+- ✅ Show thumbnail, prompt, and timestamp for each
+- ✅ "Reuse Prompt" button copies prompt to input field
+- ✅ Auto-refresh history after new generation
+- ✅ Grid layout (2 columns on desktop)
 
 ---
 
@@ -237,6 +349,74 @@ await catalog.addAsset(asset);
 **Remove hard-coded path:**
 - Delete `assets/fox-story/audio/narration.mp3` usage
 - All audio now goes to `assets/catalog/audio/`
+
+#### Client Side - History UI (MANDATORY)
+
+Add audio history list to Day5TTS.tsx:
+
+```typescript
+const [audioHistory, setAudioHistory] = useState<Asset[]>([]);
+
+// Load history on mount
+useEffect(() => {
+  async function loadHistory() {
+    const response = await fetch(`${SERVER_URL}/api/catalog/filter?type=audio`);
+    const data = await response.json();
+    setAudioHistory(data.assets.sort((a, b) =>
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    ));
+  }
+  loadHistory();
+}, []);
+```
+
+**UI Layout:**
+
+```tsx
+<div className="space-y-6">
+  {/* TTS Form (existing) */}
+  <div>
+    <select value={selectedVoice}>...</select>
+    <textarea value={text}>...</textarea>
+    <button onClick={handleGenerate}>Generate Speech</button>
+  </div>
+
+  {/* History Section (NEW) */}
+  <div className="border-t pt-6">
+    <h3 className="text-lg font-semibold mb-4">Audio History</h3>
+
+    {audioHistory.length === 0 ? (
+      <p className="text-slate-400">No audio generated yet</p>
+    ) : (
+      <div className="space-y-3">
+        {audioHistory.map(asset => (
+          <div key={asset.id} className="border rounded-lg p-4 flex items-center gap-4">
+            <audio controls src={asset.url} className="flex-1" />
+            <div className="flex-1">
+              <p className="text-sm font-medium">{asset.metadata.voice}</p>
+              <p className="text-xs text-slate-400 truncate">{asset.prompt}</p>
+              <p className="text-xs text-slate-500">{new Date(asset.createdAt).toLocaleString()}</p>
+            </div>
+            <button
+              onClick={() => setText(asset.prompt)}
+              className="text-xs text-blue-400"
+            >
+              Reuse Text
+            </button>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+</div>
+```
+
+**Required Features:**
+- ✅ Display all past audio files in reverse chronological order
+- ✅ Show audio player, voice name, narration text, and timestamp
+- ✅ "Reuse Text" button copies text to textarea
+- ✅ Auto-refresh history after new generation
+- ✅ List layout (not grid, due to audio player width)
 
 ---
 
@@ -351,6 +531,118 @@ export async function saveVideoToCatalog(
 }
 ```
 
+#### Client Side - History UI (MANDATORY)
+
+Add N8N workflow history to Day10N8N.tsx:
+
+```typescript
+const [workflowHistory, setWorkflowHistory] = useState<{
+  images: Asset[];
+  videos: Asset[];
+}>({ images: [], videos: [] });
+
+// Load history on mount
+useEffect(() => {
+  async function loadHistory() {
+    // Get N8N images (seed + edit)
+    const imageResponse = await fetch(
+      `${SERVER_URL}/api/catalog/filter?type=image&provider=n8n`
+    );
+    const imageData = await imageResponse.json();
+
+    // Get N8N videos
+    const videoResponse = await fetch(
+      `${SERVER_URL}/api/catalog/filter?type=video&provider=n8n`
+    );
+    const videoData = await videoResponse.json();
+
+    setWorkflowHistory({
+      images: imageData.assets.sort((a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      ),
+      videos: videoData.assets.sort((a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      ),
+    });
+  }
+  loadHistory();
+}, []);
+```
+
+**UI Layout:**
+
+```tsx
+<div className="space-y-6">
+  {/* Workflow Form (existing) */}
+  <div>
+    <textarea value={seedPrompt}>...</textarea>
+    <textarea value={editPrompt}>...</textarea>
+    <textarea value={animationPrompt}>...</textarea>
+    <button onClick={handleRunWorkflow}>Run Workflow</button>
+  </div>
+
+  {/* History Section (NEW) */}
+  <div className="border-t pt-6">
+    <h3 className="text-lg font-semibold mb-4">Workflow History</h3>
+
+    {workflowHistory.images.length === 0 && workflowHistory.videos.length === 0 ? (
+      <p className="text-slate-400">No workflows run yet</p>
+    ) : (
+      <div className="space-y-6">
+        {/* Group by workflow run (using createdAt proximity) */}
+        {/* For each workflow execution, show: */}
+        <div className="border rounded-lg p-4">
+          <p className="text-xs text-slate-400 mb-3">
+            {new Date(asset.createdAt).toLocaleString()}
+          </p>
+
+          {/* Images */}
+          <div className="grid grid-cols-2 gap-4 mb-4">
+            <div>
+              <p className="text-xs font-medium mb-1">Seed Image</p>
+              <img src={seedImage.url} className="w-full rounded" />
+              <p className="text-xs text-slate-400 truncate">{seedImage.prompt}</p>
+            </div>
+            <div>
+              <p className="text-xs font-medium mb-1">Edited Image</p>
+              <img src={editImage.url} className="w-full rounded" />
+              <p className="text-xs text-slate-400 truncate">{editImage.prompt}</p>
+            </div>
+          </div>
+
+          {/* Video */}
+          <div>
+            <p className="text-xs font-medium mb-1">Animation</p>
+            <video controls src={video.url} className="w-full rounded" />
+            <p className="text-xs text-slate-400 truncate">{video.prompt}</p>
+          </div>
+
+          {/* Reuse Prompts Button */}
+          <button
+            onClick={() => {
+              setSeedPrompt(seedImage.metadata.humanPrompt);
+              setEditPrompt(editImage.metadata.humanPrompt);
+              setAnimationPrompt(video.metadata.humanPrompt);
+            }}
+            className="mt-3 text-xs text-blue-400"
+          >
+            Reuse Prompts
+          </button>
+        </div>
+      </div>
+    )}
+  </div>
+</div>
+```
+
+**Required Features:**
+- ✅ Display past workflow runs grouped together (2 images + 1 video per run)
+- ✅ Show all three assets from each workflow execution
+- ✅ Display prompts and timestamps
+- ✅ "Reuse Prompts" button loads all three prompts from a past run
+- ✅ Auto-refresh history after new workflow execution
+- ✅ Reverse chronological order (newest first)
+
 ---
 
 ### Task 4: Video Filename Collision Fix
@@ -444,6 +736,17 @@ export async function migrateVideoScenesToCatalog() {
   console.log('[Migration] Video scenes migration complete');
 }
 ```
+
+#### Client Side - UI Enhancement Note
+
+**Day 6 (Video) already has a video list UI** that displays generated videos. No major UI changes needed, but ensure:
+
+- ✅ Video list loads from `/api/catalog/filter?type=video` (not from old video-scenes folder)
+- ✅ Display animation prompt in video metadata
+- ✅ Show all video metadata (provider, model, duration)
+- ✅ "Regenerate" button to create new video with same shots
+
+**Existing UI should continue to work** with catalog backend, just need to update data source.
 
 ---
 
@@ -581,6 +884,21 @@ export async function migrateMusicLibraryToCatalog() {
 }
 ```
 
+#### Client Side - UI Enhancement Note
+
+**Day 7 (Music) already has a music library UI** that displays generated tracks. Need to enhance:
+
+- ✅ Music library loads from `/api/catalog/filter?type=audio&provider=fal,kie` (not from old music-library/index.json)
+- ✅ Display complete metadata (style, tags, lyrics, BPM, model)
+- ✅ Editable track names (not "Track 1", "Track 2")
+- ✅ Show all music generation parameters used
+- ✅ "Regenerate with same settings" button
+
+**Existing library UI should continue to work** with catalog backend, just need to:
+1. Update data source to use catalog API
+2. Add name editing functionality
+3. Remove base64 audio dependency
+
 ---
 
 ## Testing Checklist
@@ -590,7 +908,9 @@ export async function migrateMusicLibraryToCatalog() {
 - [ ] Generate image with KIE.AI → saved to catalog automatically
 - [ ] Catalog contains full metadata (prompt, provider, model, dimensions)
 - [ ] Image file exists in `assets/catalog/images/`
-- [ ] Can view generation history (optional UI)
+- [ ] **History UI displays all past images**
+- [ ] **"Reuse Prompt" button works**
+- [ ] **History auto-refreshes after generation**
 
 ### Day 5 - TTS
 - [ ] Generate audio → saved to catalog automatically
@@ -598,36 +918,58 @@ export async function migrateMusicLibraryToCatalog() {
 - [ ] Catalog contains narration text
 - [ ] Audio file exists in `assets/catalog/audio/`
 - [ ] Old hard-coded path no longer used
+- [ ] **History UI displays all past audio files**
+- [ ] **Audio player works in history**
+- [ ] **"Reuse Text" button works**
 
 ### Day 10 - N8N
 - [ ] Run workflow → 3 assets saved (2 images + 1 video)
 - [ ] Both human and machine prompts saved in metadata
 - [ ] All files exist in catalog directories
 - [ ] Can retrieve results later from catalog
+- [ ] **History UI displays past workflow runs**
+- [ ] **Workflow runs grouped correctly (2 images + 1 video)**
+- [ ] **"Reuse Prompts" button loads all three prompts**
 
 ### Day 6 - Videos
 - [ ] Regenerate same shot pair → unique filenames (no overwrite)
 - [ ] Animation prompt saved in metadata
 - [ ] Old videos migrated to catalog
 - [ ] No data loss
+- [ ] **Video list loads from catalog API**
+- [ ] **Animation prompt displayed in UI**
+- [ ] **All metadata visible (provider, model, duration)**
 
 ### Day 7 - Music
 - [ ] Base64 removed from index.json (file size < 100KB)
 - [ ] Can rename tracks
 - [ ] All generation parameters saved
 - [ ] Old tracks migrated successfully
+- [ ] **Music library loads from catalog API**
+- [ ] **Track names editable (not "Track 1")**
+- [ ] **Complete metadata displayed (style, tags, lyrics, BPM)**
 
 ---
 
 ## Success Metrics
 
+**Persistence:**
 - [ ] 100% of generated assets saved to catalog
 - [ ] Zero data loss on page refresh
 - [ ] All generation metadata captured
 - [ ] No filename collisions
 - [ ] Music library index.json < 100KB
-- [ ] Ready for Day 11 Story Builder
+
+**UI:**
+- [ ] Every tool displays its own generation history
+- [ ] Users can reuse prompts/settings from history
+- [ ] History auto-refreshes after each generation
+- [ ] User confidence: "My work is being saved"
+
+**Integration:**
+- [ ] Ready for Day 11 Story Builder to query catalog
 - [ ] Migration scripts run successfully
+- [ ] No breaking changes to existing workflows
 
 ---
 
@@ -644,13 +986,20 @@ server/src/tools/music/migrate-to-catalog.ts
 
 ## Files to Modify
 
+**Client (UI + History):**
 ```
-client/src/components/tools/Day4ImageGen.tsx
-client/src/components/tools/Day5TTS.tsx
-client/src/components/tools/Day10N8N.tsx
-server/src/tools/video/index.ts
-server/src/tools/music/storage.ts
-server/src/index.ts (add save-to-catalog endpoints)
+client/src/components/tools/Day4ImageGen.tsx       # Add history list, reuse prompts
+client/src/components/tools/Day5TTS.tsx            # Add audio history, reuse text
+client/src/components/tools/Day10N8N.tsx           # Add workflow history, reuse prompts
+client/src/components/tools/Day6Video.tsx          # Update to use catalog API
+client/src/components/tools/Day7MusicGen.tsx       # Update to use catalog API, add name editing
+```
+
+**Server (Persistence):**
+```
+server/src/tools/video/index.ts                    # Fix filename collisions, add animation prompt
+server/src/tools/music/storage.ts                  # Remove base64, normalize metadata
+server/src/index.ts                                # Update endpoints to use catalog
 ```
 
 ---

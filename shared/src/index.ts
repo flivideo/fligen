@@ -203,7 +203,7 @@ export interface RefinePromptsResponse {
 
 export interface Asset {
   id: string;
-  type: 'image' | 'video' | 'audio' | 'thumbnail';
+  type: 'image' | 'video' | 'music' | 'narration' | 'thumbnail';
   filename: string;
   url: string;
   provider: string;

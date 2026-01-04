@@ -21,9 +21,10 @@ Requirements index for FliGen.
 | 13 | [FR-13: Prompt Intake and FliHub Interop](prd/fr-13-prompt-intake-interop.md) | 2026-01-02 | Complete |
 | 14 | [FR-14: Day 10 N8N Workflow Integration](prd/fr-14-day-10-n8n-workflow.md) | 2026-01-03 | Complete |
 | 15 | [FR-15: Prompt Refinement UI](prd/fr-15-prompt-refinement-ui.md) | 2026-01-03 | Complete |
-| 16 | [FR-16: Unified Asset Catalog Infrastructure](prd/fr-16-unified-asset-catalog.md) | 2026-01-04 | Pending |
+| 16 | [FR-16: Unified Asset Catalog Infrastructure](prd/fr-16-unified-asset-catalog.md) | 2026-01-04 | Complete |
 | 17 | [FR-17: Asset Persistence Implementation](prd/fr-17-asset-persistence-implementation.md) | 2026-01-04 | Pending |
 | 18 | [FR-18: Asset Browser UI](prd/fr-18-asset-browser-ui.md) | 2026-01-04 | Pending |
+| 19 | [FR-19: Thumbnail Persistence & History](prd/fr-19-thumbnail-persistence.md) | 2026-01-04 | Pending |
 
 ## Non-Functional Requirements
 
@@ -41,4 +42,4 @@ Requirements index for FliGen.
 
 ---
 
-**Last updated:** 2026-01-03
+**Last updated:** 2026-01-04
