@@ -152,7 +152,9 @@ export function AssetDetailPanel({
                 Cost
               </label>
               <p className="mt-1 font-mono text-sm text-slate-300">
-                ${asset.estimatedCost.toFixed(3)}
+                {asset.estimatedCost != null
+                  ? `$${asset.estimatedCost.toFixed(3)}`
+                  : 'N/A'}
               </p>
             </div>
           </div>
@@ -162,7 +164,9 @@ export function AssetDetailPanel({
               Generation Time
             </label>
             <p className="mt-1 font-mono text-sm text-slate-300">
-              {(asset.generationTimeMs / 1000).toFixed(1)}s
+              {asset.generationTimeMs != null
+                ? `${(asset.generationTimeMs / 1000).toFixed(1)}s`
+                : 'N/A'}
             </p>
           </div>
 
