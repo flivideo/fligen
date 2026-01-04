@@ -1,0 +1,81 @@
+{
+  "shots": [
+    {
+      "id": "shot-001",
+      "filename": "shot-001.jpg",
+      "url": "/assets/shot-list/shot-001.jpg",
+      "prompt": "Retro 1960s children's book illustration, bold black outlines, flat gouache colors, warm amber and soft green palette. A winding country path. A quick brown fox with pointed ears stands in the foreground, spotting something ahead. In the middle distance along the trail, a sleepy beige hound lies curled up under an old oak tree beside the path. Golden hour lighting, sense of depth along the trail.\n",
+      "provider": "fal",
+      "model": "Flux Pro v1.1",
+      "width": 1024,
+      "height": 1024,
+      "createdAt": "2025-12-30T12:17:29.417Z"
+    },
+    {
+      "id": "shot-002",
+      "filename": "shot-002.jpg",
+      "url": "/assets/shot-list/shot-002.jpg",
+      "prompt": "Retro 1960s children's book illustration, bold black outlines, flat gouache colors, warm sunset palette. On a dirt country trail, a russet-orange fox with white chest leaps gracefully in a high arc over a sleeping tan hound dog. The fox is mid-jump, legs extended, dynamic diagonal composition. Oak tree overhanging the path, trail continues into the background, action pose.\n",
+      "provider": "fal",
+      "model": "Flux Pro v1.1",
+      "width": 1024,
+      "height": 1024,
+      "createdAt": "2025-12-30T12:19:58.615Z"
+    },
+    {
+      "id": "shot-003",
+      "filename": "shot-003.jpg",
+      "url": "/assets/shot-list/shot-003.jpg",
+      "prompt": "Retro 1960s children's book illustration, bold black outlines, flat gouache colors, warm sunset palette. A dirt country trail stretching into the distance. A russet-orange fox with white chest runs down the path away from the viewer, tail flowing behind. In the background near the oak tree, a tan hound dog still sleeps peacefully. Trail disappears into golden light ahead, sense of motion and freedom.\n",
+      "provider": "fal",
+      "model": "Flux Pro v1.1",
+      "width": 1024,
+      "height": 1024,
+      "createdAt": "2025-12-30T12:21:08.783Z"
+    },
+    {
+      "id": "shot-004",
+      "filename": "shot-004.jpg",
+      "url": "/assets/shot-list/shot-004.jpg",
+      "prompt": "A red sports car on a mountain road at sunset",
+      "provider": "kie",
+      "model": "Flux Kontext Max",
+      "width": 1024,
+      "height": 1024,
+      "createdAt": "2025-12-31T18:59:43.778Z"
+    },
+    {
+      "id": "shot-005",
+      "filename": "shot-005.jpg",
+      "url": "/assets/shot-list/shot-005.jpg",
+      "prompt": "Can I have a picture of Kermit the Frog saying hello at Sydney Opera House.",
+      "provider": "fal",
+      "model": "Flux Schnell",
+      "width": 512,
+      "height": 512,
+      "createdAt": "2025-12-31T19:00:40.952Z"
+    },
+    {
+      "id": "shot-006",
+      "filename": "shot-006.jpg",
+      "url": "/assets/shot-list/shot-006.jpg",
+      "prompt": "A spacious, modern living room with bold, minimalist architecture and smooth concrete floors, completely empty of furniture. Floor-to-ceiling glass walls surround the space, opening onto a dense tropical jungle with tall palms, layered foliage, and drifting mist beyond the windows. Sunlight fills the room from above and through the glass, creating clean daylight, long soft shadows, and subtle reflections on the floor. The space feels intentionally unfinished—quiet, open, and prepared for transformation. Ultra-detailed, photorealistic cinematic interior photography, wide-angle lens, natural color grading, sharp focus, high dynamic range.",
+      "provider": "kie",
+      "model": "Flux Kontext Max",
+      "width": 1024,
+      "height": 1024,
+      "createdAt": "2026-01-02T14:04:04.991Z"
+    },
+    {
+      "id": "shot-007",
+      "filename": "shot-007.jpg",
+      "url": "/assets/shot-list/shot-007.jpg",
+      "prompt": "A spacious, modern living room with bold, minimalist architecture and smooth concrete floors, completely empty of furniture. Floor-to-ceiling glass walls surround the space, opening onto a dense tropical jungle with tall palms, layered foliage, and drifting mist beyond the windows. Sunlight fills the room from above and through the glass, creating clean daylight, long soft shadows, and subtle reflections on the floor. The space feels intentionally unfinished—quiet, open, and prepared for transformation. Ultra-detailed, photorealistic cinematic interior photography, wide-angle lens, natural color grading, sharp focus, high dynamic range.",
+      "provider": "fal",
+      "model": "Flux Schnell",
+      "width": 512,
+      "height": 512,
+      "createdAt": "2026-01-02T14:04:08.608Z"
+    }
+  ]
+}

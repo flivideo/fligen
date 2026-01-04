@@ -21,11 +21,11 @@ A mini-story project to demonstrate the FliGen tool pipeline: narration, imagery
 | Beat | Text |
 |------|------|
 | 1 | A quick brown fox discovers a lazy hound dozing beneath an old oak tree. |
-| 2 | With one graceful leap, the fox soars over the sleeping dog and disappears into the golden meadow. |
+| 2 | With one graceful leap, the fox soars over the sleeping dog and bounds away down the trail. |
 
 ### Full Narration Script
 
-> "A quick brown fox discovers a lazy hound dozing beneath an old oak tree. With one graceful leap, the fox soars over the sleeping dog and disappears into the golden meadow."
+> "A quick brown fox discovers a lazy hound dozing beneath an old oak tree. With one graceful leap, the fox soars over the sleeping dog and bounds away down the trail."
 
 **Duration estimate:** ~8-10 seconds
 
@@ -103,15 +103,15 @@ Retro 1960s children's book illustration, bold black outlines, flat gouache colo
 
 Visual continuity is critical for image-to-video generation. All images must:
 - Use identical character designs
-- Maintain same setting (meadow, oak tree)
+- Maintain same setting (dirt country trail, oak tree)
 - Show same time of day (late afternoon, golden light)
-- Progress left-to-right spatially
+- Progress along the trail (depth perspective)
 
 | # | Scene | Moment | Composition |
 |---|-------|--------|-------------|
-| 1 | Beginning | Discovery | Wide shot. Fox on left notices sleeping dog under oak tree on right. |
-| 2 | Middle | The Leap | Dynamic diagonal. Fox mid-air at apex of jump over sleeping dog. |
-| 3 | End | Escape | Fox landing/running toward right. Dog still asleep. Meadow horizon. |
+| 1 | Beginning | Discovery | Trail perspective. Fox in foreground, sleeping dog ~15m ahead under oak tree. |
+| 2 | Middle | The Leap | Dynamic diagonal. Fox mid-air at apex of jump over sleeping dog on the path. |
+| 3 | End | Escape | Fox running down the trail away from camera. Dog still asleep behind. |
 
 ### Timing with Narration
 
@@ -119,7 +119,7 @@ Visual continuity is critical for image-to-video generation. All images must:
 |-------|--------------|----------------|
 | 1 | 0:00 - 0:04 | "A quick brown fox discovers a lazy hound dozing beneath an old oak tree." |
 | 2 | 0:04 - 0:07 | "With one graceful leap, the fox soars over the sleeping dog..." |
-| 3 | 0:07 - 0:10 | "...and disappears into the golden meadow." |
+| 3 | 0:07 - 0:10 | "...and bounds away down the trail." |
 
 ---
 
@@ -131,36 +131,36 @@ Two variations per scene for selection. Each prompt includes the style fragment.
 
 **Prompt 1A:**
 ```
-Retro 1960s children's book illustration, bold black outlines, flat gouache colors, warm sunset palette. A clever russet-orange fox with white chest stands alert on the left, discovering a lazy tan hound dog sleeping peacefully beneath a gnarled oak tree. Golden meadow grass, late afternoon light, wide establishing shot.
+Retro 1960s children's book illustration, bold black outlines, flat gouache colors, warm sunset palette. A rustic dirt trail through a countryside setting. In the foreground, a clever russet-orange fox with white chest stands alert, ears forward. About 15 meters ahead on the trail, a lazy tan hound dog sleeps peacefully beneath a gnarled oak tree that overhangs the path. Late afternoon light, depth perspective down the trail.
 ```
 
 **Prompt 1B:**
 ```
-Retro 1960s children's book illustration, bold black outlines, flat gouache colors, warm amber and soft green palette. A quick brown fox with pointed ears peers curiously from the left side at a sleepy beige hound curled up under an old oak tree. Peaceful countryside meadow, golden hour lighting, gentle scene.
+Retro 1960s children's book illustration, bold black outlines, flat gouache colors, warm amber and soft green palette. A winding country path. A quick brown fox with pointed ears stands in the foreground, spotting something ahead. In the middle distance along the trail, a sleepy beige hound lies curled up under an old oak tree beside the path. Golden hour lighting, sense of depth along the trail.
 ```
 
 ### Scene 2: Middle (The Leap)
 
 **Prompt 2A:**
 ```
-Retro 1960s children's book illustration, bold black outlines, flat gouache colors, warm sunset palette. A russet-orange fox with white chest leaps gracefully in a high arc over a sleeping tan hound dog. The fox is mid-jump, legs extended, dynamic diagonal composition. Oak tree in background, golden meadow, action pose.
+Retro 1960s children's book illustration, bold black outlines, flat gouache colors, warm sunset palette. On a dirt country trail, a russet-orange fox with white chest leaps gracefully in a high arc over a sleeping tan hound dog. The fox is mid-jump, legs extended, dynamic diagonal composition. Oak tree overhanging the path, trail continues into the background, action pose.
 ```
 
 **Prompt 2B:**
 ```
-Retro 1960s children's book illustration, bold black outlines, flat gouache colors, warm amber tones. A quick brown fox soars through the air above a lazy beige hound who remains peacefully asleep. Fox at the apex of jump, tail streaming behind, joyful expression. Gnarled oak tree, late afternoon light.
+Retro 1960s children's book illustration, bold black outlines, flat gouache colors, warm amber tones. A quick brown fox soars through the air above a lazy beige hound who remains peacefully asleep on a country path. Fox at the apex of jump, tail streaming behind, joyful expression. Gnarled oak tree beside the trail, path visible ahead and behind, late afternoon light.
 ```
 
 ### Scene 3: End (Escape)
 
 **Prompt 3A:**
 ```
-Retro 1960s children's book illustration, bold black outlines, flat gouache colors, warm sunset palette. A russet-orange fox with white chest lands gracefully on the right side, running toward a golden meadow horizon. Behind it, a tan hound dog still sleeps peacefully under the oak tree. Sense of motion and freedom.
+Retro 1960s children's book illustration, bold black outlines, flat gouache colors, warm sunset palette. A dirt country trail stretching into the distance. A russet-orange fox with white chest runs down the path away from the viewer, tail flowing behind. In the background near the oak tree, a tan hound dog still sleeps peacefully. Trail disappears into golden light ahead, sense of motion and freedom.
 ```
 
 **Prompt 3B:**
 ```
-Retro 1960s children's book illustration, bold black outlines, flat gouache colors, warm amber and green palette. A quick brown fox bounds away into a sunlit meadow on the right, tail flowing. In the background left, a lazy beige hound remains curled up sleeping under the old oak tree. Triumphant escape moment.
+Retro 1960s children's book illustration, bold black outlines, flat gouache colors, warm amber and green palette. A winding country path viewed from behind a running fox. A quick brown fox bounds down the trail into the distance, moving away from camera. Far behind, a lazy beige hound remains curled up sleeping under the old oak tree beside the path. Triumphant escape down the trail.
 ```
 
 ---

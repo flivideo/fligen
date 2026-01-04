@@ -3,6 +3,7 @@
 export * from './types.js';
 export * as falClient from './fal-client.js';
 export * as kieClient from './kie-client.js';
+export { saveImageToCatalog } from './save-to-catalog.js';
 
 import * as falClient from './fal-client.js';
 import * as kieClient from './kie-client.js';

@@ -3,7 +3,7 @@
     "id": "fligen-config",
     "version": "1.0.0",
     "source": "claudemas-12-days",
-    "lastUpdated": "2025-12-29"
+    "lastUpdated": "2026-01-02"
   },
   "days": [
     {
@@ -51,7 +51,7 @@
       "name": "Text-to-Speech",
       "shortName": "TTS",
       "icon": "🔊",
-      "status": "next",
+      "status": "complete",
       "route": "#day-5",
       "purpose": "Voice generation",
       "apisTech": ["ElevenLabs"]
@@ -61,40 +61,40 @@
       "name": "Video Animation",
       "shortName": "Video",
       "icon": "🎬",
-      "status": "pending",
+      "status": "complete",
       "route": "#day-6",
       "purpose": "Video creation",
-      "apisTech": ["KIE.AI (VO3)", "ComfyUI"]
+      "apisTech": ["KIE.AI (Veo 3.1)", "FAL.AI (Kling O1)"]
     },
     {
       "day": 7,
       "name": "Music Generator",
       "shortName": "Music",
       "icon": "🎵",
-      "status": "pending",
+      "status": "complete",
       "route": "#day-7",
       "purpose": "Music creation",
-      "apisTech": ["Suno", "FAL.AI", "KIE.AI"]
+      "apisTech": ["FAL.AI (SonAuto)", "KIE.AI (Suno)"]
     },
     {
       "day": 8,
       "name": "Thumbnail Generator",
       "shortName": "Thumb",
       "icon": "🎨",
-      "status": "pending",
+      "status": "complete",
       "route": "#day-8",
       "purpose": "Compound tool",
       "apisTech": ["Layout composition", "Image generation", "Text overlays"]
     },
     {
       "day": 9,
-      "name": "Interop",
-      "shortName": "Interop",
+      "name": "Prompt Intake",
+      "shortName": "Intake",
       "icon": "🔗",
-      "status": "pending",
+      "status": "next",
       "route": "#day-9",
-      "purpose": "System connectors",
-      "apisTech": ["FliHub", "DAM", "FliDeck"]
+      "purpose": "FliHub integration",
+      "apisTech": ["FliHub REST API", "Project storage"]
     },
     {
       "day": 10,

@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import { ToolPanel } from '../ui/ToolPanel';
+import { ShotListStrip } from '../ui/ShotListStrip';
+import { useShots } from '../../hooks/useShots';
+import type { Provider } from '@fligen/shared';
 
 // ============================================
 // Types
@@ -86,10 +89,18 @@ function StatusIndicator({ health }: { health: ProviderHealth }) {
 function ComparisonCell({
   result,
   isLoading,
+  prompt,
+  onAddToShots,
+  addedIds,
 }: {
   result: CompareResult | null;
   isLoading: boolean;
+  prompt: string;
+  onAddToShots: (result: CompareResult, prompt: string) => Promise<void>;
+  addedIds: Set<string>;
 }) {
+  const [isAdding, setIsAdding] = useState(false);
+
   if (isLoading) {
     return (
       <div className="bg-slate-800 rounded-lg border border-slate-700 p-4 animate-pulse">
@@ -127,14 +138,50 @@ function ComparisonCell({
     );
   }
 
+  const resultKey = `${result.provider}-${result.tier}`;
+  const isAdded = addedIds.has(resultKey);
+
+  const handleClick = async () => {
+    if (isAdded || isAdding || !result.imageUrl) return;
+    setIsAdding(true);
+    try {
+      await onAddToShots(result, prompt);
+    } finally {
+      setIsAdding(false);
+    }
+  };
+
   return (
     <div className="bg-slate-800 rounded-lg border border-slate-700 p-4">
       {result.imageUrl && (
-        <img
-          src={result.imageUrl}
-          alt={`${result.model} result`}
-          className="aspect-square w-full object-cover rounded mb-3 border border-slate-600"
-        />
+        <div
+          className="relative aspect-square w-full rounded mb-3 border border-slate-600 overflow-hidden group cursor-pointer"
+          onClick={handleClick}
+        >
+          <img
+            src={result.imageUrl}
+            alt={`${result.model} result`}
+            className="w-full h-full object-cover"
+          />
+          {/* Hover overlay */}
+          {!isAdded && !isAdding && (
+            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+              <span className="text-white text-sm font-medium">+ Add to Shots</span>
+            </div>
+          )}
+          {/* Adding state */}
+          {isAdding && (
+            <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+              <span className="text-white text-sm">Adding...</span>
+            </div>
+          )}
+          {/* Added state */}
+          {isAdded && (
+            <div className="absolute bottom-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded">
+              Added
+            </div>
+          )}
+        </div>
       )}
       <div className="text-slate-300 text-sm font-medium">{result.model}</div>
       <div className="text-slate-500 text-xs">
@@ -152,10 +199,13 @@ function ComparisonTab() {
   const [prompt, setPrompt] = useState(DEFAULT_PROMPT);
   const [results, setResults] = useState<CompareResult[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [addedIds, setAddedIds] = useState<Set<string>>(new Set());
+  const { addShot } = useShots();
 
   const generateAll = async () => {
     setIsGenerating(true);
     setResults([]);
+    setAddedIds(new Set()); // Reset added state for new generation
 
     try {
       const response = await fetch(`${SERVER_URL}/api/image/compare`, {
@@ -170,6 +220,25 @@ function ComparisonTab() {
       console.error('Failed to generate comparison:', error);
     } finally {
       setIsGenerating(false);
+    }
+  };
+
+  // Handle adding image to shots
+  const handleAddToShots = async (result: CompareResult, promptText: string) => {
+    if (!result.imageUrl) return;
+
+    const success = await addShot({
+      imageUrl: result.imageUrl,
+      prompt: promptText,
+      provider: result.provider as Provider,
+      model: result.model,
+      width: result.resolution.width,
+      height: result.resolution.height,
+    });
+
+    if (success) {
+      const resultKey = `${result.provider}-${result.tier}`;
+      setAddedIds(prev => new Set([...prev, resultKey]));
     }
   };
 
@@ -203,6 +272,9 @@ function ComparisonTab() {
         </button>
       </div>
 
+      {/* Shot List Strip */}
+      <ShotListStrip />
+
       {/* 2x2 Comparison Grid */}
       <div className="grid grid-cols-[auto_1fr_1fr] gap-4">
         {/* Header Row */}
@@ -214,15 +286,39 @@ function ComparisonTab() {
         <div className="flex items-center justify-end pr-2 text-sm font-medium text-slate-400">
           ADVANCED
         </div>
-        <ComparisonCell result={getResult('fal', 'advanced')} isLoading={isGenerating} />
-        <ComparisonCell result={getResult('kie', 'advanced')} isLoading={isGenerating} />
+        <ComparisonCell
+          result={getResult('fal', 'advanced')}
+          isLoading={isGenerating}
+          prompt={prompt}
+          onAddToShots={handleAddToShots}
+          addedIds={addedIds}
+        />
+        <ComparisonCell
+          result={getResult('kie', 'advanced')}
+          isLoading={isGenerating}
+          prompt={prompt}
+          onAddToShots={handleAddToShots}
+          addedIds={addedIds}
+        />
 
         {/* Mid-range Row */}
         <div className="flex items-center justify-end pr-2 text-sm font-medium text-slate-400">
           MID-RANGE
         </div>
-        <ComparisonCell result={getResult('fal', 'midrange')} isLoading={isGenerating} />
-        <ComparisonCell result={getResult('kie', 'midrange')} isLoading={isGenerating} />
+        <ComparisonCell
+          result={getResult('fal', 'midrange')}
+          isLoading={isGenerating}
+          prompt={prompt}
+          onAddToShots={handleAddToShots}
+          addedIds={addedIds}
+        />
+        <ComparisonCell
+          result={getResult('kie', 'midrange')}
+          isLoading={isGenerating}
+          prompt={prompt}
+          onAddToShots={handleAddToShots}
+          addedIds={addedIds}
+        />
       </div>
 
       {/* Summary Stats */}

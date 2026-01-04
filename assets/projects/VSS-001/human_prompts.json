@@ -1,0 +1,6 @@
+{
+  "projectCode": "VSS-001",
+  "prompt_a": "Prompt, I want a wide shot of a big modern living room.\nIt's empty, concrete floors, minimal architecture, big glass windows all around looking onto\na tropical jungle.\nIt's daytime, sunlight is coming in, it feels clean and quiet.\n",
+  "prompt_b": "Editing prompt. Keep the room exactly the same. Same angles, same windows, but make it night outside with moonlight.\nAdd furniture that looks like it grew from plants, vines and roots.\nAdd a warm lamp inside and keep it realistic.\n",
+  "prompt_c": "Prompt for animation of the room, with the roots and the vines growing into the furniture, moss spreads into the cushions.\nDay turns into night outside, the jungle gets darker and misty, a lamp turns on inside with a warm amber light.\nKeep it cinematic and realistic, like a time lapse.\n"
+}

@@ -6,6 +6,11 @@ import { useSocket } from './hooks/useSocket';
 import { Day2AgentSDK } from './components/tools/Day2AgentSDK';
 import { Day4ImageGen } from './components/tools/Day4ImageGen';
 import { Day5TTS } from './components/tools/Day5TTS';
+import { Day6Video } from './components/tools/Day6Video';
+import { Day7MusicGen } from './components/tools/Day7MusicGen';
+import { Day8Thumbnail } from './components/tools/Day8Thumbnail';
+import { Day9PromptIntake } from './components/tools/Day9PromptIntake';
+import Day10N8N from './components/tools/Day10N8N';
 
 function AppContent() {
   const { connected: socketConnected } = useSocket();
@@ -71,6 +76,16 @@ function AppContent() {
             <Day4ImageGen />
           ) : currentDay === 5 ? (
             <Day5TTS />
+          ) : currentDay === 6 ? (
+            <Day6Video />
+          ) : currentDay === 7 ? (
+            <Day7MusicGen />
+          ) : currentDay === 8 ? (
+            <Day8Thumbnail />
+          ) : currentDay === 9 ? (
+            <Day9PromptIntake />
+          ) : currentDay === 10 ? (
+            <Day10N8N />
           ) : (
             <div className="h-full overflow-auto p-4">
               <div className="max-w-2xl mx-auto">

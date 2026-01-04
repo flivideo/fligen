@@ -7,7 +7,7 @@ import path from 'path';
 import type { HealthResponse, ServerToClientEvents, ClientToServerEvents } from '@fligen/shared';
 import { handleAgentQuery, clearSession, cancelQuery } from './agent/index.js';
 import { isKybernesisConfigured } from './tools/kybernesis/index.js';
-import { checkHealth as checkImageHealth, generateTestImages, compareImages, isFalConfigured, isKieConfigured } from './tools/image/index.js';
+import { checkHealth as checkImageHealth, generateTestImages, compareImages, isFalConfigured, isKieConfigured, saveImageToCatalog } from './tools/image/index.js';
 import type { CompareRequest } from './tools/image/index.js';
 import { isConfigured as isElevenLabsConfigured, getVoices, generateSpeech } from './tools/elevenlabs/index.js';
 import type { GenerateSpeechRequest } from './tools/elevenlabs/index.js';
@@ -101,6 +101,34 @@ app.post('/api/image/compare', async (req, res) => {
     const message = error instanceof Error ? error.message : 'Unknown error';
     console.error(`[API] /api/image/compare - error: ${message}`);
     res.status(500).json({ error: message, results: [] });
+  }
+});
+
+// Image save to catalog endpoint - saves generated images to catalog
+app.post('/api/images/save-to-catalog', async (req, res) => {
+  try {
+    const { imageUrl, prompt, provider, model, width, height, metadata } = req.body;
+
+    if (!imageUrl || !prompt || !provider || !model) {
+      res.status(400).json({ error: 'Missing required fields' });
+      return;
+    }
+
+    const asset = await saveImageToCatalog(
+      imageUrl,
+      prompt,
+      provider,
+      model,
+      width || 1024,
+      height || 1024,
+      metadata || {}
+    );
+
+    res.json({ asset });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('[API] /api/images/save-to-catalog - error:', message);
+    res.status(500).json({ error: 'Failed to save image' });
   }
 });
 

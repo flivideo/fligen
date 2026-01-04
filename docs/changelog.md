@@ -21,6 +21,259 @@ Any important context or decisions made during implementation.
 
 ---
 
+## 2026-01-03 - FR-15: Prompt Refinement UI
+
+**Reference:** [FR-15: Prompt Refinement UI](prd/fr-15-prompt-refinement-ui.md)
+
+### Changes
+
+#### Backend Infrastructure
+- Created `server/src/tools/prompts/` module for prompt refinement
+- `system-prompts.ts` - Hard-coded templates for Seed, Edit, Animation prompts
+- `refine.ts` - Claude Agent SDK integration using `query()` API
+- Added `GET /api/prompts/system` - Returns system prompt templates
+- Added `POST /api/prompts/refine` - Refines human prompts into machine prompts
+
+#### Frontend Implementation
+- Created `PromptRefinementPanel.tsx` - 6-panel layout (3 system + 3 machine prompts)
+- Integrated into Day10N8N.tsx between INPUT and PROCESS sections
+- Modified workflow execution to support dual modes: Human Prompts (blue) and Machine Prompts (amber)
+- Machine prompts button disabled until prompts are generated
+
+#### Type Definitions
+- Added to `shared/src/index.ts`:
+  - `MachinePrompts` - Refined prompts for Seed, Edit, Animation
+  - `RefinePromptsRequest` - API request payload
+  - `RefinePromptsResponse` - API response payload
+
+### Files Created
+```
+server/src/tools/prompts/system-prompts.ts     - 48 lines
+server/src/tools/prompts/refine.ts             - 92 lines
+server/src/tools/prompts/index.ts              - 3 lines
+client/src/components/tools/PromptRefinementPanel.tsx - 195 lines
+```
+
+### Files Modified
+```
+server/src/index.ts                            - Added prompts endpoints
+client/src/components/tools/Day10N8N.tsx       - Integrated refinement panel
+shared/src/index.ts                            - Added prompt types
+```
+
+### Technical Implementation
+
+**Claude Agent SDK Integration:**
+- Uses `query()` function with `Options` interface
+- Runs three refinements in parallel using `Promise.all()`
+- Each refinement uses `maxTurns: 1` for simple transformation
+- Accumulates streaming text from `assistant` messages and `stream_event` deltas
+
+**System Prompts:**
+- **Seed System**: Optimizes for Flux image generation (style, lighting, composition)
+- **Edit System**: Optimizes for image-to-image editing (precise modifications)
+- **Animation System**: Optimizes for image-to-video (camera movement, subject motion)
+
+**API Flow:**
+1. Client loads project → Human prompts populate
+2. User clicks "Generate Machine Prompts"
+3. Client POSTs to `/api/prompts/refine` with human prompts
+4. Server calls `refinePrompts()` → 3 parallel Claude queries
+5. Server responds with machine prompts
+6. Client displays machine prompts in bottom row
+7. User executes workflow with either human or machine prompts
+
+### Notes
+Day 10 enhancement - Implements Human → System → Machine prompt refinement pipeline. Users can now:
+1. Load human prompts from saved projects
+2. Generate machine-optimized prompts using Claude Agent SDK
+3. Compare human vs machine prompts side-by-side
+4. Execute N8N workflow with either prompt set
+5. Experiment with prompt quality improvements
+
+This builds on FR-14 (Day 10 N8N Workflow) and demonstrates practical Claude Agent SDK usage for prompt engineering at scale.
+
+---
+
+## 2025-12-31 - FR-11: Music Generation
+
+**Reference:** [FR-11: Music Generation](prd/fr-11-music-generation.md)
+
+### Changes
+
+#### Server Module
+- Created music module at `server/src/tools/music/` (types, storage, fal-client, kie-client, index)
+- Implemented FAL.AI SonAuto v2 integration - text-to-music with lyrics support
+- Implemented KIE.AI Suno integration - async polling with model selection (V4, V4.5, V5)
+- Music library storage at `assets/music-library/` with persistent index.json
+
+#### API Endpoints
+- `GET /api/music/health` - Check provider status
+- `POST /api/music/generate` - Generate music with provider selection
+- `GET /api/music/library` - List saved tracks
+- `POST /api/music/save` - Save track to library with custom name
+- `DELETE /api/music/library/:id` - Delete saved track
+
+#### Client Integration
+- Wired Day7MusicGen.tsx mock UI to real APIs
+- Provider toggle between FAL.AI SonAuto and KIE.AI Suno
+- Audio playback with editable track names
+- Save to library with server persistence
+
+### Files Created
+```
+server/src/tools/music/types.ts      - Type definitions
+server/src/tools/music/storage.ts    - Library storage operations
+server/src/tools/music/fal-client.ts - FAL.AI SonAuto v2 client
+server/src/tools/music/kie-client.ts - KIE.AI Suno client
+server/src/tools/music/index.ts      - Module exports
+```
+
+### Files Modified
+```
+shared/src/index.ts                          - Added music types
+shared/src/config.json                       - Day 6 → complete, Day 7 → next
+server/src/index.ts                          - Added music API endpoints, 50MB body limit
+client/src/App.tsx                           - Added Day 7 routing
+client/src/components/tools/Day7MusicGen.tsx - Wired to real APIs
+```
+
+### Bug Fixes Applied
+
+| Issue | Root Cause | Fix |
+|-------|------------|-----|
+| FAL "Unprocessable Entity" | Sent prompt + tags + lyrics together | Don't send all three simultaneously |
+| FAL "No audio URL" | Response wrapped in data property | Handle nested data.audio structure |
+| Express "Payload too large" | Default 100KB limit | Increased JSON limit to 50MB |
+| KIE 404 Not Found | Wrong endpoint path | Fixed to /api/v1/generate |
+| KIE polling endpoint | Wrong status path | Fixed to /api/v1/generate/record-info |
+
+### Music Providers
+
+| Provider | Model | Cost | Generation Time |
+|----------|-------|------|-----------------|
+| FAL.AI | SonAuto v2 | $0.075/track | ~40s |
+| KIE.AI | Suno V4/V4.5/V5 | ~$0.06/track | ~60s (async) |
+
+### Notes
+Day 7 of "12 Days of Claudemas" - Music generation complete. Users can:
+1. Select provider (FAL.AI SonAuto or KIE.AI Suno)
+2. Enter prompt, optional lyrics, style tags
+3. Generate full songs with vocals or instrumentals
+4. Play, rename, and save tracks to library
+5. Download as MP3
+
+Reuses existing FAL_API_KEY and KIE_API_KEY from Day 4/6 image and video generation.
+
+---
+
+## 2025-12-30 - FR-10: Shot List and Video Generation
+
+**Reference:** [FR-10: Shot List and Video Generation](prd/fr-10-shot-list-and-video.md)
+
+### Changes
+
+#### Part 1: Shot List Infrastructure
+- Created shots module at `server/src/tools/shots/` (types, storage, index)
+- Implemented `GET /api/shots` - List all shots with metadata
+- Implemented `POST /api/shots` - Add image to shot list (downloads from URL)
+- Implemented `DELETE /api/shots/:id` - Remove individual shot
+- Implemented `DELETE /api/shots/clear` - Clear all shots
+- Added Socket.IO events: `shots:list`, `shots:added`, `shots:removed`, `shots:cleared`
+- Added static file serving for `/assets` directory
+- Created `useShots` hook for client-side shot management
+- Created `ShotListStrip` component with thumbnails, remove buttons, clear all
+
+#### Part 2: Day 4 UI Modifications
+- Updated Day4ImageGen with clickable images
+- Added "Add to Shots" hover overlay on comparison grid images
+- Integrated ShotListStrip between Generate button and comparison grid
+- Shot list persists across page refreshes via server storage
+
+#### Part 3: Day 6 Video Generation
+- Created video module at `server/src/tools/video/` (types, storage, kie-client, fal-client)
+- Implemented KIE.AI Veo 3.1 video generation with async polling
+- Implemented FAL.AI Kling O1 and Wan 2.1 FLF2V video generation
+- Added `GET /api/video/health` - Check video API status
+- Added `POST /api/video/generate` - Generate transition video
+- Added `GET /api/video/status/:taskId` - Poll video task status
+- Added `GET /api/video/list` - List generated videos
+- Added Socket.IO events: `video:progress`, `video:completed`, `video:failed`
+- Created Day6Video component with drag-and-drop drop zones
+- Added provider/model selection, duration options, optional prompt
+
+### Files Created
+```
+server/src/tools/shots/types.ts     - Shot type definitions
+server/src/tools/shots/storage.ts   - File system operations
+server/src/tools/shots/index.ts     - Module exports
+
+server/src/tools/video/types.ts     - Video type definitions
+server/src/tools/video/storage.ts   - Video file storage
+server/src/tools/video/kie-client.ts - KIE.AI Veo 3.1 client
+server/src/tools/video/fal-client.ts - FAL.AI Kling/Wan client
+server/src/tools/video/index.ts     - Module exports
+
+client/src/hooks/useShots.ts        - Shot list hook
+client/src/components/ui/ShotListStrip.tsx - Shot list strip component
+client/src/components/tools/Day6Video.tsx  - Day 6 video component
+```
+
+### Files Modified
+```
+server/src/index.ts                 - Added shots and video API endpoints
+shared/src/index.ts                 - Added Shot and VideoTask types
+shared/src/config.json              - Updated Day 5 to complete, Day 6 to next
+client/src/App.tsx                  - Added Day 6 routing
+client/src/components/tools/Day4ImageGen.tsx - Added clickable images, shot strip
+```
+
+### Video Providers
+| Provider | Model | First+Last Frame | Duration | Cost |
+|----------|-------|------------------|----------|------|
+| KIE.AI | Veo 3.1 | Planned | 5-8s | ~$0.25 |
+| FAL.AI | Kling O1 | Single frame | 5-10s | ~$0.56 |
+| FAL.AI | Wan 2.1 FLF2V | Yes | ~3s | ~$0.15 |
+
+### Bug Fixes Applied
+
+| Issue | Root Cause | Fix |
+|-------|------------|-----|
+| "Image fetch failed" from KIE.AI | External APIs can't access localhost URLs | Convert images to base64 data URLs before sending |
+| "FAL_KEY not configured" | Video client used wrong env var name | Changed FAL_KEY → FAL_API_KEY (consistent with image client) |
+| "No video URL in response" | FAL wraps response in data property | Added fallback: result.data?.video?.url |
+| Wan FLF2V "Not Found" | Wrong endpoint path | Fixed: fal-ai/wan/v2.1/flf2v → fal-ai/wan-flf2v |
+| Wan FLF2V "Unprocessable Entity" | Wrong parameter names | Fixed: first_frame_url → start_image_url, last_frame_url → end_image_url |
+
+### Files Modified for Bug Fixes
+```
+server/src/tools/shots/storage.ts   - Added getShotAsBase64() function
+server/src/tools/video/index.ts     - Now reads local files and converts to base64
+server/src/tools/video/fal-client.ts - Fixed env var, endpoint, params, response parsing
+server/src/tools/video/kie-client.ts - Added base64 logging
+```
+
+### Video Model Status (Final)
+
+| Model | Provider | Endpoint | Status |
+|-------|----------|----------|--------|
+| Veo 3.1 | KIE.AI | /api/v1/veo/generate | Working |
+| Kling O1 | FAL.AI | fal-ai/kling-video/o1/image-to-video | Working |
+| Wan 2.1 FLF2V | FAL.AI | fal-ai/wan-flf2v | Working |
+
+### Notes
+Day 6 of "12 Days of Claudemas" - Shot list and video generation complete. Users can:
+1. Generate images in Day 4 and click to add to shot list
+2. Shot list persists across sessions via server storage
+3. Navigate to Day 6 and drag shots to start/end frame drop zones
+4. Select video provider, duration, and optional prompt
+5. Generate transition videos with real-time progress
+6. View and download completed videos
+
+Key learning: External video APIs (KIE.AI, FAL.AI) cannot fetch images from localhost. Solution: read local files and convert to base64 data URLs before sending to external APIs.
+
+---
+
 ## 2025-12-29 - FR-09: 11 Labs Text-to-Speech
 
 **Reference:** [FR-09: 11 Labs Text-to-Speech](prd/fr-09-elevenlabs-tts.md)
