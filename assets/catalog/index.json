@@ -1,5 +1,433 @@
 {
   "version": "1.0.0",
-  "lastUpdated": "2026-01-04T05:39:30.478Z",
-  "assets": []
+  "lastUpdated": "2026-01-04T11:20:21.206Z",
+  "assets": [
+    {
+      "id": "asset_image_1767515187647_mlv946",
+      "type": "image",
+      "filename": "image-1767515187647-kie-flux-kontext-pro.jpg",
+      "url": "/assets/catalog/images/image-1767515187647-kie-flux-kontext-pro.jpg",
+      "provider": "kie",
+      "model": "Flux Kontext Pro",
+      "prompt": "Let's do a technology iceberg with code under the iceberg and a little vibe code app on top. Golden Age of Comics style.",
+      "status": "ready",
+      "createdAt": "2026-01-04T08:26:28.297Z",
+      "completedAt": "2026-01-04T08:26:28.297Z",
+      "estimatedCost": 0.03,
+      "generationTimeMs": 650,
+      "metadata": {
+        "width": 512,
+        "height": 512,
+        "tier": "midrange",
+        "estimatedCost": 0.004,
+        "generationTimeMs": 18522
+      }
+    },
+    {
+      "id": "asset_image_1767515187646_esh7pd",
+      "type": "image",
+      "filename": "image-1767515187646-kie-flux-kontext-max.jpg",
+      "url": "/assets/catalog/images/image-1767515187646-kie-flux-kontext-max.jpg",
+      "provider": "kie",
+      "model": "Flux Kontext Max",
+      "prompt": "Let's do a technology iceberg with code under the iceberg and a little vibe code app on top. Golden Age of Comics style.",
+      "status": "ready",
+      "createdAt": "2026-01-04T08:26:28.426Z",
+      "completedAt": "2026-01-04T08:26:28.426Z",
+      "estimatedCost": 0.03,
+      "generationTimeMs": 780,
+      "metadata": {
+        "width": 1024,
+        "height": 1024,
+        "tier": "advanced",
+        "estimatedCost": 0.025,
+        "generationTimeMs": 23028
+      }
+    },
+    {
+      "id": "asset_image_1767515187646_ix0ow4",
+      "type": "image",
+      "filename": "image-1767515187646-fal-flux-schnell.jpg",
+      "url": "/assets/catalog/images/image-1767515187646-fal-flux-schnell.jpg",
+      "provider": "fal",
+      "model": "Flux Schnell",
+      "prompt": "Let's do a technology iceberg with code under the iceberg and a little vibe code app on top. Golden Age of Comics style.",
+      "status": "ready",
+      "createdAt": "2026-01-04T08:26:30.213Z",
+      "completedAt": "2026-01-04T08:26:30.213Z",
+      "estimatedCost": 0.05,
+      "generationTimeMs": 2567,
+      "metadata": {
+        "width": 512,
+        "height": 512,
+        "tier": "midrange",
+        "estimatedCost": 0.000786432,
+        "generationTimeMs": 1296
+      }
+    },
+    {
+      "id": "asset_image_1767515187645_8a60b5",
+      "type": "image",
+      "filename": "image-1767515187645-fal-flux-pro-v1.1.jpg",
+      "url": "/assets/catalog/images/image-1767515187645-fal-flux-pro-v1.1.jpg",
+      "provider": "fal",
+      "model": "Flux Pro v1.1",
+      "prompt": "Let's do a technology iceberg with code under the iceberg and a little vibe code app on top. Golden Age of Comics style.",
+      "status": "ready",
+      "createdAt": "2026-01-04T08:26:30.316Z",
+      "completedAt": "2026-01-04T08:26:30.316Z",
+      "estimatedCost": 0.05,
+      "generationTimeMs": 2671,
+      "metadata": {
+        "width": 1024,
+        "height": 1024,
+        "tier": "advanced",
+        "estimatedCost": 0.04194304,
+        "generationTimeMs": 5527
+      }
+    },
+    {
+      "id": "asset_audio_1767515307703_8b589b",
+      "type": "audio",
+      "filename": "audio-1767515307703-elevenlabs-antoni.mp3",
+      "url": "/assets/catalog/audio/audio-1767515307703-elevenlabs-antoni.mp3",
+      "provider": "elevenlabs",
+      "model": "eleven_multilingual_v2",
+      "prompt": "Holy iceberg, Batman — the app looks bright!\nBut the code below’s where the heroes fight!",
+      "status": "ready",
+      "createdAt": "2026-01-04T08:28:27.705Z",
+      "completedAt": "2026-01-04T08:28:27.705Z",
+      "estimatedCost": 0.003,
+      "generationTimeMs": 1601,
+      "metadata": {
+        "voice": "Antoni",
+        "voiceId": "ErXwobaYiN019PkySvjV",
+        "narrationText": "Holy iceberg, Batman — the app looks bright!\nBut the code below’s where the heroes fight!",
+        "characterCount": 89,
+        "format": "mp3",
+        "name": "Some Music"
+      }
+    },
+    {
+      "id": "asset_audio_1767515630978_4k7ozd",
+      "type": "audio",
+      "filename": "audio-1767515630979-kie-v4.5.mp3",
+      "url": "/assets/catalog/audio/audio-1767515630979-kie-v4.5.mp3",
+      "provider": "kie",
+      "model": "V4.5",
+      "prompt": "Upbeat retro superhero theme, 1960s comic-book camp, surf rock guitars, punchy brass hits, walking bassline, handclaps, dramatic timpani, lots of ‘pow/bam’ energy, major key, fast tempo (160–180 BPM), playful yet heroic.",
+      "status": "ready",
+      "createdAt": "2026-01-04T08:33:50.996Z",
+      "completedAt": "2026-01-04T08:33:50.996Z",
+      "metadata": {
+        "name": "Track 1",
+        "style": "electronic, synth, upbeat",
+        "format": "mp3"
+      }
+    },
+    {
+      "id": "asset_image_1767515854124_nxuaas",
+      "type": "image",
+      "filename": "image-1767515854124-kie-flux-kontext-max.jpg",
+      "url": "/assets/catalog/images/image-1767515854124-kie-flux-kontext-max.jpg",
+      "provider": "kie",
+      "model": "Flux Kontext Max",
+      "prompt": "technology iceberg with code under the iceberg and a little vibe code app on top. Golden Age of Comics style.",
+      "status": "ready",
+      "createdAt": "2026-01-04T08:37:34.899Z",
+      "completedAt": "2026-01-04T08:37:34.899Z",
+      "estimatedCost": 0.03,
+      "generationTimeMs": 775,
+      "metadata": {
+        "width": 1024,
+        "height": 1024,
+        "tier": "advanced",
+        "estimatedCost": 0.025,
+        "generationTimeMs": 29598
+      }
+    },
+    {
+      "id": "asset_image_1767515854124_le31lc",
+      "type": "image",
+      "filename": "image-1767515854124-kie-flux-kontext-pro.jpg",
+      "url": "/assets/catalog/images/image-1767515854124-kie-flux-kontext-pro.jpg",
+      "provider": "kie",
+      "model": "Flux Kontext Pro",
+      "prompt": "technology iceberg with code under the iceberg and a little vibe code app on top. Golden Age of Comics style.",
+      "status": "ready",
+      "createdAt": "2026-01-04T08:37:34.931Z",
+      "completedAt": "2026-01-04T08:37:34.931Z",
+      "estimatedCost": 0.03,
+      "generationTimeMs": 807,
+      "metadata": {
+        "width": 512,
+        "height": 512,
+        "tier": "midrange",
+        "estimatedCost": 0.004,
+        "generationTimeMs": 20741
+      }
+    },
+    {
+      "id": "asset_image_1767515854124_iij7pe",
+      "type": "image",
+      "filename": "image-1767515854124-fal-flux-schnell.jpg",
+      "url": "/assets/catalog/images/image-1767515854124-fal-flux-schnell.jpg",
+      "provider": "fal",
+      "model": "Flux Schnell",
+      "prompt": "technology iceberg with code under the iceberg and a little vibe code app on top. Golden Age of Comics style.",
+      "status": "ready",
+      "createdAt": "2026-01-04T08:37:36.822Z",
+      "completedAt": "2026-01-04T08:37:36.822Z",
+      "estimatedCost": 0.05,
+      "generationTimeMs": 2698,
+      "metadata": {
+        "width": 512,
+        "height": 512,
+        "tier": "midrange",
+        "estimatedCost": 0.000786432,
+        "generationTimeMs": 2019
+      }
+    },
+    {
+      "id": "asset_image_1767515854122_p1tejk",
+      "type": "image",
+      "filename": "image-1767515854123-fal-flux-pro-v1.1.jpg",
+      "url": "/assets/catalog/images/image-1767515854123-fal-flux-pro-v1.1.jpg",
+      "provider": "fal",
+      "model": "Flux Pro v1.1",
+      "prompt": "technology iceberg with code under the iceberg and a little vibe code app on top. Golden Age of Comics style.",
+      "status": "ready",
+      "createdAt": "2026-01-04T08:37:37.093Z",
+      "completedAt": "2026-01-04T08:37:37.093Z",
+      "estimatedCost": 0.05,
+      "generationTimeMs": 2971,
+      "metadata": {
+        "width": 1024,
+        "height": 1024,
+        "tier": "advanced",
+        "estimatedCost": 0.04194304,
+        "generationTimeMs": 7510
+      }
+    },
+    {
+      "id": "asset_image_1767517943756_nur6gt",
+      "type": "image",
+      "filename": "image-start.png",
+      "url": "/assets/catalog/n8n/0001/image-start.png",
+      "provider": "n8n",
+      "model": "flux-pro",
+      "prompt": "A retro Golden Age Comics style illustration of a technology iceberg, dramatic comic book aesthetic with bold Ben-Day dots and halftone patterns, vibrant primary colors with aged paper texture, floating iceberg in digital ocean, small glowing app icon labeled \"vibe code\" perched on top of iceberg tip, beneath the waterline massive amounts of cascading source code in monospace font flowing downward, matrix-style green code streams, binary digits, programming syntax, HTML tags, JavaScript functions, dark mysterious depths filled with layers of computer code, vintage 1940s comic book art style, thick black ink outlines, dynamic perspective, dramatic lighting with sharp shadows, retro superhero comic aesthetic, Roy Lichtenstein inspired, classic four-color printing look, epic heroic composition, high contrast, professional comic book illustration quality, 4K detailed artwork",
+      "status": "ready",
+      "createdAt": "2026-01-04T09:12:23.756Z",
+      "completedAt": "2026-01-04T09:12:23.756Z",
+      "estimatedCost": 0.04,
+      "generationTimeMs": 0,
+      "metadata": {
+        "workflowId": "0001",
+        "workflowType": "image-edit-and-animate",
+        "workflowName": "A retro Golden Age Comics style illustration of a ",
+        "runDate": "2026-01-04T09:12:22.995Z",
+        "prompts": {
+          "seedImage": {
+            "human": "A retro Golden Age Comics style illustration of a technology iceberg, dramatic comic book aesthetic with bold Ben-Day dots and halftone patterns, vibrant primary colors with aged paper texture, floating iceberg in digital ocean, small glowing app icon labeled \"vibe code\" perched on top of iceberg tip, beneath the waterline massive amounts of cascading source code in monospace font flowing downward, matrix-style green code streams, binary digits, programming syntax, HTML tags, JavaScript functions, dark mysterious depths filled with layers of computer code, vintage 1940s comic book art style, thick black ink outlines, dynamic perspective, dramatic lighting with sharp shadows, retro superhero comic aesthetic, Roy Lichtenstein inspired, classic four-color printing look, epic heroic composition, high contrast, professional comic book illustration quality, 4K detailed artwork",
+            "cleaned": "A retro Golden Age Comics style illustration of a technology iceberg dramatic comic book aesthetic with bold BenDay dots and halftone patterns vibrant primary colors with aged paper texture floating iceberg in digital ocean small glowing app icon labeled vibe code perched on top of iceberg tip beneath the waterline massive amounts of cascading source code in monospace font flowing downward matrixstyle green code streams binary digits programming syntax HTML tags JavaScript functions dark mysterious depths filled with layers of computer code vintage 1940s comic book art style thick black ink outlines dynamic perspective dramatic lighting with sharp shadows retro superhero comic aesthetic Roy Lichtenstein inspired classic fourcolor printing look epic heroic composition high contrast professional comic book illustration quality 4K detailed artwork"
+          },
+          "editInstruction": {
+            "human": "Zoom in on the submerged portion of the iceberg, magnifying and bringing into sharp focus the underwater code section beneath the waterline while reducing or cropping out the visible tip above water.",
+            "cleaned": "Zoom in on the submerged portion of the iceberg magnifying and bringing into sharp focus the underwater code section beneath the waterline while reducing or cropping out the visible tip above water"
+          },
+          "animation": {
+            "human": "Camera starts with a medium shot of the iceberg's tip above the waterline, slowly pushing in. The iceberg emits a rhythmic pulsating glow that intensifies in waves across its surface. As the camera continues its forward dolly movement, a bright flash of light blooms from the center of the frame, creating a transition effect. The camera then tilts down and pushes through the waterline, revealing the massive submerged portion of the iceberg below. The pulsating glow effect carries through both sections, with the flash serving as the punctuation between above and below water environments. Smooth, continuous camera movement with dynamic lighting transition.",
+            "cleaned": "Camera starts with a medium shot of the icebergs tip above the waterline slowly pushing in The iceberg emits a rhythmic pulsating glow that intensifies in waves across its surface As the camera continues its forward dolly movement a bright flash of light blooms from the center of the frame creating a transition effect The camera then tilts down and pushes through the waterline revealing the massive submerged portion of the iceberg below The pulsating glow effect carries through both sections with the flash serving as the punctuation between above and below water environments Smooth continuous camera movement with dynamic lighting transition"
+          }
+        },
+        "position": "start",
+        "step": "seed-image",
+        "humanPrompt": "A retro Golden Age Comics style illustration of a technology iceberg, dramatic comic book aesthetic with bold Ben-Day dots and halftone patterns, vibrant primary colors with aged paper texture, floating iceberg in digital ocean, small glowing app icon labeled \"vibe code\" perched on top of iceberg tip, beneath the waterline massive amounts of cascading source code in monospace font flowing downward, matrix-style green code streams, binary digits, programming syntax, HTML tags, JavaScript functions, dark mysterious depths filled with layers of computer code, vintage 1940s comic book art style, thick black ink outlines, dynamic perspective, dramatic lighting with sharp shadows, retro superhero comic aesthetic, Roy Lichtenstein inspired, classic four-color printing look, epic heroic composition, high contrast, professional comic book illustration quality, 4K detailed artwork",
+        "cleanedPrompt": "A retro Golden Age Comics style illustration of a technology iceberg dramatic comic book aesthetic with bold BenDay dots and halftone patterns vibrant primary colors with aged paper texture floating iceberg in digital ocean small glowing app icon labeled vibe code perched on top of iceberg tip beneath the waterline massive amounts of cascading source code in monospace font flowing downward matrixstyle green code streams binary digits programming syntax HTML tags JavaScript functions dark mysterious depths filled with layers of computer code vintage 1940s comic book art style thick black ink outlines dynamic perspective dramatic lighting with sharp shadows retro superhero comic aesthetic Roy Lichtenstein inspired classic fourcolor printing look epic heroic composition high contrast professional comic book illustration quality 4K detailed artwork"
+      }
+    },
+    {
+      "id": "asset_image_1767517944264_iqwpkd",
+      "type": "image",
+      "filename": "image-end.png",
+      "url": "/assets/catalog/n8n/0001/image-end.png",
+      "provider": "n8n",
+      "model": "flux-edit",
+      "prompt": "Zoom in on the submerged portion of the iceberg, magnifying and bringing into sharp focus the underwater code section beneath the waterline while reducing or cropping out the visible tip above water.",
+      "status": "ready",
+      "createdAt": "2026-01-04T09:12:24.264Z",
+      "completedAt": "2026-01-04T09:12:24.264Z",
+      "estimatedCost": 0.04,
+      "generationTimeMs": 0,
+      "metadata": {
+        "workflowId": "0001",
+        "workflowType": "image-edit-and-animate",
+        "workflowName": "A retro Golden Age Comics style illustration of a ",
+        "runDate": "2026-01-04T09:12:22.995Z",
+        "prompts": {
+          "seedImage": {
+            "human": "A retro Golden Age Comics style illustration of a technology iceberg, dramatic comic book aesthetic with bold Ben-Day dots and halftone patterns, vibrant primary colors with aged paper texture, floating iceberg in digital ocean, small glowing app icon labeled \"vibe code\" perched on top of iceberg tip, beneath the waterline massive amounts of cascading source code in monospace font flowing downward, matrix-style green code streams, binary digits, programming syntax, HTML tags, JavaScript functions, dark mysterious depths filled with layers of computer code, vintage 1940s comic book art style, thick black ink outlines, dynamic perspective, dramatic lighting with sharp shadows, retro superhero comic aesthetic, Roy Lichtenstein inspired, classic four-color printing look, epic heroic composition, high contrast, professional comic book illustration quality, 4K detailed artwork",
+            "cleaned": "A retro Golden Age Comics style illustration of a technology iceberg dramatic comic book aesthetic with bold BenDay dots and halftone patterns vibrant primary colors with aged paper texture floating iceberg in digital ocean small glowing app icon labeled vibe code perched on top of iceberg tip beneath the waterline massive amounts of cascading source code in monospace font flowing downward matrixstyle green code streams binary digits programming syntax HTML tags JavaScript functions dark mysterious depths filled with layers of computer code vintage 1940s comic book art style thick black ink outlines dynamic perspective dramatic lighting with sharp shadows retro superhero comic aesthetic Roy Lichtenstein inspired classic fourcolor printing look epic heroic composition high contrast professional comic book illustration quality 4K detailed artwork"
+          },
+          "editInstruction": {
+            "human": "Zoom in on the submerged portion of the iceberg, magnifying and bringing into sharp focus the underwater code section beneath the waterline while reducing or cropping out the visible tip above water.",
+            "cleaned": "Zoom in on the submerged portion of the iceberg magnifying and bringing into sharp focus the underwater code section beneath the waterline while reducing or cropping out the visible tip above water"
+          },
+          "animation": {
+            "human": "Camera starts with a medium shot of the iceberg's tip above the waterline, slowly pushing in. The iceberg emits a rhythmic pulsating glow that intensifies in waves across its surface. As the camera continues its forward dolly movement, a bright flash of light blooms from the center of the frame, creating a transition effect. The camera then tilts down and pushes through the waterline, revealing the massive submerged portion of the iceberg below. The pulsating glow effect carries through both sections, with the flash serving as the punctuation between above and below water environments. Smooth, continuous camera movement with dynamic lighting transition.",
+            "cleaned": "Camera starts with a medium shot of the icebergs tip above the waterline slowly pushing in The iceberg emits a rhythmic pulsating glow that intensifies in waves across its surface As the camera continues its forward dolly movement a bright flash of light blooms from the center of the frame creating a transition effect The camera then tilts down and pushes through the waterline revealing the massive submerged portion of the iceberg below The pulsating glow effect carries through both sections with the flash serving as the punctuation between above and below water environments Smooth continuous camera movement with dynamic lighting transition"
+          }
+        },
+        "position": "end",
+        "step": "edit-image",
+        "humanPrompt": "Zoom in on the submerged portion of the iceberg, magnifying and bringing into sharp focus the underwater code section beneath the waterline while reducing or cropping out the visible tip above water.",
+        "cleanedPrompt": "Zoom in on the submerged portion of the iceberg magnifying and bringing into sharp focus the underwater code section beneath the waterline while reducing or cropping out the visible tip above water",
+        "sourceImageUrl": "https://tempfile.aiquickdraw.com/image-format-converter/1767517718676-6x6yuf7h59.png"
+      }
+    },
+    {
+      "id": "asset_video_1767517945308_j3v304",
+      "type": "video",
+      "filename": "video.mp4",
+      "url": "/assets/catalog/n8n/0001/video.mp4",
+      "provider": "n8n",
+      "model": "veo-3",
+      "prompt": "Camera starts with a medium shot of the iceberg's tip above the waterline, slowly pushing in. The iceberg emits a rhythmic pulsating glow that intensifies in waves across its surface. As the camera continues its forward dolly movement, a bright flash of light blooms from the center of the frame, creating a transition effect. The camera then tilts down and pushes through the waterline, revealing the massive submerged portion of the iceberg below. The pulsating glow effect carries through both sections, with the flash serving as the punctuation between above and below water environments. Smooth, continuous camera movement with dynamic lighting transition.",
+      "status": "ready",
+      "createdAt": "2026-01-04T09:12:25.308Z",
+      "completedAt": "2026-01-04T09:12:25.308Z",
+      "estimatedCost": 0.15,
+      "generationTimeMs": 0,
+      "metadata": {
+        "workflowId": "0001",
+        "workflowType": "image-edit-and-animate",
+        "workflowName": "A retro Golden Age Comics style illustration of a ",
+        "runDate": "2026-01-04T09:12:22.995Z",
+        "prompts": {
+          "seedImage": {
+            "human": "A retro Golden Age Comics style illustration of a technology iceberg, dramatic comic book aesthetic with bold Ben-Day dots and halftone patterns, vibrant primary colors with aged paper texture, floating iceberg in digital ocean, small glowing app icon labeled \"vibe code\" perched on top of iceberg tip, beneath the waterline massive amounts of cascading source code in monospace font flowing downward, matrix-style green code streams, binary digits, programming syntax, HTML tags, JavaScript functions, dark mysterious depths filled with layers of computer code, vintage 1940s comic book art style, thick black ink outlines, dynamic perspective, dramatic lighting with sharp shadows, retro superhero comic aesthetic, Roy Lichtenstein inspired, classic four-color printing look, epic heroic composition, high contrast, professional comic book illustration quality, 4K detailed artwork",
+            "cleaned": "A retro Golden Age Comics style illustration of a technology iceberg dramatic comic book aesthetic with bold BenDay dots and halftone patterns vibrant primary colors with aged paper texture floating iceberg in digital ocean small glowing app icon labeled vibe code perched on top of iceberg tip beneath the waterline massive amounts of cascading source code in monospace font flowing downward matrixstyle green code streams binary digits programming syntax HTML tags JavaScript functions dark mysterious depths filled with layers of computer code vintage 1940s comic book art style thick black ink outlines dynamic perspective dramatic lighting with sharp shadows retro superhero comic aesthetic Roy Lichtenstein inspired classic fourcolor printing look epic heroic composition high contrast professional comic book illustration quality 4K detailed artwork"
+          },
+          "editInstruction": {
+            "human": "Zoom in on the submerged portion of the iceberg, magnifying and bringing into sharp focus the underwater code section beneath the waterline while reducing or cropping out the visible tip above water.",
+            "cleaned": "Zoom in on the submerged portion of the iceberg magnifying and bringing into sharp focus the underwater code section beneath the waterline while reducing or cropping out the visible tip above water"
+          },
+          "animation": {
+            "human": "Camera starts with a medium shot of the iceberg's tip above the waterline, slowly pushing in. The iceberg emits a rhythmic pulsating glow that intensifies in waves across its surface. As the camera continues its forward dolly movement, a bright flash of light blooms from the center of the frame, creating a transition effect. The camera then tilts down and pushes through the waterline, revealing the massive submerged portion of the iceberg below. The pulsating glow effect carries through both sections, with the flash serving as the punctuation between above and below water environments. Smooth, continuous camera movement with dynamic lighting transition.",
+            "cleaned": "Camera starts with a medium shot of the icebergs tip above the waterline slowly pushing in The iceberg emits a rhythmic pulsating glow that intensifies in waves across its surface As the camera continues its forward dolly movement a bright flash of light blooms from the center of the frame creating a transition effect The camera then tilts down and pushes through the waterline revealing the massive submerged portion of the iceberg below The pulsating glow effect carries through both sections with the flash serving as the punctuation between above and below water environments Smooth continuous camera movement with dynamic lighting transition"
+          }
+        },
+        "position": "video",
+        "step": "animate",
+        "duration": 5,
+        "humanPrompt": "Camera starts with a medium shot of the iceberg's tip above the waterline, slowly pushing in. The iceberg emits a rhythmic pulsating glow that intensifies in waves across its surface. As the camera continues its forward dolly movement, a bright flash of light blooms from the center of the frame, creating a transition effect. The camera then tilts down and pushes through the waterline, revealing the massive submerged portion of the iceberg below. The pulsating glow effect carries through both sections, with the flash serving as the punctuation between above and below water environments. Smooth, continuous camera movement with dynamic lighting transition.",
+        "cleanedPrompt": "Camera starts with a medium shot of the icebergs tip above the waterline slowly pushing in The iceberg emits a rhythmic pulsating glow that intensifies in waves across its surface As the camera continues its forward dolly movement a bright flash of light blooms from the center of the frame creating a transition effect The camera then tilts down and pushes through the waterline revealing the massive submerged portion of the iceberg below The pulsating glow effect carries through both sections with the flash serving as the punctuation between above and below water environments Smooth continuous camera movement with dynamic lighting transition",
+        "sourceImages": [
+          "https://tempfile.aiquickdraw.com/image-format-converter/1767517718676-6x6yuf7h59.png",
+          "https://tempfile.aiquickdraw.com/image-format-converter/1767517787055-txkxg5icn8.png"
+        ]
+      }
+    },
+    {
+      "id": "asset_video_1767098871389_l7u4j4",
+      "type": "video",
+      "filename": "001-002.mp4",
+      "url": "/assets/video-scenes/001-002.mp4",
+      "provider": "fal",
+      "model": "wan-flf2v",
+      "prompt": "Transition video from shot-001 to shot-002",
+      "status": "ready",
+      "createdAt": "2025-12-30T12:47:51.389Z",
+      "completedAt": "2025-12-30T12:48:35.756Z",
+      "estimatedCost": 0.15,
+      "generationTimeMs": 44367,
+      "metadata": {
+        "startShot": "shot-001",
+        "endShot": "shot-002",
+        "duration": 10,
+        "migratedFrom": "video-scenes"
+      }
+    },
+    {
+      "id": "asset_video_1767099034044_cp09s3",
+      "type": "video",
+      "filename": "003-002.mp4",
+      "url": "/assets/video-scenes/003-002.mp4",
+      "provider": "fal",
+      "model": "kling-o1",
+      "prompt": "Transition video from shot-003 to shot-002",
+      "status": "ready",
+      "createdAt": "2025-12-30T12:50:34.044Z",
+      "completedAt": "2025-12-30T12:52:00.270Z",
+      "estimatedCost": 0.56,
+      "generationTimeMs": 86226,
+      "metadata": {
+        "startShot": "shot-003",
+        "endShot": "shot-002",
+        "duration": 5,
+        "migratedFrom": "video-scenes"
+      }
+    },
+    {
+      "id": "asset_video_1767363229958_bcr897",
+      "type": "video",
+      "filename": "005-004.mp4",
+      "url": "/assets/video-scenes/005-004.mp4",
+      "provider": "fal",
+      "model": "wan-flf2v",
+      "prompt": "Transition video from shot-005 to shot-004",
+      "status": "ready",
+      "createdAt": "2026-01-02T14:13:49.958Z",
+      "completedAt": "2026-01-02T14:14:35.150Z",
+      "estimatedCost": 0.15,
+      "generationTimeMs": 45192,
+      "metadata": {
+        "startShot": "shot-005",
+        "endShot": "shot-004",
+        "duration": 5,
+        "migratedFrom": "video-scenes"
+      }
+    },
+    {
+      "id": "asset_video_1767515964405_01z7zg",
+      "type": "video",
+      "filename": "009-009-01z7zg.mp4",
+      "url": "/assets/video-scenes/009-009-01z7zg.mp4",
+      "provider": "fal",
+      "model": "wan-flf2v",
+      "prompt": "Transition video from shot-009 to shot-009",
+      "status": "ready",
+      "createdAt": "2026-01-04T08:39:24.405Z",
+      "completedAt": "2026-01-04T08:40:05.856Z",
+      "estimatedCost": 0.15,
+      "generationTimeMs": 41451,
+      "metadata": {
+        "startShot": "shot-009",
+        "endShot": "shot-009",
+        "duration": 5,
+        "migratedFrom": "video-scenes"
+      }
+    },
+    {
+      "id": "asset_video_1767516146727_mhbvcs",
+      "type": "video",
+      "filename": "008-009-mhbvcs.mp4",
+      "url": "/assets/video-scenes/008-009-mhbvcs.mp4",
+      "provider": "fal",
+      "model": "kling-o1",
+      "prompt": "Smooth cinematic transition with natural motion and in the middle of it a little bit of a glowing boom as they transition from one image to the other.",
+      "status": "ready",
+      "createdAt": "2026-01-04T08:42:26.727Z",
+      "completedAt": "2026-01-04T08:43:41.573Z",
+      "estimatedCost": 0.56,
+      "generationTimeMs": 74846,
+      "metadata": {
+        "startShot": "shot-008",
+        "endShot": "shot-009",
+        "duration": 5,
+        "migratedFrom": "video-scenes"
+      }
+    }
+  ]
 }

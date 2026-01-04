@@ -16,6 +16,10 @@ export default defineConfig({
         target: 'http://localhost:5401',
         ws: true,
       },
+      '/assets': {
+        target: 'http://localhost:5401',
+        changeOrigin: true,
+      },
     },
   },
 });

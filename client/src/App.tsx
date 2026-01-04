@@ -11,11 +11,13 @@ import { Day7MusicGen } from './components/tools/Day7MusicGen';
 import { Day8Thumbnail } from './components/tools/Day8Thumbnail';
 import { Day9PromptIntake } from './components/tools/Day9PromptIntake';
 import Day10N8N from './components/tools/Day10N8N';
+import { AssetBrowser } from './components/tools/AssetBrowser';
 
 function AppContent() {
   const { connected: socketConnected } = useSocket();
   const [currentDay, setCurrentDay] = useState(2); // Start on Day 2 for chat demo
   const [showSettings, setShowSettings] = useState(false);
+  const [viewingLibrary, setViewingLibrary] = useState(false);
   const { showDayIcons } = useSettings();
 
   const day = DAYS[currentDay - 1];
@@ -28,9 +30,12 @@ function AppContent() {
           {DAYS.map((d) => (
             <button
               key={d.day}
-              onClick={() => setCurrentDay(d.day)}
+              onClick={() => {
+                setCurrentDay(d.day);
+                setViewingLibrary(false);
+              }}
               className={`w-full flex items-center gap-2 px-3 py-2 text-left transition-colors ${
-                currentDay === d.day
+                currentDay === d.day && !viewingLibrary
                   ? 'bg-slate-700 text-white'
                   : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
               }`}
@@ -45,6 +50,21 @@ function AppContent() {
             </button>
           ))}
         </nav>
+
+        {/* Library Navigation */}
+        <div className="border-t border-slate-700">
+          <button
+            onClick={() => setViewingLibrary(true)}
+            className={`w-full flex items-center gap-2 px-3 py-2 text-left transition-colors ${
+              viewingLibrary
+                ? 'bg-slate-700 text-white'
+                : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
+            }`}
+          >
+            <span className="text-lg shrink-0">📚</span>
+            <span className="flex-1 truncate text-sm">Asset Library</span>
+          </button>
+        </div>
       </aside>
 
       {/* Main area */}
@@ -54,7 +74,9 @@ function AppContent() {
           <div className="flex items-center">
             <span className="font-bold text-blue-400">FliGen</span>
             <span className="mx-2 text-slate-500">›</span>
-            <span className="text-slate-400">Day {day.day} - {day.name}</span>
+            <span className="text-slate-400">
+              {viewingLibrary ? 'Asset Library' : `Day ${day.day} - ${day.name}`}
+            </span>
           </div>
           <button
             onClick={() => setShowSettings(true)}
@@ -70,7 +92,9 @@ function AppContent() {
 
         {/* Content */}
         <main className="flex-1 overflow-hidden bg-slate-900">
-          {currentDay === 2 ? (
+          {viewingLibrary ? (
+            <AssetBrowser />
+          ) : currentDay === 2 ? (
             <Day2AgentSDK />
           ) : currentDay === 4 ? (
             <Day4ImageGen />

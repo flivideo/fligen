@@ -9,13 +9,13 @@ import { handleAgentQuery, clearSession, cancelQuery } from './agent/index.js';
 import { isKybernesisConfigured } from './tools/kybernesis/index.js';
 import { checkHealth as checkImageHealth, generateTestImages, compareImages, isFalConfigured, isKieConfigured, saveImageToCatalog } from './tools/image/index.js';
 import type { CompareRequest } from './tools/image/index.js';
-import { isConfigured as isElevenLabsConfigured, getVoices, generateSpeech } from './tools/elevenlabs/index.js';
+import { isConfigured as isElevenLabsConfigured, getVoices, generateSpeech, saveAudioToCatalog } from './tools/elevenlabs/index.js';
 import type { GenerateSpeechRequest } from './tools/elevenlabs/index.js';
 import { listShots, addShot, removeShot, clearAllShots } from './tools/shots/index.js';
 import type { AddShotRequest } from './tools/shots/index.js';
-import { checkVideoHealth, generateTransitionVideo, getVideoStatus, listVideoTasks, isKieConfigured as isKieVideoConfigured, isFalConfigured as isFalVideoConfigured } from './tools/video/index.js';
+import { checkVideoHealth, generateTransitionVideo, getVideoStatus, listVideoTasks, isKieConfigured as isKieVideoConfigured, isFalConfigured as isFalVideoConfigured, saveVideoToCatalog } from './tools/video/index.js';
 import type { VideoModel } from './tools/video/index.js';
-import { checkMusicHealth, generateMusic, listLibraryTracks, saveTrackToLibrary, deleteLibraryTrack, isFalConfigured as isFalMusicConfigured, isKieConfigured as isKieMusicConfigured } from './tools/music/index.js';
+import { checkMusicHealth, generateMusic, listLibraryTracks, saveTrackToLibrary, deleteLibraryTrack, saveMusicToCatalog, isFalConfigured as isFalMusicConfigured, isKieConfigured as isKieMusicConfigured } from './tools/music/index.js';
 import type { MusicGenerationRequest, GeneratedTrack } from './tools/music/index.js';
 import { checkFliHubHealth, fetchTranscripts, isFliHubConfigured } from './tools/flihub/index.js';
 import { saveProject, loadProject, listProjects, projectExists } from './tools/projects/index.js';
@@ -143,7 +143,7 @@ app.get('/api/tts/voices', (_req, res) => {
   }
 });
 
-// TTS generate endpoint - convert text to speech
+// TTS generate endpoint - convert text to speech and save to catalog
 app.post('/api/tts/generate', async (req, res) => {
   try {
     const { text, voiceId } = req.body as GenerateSpeechRequest;
@@ -160,7 +160,33 @@ app.post('/api/tts/generate', async (req, res) => {
 
     console.log(`[API] /api/tts/generate - voiceId: "${voiceId}", text length: ${text.length}`);
     const result = await generateSpeech(text, voiceId);
-    res.json(result);
+
+    if (!result.success || !result.audioBase64) {
+      res.json(result);
+      return;
+    }
+
+    // Save audio to catalog as narration
+    const asset = await saveAudioToCatalog(
+      result.audioBase64,
+      text,
+      voiceId,
+      result.voiceName || 'Unknown',
+      result.model || 'eleven_multilingual_v2',
+      result.characterCount || text.length,
+      result.durationMs || 0
+    );
+
+    // Return asset info instead of base64
+    res.json({
+      success: true,
+      audioUrl: asset.url,
+      assetId: asset.id,
+      durationMs: result.durationMs,
+      voiceName: result.voiceName,
+      model: result.model,
+      characterCount: result.characterCount,
+    });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     console.error(`[API] /api/tts/generate - error: ${message}`);
@@ -268,11 +294,12 @@ app.get('/api/video/health', async (_req, res) => {
 // Generate transition video
 app.post('/api/video/generate', async (req, res) => {
   try {
-    const { startShotId, endShotId, model, duration } = req.body as {
+    const { startShotId, endShotId, model, duration, prompt } = req.body as {
       startShotId: string;
       endShotId: string;
       model: VideoModel;
       duration: number;
+      prompt?: string;
     };
 
     if (!startShotId || !endShotId) {
@@ -285,13 +312,14 @@ app.post('/api/video/generate', async (req, res) => {
       return;
     }
 
-    console.log(`[API] /api/video/generate - ${startShotId} -> ${endShotId}, model: ${model}, duration: ${duration}s`);
+    console.log(`[API] /api/video/generate - ${startShotId} -> ${endShotId}, model: ${model}, duration: ${duration}s${prompt ? `, prompt: "${prompt}"` : ''}`);
 
     const task = await generateTransitionVideo(
       startShotId,
       endShotId,
       model,
       duration || 5,
+      prompt,
       io
     );
 
@@ -374,6 +402,14 @@ app.post('/api/music/generate', async (req, res) => {
 
     console.log(`[API] /api/music/generate - provider: ${request.provider}, prompt: "${request.prompt.substring(0, 50)}..."`);
     const track = await generateMusic(request);
+
+    // Auto-save to catalog (FR-17 requirement)
+    if (track.audioBase64 || track.audioUrl) {
+      console.log(`[API] /api/music/generate - auto-saving to catalog: "${track.name}"`);
+      const audioData = track.audioBase64 || track.audioUrl;
+      await saveMusicToCatalog(track, audioData);
+    }
+
     res.json({ success: true, track });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
@@ -382,11 +418,38 @@ app.post('/api/music/generate', async (req, res) => {
   }
 });
 
-// List saved tracks in library
+// List saved tracks in library (from catalog + old storage for backward compatibility)
 app.get('/api/music/library', async (_req, res) => {
   try {
-    const tracks = await listLibraryTracks();
-    res.json({ tracks });
+    // Get music assets from NEW catalog
+    const catalogAssets = await catalog.filterAssets({ type: 'music' });
+
+    // Convert catalog assets to SavedTrack format
+    const catalogTracks = catalogAssets.map(asset => ({
+      id: asset.id,
+      name: asset.metadata?.name || 'Untitled Track',
+      audioUrl: asset.url,
+      provider: asset.provider as 'fal' | 'kie',
+      model: asset.model,
+      prompt: asset.prompt || '',
+      lyrics: asset.metadata?.lyrics,
+      style: asset.metadata?.style,
+      duration: asset.metadata?.duration || 0,
+      generatedAt: asset.createdAt,
+      status: asset.status === 'ready' ? 'saved' : asset.status,
+      estimatedCost: asset.estimatedCost || 0,
+      generationTimeMs: asset.generationTimeMs || 0,
+      savedAt: asset.completedAt || asset.createdAt,
+      filename: asset.filename,
+    }));
+
+    // Get music from OLD storage (for backward compatibility)
+    const oldTracks = await listLibraryTracks();
+
+    // Combine both sources (catalog first, then old storage)
+    const allTracks = [...catalogTracks, ...oldTracks];
+
+    res.json({ tracks: allTracks });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     console.error(`[API] /api/music/library - error: ${message}`);
@@ -404,8 +467,28 @@ app.post('/api/music/save', async (req, res) => {
       return;
     }
 
-    console.log(`[API] /api/music/save - saving track: "${track.name}"`);
-    const savedTrack = await saveTrackToLibrary(track);
+    console.log(`[API] /api/music/save - saving track to catalog: "${track.name}"`);
+    const asset = await saveMusicToCatalog(track, track.audioBase64);
+
+    // Convert Asset to SavedTrack format for client compatibility
+    const savedTrack = {
+      id: asset.id,
+      name: asset.metadata?.name || track.name,
+      audioUrl: asset.url,
+      provider: asset.provider as 'fal' | 'kie',
+      model: asset.model,
+      prompt: asset.prompt || '',
+      lyrics: asset.metadata?.lyrics,
+      style: asset.metadata?.style,
+      duration: asset.metadata?.duration || track.duration,
+      generatedAt: asset.createdAt,
+      status: 'saved' as const,
+      estimatedCost: asset.estimatedCost || 0,
+      generationTimeMs: asset.generationTimeMs || 0,
+      savedAt: asset.completedAt || asset.createdAt,
+      filename: asset.filename,
+    };
+
     res.json(savedTrack);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
@@ -414,12 +497,12 @@ app.post('/api/music/save', async (req, res) => {
   }
 });
 
-// Delete track from library
+// Delete track from library (catalog)
 app.delete('/api/music/library/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(`[API] /api/music/library/${id} - deleting track`);
-    const success = await deleteLibraryTrack(id);
+    console.log(`[API] /api/music/library/${id} - deleting track from catalog`);
+    const success = await catalog.deleteAsset(id);
 
     if (success) {
       res.json({ success: true });
@@ -429,6 +512,38 @@ app.delete('/api/music/library/:id', async (req, res) => {
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     console.error(`[API] /api/music/library/${req.params.id} - error: ${message}`);
+    res.status(500).json({ error: message });
+  }
+});
+
+// Rename track in catalog
+app.patch('/api/catalog/assets/:id/rename', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name } = req.body as { name: string };
+
+    if (!name || typeof name !== 'string') {
+      res.status(400).json({ error: 'Missing or invalid name' });
+      return;
+    }
+
+    console.log(`[API] /api/catalog/assets/${id}/rename - renaming to "${name}"`);
+
+    const asset = await catalog.updateAsset(id, {
+      metadata: {
+        ...(await catalog.getAsset(id))?.metadata,
+        name,
+      },
+    });
+
+    if (asset) {
+      res.json({ success: true, asset });
+    } else {
+      res.status(404).json({ error: 'Asset not found' });
+    }
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error(`[API] /api/catalog/assets/${req.params.id}/rename - error: ${message}`);
     res.status(500).json({ error: message });
   }
 });
@@ -636,9 +751,141 @@ app.post('/api/n8n/workflow', async (req, res) => {
       }
     }
 
+    // Save generated assets to catalog in sequential workflow folder
+    let savedAssets: any[] = [];
+    if (data && (data.image1 || data.image2 || data.video)) {
+      try {
+        // Get next workflow number (0001, 0002, etc.)
+        const workflowId = await catalog.getNextWorkflowNumber();
+        const assetsDir = path.resolve(process.cwd(), '..', 'assets');
+        const workflowFolder = path.join(assetsDir, 'catalog', 'n8n', workflowId);
+        const fs = await import('fs/promises');
+        await fs.mkdir(workflowFolder, { recursive: true });
+
+        console.log(`[API] Saving N8N workflow ${workflowId} assets...`);
+
+        const workflowMetadata = {
+          workflowId,
+          workflowType: 'image-edit-and-animate',
+          workflowName: seedImage.substring(0, 50),
+          runDate: new Date().toISOString(),
+          prompts: {
+            seedImage: { human: seedImage, cleaned: cleanedSeedImage },
+            editInstruction: { human: editInstruction, cleaned: cleanedEditInstruction },
+            animation: { human: animation, cleaned: cleanedAnimation },
+          },
+        };
+
+        const savePromises: Promise<Asset>[] = [];
+
+        // Save Image 1 (start frame) to workflow folder
+        if (data.image1) {
+          const imageBuffer = await fetch(data.image1).then(r => r.arrayBuffer());
+          const filename = 'image-start.png';
+          const filePath = path.join(workflowFolder, filename);
+          await fs.writeFile(filePath, Buffer.from(imageBuffer));
+
+          const asset: Asset = {
+            id: catalog.generateAssetId('image'),
+            type: 'image',
+            filename,
+            url: `/assets/catalog/n8n/${workflowId}/${filename}`,
+            provider: 'n8n',
+            model: 'flux-pro',
+            prompt: seedImage,
+            status: 'ready',
+            createdAt: new Date().toISOString(),
+            completedAt: new Date().toISOString(),
+            estimatedCost: 0.04,
+            generationTimeMs: 0,
+            metadata: {
+              ...workflowMetadata,
+              position: 'start',
+              step: 'seed-image',
+              humanPrompt: seedImage,
+              cleanedPrompt: cleanedSeedImage,
+            },
+          };
+          savePromises.push(catalog.addAsset(asset).then(() => asset));
+        }
+
+        // Save Image 2 (end frame) to workflow folder
+        if (data.image2) {
+          const imageBuffer = await fetch(data.image2).then(r => r.arrayBuffer());
+          const filename = 'image-end.png';
+          const filePath = path.join(workflowFolder, filename);
+          await fs.writeFile(filePath, Buffer.from(imageBuffer));
+
+          const asset: Asset = {
+            id: catalog.generateAssetId('image'),
+            type: 'image',
+            filename,
+            url: `/assets/catalog/n8n/${workflowId}/${filename}`,
+            provider: 'n8n',
+            model: 'flux-edit',
+            prompt: editInstruction,
+            status: 'ready',
+            createdAt: new Date().toISOString(),
+            completedAt: new Date().toISOString(),
+            estimatedCost: 0.04,
+            generationTimeMs: 0,
+            metadata: {
+              ...workflowMetadata,
+              position: 'end',
+              step: 'edit-image',
+              humanPrompt: editInstruction,
+              cleanedPrompt: cleanedEditInstruction,
+              sourceImageUrl: data.image1,
+            },
+          };
+          savePromises.push(catalog.addAsset(asset).then(() => asset));
+        }
+
+        // Save Video to workflow folder
+        if (data.video) {
+          const videoBuffer = await fetch(data.video).then(r => r.arrayBuffer());
+          const filename = 'video.mp4';
+          const filePath = path.join(workflowFolder, filename);
+          await fs.writeFile(filePath, Buffer.from(videoBuffer));
+
+          const asset: Asset = {
+            id: catalog.generateAssetId('video'),
+            type: 'video',
+            filename,
+            url: `/assets/catalog/n8n/${workflowId}/${filename}`,
+            provider: 'n8n',
+            model: 'veo-3',
+            prompt: animation,
+            status: 'ready',
+            createdAt: new Date().toISOString(),
+            completedAt: new Date().toISOString(),
+            estimatedCost: 0.15,
+            generationTimeMs: 0,
+            metadata: {
+              ...workflowMetadata,
+              position: 'video',
+              step: 'animate',
+              duration: 5,
+              humanPrompt: animation,
+              cleanedPrompt: cleanedAnimation,
+              sourceImages: [data.image1, data.image2].filter(Boolean),
+            },
+          };
+          savePromises.push(catalog.addAsset(asset).then(() => asset));
+        }
+
+        savedAssets = await Promise.all(savePromises);
+        console.log('[N8N] Saved', savedAssets.length, 'assets to catalog:', savedAssets.map(a => a.id));
+      } catch (saveError) {
+        console.error('[N8N] Failed to save assets to catalog:', saveError);
+        // Don't fail the request - just log the error
+      }
+    }
+
     res.json({
       success: true,
       data,
+      savedAssets: savedAssets.map(a => ({ id: a.id, url: a.url, type: a.type })),
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
@@ -836,6 +1083,30 @@ app.delete('/api/catalog/:id', async (req, res) => {
   } catch (error) {
     console.error('[Catalog] Failed to delete asset:', error);
     res.status(500).json({ error: 'Failed to delete asset' });
+  }
+});
+
+// PUT /api/catalog/:id/tags - Update asset tags (FR-18)
+app.put('/api/catalog/:id/tags', async (req, res) => {
+  try {
+    const { tags } = req.body;
+
+    if (!Array.isArray(tags)) {
+      res.status(400).json({ error: 'tags must be an array' });
+      return;
+    }
+
+    const asset = await catalog.updateAsset(req.params.id, { tags });
+
+    if (!asset) {
+      res.status(404).json({ error: 'Asset not found' });
+      return;
+    }
+
+    res.json({ asset });
+  } catch (error) {
+    console.error('[Catalog] Failed to update tags:', error);
+    res.status(500).json({ error: 'Failed to update tags' });
   }
 });
 
