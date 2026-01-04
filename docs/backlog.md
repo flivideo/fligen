@@ -15,6 +15,15 @@ Requirements index for FliGen.
 | 7 | [FR-7: Image API Connectivity](prd/fr-07-api-connectivity.md) | 2025-12-28 | Complete |
 | 8 | [FR-08: Image Generation Comparison](prd/fr-08-image-comparison.md) | 2025-12-28 | Complete |
 | 9 | [FR-09: 11 Labs Text-to-Speech](prd/fr-09-elevenlabs-tts.md) | 2025-12-29 | Complete |
+| 10 | [FR-10: Shot List and Video Generation](prd/fr-10-shot-list-and-video.md) | 2025-12-30 | Complete |
+| 11 | [FR-11: Music Generation](prd/fr-11-music-generation.md) | 2025-12-31 | Complete |
+| 12 | [FR-12: Thumbnail Generator](prd/fr-12-thumbnail-generator.md) | 2026-01-01 | Complete |
+| 13 | [FR-13: Prompt Intake and FliHub Interop](prd/fr-13-prompt-intake-interop.md) | 2026-01-02 | Complete |
+| 14 | [FR-14: Day 10 N8N Workflow Integration](prd/fr-14-day-10-n8n-workflow.md) | 2026-01-03 | Complete |
+| 15 | [FR-15: Prompt Refinement UI](prd/fr-15-prompt-refinement-ui.md) | 2026-01-03 | Complete |
+| 16 | [FR-16: Unified Asset Catalog Infrastructure](prd/fr-16-unified-asset-catalog.md) | 2026-01-04 | Pending |
+| 17 | [FR-17: Asset Persistence Implementation](prd/fr-17-asset-persistence-implementation.md) | 2026-01-04 | Pending |
+| 18 | [FR-18: Asset Browser UI](prd/fr-18-asset-browser-ui.md) | 2026-01-04 | Pending |
 
 ## Non-Functional Requirements
 
@@ -32,4 +41,4 @@ Requirements index for FliGen.
 
 ---
 
-**Last updated:** 2025-12-29
+**Last updated:** 2026-01-03
