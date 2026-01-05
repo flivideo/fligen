@@ -1,0 +1,281 @@
+The 12 days of Clawedness is the idea of can we build 12 applications or tools in 12 days
+using nothing but Clawed code.
+In this video we are up to day number 2 which is we're working on the brain.
+Now in day number 1 we worked on the foundation called FlyGenHarness and what FlyGen is is
+an application harness in which we can call different generative AI tools for images or
+videos or audio files.
+But today as we move into the brain what we're looking to do is build our primary orchestrator
+or main agent and we'll do that using Clawed Agent SDK.
+Anyway, I'm happy Dave, let's get into it.
+
+So let's head over to the FlyGen application that we were working on
+yesterday and the idea was to get this harness up and running. It's a socket IO
+system meaning that we have a server that's talking live to the client and
+changes that we can do on the file system can be reflected live in the
+client and so day one was really just setting up this little application. Now
+I'm in the middle of making a minor change right now so at the moment we've
+got settings coming through here from our configuration file and what we
+should be able to do is just type in some information into a setting and hit
+save and the next thing I want to do is just deal with these little icons. I don't
+really like them but rather than removing them from the code I'm thinking
+it might be useful to remove them from the configuration and so while I've been
+talking I've just been letting a bit of code fly around over here to see whether
+it's going to work so we'll come back.
+
+Now, after a little bit of pain, and you can tell that because I'm down to 10% context,
+it figured out that there was just a configuration in the tailwind, and I had told it a couple
+of times to go looking for that, but finally got there.
+And so we've got some changes to the system.
+Notice now that we've got a nicer looking dialog box.
+If we click this little button, those icons up on the left will disappear, which is what
+I wanted.
+And then we can save it as saving it into the configuration.
+And so now we can move on to the brain, which is what we would like to alter today.
+And what I'm thinking is that I probably want to get rid of a lot of the icons or what I'm
+thinking is I want to get rid of those panels here and have some sort of text dialog box
+that if we typed into it would work with my Claude Agent SDK, which we're going to have
+to figure out how to install into the service system and use my Mac's account to just return
+some sort of a result.
+
+So we'll get started by heading over to Claude code and we'll run it with the
+dangerously skipped permissions and then we'll just use the voice agent and we'll
+put in a prompt. I'd like to work with the Claude agent SDK. I believe I've got
+planning documents for it. I also think those planning documents point to one of
+the applications or videos that I've done in the past. Can you go and identify
+the information and give me a little bit of a rundown or a report on what
+we've got? So we'll just let that come through and we'll press enter. So you can
+see that what it's doing is using the read tool and the search tool just to
+look through the file system. It's looking for some files. It's identified
+the 07 BMAD Claude SDK and what that's doing is bringing up access to this
+video. So here we are at story 2.1 of installing the agent SDK and this is at
+the hour and 16 minute. In a video I did on using BMAD to build this
+application and we can go down and we can see that there's a chapter bookmark
+that you can get to to go and watch that video and that would give you in-depth
+if you're interested but otherwise what we're looking at is it's come up with
+some sort of a report for us. So we've got a planning document going on here.
+We've also got access to where I recorded that video and where I put the
+code base. If you're wondering how it found that, it didn't just search the file
+system. Sometimes it'll use some skills that I've got on the computer which are
+designed to either use my digital access management tool or to use my jump system
+and jump system is where I'm recording videos and the jump system is how I get
+to different folders on my computer. It's also found other curated documentation
+I've got in my own second brain here for the agent SDK plus the original Claude
+agent SDK in TypeScript is down on my computer in the JavaScript third
+directory for third-party JavaScript products. So I think what we'll do is I'm
+just going to go into the product donor
+
+And at the moment I've just hit escape on that because it went into a subagent and I've got a little bit of a problem with my
+Plugins and they're the way they're installed in Claude code. So I think what we'll do
+Is just write in a little prompt and we'll say can you create a new requirements document that will get us started?
+With the Claude agent SDK running on the server side of our application
+It should also have some sort of mechanism to authenticate using the Claude agent SDK or in this case
+Claude code and then when you've done that we need to write up a requirements document for this
+We're not doing the development. We're just writing up the requirements document
+So I'll let that go through and I'll say use PO. Hopefully that'll work
+While it's doing that I'll just point out that I've been having issues with the plug-in system with
+Anthropic at the moment and currently I'm using version 76 and it's been stuck there for two or three days
+Which makes sense because it's actually Christmas at the moment. So I don't think they're doing any coding only
+So I don't think they're doing any coding at the moment on it
+So we can see the background agent kicked in so product owner create a requirements
+Document PRD for integrating Claude agent SDK is reading a bunch of files that's creating a bunch of stuff as it goes
+It's going to make sure it updates the backlog to pending and it's also knows that it's only writing the requirements
+So it's now finished. We've got the document which will be a product requirement document for this feature
+Backlog is updated and we've got the areas that it's going to work on. What we'll do is we'll start a new Claude agent and
+Once that's in place, we'll go into the developer
+developer is kicking off right now as
+he gets started he loads the context in so he's got the backlog and
+Automatically worked out that it can start with
+Fr3 it says start on fr3
+We'll just press the tab and press enter to kick that off
+And this idea of using two Claude windows at the same time is just so that I don't poison any of the context
+So the context on the left is only being kept for writing
+Requirements updating the changelog or the backlog and the conversation on the right is only for development
+And once I've done a little bit of development, I'll probably close it down and start up a clean
+Conversation each time as well the one of the things that we can look at when we're doing this is if we go into Claude
+code again and
+Start it. There's a little option you can run called the
+Called context and what that will tell you is just how much context you're using in the window at the moment
+And it's this little graph near the top that you want to be going and looking at and what that's showing us
+Is that our free space is a hundred and thirty thousand. I guess that's tokens
+Is a hundred and thirty thousand tokens or 65% of the context when it first starts and it's something that you want to keep in
+And it's something that you want to keep an eye on from time to time such as how big are the system tools each time?
+You start a new window
+So it looks like we've been
+stored the SDK
+So it looks like we've installed the SDK. We've got some shared types set up for the socket IO events
+So that's the communication between the server and the client. It's working with the
+Where you can see it's just finished creating the agent code over on the server
+So now we're wiring up the socket IO to communicate with the front end
+now it's kicking in and doing some sort of testing on the server and
+What we can do is go down to this background tasks and see what it's running
+It's doing an NPM run dev at the moment and it feels like it's finished everything
+I don't know that it works. We've probably got a little bit of debug ahead of us
+
+So, I wasn't recording when I did this bit, but let's just have a look at what I did.
+I asked a question of Claude off login, how do we do it?
+One of the things that came up with originally was to use the Anthropic key.
+That's not the way we want to do it because we don't want to use API credits.
+What we want to do is use our max plan.
+Now, there's also this note here from the documentation about using your Claude off
+login.
+So, what we're trying to do, my ability to use my Claude max account, is really only
+something I can use locally.
+It's not designed for hosting an application and allowing other people to use their Claude
+max accounts, but when you're building your own little application like we're doing here,
+we can do it.
+But we don't need to run this command right now because we've already done it, otherwise
+we wouldn't be in Claude code.
+And what that does is it installs here in this Claude directory, your authentication
+credentials.
+And that left me a little bit confused on how the Agent SDK gets working.
+I did this quite a while ago.
+And so, what I decided to do was use my Flyhub skill, and what that's doing is having a conversation
+with this application that's right here in this particular application where we're recording
+the videos, also has the video that I did, B54, B64, BMAD Claude SDK.
+And one of the things going on in that particular video is that we have access to all the transcripts.
+And so, the transcripts, which go for about two hours, are all available as...
+And so, the transcript that's here actually tells us how to use this Claude Agent SDK.
+I know it's around about the one hour and 16 minute mark.
+I know it's around the one minute and 16 mark, or as we said earlier, it's number chapter...
+Or as we said earlier, it's chapter 20 Claude Agent SDK, so the answer's in here.
+But the good thing is, I don't have to read that, what I can do is let the Flyhub system,
+which is here, is let the Flyhub system talk to that web server.
+So it's talking to the web server, it's looking for B64, and from that, it found the transcript
+and found the answer.
+And from that, it's apparently gone and created a little file that we might be able to test,
+so let's give that a whirl.
+
+So I've got my Flygem folder open. We're just going to copy that line here and we'll paste it down.
+So we're CDing into the server and then we're running this test SDK and it looks like it's giving us some information.
+And so that little tool brought down all this data which means that we can communicate using our Max account.
+And I just did a check to see whether any of that data was sensitive. So it's all publicly available data.
+
+So what I think we'll do is we'll get the developer to communicate with the
+product owner. At the moment I think we've got a test harness working. We've
+probably got the server application working with the agent SDK, but we don't
+have a front end. We don't know how we're going to communicate with it yet. So
+we'll come back down to this window and we'll just put in a little prompt and
+we'll say, can you hand over some information to the product
+owner? Firstly, let them know what you've worked on, but also let them know that we
+need to come up with a plan of action on the front end. Maybe we need some sort of
+mock user interface, a couple of versions that we can potentially iterate on and
+come up with a nice front end that can communicate with this agent SDK. And can
+you give it any other information that you think is relevant so that we can
+have success with this project? So I'm just going to put that prompt in right
+there. We'll see what it comes up with. So whatever the answer is here, we're
+going to transfer it back over to our product owner conversation and either
+update the current functional requirement or create another one. So we've
+got this pretty long piece of information as a handover. Once we go all
+the way down, it's also got some relevant context for success and we'll just come
+to the PO and just paste it in verbatim, see what it does with that. So one of the
+things we can see here, Toulon didn't read, is that the back end is done and
+tested, needs the PO to spec out the front end chat UI options. Now that's
+kicked off as a sub agent, that's probably a good thing. If you're
+wondering about that TLDR that Toulon didn't read, you might want to come out
+and check my other YouTube channel. It's AITLDR and this channel is all about
+faceless YouTube automation. So the sort of stuff we do here is create graphics,
+create animations, avatars, all that sort of stuff. And the whole reason for the
+FlyGen application that we're trying to build over here is to
+build these different tools that will help us be more productive with this
+particular YouTube channel. So enough of the self-promotion, let's go and have a
+look at what it's doing right here. It's still writing the requirements document.
+One of the things to notice here, so what it's done is taken the information and
+said that FR or feature request number 3 is complete and it's planning for feature
+request number 4, which is a chat interface or the chat user experience.
+And the good thing is it's doing a lot of the update on the Claude SDK
+integration document, so we haven't changed our source of TRF document.
+I was able to press Ctrl O which expanded everything and the good thing is
+it's also got a couple of ideas on what the user interface could be.
+That's probably going to show up at the end anyway, but we can look at it ahead of time.
+So the first one, the minimal, is just a chat where Claude says something,
+the human says something, Claude says something and any tools that are being
+used such as reading or writing from the file system are available.
+I don't really get this option B, I don't like that, the way it's working,
+and option C looks fairly fancy but unless we're using a fancy user interface like the Versel
+like the Versel Agent SDK, I don't want to get into that, so I think we're going to go with option
+A anyway. We press Ctrl O and we come back to the main conversation and here we get a summary of
+everything that's working. So we've got a couple of documents being updated for us.
+We've got the new PRD document which is FR04, Front End Chat Interface, and we've got our three
+options. Its recommendation is that we start with option A, so I reckon we can just come back over
+here. I'm just going to type progress, what that should do is reload this context with the information
+we just read from the left and the way that does that is it's reading from either the backlog
+or from the changelog file and we can see that going on. It also has access to brainstorming notes
+so sometimes when I'm just thinking of something and I want it in the application I'll use the
+brainstorming rather than the backlog or the changelog and I've just put in slash dev that
+should bring in the developer agent and I said can you implement FR4 and it's just occurred to
+me that where we're going to put it which is date to the brain, hopefully it's going to show up here
+but we haven't stated where it should show up, hopefully it'll just work that out. So it's
+getting into the coding now, it's got a plan of action that it's going to work through so
+firstly it's going to create a use socket hook that should be on the react side of things.
+By the way when I said that that's an educated guess because I don't really know how to
+use react which is what I love about Claude Code and the Opus 4.5 model is that you don't have to
+be a developer, you really just have to understand the way software flows. Now if you are a developer
+of course it's a lot easier because you can make more informed decisions as you go but we're just
+seeing there that the chat panel is being created and being able to read code is important because
+this here is a bit of a problem. What it's doing is saying day two is kybernesis. Now that used to
+be day two but kybernesis is a memory system that we want to do on day three so I might need to
+rename it along the way. Now I haven't used kybernesis yet but what it is over here we can
+see it and it's fairly new if you come to this website it's kybernesis.ai there is a wait list
+to join it. I've been given early access so I'm trying to test it out as a friend of mine has this
+and what it is is essentially a memory system so we have a memory graph it's got I won't say it's
+got rag because it's got a more intelligent sort of self-editing system there is rag of course going
+on there there's also an agent system now we're only using it for the memory part but none of that
+happens until tomorrow anyway I wasn't going to do it today because I don't know how to use it yet
+and that creates a little bit of fear when you're trying to build those sort of things
+because you don't know whether it's going to take one hour or 10 hours but the good thing is when
+we're using Claude code it's just so powerful that we can usually muddle through most sorts
+of problems that we run into and look at that it's just finished and I just noticed a screen
+change so we've got something going on I don't know if it works I'm just gonna say hello and
+you can't see that because behind my head but say hello David from and we'll just say can you
+do a story about the quick brown fox jumping over the lazy dog and I'm just letting the voice
+agent type that in and it's going up into the top area it says sending down in the bottom right
+hand corner oh look at that and that feels okay you know we might be done for the night
+so let's see what we've got here front end chat ui is complete implemented option a I'm sure we
+could come back and do option b or c later on we've got use socket we've got a chat panel
+date to carbon a sees rapper that's the only thing I want to change I want to say
+one of the things that we did was we renamed day two which was kyber nacies to the check
+or to the Claude agent sdk and now kyber nacies is for day three so what I wouldn't mind you
+doing is just modifying that class name so what I wouldn't mind you doing is modifying that class
+name or file name so we'll let that kick in and see whether at least changes it otherwise we'll
+have confusion a bit later on in the system and we want to try and knock any issues that we see
+ahead of time on the head otherwise you just create more pain for yourself so you might be
+able to see over there that it's writing a little bit of code you might be wondering a little bit
+about my setup so what I've got is a 30 inch monitor in front of me but over here on the right
+I've got a 27 inch monitor that's actual in vertical alignment and with that in and with
+that being the case what I can do is have multiple terminals so what we're seeing is another set of
+terminals down below the ones that we were looking at up here and I share that because when you're
+writing code having access to these different terminals in different orientations so I like to
+have the terminals vertical I like to have VS code on the horizontal so if we press VS code right
+there we can see the information that's currently in VS code again as a developer in the past we
+would have looked at this information all the time but we haven't looked at it once in this
+entire project today but that gets me thinking that we could do so where did they put that
+component so day one harness day two agent SDK has been renamed but let's see what's going on
+over here that all looks finished what I want to do is give this as a handover conversation back
+to the product owner so we'll just say can you create a handover document for the product owner
+just showing everything that you've completed while you do that is there anything that we
+missed or anything that the product owner needs to be aware of so we'll just let that prompt kick in
+we'll press enter
+
+So we have our handover to the product owner going on here, we can see that it's got information
+about FR3 and FR4, we've got areas of code, what's been changed, stuff like that.
+We've also got where that little test harness is that we created earlier.
+We can talk about how to run the application.
+So it's currently running on port 5400 on my computer.
+So I'm just going to grab all the information to the bottom and we'll pop in over here and
+paste it in.
+And so we're currently letting the product owner know that there's updated documentation
+coming in from the developer.
+While that's happening, we'll run a git status over here so we've got a bunch of new files
+in the system.
+Let's take a quick look.
+
+So I think we'll finish it there. I've got the conversation working and needs
+some formatting of some form but at the moment we've done the FlyGen harness
+that was yesterday. Today we've worked on the primary brain which is Claude Agent
+SDK. Tomorrow we'll work on the second brain which will hopefully be with
+KyberNexus if we can get it working and then from a serious
+continuity point of view we're going to get into a lot of the image generation
+once we've got these foundational areas done. Anyway I'm Abbey Dave please like
+and subscribe. Anyway I'm Abbey Dave please like and subscribe and I'll see
+you in the next video.
+

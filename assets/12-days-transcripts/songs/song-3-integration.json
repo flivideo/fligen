@@ -1,0 +1,14 @@
+{
+  "provider": "kie",
+  "model": "V4.5",
+  "title": "The Integration - 12 Days of Claudemas",
+  "style": "Epic Cinematic Rock, triumphant and powerful, 130 BPM, orchestral strings with rock guitar",
+  "instrumental": false,
+  "vocalGender": "male",
+  "outputFormat": "mp3",
+  "lyrics": "[Intro - Building]\nBringing it all together\n\n[Verse 1]\nDay nine, connection, FliHub interop\nAPIs talking, data never stops\nDay ten, automation, N8N workflows run\nOrchestration magic, many tasks as one\n\n[Verse 2]\nDay eleven, storytelling, narratives unite\nImages and voices, videos in flight\nDay twelve, completion, everything's just right\nTwelve tools together, shining in the light\n\n[Chorus - Epic]\nJourney's done, twelve tools complete\nClaudemas magic, can't be beat\nFrom harness to story, we built it all\nTwelve days of Claudemas, hear the call!\n\n[Bridge - Instrumental build]\n\n[Final Chorus - Full power]\nBuilt it with Claude, day by day\nTwelve tools born, along the way\nFrom code to creation, watched it grow\nTwelve days of Claudemas, now you know!\n\n[Outro - Triumphant]\nTwelve days, one journey, mission complete",
+  "prompt": "A triumphant epic cinematic rock anthem with soaring orchestral strings, powerful guitar riffs, and victorious energy",
+  "days": [9, 10, 11, 12],
+  "theme": "Integration",
+  "description": "Epic Cinematic Rock finale bringing together all the tools built during the 12 Days of Claudemas. Triumphant and powerful, celebrating the completion of the journey with orchestral elements and rock energy."
+}

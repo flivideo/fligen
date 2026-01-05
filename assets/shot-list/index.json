@@ -76,6 +76,28 @@
       "width": 512,
       "height": 512,
       "createdAt": "2026-01-02T14:04:08.608Z"
+    },
+    {
+      "id": "shot-008",
+      "filename": "shot-008.jpg",
+      "url": "/assets/shot-list/shot-008.jpg",
+      "prompt": "technology iceberg with code under the iceberg and a little vibe code app on top. Golden Age of Comics style.",
+      "provider": "fal",
+      "model": "Flux Pro v1.1",
+      "width": 1024,
+      "height": 1024,
+      "createdAt": "2026-01-04T08:38:22.716Z"
+    },
+    {
+      "id": "shot-009",
+      "filename": "shot-009.jpg",
+      "url": "/assets/shot-list/shot-009.jpg",
+      "prompt": "technology iceberg with code under the iceberg and a little vibe code app on top. Golden Age of Comics style.",
+      "provider": "fal",
+      "model": "Flux Schnell",
+      "width": 512,
+      "height": 512,
+      "createdAt": "2026-01-04T08:38:23.601Z"
     }
   ]
 }

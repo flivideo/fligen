@@ -1,0 +1,6 @@
+{
+  "projectCode": "VSS-004",
+  "prompt_a": "Prompt, show Claude code in a terminal with the title 12 GIFs.\n",
+  "prompt_b": "Prompt. Edit the image so it has the words Foundation, Brain, Creative, Integration and Finale.\n",
+  "prompt_c": "Prompt, Claude Code Terminal breaks up to become Foundation Brain Creative Integration\nand Finale.\n"
+}

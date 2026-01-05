@@ -11,6 +11,7 @@ import { Day7MusicGen } from './components/tools/Day7MusicGen';
 import { Day8Thumbnail } from './components/tools/Day8Thumbnail';
 import { Day9PromptIntake } from './components/tools/Day9PromptIntake';
 import Day10N8N from './components/tools/Day10N8N';
+import Day11StoryBuilder from './components/tools/Day11StoryBuilder';
 import { AssetBrowser } from './components/tools/AssetBrowser';
 
 function AppContent() {
@@ -110,6 +111,8 @@ function AppContent() {
             <Day9PromptIntake />
           ) : currentDay === 10 ? (
             <Day10N8N />
+          ) : currentDay === 11 ? (
+            <Day11StoryBuilder />
           ) : (
             <div className="h-full overflow-auto p-4">
               <div className="max-w-2xl mx-auto">

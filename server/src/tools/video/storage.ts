@@ -62,7 +62,8 @@ export async function createVideoTask(
   endShotId: string,
   provider: 'kie' | 'fal',
   model: string,
-  duration: number
+  duration: number,
+  prompt?: string
 ): Promise<VideoTask> {
   await ensureDir();
 
@@ -78,6 +79,7 @@ export async function createVideoTask(
     provider,
     model: model as VideoTask['model'],
     duration,
+    prompt,
     status: 'pending',
     createdAt: new Date().toISOString(),
   };
@@ -85,7 +87,7 @@ export async function createVideoTask(
   index.videos.push(task);
   await saveIndex(index);
 
-  console.log(`[Video] Created task ${id}`);
+  console.log(`[Video] Created task ${id}${prompt ? ` with prompt: "${prompt}"` : ''}`);
   return task;
 }
 

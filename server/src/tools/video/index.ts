@@ -4,6 +4,7 @@ export * from './types.js';
 export * from './storage.js';
 export { generateVideo as generateVideoKie, checkHealth as checkHealthKie, isConfigured as isKieConfigured } from './kie-client.js';
 export { generateVideo as generateVideoFal, checkHealth as checkHealthFal, isConfigured as isFalConfigured } from './fal-client.js';
+export { saveVideoToCatalog } from './save-to-catalog.js';
 
 import type { VideoHealthResponse, VideoTask, VideoModel } from './types.js';
 import { VIDEO_MODELS } from './types.js';
@@ -33,6 +34,7 @@ export async function generateTransitionVideo(
   endShotId: string,
   model: VideoModel,
   duration: number,
+  prompt?: string,
   io?: Server
 ): Promise<VideoTask> {
   // Get the shot data
@@ -58,7 +60,8 @@ export async function generateTransitionVideo(
     endShotId,
     modelConfig.provider,
     model,
-    duration
+    duration,
+    prompt
   );
 
   // Convert local images to base64 data URLs (external APIs can't access localhost)

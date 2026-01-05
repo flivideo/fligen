@@ -1,0 +1,14 @@
+{
+  "provider": "kie",
+  "model": "V4.5",
+  "title": "The Foundation - 12 Days of Claudemas",
+  "style": "Electronic Pop, upbeat and inspiring, 120 BPM, modern production with synths",
+  "instrumental": false,
+  "vocalGender": "male",
+  "outputFormat": "mp3",
+  "lyrics": "[Intro]\nTwelve days to build a dream\n\n[Verse 1]\nOn day one built the harness, FliGen came alive\nReact and Vite together, Express on the line\nDay two added brains, Claude SDK arrived\nAgent conversations, intelligence defined\n\n[Verse 2]\nDay three, second brain, Kybernesis in flight\nMemory and context, keeping knowledge tight\nDay four, images flowing, FAL and KIE unite\nPixels come to play, creating day and night\n\n[Chorus]\nFoundation's set, the journey's begun\nFour days down, we're having fun\nBuilding tools with Claude by my side\nTwelve days of Claudemas, what a ride!\n\n[Outro]\nFour days done, eight more to go",
+  "prompt": "An upbeat electronic pop track with modern synths and inspiring melodies, building excitement and momentum",
+  "days": [1, 2, 3, 4],
+  "theme": "Foundation",
+  "description": "Electronic Pop anthem covering the foundational tools built in the first four days of Claudemas. Upbeat and inspiring, celebrating the technical infrastructure."
+}

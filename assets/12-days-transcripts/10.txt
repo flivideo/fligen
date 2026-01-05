@@ -1,0 +1,237 @@
+This is day 10 of 12 days of Clawdmas where we've been vibe coding using Clawdcode, various
+content creation utilities and tools.
+We started off on day one working on the foundation and what the foundation is, is this little
+application where we've got a menu to host each of the different tools.
+And today's focus is on how we could hook up to advanced graphics workflows to do.
+And today is about hooking up to workflow engines so that we can do advanced graphics,
+video and image processing.
+
+Today when we work with the NA to N workflow, we're going to touch upon
+different ideas from the past. So we've got our primary brain which we will use
+today to generate advanced prompts. When it comes to image generation and video
+generation, we're going to delegate that to the workflow end.
+
+Now the text-to-speech and the music that we've done including thumbnails are
+not something we're covering today but the interop from yesterday is something
+that we're going to use to load information into our workflow. So
+currently we have this data that we loaded. Now yesterday we were able to
+get human based prompts that were just spoken into the camera into a recording
+and we were able to bring it in from the flyhub application.
+
+The simple human prompt that you see here with a little bit of post-processing should be able to create images similar to this.
+Now we're going to do that using workflows for NATN created by Steve from Dreaming Computer.
+And if you want to find out more about his...
+
+Now if you want to find out more about the workflows he's doing for ComfyUI
+and NA10, then what you want to do is check out Dreaming Computers, the link
+will be in the description. But for now we're moving on to day 10 of the 12 Days
+of Clawdmas, which is about hooking into these sorts of workflows. I'm Happy Dave,
+let's get into it.
+
+I think for today we're going to take a three-step process.
+So the first one is dealing with those human prompts that we
+get from the Flyhub system. What I want to do is maybe take these three
+boxes and a little bit of a load box and we'll go over to the
+N8N workflow and we'll just be able to load them there as well.
+Then in step two what I want to do is just send the basic human prompts
+through to an N8N workflow and just based on those prompts alone
+just see what sort of video recording we could get just using
+the simple human prompts. And then lastly we'll go to the N8N
+workflow where we'll have our little text boxes and we'll put
+in a more advanced system that's probably using the Agent SDK
+brain that we did to generate advanced image prompt, edit prompt
+and an animation prompt.
+
+to help us generate an image prompt,
+an edit prompt and an animation prompt. So
+let's get started down in Claude code where we normally are. We've got a new
+instance. I've run a progress command just to find out where the application is up to.
+
+So I've got the product owner loaded in and I'm just giving this simple instruction for
+phase one that we load in the information from day two which is the three human prompts.
+They're basically the seed for the image, the edit of the image and the animation instruction
+and the animation instruction.
+I do have a pre-planning document which has some ideas about the end point so we just
+need to hook up a generate button to that end point.
+So that part of the instruction should deal with this area here, dealing with a payload,
+giving it some prompts, maybe we can give it an extended payload if we'd like.
+And then what we need is some sort of visualization of two images at the very least and one video
+file and one video file and I expect that this could take two to three minutes on a
+slow work cycle.
+So our application needs to deal with long wait limits on the request cycle.
+Now let's just press enter, let the product owner deal with writing our requirements.
+Now we've asked to use the front end design, what we've got is this aesthetic direction
+coming in which is just a little overview of the aesthetic which is just a little overview.
+So we've asked it to use the front end design, we've got this mission control idea, we've
+got the key decision points and it's started writing a bit of code, in fact it looks like
+it's finished.
+Let's head over and see what we've got.
+This is looking pretty good, it's missing one concept that I really would like it to
+have and that's the load project button that we had here on the intake form because we
+should be able to get our data from Flyhub here and load it in and then once it's loaded
+in just work through the work and once it's loaded in just run the workflow.
+So we'll come back to our console.
+Now I'm just kicking off this little prompt letting it know that it looks great, I just
+want to use the load system that we did on day nine and currently it's making an update
+to the day ten file so we should see something come through here any moment.
+Bunch of code just kicked in and what have we got?
+It looks like something's coming through, I'm just going to select VSS001, we'll do
+a load project, great.
+Now we've got the information from yesterday.
+Now if you also didn't see how these were loaded in yesterday, they were coming from
+these videos that we have here so the first prompt is the text that you see down below
+then we've got the second and we've got the third and all of that information was being
+extracted out of the transcripts API endpoint.
+
+So I think we can do our first test. I don't know whether there's any bugs
+We'll just press and there is straight away
+So with the workflow failed to start what I've done is I've asked it to go and add
+General logging into the system plus extra logging when we do the generate button itself
+Now I suspect the issue is that I don't have a production URL. Let's put that in
+So it's made a fair bit of extensive changes the main one
+We're interested in is that we've got an N8N webhook URL
+
+Now, it's just putting in some information about what the startup server will show.
+We've got the new value.
+Let's go down to the server itself and have a look and we can see it's configured here.
+We can now try and test out this workflow again and we've got another different error.
+We've got a different error and because we've put logging into the system, we can see easily
+what the issue is.
+This production URL has not been activated yet.
+I'll send a message through to Steve from Dreaming Computers, get him to activate it
+for me.
+
+Now let's try our second attempt and we're executing and we've got another
+error if we look at the console log what we can see here is that we don't have
+the webhook registered so we need to activate it on N8n so what I'll do is
+I'll send a message through to Steve from Dreaming Computers he can activate
+that N8n workflow and then when we do our third test hopefully this will come
+through with images and video.
+
+So I've just kicked off another N8N workflow. We've just been debugging a
+couple of things here. Interesting about this one is that it's going a lot longer
+than normal so this is a good sign. While that's running I will point you through
+to the debug that we were doing on the side because one of the issues was that
+punctuation was getting into the prompt and that wasn't going to be valid so you
+can see that Clawd has come through here and cleaned it up quite nicely and so
+far the workflow that we're running is about one minute in. So I've currently
+got Steve on the line while we're doing this and he said that the two images
+have been generated. We're into the video generation stuff right now and
+hopefully we're only less than 20 seconds away from an output coming back
+through to the interface and it looks like it's starting to generate the
+images. It says it's done. Let's see if we see something visual. It looks like a
+bit of a problem here and I have been told that things are working on the
+N8N workflow side but look what happens when we bring up the console. We've got a
+couple of resolution issues.
+
+So what we'll do is go over to here. I've put in the console log from the browser and the server log, which actually looks okay.
+And we'll just say there was something wrong. I think the images came back okay in the URL, but they didn't get displayed.
+Here's a screenshot. So we'll just put that prompt in and I've come through and just taken a screenshot of how we see these missing values.
+And we'll just paste that in right here and see whether we get an answer to it. You can notice that there are some images. I'll see if I can open them.
+
+So the placeholder is an issue but the images themselves, they've come through and so we're
+meant to be transitioning from this image through to this variation.
+We have a little video here, let's go and click on that and there it's coming through.
+Wow, that's pretty cool.
+So that was just based off our human prompts, like I said we haven't fixed the placeholder
+issue right now but what I'd like to do is run another requirements document that can
+just improve on this so that we don't just have the import source that you see right
+here but that we run them all through a little prompt and I'm just going to paste in a bunch
+of information here and then talk about it.
+Can you take this prompt and turn it into a requirements document please?
+So we'll just let that come through and the essence of this prompt is that I want to take
+the three human values that we've been seeing here, I want to run them through a compilation
+prompt which will turn them into a machine readable format that's just better for the
+target idea.
+So for the generation of the main image it will think of things that I didn't consider
+when I just spoke these values, for the edit prompt it'll think of anything related to
+editing that should be in here and for the animation prompt it will think of it like
+things like how do cameras pan or whatever it needs to do.
+So right now we've just let that go through, it's building up our requirements document
+and then we should be able to do a development of it.
+
+Now it's written up a requirements, it's updated a particular document for us. We
+can see the workflow going on here human through system into generated machine
+prompt and you can see some of the things that the machine prompts and you
+can see some of the things that the compilation prompt is trying to do is
+work with the idea of what type of engineer would create these images or
+what type of an engineer would do the image to image compilation the image to
+image editing and of course we've got what sort of engineer would do the video
+generation or the animation. So with the developer loaded we've just asked can he
+implement it we've pasted all the information in
+
+Now I think we are nearly through to the end. There's been a fair bit of
+development going on and it's in the full test at the moment. It's got a
+change log that it's written. We can see some of the ideas like the system
+prompts coming through. So we can see what was built. We've got a six panel
+system kicking in. We've got the system prompts. We've got the machine
+generation prompts and we've got a modification to the workflow
+integration. So if we come over to our application we'll load in
+the human readable stuff. This is going to allow us to do the machine prompts. We
+haven't tested this yet. It hasn't failed so far. What we're hoping is that these
+three values will be better than the three values that are up here. Now I
+thought the images and the videos were pretty good so I'm not sure whether it's
+really going to matter but what we've done is kicked off the
+machine readable version. Hopefully it's using a different prompt structure. Now
+it's taking a little while but let's just pop down to another thing that's
+going on right now. So I've absorbed all the N8n workflows and we're just going
+to build up four different slides so that we can talk about that as well. And
+all of what we're about to see is part of another application I've vibe coded
+which is my fly deck system. I used it recently for a long video that I did on
+the BMAD method where I turned a lot of the information that's in raw text into
+these nice visualizations that help people understand what's going on. So we
+should see another entry here as soon as it's got through to writing out these
+two files and I've just come back it's completed. Let's see what we've got. Now
+the images are showing we've got obviously a different image going on
+here. Let's just see what happens if we try to play this and we'll hit play. That
+is nuts. Now personally is it any better than this other variation which will
+play right here and it's debatable. I think they're both great but what I do
+know is that this version of it is at least using extra ideas that a expert
+would come up with when coming up with the prompts for creation for editing
+and for animation. So we'll come back to our system.
+
+And I'm just waiting for the generation of the
+N8n workflows to kick in but while that's happening
+let's go and have a look at a little bit of the work that Steve does because he has these incredible videos that he does and
+You can see the character consistency coming through I'm not playing it with the audio
+But there's this awesome music that he's done using Suno in the background
+
+A to N stages were first lead to image then it was to create another image and lastly we did the image to video
+
+At the first stage, what we're doing is we're talking to, and in this case, we're using
+nano, we'd create a task, we would wait for 15 or polling the system to see if there was
+an image.
+If an image came back with a status of back into the loop, otherwise it would move on
+to get the image.
+We would want to save it.
+
+number one created with the next workflow and the prompt B that we'd
+speech that we'd created this point of view it was pretty much doing the same
+things
+
+finishes and we've got in on the Google Drive
+well to video generation image and an end frame
+in 2.5 turbo and except video rather than
+images and that the one that we would wait would be a fair bit longer
+it's still
+
+So as complex as each look in the NA-10, they were all really quite repeatable and the end
+product being this video that we saw, looks as follows.
+
+Now three major areas and about six or seven system was really quite simple
+because most of the non-alterations from the previous section and we saw the
+video looking really great
+trying to do
+now for option
+
+The end of the 12 days of Clawdmas, Vibe Coding with Clawdo is look at storytelling, how do
+we combine to create one video.
+Anyway, I'm Abbey Dave, please like and subscribe, access to prompts or the community, there
+is a link down in the description below, I'll see you in the next video.
+
+Actually, I had a little bit of an error in the end of the recording, I wasn't able to
+demonstrate the flows, but the main thing is that we've got the image generation working
+using NATN, we were using CHI provider and the model we were using was Nano, but the
+actual video generation we were using Gling AI.
+I'm Appy Dave, please like and subscribe, I'll see you in the next video.
+

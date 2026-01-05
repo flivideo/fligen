@@ -48,6 +48,7 @@ export interface VideoTask {
   provider: VideoProvider;
   model: VideoModel;
   duration: number;
+  prompt?: string; // Animation prompt for video generation
   status: VideoStatus;
   progress?: number;
   error?: string;

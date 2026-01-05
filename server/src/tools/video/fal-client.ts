@@ -137,7 +137,7 @@ export async function generateVideo(
     await updateVideoTask(task.id, { status: 'processing' });
     if (onProgress) onProgress(10);
 
-    const prompt = `Smooth cinematic transition with natural motion, duration ${task.duration} seconds`;
+    const prompt = task.prompt || `Smooth cinematic transition with natural motion, duration ${task.duration} seconds`;
     let videoUrl: string;
 
     if (task.model === 'kling-o1') {

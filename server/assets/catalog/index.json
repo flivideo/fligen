@@ -1,5 +1,228 @@
 {
   "version": "1.0.0",
   "lastUpdated": "2026-01-04T05:37:43.145Z",
-  "assets": []
+  "assets": [
+    {
+      "id": "sto-20260104-mjzt4kgq",
+      "type": "video",
+      "subtype": "story",
+      "path": "../assets/video-scenes/iceberg-1-1767535712666.mp4",
+      "date": "2026-01-04T14:08:38.296Z",
+      "metadata": {
+        "duration": 39.92,
+        "videos": [
+          "/assets/catalog/n8n/0001/video.mp4",
+          "/assets/catalog/n8n/0002/video.mp4",
+          "/assets/catalog/n8n/0003/video.mp4"
+        ],
+        "music": {
+          "file": "/assets/catalog/music/music-1767532907236-kie-v5.mp3",
+          "volume": 0.35
+        },
+        "narration": {
+          "file": "/assets/catalog/narration/narration-1767532166905-elevenlabs-eleven_multilingual_v2.mp3",
+          "volume": 1
+        },
+        "outputName": "iceberg-1"
+      }
+    },
+    {
+      "id": "sto-20260104-mjzt8bfi",
+      "type": "video",
+      "subtype": "story",
+      "path": "../assets/video-scenes/iceberg-1-1767535887582.mp4",
+      "date": "2026-01-04T14:11:33.014Z",
+      "metadata": {
+        "duration": 15.25,
+        "videos": [
+          "/assets/catalog/n8n/0001/video.mp4",
+          "/assets/catalog/n8n/0002/video.mp4",
+          "/assets/catalog/n8n/0003/video.mp4"
+        ],
+        "music": {
+          "file": "/assets/catalog/music/music-1767532907236-kie-v5.mp3",
+          "volume": 0.35,
+          "startTime": 15
+        },
+        "narration": null,
+        "outputName": "iceberg-1"
+      }
+    },
+    {
+      "id": "sto-20260104-mjztcyhv",
+      "type": "video",
+      "subtype": "story",
+      "path": "../assets/video-scenes/iceberg-2-1767536104099.mp4",
+      "date": "2026-01-04T14:15:10.989Z",
+      "metadata": {
+        "duration": 15.25,
+        "videos": [
+          "/assets/catalog/n8n/0001/video.mp4",
+          "/assets/catalog/n8n/0002/video.mp4",
+          "/assets/catalog/n8n/0003/video.mp4"
+        ],
+        "music": {
+          "file": "/assets/catalog/music/music-1767532907236-kie-v5.mp3",
+          "volume": 0.35,
+          "startTime": 11
+        },
+        "narration": null,
+        "outputName": "iceberg-2"
+      }
+    },
+    {
+      "id": "sto-20260104-mjztels5",
+      "type": "video",
+      "subtype": "story",
+      "path": "../assets/video-scenes/iceberg-1-1767536180933.mp4",
+      "date": "2026-01-04T14:16:26.568Z",
+      "metadata": {
+        "duration": 15.25,
+        "videos": [
+          "/assets/catalog/n8n/0002/video.mp4",
+          "/assets/catalog/n8n/0003/video.mp4",
+          "/assets/catalog/n8n/0004/video.mp4"
+        ],
+        "music": {
+          "file": "/assets/catalog/music/music-1767532907236-kie-v5.mp3",
+          "volume": 0.35,
+          "startTime": 11
+        },
+        "narration": null,
+        "outputName": "iceberg-1"
+      }
+    },
+    {
+      "id": "sto-20260104-mjzti6kt",
+      "type": "video",
+      "subtype": "story",
+      "path": "../assets/video-scenes/iceberg-1-1767536347853.mp4",
+      "date": "2026-01-04T14:19:12.140Z",
+      "metadata": {
+        "duration": 15.25,
+        "videos": [
+          "/assets/catalog/n8n/0002/video.mp4",
+          "/assets/catalog/n8n/0003/video.mp4",
+          "/assets/catalog/n8n/0004/video.mp4"
+        ],
+        "music": {
+          "file": "/assets/catalog/music/music-1767532907236-kie-v5.mp3",
+          "volume": 0.35,
+          "startTime": 11
+        },
+        "narration": null,
+        "outputName": "iceberg-1"
+      }
+    },
+    {
+      "id": "sto-20260104-mjztj4to",
+      "type": "video",
+      "subtype": "story",
+      "path": "../assets/video-scenes/iceberg-1-1767536392236.mp4",
+      "date": "2026-01-04T14:19:56.726Z",
+      "metadata": {
+        "duration": 15.25,
+        "videos": [
+          "/assets/catalog/n8n/0002/video.mp4",
+          "/assets/catalog/n8n/0003/video.mp4",
+          "/assets/catalog/n8n/0004/video.mp4"
+        ],
+        "music": {
+          "file": "/assets/catalog/music/music-1767532907236-kie-v5.mp3",
+          "volume": 0.35,
+          "startTime": 11
+        },
+        "narration": null,
+        "outputName": "iceberg-1"
+      }
+    },
+    {
+      "id": "sto-20260104-mjztk3lc",
+      "type": "video",
+      "subtype": "story",
+      "path": "../assets/video-scenes/iceberg-1-1767536437296.mp4",
+      "date": "2026-01-04T14:20:41.600Z",
+      "metadata": {
+        "duration": 18,
+        "videos": [
+          "/assets/catalog/n8n/0002/video.mp4",
+          "/assets/catalog/n8n/0003/video.mp4",
+          "/assets/catalog/n8n/0004/video.mp4"
+        ],
+        "music": {
+          "file": "/assets/catalog/music/music-1767532907236-kie-v5.mp3",
+          "volume": 0.35,
+          "startTime": 11
+        },
+        "narration": null,
+        "outputName": "iceberg-1"
+      }
+    },
+    {
+      "id": "sto-20260104-mjztpth8",
+      "type": "video",
+      "subtype": "story",
+      "path": "../assets/video-scenes/iceberg-1-1767536704124.mp4",
+      "date": "2026-01-04T14:25:08.796Z",
+      "metadata": {
+        "duration": 19,
+        "videos": [
+          "/assets/catalog/n8n/0002/video.mp4",
+          "/assets/catalog/n8n/0003/video.mp4",
+          "/assets/catalog/n8n/0004/video.mp4"
+        ],
+        "music": {
+          "file": "/assets/catalog/music/music-1767532907236-kie-v5.mp3",
+          "volume": 0.35,
+          "startTime": 11
+        },
+        "narration": null,
+        "outputName": "iceberg-1"
+      }
+    },
+    {
+      "id": "sto-20260104-mjztrp4s",
+      "type": "video",
+      "subtype": "story",
+      "path": "../assets/video-scenes/iceberg-1-1767536791804.mp4",
+      "date": "2026-01-04T14:26:36.724Z",
+      "metadata": {
+        "duration": 18,
+        "videos": [
+          "/assets/catalog/n8n/0002/video.mp4",
+          "/assets/catalog/n8n/0003/video.mp4",
+          "/assets/catalog/n8n/0004/video.mp4"
+        ],
+        "music": {
+          "file": "/assets/catalog/music/music-1767532907236-kie-v5.mp3",
+          "volume": 0.35,
+          "startTime": 11
+        },
+        "narration": null,
+        "outputName": "iceberg-1"
+      }
+    },
+    {
+      "id": "sto-20260104-mjztu80r",
+      "type": "video",
+      "subtype": "story",
+      "path": "../assets/video-scenes/iceberg-1-1767536909595.mp4",
+      "date": "2026-01-04T14:28:34.697Z",
+      "metadata": {
+        "duration": 18,
+        "videos": [
+          "/assets/catalog/n8n/0002/video.mp4",
+          "/assets/catalog/n8n/0003/video.mp4",
+          "/assets/catalog/n8n/0004/video.mp4"
+        ],
+        "music": {
+          "file": "/assets/catalog/music/music-1767532907236-kie-v5.mp3",
+          "volume": 0.35,
+          "startTime": 11
+        },
+        "narration": null,
+        "outputName": "iceberg-1"
+      }
+    }
+  ]
 }

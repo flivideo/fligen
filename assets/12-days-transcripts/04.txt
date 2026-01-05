@@ -1,0 +1,357 @@
+Welcome to the fourth day of Clawedmas, where we're using Clawed code on a daily basis for 12 days to generate micro applications and tools using vibe coding techniques.
+I'm Appy Dave, let's get into it.
+
+So what we'll do is look at our quest progress. So on day one what we did was
+we worked on the FlyGen harness. On day two we moved on to creating a primary
+brain which was an orchestrator of source using the Claude Agent SDK and
+then we moved on to the second brain last night and the idea of that was to
+use either the file system or to use Kybernesis. You can go back and
+watch the videos to see how I implemented each of these but what we're
+going to do today is look at image generation.
+
+So let's talk briefly of what the image generation is going to be and what I'm
+thinking is that we just need to generate a couple of images test a
+couple of models and what I'd like to do is use a combination of either FAL AI or
+CHI AI these are both aggregators of different models and I haven't used them
+I've I've got myself a free account and I'm probably going to have to put a
+little bit of money into it to test it out and we've got FAL and the other one
+that we've got is CHI and over the next four days of progress we're going to
+have access to concepts like images and videos and even audio models and I
+suspect that once we've got that working we should be able to use it for anything
+in this creative phase.
+
+So to get started what we'll do is we'll head over firstly to FAL AI and what we
+got up here is this docs and so we'll go and click on that and that brings us
+over to this documentation that's going on here. Now I believe that if we're
+going to talk to this system we're probably going to need to go through the
+models API's maybe it's clicking on here so I think all the documentation that we
+need to make available to Claude will come from this particular page. Now if
+we're using CHI AI we've got a similar sort of concept apparently both tools
+work in a similar sort of fashion if we click on explore the API you can see all
+the different models that it has available for video generation, image
+generation, music generation but we don't need to look at that because we're not
+going to use it that way the idea is just to use a similar thing the
+documentation for that.
+
+Now the first thing I want to do is get access to the documentation on my computer.
+So a couple of ways we could do it.
+We could use this copy markdown for large language models and this URL we could use
+from Claude code and build a second brain.
+But I noticed that with Fowl they've got an MCP server.
+So instead I'm just going to grab the URL, head over to Claude and I'm just going to
+ask Claude, do you know how to add an MCP server for this folder that we're working
+on?
+This is the information that you can use to figure it out.
+So what we're going to do is just paste in that URL and we're just going to let it read
+the page.
+The documentation in place is general MCP plus there's also a fair bit of information
+for cursor, which is not what we're using but that's okay, Claude will figure it out.
+
+and it's worked out a couple of ways we can either use manual configuration but
+what we'll do is we'll use a command line so we're just going back down to
+the terminal and we're going to paste that in and that should be enough to get
+us set up using Claude with that MCP server so let's just turn on Claude one
+more time so with that we just put in a little prompt and we'll say can you tell
+me how to get started with FAL AI and we'll let that come through and we'll
+press enter and what should happen is it should put in an MCP so we'll exit out
+of the other window we don't need that anymore so we'll exit out of there and
+there we've got it it's reading a whole lot of information so hopefully as we
+go through this project if we need to do anything with FAL AI we probably won't
+need to go to the documentation because we have all the information in Claude
+already
+
+So that's Foul's documentation out of the road. Let's go and have a look at
+CHI. I believe this is going to be a fair bit harder so we've got the CHI
+documentation. What we'll do is we'll go and click on this link. We'll go back to
+our terminal but this time we're going to go to a different folder on my
+computer. What we're going to do is we're going to go over to the brains because
+in this case we're going to set up a new second brain. So we'll just say can you
+read any documentation we got about setting up a new second brain within
+this folder and we'll pop that in. Now I don't currently have a skill or a
+command around setting up new brains so don't do it all that often but I do know
+there is a document for it so we'll just pop that in there and I'll just put in
+a little prompt and say what I'd like you to do is set up a new second brain
+for a brain called and what we'll do is we'll type it in directly so kie.ai
+and then just wait. So we'll let it set up the brain on the computer.
+
+So, we're ready to extend that, but we'll come back to the documentation.
+I'm going to click on this again, pop in over here, and we'll just say, I'd like you to
+go and research this information I'm going to give you.
+You'll either fit it into the documents that you need or you'll build additional documents.
+We're trying to build a second brain.
+You are allowed to go deeper than where this documentation takes you, but the main areas
+we do need to figure out right now is how do we connect to the API?
+Probably need an API key, and we want to do some basic image generation sort of calls.
+So that's where the bulk of your research can go.
+So I'm just putting in that prompt right now, and then I'm going to paste in the information
+that I got from that page.
+Now that's all in large language model format, so it's a little bit of XML sort of structures
+going on.
+I'm not sure if we can see it all expanded.
+There it is.
+Notice how we've got these XML structures and then data within them.
+So we'll just close that back down.
+And what it's going to do is fetch the large language model's text file and then start
+doing all sorts of research based on what I asked it to focus on.
+
+Now while it's doing some research on image generation let's go back and have
+a look at what it was we were building over the last three days. So on day one
+we did this harness and the harness had this settings we can put in ideas like
+the FAL ID, the FAL AI key and the CHI AI key and other so we can put in things
+like our API keys also we can go to the brain so the brain is essentially the
+chatbot so we use Claude Agent SDK but then what we did was we put in memory so
+second brains so the first one we did was a local document store so I say can
+you tell me information about what's can you tell me information about what's in
+the local document store and we'll let that conversation go through and what
+should happen is it should use a little tool within the chat window to access
+the local docs and there's a couple of tools there the first one is just
+getting an index of the files so they're the files locally this is all related to
+what we're building at the moment the other one that we had was related to
+Kybernesis so I'll just say can you tell me a little bit of information about my
+brand style out of Kybernesis and we'll let that kick in and what should happen
+is a different tool should get called this one is now communicating with an
+external application we can see that external and it's just finished so it's
+got the information we've got our brand information now that is through
+Kybernesis that we can see over here and I was demonstrating that yesterday
+where we've got these ideas of a graph based memory and when you click on
+different documents you can see the chunks of information available and
+that's the information that's coming through to the application right now but
+I've just noticed that this brain has kind of finished so we just better go
+down to our file system at the moment I'm just going to do an LS and hopefully
+we've got a Kai AI let's just go CD into Kai AI and we'll run a tree and see what
+we've got we've just got a couple of files there we've got fundamentals got
+image generation and if we run a cat on the sources and type in read me we can
+see whatever was typed into that file as well so we can clear that and what we
+can now see is that we've got two areas that we've got access to second brains
+we can either talk to the file system over here for Kai or when we're in our
+conversation on the fly gen application that we're building we've also got
+access to an MCP server directly for file AI
+
+Now, with that information handy to us, we'll come back to our application and we'll move
+down to Day 4.
+And I think the best thing we should be able to do is maybe do, on the left hand side we'll
+do a bunch of images for Fowl, on the right we'll do a bunch of images for Kai, and we'll
+use a different model each time.
+
+So the first thing I've done with both of these is buy a few credits. So on
+FAU I've got $10 and on CHI I've got $5 bought and I don't really know what that
+means from usage but if we go over to pricing on CHI we can see the different
+prices. One of the things they talk about here is their price versus the price on
+FAU so it's possible that this is going to be cheaper but the main thing that
+I'm interested in at the moment is maybe just picking three different models to
+work with. So what I might do is I've just clicked on the images here I'm
+going to select everything on the page and put it into the clipboard.
+
+And we're going to start off by doing a little bit of research on models.
+So I'm just going to paste in all that information.
+Notice that it got other stuff other than the models.
+And we'll just say, can you have a look at the list of image generation models that are here?
+And can you then rank them by popularity?
+What I'm looking for is either the best of class, maybe three of them, and middle of the range image generations.
+Let's go with three of them as well.
+So we'll let that do that.
+I'm not sure whether it's going to search the internet or what it's going to do.
+But we're doing this because I don't want to waste time researching what the best image model is.
+I just want to know what three good ones are and what three average ones are.
+And then what we'll do is we'll compare them between FAL and CHI-AI.
+I'm sure from a quality point of view, there won't be any differences.
+But the reason I did high end ones is that they're both likely to have it.
+When it comes to medium level ones, I'm not sure whether they both have it.
+So we've been given three top contenders and three mid range.
+Now, I ran this through perplexity.
+It didn't agree.
+So what I'm going to do is say, this is what perplexity thought.
+What is your opinion?
+And do we have it available on CHI-AI?
+So we're just putting in a little bit of extra information.
+We'll make sure that that's spelled correctly, CHI-AI.
+And so what we're doing is using perplexity's view of what the best image generators are.
+And we're just doing the search one more time.
+It could be that the pricing page that we were looking at just had a limited range.
+I thought it might have had the top contenders in there.
+And so I have worked out that part of the problem is just availability on these tools may not be the same as the best in class.
+But there's six that we could work with.
+We'll ask it one more question.
+Can you also check FAL-AI and see if it has it available?
+And even can you figure out what the costs are?
+So we're just going to run one more prompt.
+And notice that this is a little easier because it can go directly to the API documentation using the MCP server.
+Also, when you're using Claude code, some of the things to be mindful of or to identify is that at the moment we're seeing a little bit of a pattern here.
+This is the stuff coming through from the MCP server.
+But then we get into different tools.
+So here we've got the fetch tool, which is just reading from a URL.
+Or we've got the web search tool, which is just doing that search query against the Internet, against the search engine.
+And so what have we got now?
+It looks like we've got a full list.
+We've even got some prices and winners.
+You know what's going to be cool?
+Not only that we do all the images that we see here.
+It looks like there's six of them from each of the two.
+So we should get 12 images.
+But we should also work out the exact cost of each image that we generate.
+
+So I think what we'll do is we'll create two requirements at the same time so
+let's go into our product owner that we've been using in the past. So the
+product owner is ready to write requirements documents so the first one
+we'll do is I'd like you to create a requirement that just tests that we can
+talk to both FAL AI and CHI AI. So I think at the very least we just need to
+have a little bit of code that runs and does a health check maybe it generates a
+really small image and we see the image coming back because in the next
+requirement we are going to do image generation. So we'll let that kick in and
+we'll let the product owner create a requirements document. We should tell it
+can you make sure that when you want to look for documentation on CHI that you
+look at the second brain there should be one called CHI-AI. If you want to
+look for FAL you can use the MCP. So we'll just pop that in and hopefully that
+background task will pick up this piece of information. So it looks like we're
+good to go we've got a feature request called the 07 API connectivity. What we'll
+also do is we'll go over to FAL. I've gone and generated a key for FAL and
+we'd go over to CHI-AI and I've done the same thing for that and I've gone
+into VS code we rarely do that in this vibe coding sessions but we're going to
+have a FAL API key and a CHI API key. So we'll come back to our terminal and let
+it know can you update the documentation to be aware of two API keys and what
+we'll do is just paste them in like that.
+
+So we look good to go. We're going to open up a second Claude instance. This is where we're going to do the development.
+As soon as Claude loads, we're going to go straight into the progress command.
+Let's just bring some context into memory. Hopefully it's going to notice that we're on FR7.
+Once we know what the context is, what requirement we're going to work on, we'll go straight to the developer agent and then start developing.
+Now it's already filling in the idea, but we won't do that until we select dev. So we'll select dev first.
+And the developer already says pending is FR7, but we'll just say implement FR7. So the coding should kick in.
+I'm not sure what we're going to see, but of course if we go back to where we all started,
+we're hoping that the implementation of the first check will probably be done on this page.
+Let's have a look at what the developer is doing right now. So it's researching the APIs.
+We've got some image. We're going to create an image API client. We're going to do a health check on the endpoints.
+To be honest, I was a little surprised it had to research the API endpoints because I was hoping that had been done during the requirement phase.
+When I'm using a more dedicated context engineering framework like the BMAD method, those sorts of things just fall into place.
+But we're vibe coding, so things we've got to kind of play around on the side as we go.
+So we've kind of got to vibe it or roll with the punches as we go.
+
+So we can see here it's been writing a bit of code for us. It looks like it's
+also got some sort of visualization though it's going to go out the console
+log. We can see here that it's adding it to day 4 image gen. That'll be the
+component. Oh look at that we've got something happening. So we've got an
+auth failure. Now at the moment it says it's waiting to test things. What we'll
+do is we'll press this button see what it does.
+And it looks like everything's working.
+And one of the things that we did but we don't need to test with it is that we
+added in a lot of logging. And so if there had been an issue this time we
+could have copied the logging up into the conversation window up here. But at
+the moment we're working. So I think the next thing is just to generate a bunch
+of images using a bunch of models. So we'll come back to our conversation and
+we'll just tell our developer can you write a handover conversation back to
+the product owner stating that this feature is now complete and that they
+can move on to the next feature. So we'll just put that in. So we're trying to
+gather up all the information that the developer knows about make it available
+for the product owner which is the conversation on the left here. So we're
+just going to copy the information here and paste it over here.
+
+And so our change log and our backlog have been updated here.
+What we can do is create a new requirement.
+So we'll say, can you come up with a requirement for an extension to this page?
+Maybe we should have tabs.
+On the first tab will be the work that you're about to put into this requirement.
+In the second tab would be the existing information that we had from FR07.
+Now what I'd like on the page, and we'll just let that part of the conversation come through,
+is a side-by-side comparison of FAL AI versus CHI AI.
+I'd like it to be two boxes going vertically down the screen for each of the systems.
+So in the first box, top left, we will see the advanced models for FAL.
+On the top right, we will see the advanced models for CHI.
+And on the bottom left, we will see the mid-range models for FAL.
+And on the bottom right, we will see the mid-range for CHI.
+So let's do that.
+And I think the next thing we'll do, can you also make sure you include the time, the stats
+and the cost for each image that you generate?
+And then we should just have one button at the top that will allow us to regenerate any
+time we want.
+So we'll let that go in.
+We better also say, before you write the requirements, please give me an example of the user interface
+so I can confirm it.
+So we're letting that come through.
+Now the reason I did that last bit is that I think I got the visual in my head the way
+I want it to be, but I want to see the options.
+And that's usually what Claude will do.
+It will give us a couple of options and say, do you want to pick option A or option B,
+whatever it does.
+And I just saw it come out the corner of my eyes.
+We've only got one version, but this is pretty much what I want to see.
+There should be some tabs at the top.
+So we'll have the image comparison on the left, the API status on the right, and say,
+can you write up this requirements document?
+And then can you give me a handover conversation for the developer?
+So when it writes up the requirements document, it should put it into the hard drive.
+It'll probably be FR8, I believe.
+And then after that, we'll get a little bit of a conversation that we can copy and paste.
+And we will be moving it over to the developer for implementation when it comes through.
+So we see Claude writing the file using the write tool, is updating the backlog.
+And we have our developer handover.
+So we'll copy that, we'll paste it over here.
+And now the development is kicking in.
+And the reason we do the two conversations is that we don't want to have context poisoning
+between two different ideas.
+So the ideas on the left is that we're just doing documentation.
+We create it, we update it.
+The ideas on the right is that we only do development.
+We either create it or we debug it.
+And from time to time, if we want, we can come over and do something like a context
+command and get a feel for how much context we're using in the window.
+And so long as we've got a whole lot of open areas here, which is the free space, then
+we can keep going with this context.
+If it starts to get a bit small, say 10% left, we might want to do something about
+either compressing it or starting a new conversation.
+But we're straight into the development.
+So it's going to add some comparison types.
+So types are really just the shape of data.
+So if data is coming back from an API from file, it'll have a shape.
+It might have something like the image name or the file name.
+And the same thing can happen for CHI.
+So these sorts of types are being stored in the types folder because it's probably
+being shared between the server and the client.
+Now if you don't know what the server and the client is, essentially the client is everything
+we see here.
+And there is a little connection icon from time to time like this one.
+And these connections are pointing to the fact that it's connected to the server.
+So information comes from one, goes to the other, and back and forth.
+So we'll keep checking out our development as it goes through a whole lot of code.
+Again, one of the interesting things about vibe coding today is that generally you can
+be pretty confident with the code.
+It's a bit of, I probably shouldn't say that because if you don't know what you're looking
+for, you can create a lot of strife for yourself from hackers or cost overruns, all that sort
+of stuff.
+One of the things I'm loving about the Opus 4.5 model that we're using with Claude is
+it's just getting better and better.
+And if you are building a bigger sort of application than what we're doing right here, or if you're
+going to put it out in public, then you want to use something more complex like a context
+to engineering framework, like either OpenSpec or the BMAD method, which is what I like to
+use.
+Now, the other thing we're seeing when we look at everything down in these four lines
+is it's all on the server.
+And what that means is that if we look at the front end application, nothing yet has
+changed because we haven't got to this part of the application.
+But we will get there as soon as we get to this area.
+Now, it could be that it was working because what it's trying to tell me is that it had
+two different models working for Fowl and two for Kai.
+I'm trying to see if it can align them up better.
+And it can't because we can't find models that are the same on both platforms.
+So we're just going to do one more test.
+And what we're going to do is a woman and her cat in New York City in 2020, a day in
+the life sort of scene, let's do it in the golden age of comic style.
+So we'll pop that in and see what comes through.
+We'll press generate all.
+The problem we're going to have with trying to do side by side comparisons is that neither
+Fowl AI or Kai AI have the same sort of models quite often.
+So the ones that we're doing are going to be the best that they have and the mid-range
+that they have, but they're not the same.
+So there we have it.
+It's looking really good.
+I'm going to end the video there.
+So I'm happy Dave.
+This is part of the, this is day four of, so I'm going to end it right there.
+I'm happy Dave.
+And that's day four of the 12 days of Claude-mas where we're vipe coding using Claude code.
+And the whole idea is to build content creation tools.
+That's what I'm trying to do at the end of this.
+That's what the fly gen application will be about.
+If you want to join my community, there should be a link in the description.
+Otherwise, like and subscribe.
+I'll see you in the next video.
+

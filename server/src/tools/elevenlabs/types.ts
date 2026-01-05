@@ -23,6 +23,7 @@ export interface VoicesResponse {
 export interface GenerateSpeechRequest {
   text: string;
   voiceId: string;
+  name?: string; // Optional custom name for the narration
 }
 
 /**

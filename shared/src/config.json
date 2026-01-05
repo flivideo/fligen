@@ -101,7 +101,7 @@
       "name": "N8N/ComfyUI",
       "shortName": "N8N",
       "icon": "⚙️",
-      "status": "pending",
+      "status": "complete",
       "route": "#day-10",
       "purpose": "Orchestration",
       "apisTech": ["N8N", "ComfyUI", "Workflow patterns"]
@@ -111,10 +111,10 @@
       "name": "Story Builder",
       "shortName": "Story",
       "icon": "📖",
-      "status": "pending",
+      "status": "next",
       "route": "#day-11",
-      "purpose": "Narrative tool",
-      "apisTech": ["Storyline patterns", "A day in the life narrative structure"]
+      "purpose": "Video assembly",
+      "apisTech": ["FFmpeg", "Video concatenation", "Audio layering"]
     },
     {
       "day": 12,

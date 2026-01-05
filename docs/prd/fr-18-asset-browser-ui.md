@@ -1,8 +1,9 @@
 # FR-18: Asset Browser UI
 
-**Status:** Pending
+**Status:** Complete
 **Created:** 2026-01-04
-**Priority:** Important 🟡 (Can wait until after Day 11)
+**Completed:** 2026-01-04
+**Priority:** Important 🟡
 **Depends On:** FR-16 (Unified Asset Catalog), FR-17 (Asset Persistence)
 **Blocks:** None (Day 11 can access catalog via API directly)
 **Related:** Data Persistence Audit (`docs/data-persistence-audit.md`)

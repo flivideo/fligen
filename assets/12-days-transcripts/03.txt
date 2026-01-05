@@ -1,0 +1,436 @@
+Could you create 12 applications or tools in 12 days using nothing but vibe coding and
+Claude code as your coding agent?
+In this quest that we're working on, we've already gone down day one and two.
+In day one, what we did was we created the FlyGen harness and that's this application
+that you see right here.
+It has concepts like a configuration system and a little menu over on the left that we're
+going to use for each of the applications that we built.
+On day two, we worked through on the primary brain and the primary brain is a Claude agent
+SDK.
+If we say something like, hello, Appy Dave, it will use my Claude SDK, it will use my
+Claude code account and the Max plan to communicate in a way similar to if I was using Claude
+code.
+Now, the next area for us to look into is memory and this is hooking up the concept
+of a second brain.
+For today, we'll test it out by using file system based second brains and Claude skills
+and we'll also give a crack at Hibernese's AI and we'll also have a look at Hibernese's
+AI and see if we can hook it up to that as a second brain.
+What that provides us with is the idea of a neural memory graph and workflow automation
+if we can get it up and running.
+Anyway, I'm Appy Dave, let's get into it.
+
+Now, before we get started with looking at the second brain, which is day three, I thought
+I'd just take a moment out to talk about certain issues that people can have when they're
+vibe coding and what they are.
+And what that could be is that you check in something into your repository, this is where
+we store the code, that could be seen by a malicious actor and they could use it to maybe
+steal money from you, they might do it by using API keys that you've checked in by accident
+and then start using those API keys and you're up for a big bill, or they might find other
+ways of checking your code and seeing if there's something that they can manipulate and cause
+you a bit of pain.
+Now most of the code that we're doing in this session is really just free for other people
+to use as they see fit, it's not a production level system so I'm not putting in all the
+sorts of checks, so I'm not putting in all the checks and balances that you might need
+in a larger application, but what I did do five minutes before this video started was
+I went and had a look at this idea of GitLeaks and GitLeaks is this little tool, a little
+hook that we can put into the code base so that any time we upload our code to the cloud
+so that it's safe and backed up and versioned, we can make sure that we're not checking in
+some sort of problem along the way.
+And the way I did that at the beginning of this session was that I just asked it to look
+at two of my other applications, that was FlyHub and FlyDeck, look for a pattern that
+I might have used in the past and come up with a plan of action and what it did was
+it came up with an idea and what it did was it came up with a little requirements document
+and I took that requirements document and just gave it to the developer conversation
+on the right, it took a few minutes for it to write all the code and I've just handed
+it back.
+And so as we get into the next areas of this application where we're starting to work with
+API keys, we hopefully won't check any of those into our public facing repository.
+So with that little tweak out of the way, what we can do is start moving on to day three,
+which is the second.
+We can move on to day three, which is the second brain.
+
+So let's have a talk about what the second brain could be.
+Now a few weeks ago I did a video on the BMAD method and I was just looking through the
+comments this morning and I saw someone talking about this idea of what is a brain or at the
+very least what is a brain in the context of agents.
+And in simple terms what a brain is, is just context, information, documents that you have
+available which your large language model can pull on.
+So you might have all your Google dots for your company or you might have documentation
+for the code that you're writing and you want to make it available as a second brain.
+And what I do in my own system is that I have a terminal which I have a file, I have a folder
+on my computer which I call brains and if we do a tree on it what we'll see is a whole
+lot of markdown documents in different categories of folders.
+So for instance when I'm working with Claude Code what I'd like to do is have any brain
+information around the agent SDK, I have stuff around Claude Code, I have stuff around skills.
+Or when I'm working with the BMAD method I have information around version 4 and I have
+information around version 6.
+Now these files that you're looking at are not the official documentation, I also have
+that on my computer as well in folders often called SDK or some other sort of name that's
+come from a repository on the internet.
+And what I like to do is cross-reference the information I've got in my own brains which
+is just the way I'm formulating information, maybe I'm taking it from YouTube videos, maybe
+I'm taking it from searches on the internet and then I like to link it through to the
+SDKs so that I also have access to official documentation.
+
+So, if I was to start Claude Code just in one of the brains folders, what I could do
+is say something along the lines of, what can you tell me about Appy Dave's content
+pillars that he works on and what are the branding colours that he works with.
+So what we're doing is we're just firing off a little prompt and hopefully it's going
+to search in the correct locations.
+And it's already in the first two searches started to find files that are in the content
+pillars folder and in the Appy Dave brand and design system folder.
+Now this is not the only way that you can do a second brain.
+If you were using ChatGPT you might have access to projects.
+Gemini and Claude have similar sorts of concepts.
+Maybe you're hooking into Google Docs.
+But for me I'm just reading little markdown documents that are sitting on my computer
+and I love it working this way because I can change them anytime I like from Claude Code
+and read them pretty easily.
+Now for this to work or actually for the content to be discovered, what we've really got to
+do is go and work with say the Claude MD file or maybe we've got some skills that are aware
+of where folders are on the computer and they can gather document and they can gather data.
+
+But another way that you can make brain information available is directly from the application
+to set your vibe coding.
+So at the moment we're recording a video and if I said something along the lines of Peter
+Piper picked a pack of pickles, Peppers, whatever the word is, what's going to happen when I
+stop the video?
+
+that the recording I just recorded has just appeared here on the computer if I
+rename it it's going to go into a new chapter underneath this particular video
+and while that's happening some transcripts are going to run. Now my
+transcript system is running directly off my computer and it's fairly slow so
+by the time we get to this it could be about three or four minutes before we
+get there but once it's done what will happen is within the transcript system
+I will have all the text that I just said including that phrase around Peter
+Piper. Now I also know that this particular application we're working on
+or the video has a code it's called B96 so what we can do is go back to our
+conversation that we were having and earlier we were just talking to the
+earlier we were just talking to the file system but what if we said something
+along the lines of can you go and have a look in a video called B96 in the Fly
+Hub application and just tell me what was David talking about with Peter
+Piper and what we'll do is we'll let that prompt kick in and so what we could
+do is come over to our little application and we could press this
+button and we can take the context as it is by pressing the copy button and what
+we could do is ask Claude code to fix up some of the typos that we got in this
+but the good thing about second brains and using Claude skills is that we
+could also just talk directly to this document and grab that information so if
+we come back over here we'll say can you have a look at but to fix it up we're
+going to go back to this prompt that we've already started writing and we
+might just add one more information to it and we'll say can you identify who it
+was and what was really trying to be said what was the real what was the real
+phrase so we'll just let that go in and when we press enter what should happen
+is that a skill should kick in it should be the skill for Fly Hub and Fly Hub is
+going to look for a video and the one that we're looking for right now and the
+video we're looking for right now is this one called B96 but the skills also
+smart enough just to check whether the actual web server is running so it's
+done a health check and now it's doing a search and we've got a query on the end
+of it called B96 and it's going to grab the and it's going to grab the
+transcript from this if we press ctrl O we can see all the information coming in
+from that web application it's identified the it's identified the
+transcript file it's read in what I actually said and it's cleaned it up
+with what it should have said and so what we're looking at whether we're
+getting information out of an application like we did here or whether
+we're just getting information directly out of the file system is that we're
+interacting with a second brain it's not the brain that comes with the large
+language model it's extra information that we're bringing in for context and
+it's one of the simplest ways we can get context in now there are more complex
+systems like RAG retrieval augmented generation or other sorts of memory
+systems but for now what I'd like to do is just use one of those simplistic ones
+we did probably talking to the documentation that we used to build this
+application so far and we'll see if we can make it available either with inside
+the memory page because that is the day that we're on or maybe even as an
+integration to the brain that we built yesterday
+
+Now somehow what we want to do is hook the application that we've been building
+and that's this application and probably work with this chat interface and we
+want to hook it into our file system. And where on the file system? Well
+probably part of the application we're building somewhere with this doc and
+probably accessing this docs folder. Now if we had access to this docs folder, now
+if we had access to the documentation folder what we'd have access to is all
+the planning I did before we started the application plus we'd have access to all
+the functional requirements and non-functional requirements that we've
+been creating. We'd also have concepts like the backlog which is just
+representing what we've done or what we've got to do or we could look at the
+change log which gives us a little bit more detail. So these are the sorts of
+information that we want to make available from the application that
+we're building over here. So I think to get started we'll head down to a
+terminal and rather than starting off with the product owner or the developer
+which we've done a lot in this series, we'll just have a basic conversation and
+see if we can get a multi-agent, not quite a swarm but at least a multi-agent
+system working that can go and read some of those structures, figure out a plan of
+action for us, write up a particular brief and see if it can all come
+together all in one hit with asynchronous Claude agents.
+
+Now what I'd like to do is use our product owner and turn that into a proper requirements
+document.
+And the product owner is just finished, we've got the PO session complete, we've got this
+new document called functional requirement 05, it's related to the second brain skill.
+So we're just going to start Claude code in a second window, go straight to the developer.
+We see this little grey suggestion, so we'll just press tab and we'll execute that.
+And it will now start building things out, hopefully we get a working system where we
+can use a skill.
+And if we're really lucky, we'll be able to use it from within this chatbot just to
+to our documentation.
+
+So what I'm going to do is take us over to the terminal and I'm going to start
+off a prompt that says okay run this in plan mode and then what we're going to
+do is state our goal. So the goal is to integrate the Clawd Agent SDK that
+we've already built with a local second brain and we'll tell it that what we
+want to do is use either a skill or a tool to retrieve information. Now I'm
+just going to select the folder we're in, we'll paste it in and we'll also put the
+word docs because that's where everything happened to be. Now we've
+just put in this area called use multiple sub agents and then we'll put
+in the first one that we'd like to do. So step one and this can be synchronous so
+we can get the answer back and respond to it and I just want this particular
+agent to read our documentation just make sure it's coherent. Do we have a
+topology, an index, table of contents, that sort of stuff. After that we can also
+kick off asynchronously another agent and this should spin up three different
+agents it's async and what this should do is spin up three agents to run in
+parallel and asynchronously and what they'll do is one will and one will do
+research on how to integrate the skills or the tool into the agent SDK that
+we've done. We'll ask it to search the Anthropic Clawd Code documentation. I've
+been quite specific here because I'm hoping it will use the internal tool to
+do that but it can also use online examples. We're just looking for
+integration patterns at this stage and we've got a little bit of information in
+the best practices for a skill design that's just reading from the file system.
+Then we'll have another step we'll just make sure that before it solidifies the
+documentation we have clarifying questions being asked around whether we
+want to do indexing or whether we want to get an index like a file list or a
+file, whether we want to have indexing like the folder structure and file
+structure or whether we want to have content coming through. So in step three
+we want to just make sure that it's before it solidifies the documentation
+it just asks us some appropriate conversation. So in step three
+before we solidify the documentation we just want to ensure that it's asking
+questions that would make sense for what we're trying to do and then in step
+four we want it to design the skill and I'm really looking for it to happen with
+either a list or file system mode or a content mode. After that I want it to
+write a requirements doc. After that I want it to write a requirements document.
+After that I just want it to write the requirements into the conversation
+stream and we'll then use the product owner to turn it into a requirements. So
+with that in place let's kick it off and see what happens. So at the moment it's
+seeing that it wants to do a multi-step plan with subagents so here's our
+multi-step plan kicking in right here. This was a little unexpected it's using
+one of my own agents it's using one of my own agents that do abridgements so
+that's essentially taking a whole lot of information and compressing it but not
+losing too much detail and if we just press control O we can see everything
+that it was reading just then and this is synchronous so it's running the step
+one before it's doing anything else. So it's come up with a step one complete
+doc audit results and it looks like it's going to go straight into step two and
+run three parallel agents but the recommendations are these are minor
+cosmetic issues and nothing we need to do here. Look at that it's using the
+Claude code guide so that was the first one make sure that it used its own
+internal agent to go and read Claude docs the other two it's just doing
+search on the internet and they're all running in parallel at the moment and
+this is pretty cool I wasn't expecting this so I'm going to just pick one sort
+of document that it should read so we'll press next
+
+So the development is on track we've got a bunch of items that's going to do
+work with a security TypeScript file, a scanner, a reader. I'm a little
+wary of what it's doing here because we haven't talked about Kybernesis yet and
+I think it's just picked up the fact that I've got the name somewhere in the
+system. So I can see as it's developing this that it's using Kybernesis all the
+way through. So what it's done is it's confused the next part and it's mainly
+because I never had the concept of doing a local second brain. So when this is
+finished we'll probably tell it so and let it move it into a local folder and
+then we can come back and do Kybernesis next. So it's finished writing all the
+code we're going to have to figure out how to test it now and if it works we
+will then come back and rename this Kybernesis and if it works we'll come
+back and rename Kybernesis that you see here.
+
+I think before we move on and even test it I do want to get the name of this
+correct because Kybernesis will be the next area so I'm just going to let it
+know that the problem we've got is that the version we've implemented is the
+local file reader version I'm not sure a good name for that but what it can't be
+is Kybernesis and that's because Kybernesis will be the second version
+that we use and we'll use that to talk to and what I'll do is paste in
+Kybernesis AI and we'll just say at a later date so we'll just can you go and
+rename it so we'll let that go through and hopefully it comes up with a better
+name and then we'll test out this local one so this looks like good naming
+conventions we're going to go from Kybernesis index tool to local docs
+index tool
+if I was in the chat interface on the brain what would be three or four
+questions I could ask to use this
+you
+
+So here we are at Kybernesis AI. Now the way I know about this particular application is
+that the guy that built it lives a couple hundred meters away from me and right now
+he just sent me a message saying that he was rebuilding the database. So we're going to
+get into it in a moment but the only time I've ever seen this in action is from his
+house and it's an awesome looking application so I'm hoping it's going to solve the problems
+that I have with memory management which we've saw a solution to by reading directly from
+the file system but what this allows you to do is build your own knowledge base and when
+documents hit this system they automatically get chunked and it's using and when documents
+hit this system they get intelligently chunked into smaller pieces and then there's a dual
+memory system so there's both short-term memory and longer-term memory going on and because
+memory can get stale after a while, for instance a project you might have done three months ago
+is important to you but it's not important today, it uses these sleep agents to keep
+refreshing what it considers the current memory and so it has the ability to retrieve data either
+from the semantic meaning in the database or from different keywords that it extracts along
+the way. Other areas that are going on in it are other areas involved in the future version
+and the good thing you can do with it is also create your own agents that kind of work like
+an employee workforce to do your bidding based on the data stored in the memories. So I'm going
+to start by clicking on access console and I've been brought to this area called David's personal
+workspace it's all about the neural memory graph soon to come we're going to have the workflow
+automation and the areas of interest to us is going to be the API integration and guides but
+before we can get going I believe what I got to do is go and click on this memory graph and try
+and get some data into the system.
+
+Now I think for a basic test what I'm going to do is go into one of my folders
+here called the design system and I'm just going to grab a couple of documents
+and I think I can just drop them so they've been persisted into the memory
+at the moment and the next thing that should be happening is that they should
+be getting chunked and at the moment we've got three memories going on and
+here they are here we've got the brand guide what's this visual design system
+and we've got a readme file and look at that we can click on them and see the
+contents of each document there's a little legend over here I'm just going
+to start typing in primary color and so we can see a little index over here and
+apparently we can just type I'm going to start typing in the word patterns and
+press space it looks like there's only one document if we click on that we can
+see component patterns and we can see that this memory is also being chunked
+into various areas so we can go through them but I think this is a good starting
+point for us to test so I'm going to come back to the dashboard and we're
+going to go and check out the API integration documents
+
+So I think what we're going to need to do is absorb some of this documentation into Claude code.
+So I've just done a handover document on the last item we were doing
+and I've told the product owner to update the documentation.
+So with that in place, we'll just do a quick commit on that last feature
+and just do a git status and a git push to ensure that the code has been moved up.
+Then what we can do is start a new Claude instance and this is where we're going to do our research.
+What's the simplest way of getting started by connecting a local application to this application?
+So let's go ahead and get started.
+Okay.
+Okay.
+What do you consider a memory?
+Okay.
+Okay.
+Okay.
+So it's read all that documentation I gave it and I think the main area we've got to start with
+is just getting ourselves an API key.
+So we'll go over to the application.
+I think it's set to press command A and that brings us to my user profile.
+And if we scroll down, there's an area where we can generate a new API key.
+So we'll just press that.
+We'll go with the Appy Dave 12 days of Claude.
+This will create a key and there it is.
+I'll delete this at the end of this system.
+But for now, we're just going to copy it.
+And let's go back to our terminal and see what we should do next.
+So we've got the ability to store memories, not what I want to do.
+I want to search memories.
+And for the FlyGen integration, I think that's exactly what we want.
+A service in the server.
+Now, two things I know already is that we've never had to work with an environment variable before.
+So we're going to have to tell it that.
+And we probably should get it to read FR05 that we just did because that had a pattern for using the MCP server
+that connected to our local storage.
+So I think what we can do is just go into our product.
+We'll just go into our product owner.
+And that should be able to read in the information from our backlog documents anyway.
+Now, because this is a pretty fly by the set of your pants sort of video that I'm doing,
+if there's any questions that you've got, I'm doing this for 12 days.
+And then I'm going to do on the 13th day an overview or recap.
+So if there are any questions, that'll be the time when I can answer some of them.
+So let's just come back and see what it's doing here.
+
+and I might just do a pretty free-form sort of conversation here so I'll say
+I've gone and put a API key for kybernesis down into the clipboard I'm
+not sure where we're doing environments I'm assuming we need to set up an
+environment key called kybernesis underscore API or something like that and
+then I can put the value in the other thing is that we were working on a
+ticket called FR05 so let's just see that come through and we'll continue and
+say this was a really successful pattern for us using a MCP server to talk to the
+local file system from the agent from the Claude agent SDK I'd like to use the
+same thing as at the time we initially called it kybernesis then what we did
+was we renamed it to local documents I believe and what I'd like to do with this
+one is follow that pattern use the kybernesis official documentation for
+APIs but implement it as an MCP service like the last one so we'll put that in
+there hopefully we recorded a bunch of information on best practices for
+setting up these MCP tools with the Claude agent SDK you might have to look
+into that as well so we'll put that through I'll now give it some answers to
+these questions and we'll say for number one the scope I'm assuming it's MCP but
+I'll let you choose for me when it comes to memory types I am not exactly sure
+what type I've got if it's a tier I've probably got the basic tier when it
+comes to UI browse or manual add I think we only need to do searches and when it
+comes to the authentication or authorization we are going to use the
+kybernesis API using an API key so we'll put that in and let's just press enter
+and see what it does while it's going through and figuring things out let's
+just come back to what we had done before so I'm just going to copy that
+particular question and we'll refresh and we don't have any sort of memory or
+state control on this that's why it's empty but if we press enter this should
+still be working and one of the things we'll notice is that there should be a
+yellow message saying MCP local dots and in this case issues in the local dots
+index I'm assuming that if we've got a Kybernesis version going on that there
+will be a different message at this particular location and potentially here
+as well and we might need to have questions that help route towards either
+direction do we want it from the local dots or do we want it from Kybernesis
+now as it's coming through it's starting to read information from the starting
+to read information from the functional requirement of five that's where we did
+all our work and now it's building out FR 06 Kybernesis MCP one things we can
+see is that she is in the environment example so it has a pattern for
+environments while it's working that out let's just jump on down here where
+we've got what is essentially an example file ready to go hopefully if we copy
+and paste that and we'll just call that dot m and press enter and the main thing
+we want to check with those sorts of environment variables is that you
+wouldn't check them into your repository so we need to click on now
+get ignore and just ensure that the ENV file which is this one right here is in
+this file that means it's light gray which means it won't get committed to
+the repository because if it was committed to the repository then someone
+could find it find your key and then start spending your money now it looks
+like it's done some work and the big thing here that we want is that we have
+these two values now we haven't seen this org ID before so let's just paste
+it into VS code and go here and we'll bring that down and is it the same value
+it's not quite the same value one says API this one says API key so we'll put
+that in place and then we'll figure out what this org is we had loaded in the
+documentation so maybe we can just figure it out and say when you read the
+documentation did you have an idea of where the org ID comes from is it up on
+the settings I bet it is you know so I'm gonna press the enter on that so the
+thrills of working with alpha products I just had a chat online with Ian who
+built kubernetes he said just to work with this so I've just thrown it in and
+we're just seeing it all and we're just seeing our documentation and we're just
+seeing our documentation get altered at the moment so we've had a bit of an
+update now I can see Ian actually typing a message to me at the moment we're
+going all maverick at the moment he's suggesting that there's another way to
+do it but I want to check whether this works anyway and his result and his idea
+is that we should be using skills rather than the MCP server it's just works a
+little bit more effectively it just works a little bit more effectively but
+since we've gone down this path we might as well just keep going so the Dell so
+the developer knows what to do we'll just press tab and start working on this
+particular feature and if this doesn't work then you'll never see this part of
+the video if it does work what I'll probably do is come back and use the
+other technique probably tomorrow just so that I can see an improved way of
+working with the kubernetes system but at the moment it's starting to work
+through a bunch of tasks right here and I'll just let you know that it looks
+like I've got success and what I've done is I've just let Claude work through a
+few issues now this is not normal what we're doing at the moment so I'm not
+going to go through the whole thing mainly because this particular application
+in alpha and we're using an endpoint that's going to be deprecated but we
+got it working so I'm just going to head over to our own application and let's
+just test whether we can talk to our local documents can you tell me what's
+going on with our local documents and maybe the backlog so we'll just put that
+in and press enter I'm going to bring up the camera and so at the moment it's
+looking for the MCP local docs I noticed that there was also the kubernetes not
+sure what's going to happen in this particular case and there's our backlog
+and what I want to do is just put in this question what do you know about my
+branding system using kubernetes now this is a happy path test I'm not trying
+to test that it's robust because like I said this is an alpha version of the
+system but we should see my branding colors which are browns and yellows and
+stuff like that in fact the big thing we'll look for is the word be bad there
+it is babe as new because that's the font I use and brand brown brand gold so how
+cool is that because this information has come from a second brain that's
+intelligent by nature and if we go and click on something so the visual design
+system we can see where it got part of that information so there's the brand
+brown coming through and there's the babe as new and personally I think that's
+pretty awesome that we've been able to vibe code this we've been able to hook
+up multiple memories to our brain today now it's flimsy as like I wouldn't trust
+it in production at all but for a proof-of-concept little tool I'm really
+happy where this is so I think at that point we'll just end the video I'm happy
+Dave please like and subscribe if you want to check out my community where I'm
+going to be talking about context engineering you can see it down in the
+link below and I guess what we're going to be talking about tomorrow is image
+generation so with that hopefully we're going to use either foul AI or Chi AI
+because these are endpoints that will allow us to talk to multiple image
+generation system and we'll figure out how to use them tomorrow I'm happy Dave
+see you in the next video
+

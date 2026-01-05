@@ -1,13 +1,12 @@
 import * as catalog from '../catalog/index.js';
 import fs from 'fs/promises';
 import path from 'path';
-import fetch from 'node-fetch';
 import type { Asset } from '@fligen/shared';
 
 export async function saveImageToCatalog(
   imageUrl: string,
   prompt: string,
-  provider: 'fal' | 'kie',
+  provider: string,
   model: string,
   width: number,
   height: number,

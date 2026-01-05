@@ -1,0 +1,191 @@
+Welcome to day 7 of the 12 days of Clawedmas where we've been vibe coding on a daily basis using Clawed code.
+Now on the first day we worked on FlyGen which is the harness for the application.
+After that we worked on a couple of brain related functions on day 2 and 3.
+Recently we've been working on the creative space, we did images, we did text to speech and yesterday we did video.
+Today we're looking at music.
+
+So moving on from yesterday's video generation, we get into the music generation and we're going to be playing around with Suno.
+
+Now as per the video generation in which we were either testing with the CHI
+models or we were testing with the FAL models what we'll do is we'll go and
+have a look at what we can find on FAL and I found one called SonAuto it's
+apparently a music program it's apparently a music generator if I click
+the button here we get a little bit of music it sounds pretty good if I go over
+to CHI what I come across is access to Suno so that should be good as well if
+we click on that we'll see what we get and it just says AI music API I'm
+assuming that this is Suno but what we can do is head over to our terminal and
+I've just started up a new Claude instance and I've run the progress
+command so it's loaded up the fact that we've worked on six different projects
+this week we're moving on to day seven which is the music generator
+
+And what we'll do is we'll try and figure out what these two APIs could do.
+So we'll start the prompt with, I would like to check out the FAL.AI application, the API,
+and I want to look at this model called SONAUTO, S-O-N-A-U-T-O.
+And I want to figure out how I create music with it.
+What sort of parameters would you like me to provide?
+I'm assuming there's a prompt for the type of music and potentially some lyrics.
+And so we'll just let that one go in and we'll press Enter twice.
+And we'll press Shift-Enter twice.
+And then we'll do the next prompt and say...
+And I've also put in the URL that I was looking at on FAL.
+And then we'll move forward and we'll do CHI.AI.
+And then we'll say, can you also check CHI, K-I-E.AI for how it generates music using SONAUTO, S-U-N-O.
+And hopefully this URL helps you.
+And we'll just let that come through and we'll paste that in.
+And we'll finish off the prompt.
+What I'd like you to do is just research both and come up with a unified idea in how the data might look
+if we wanted to generate music using either of those systems.
+So we're bringing that together. We'll let it kick off.
+
+So the research has gone off. It's come up with a little bit of a unified model between the two ways of doing things.
+We can see the types being defined right here.
+
+Now the research has come back and we've got a unified model coming together
+we've even got a little interface definition which would allow us to use
+either CHI or FAL to generate the music and what we'll do first is come up with
+a little bit of a requirement and what I think I want to do is come up with a
+little bit of a requirement that can both generate an interface that would
+work with either of the models and then we'll assume that the model will return
+some sort of music file and we'd probably need a way to name it and just
+put it onto a list of music files that we've saved so I think we can just go
+back and we'll go into the voice agent mode and say can I get you to come up
+with a mock design for an interface that would allow us to generate music with
+either of these two programs and then when music comes back can it go into a
+little bit of a list I guess and can we just know it can we have the ability to
+put a name against any of the files and then hit save and see it persisted
+somewhere on the server so we'll put that in and we'll let it run that's
+interesting it's kicked in and used anthropics front-end design bot so I
+have that skill loaded on my system I've never used it before and the good
+thing about this and the good thing about this skill was it was designed by
+anthropic to be really good at doing visual designs it's worked out that
+we're using day seven if we go up and have a look at what day seven currently
+looks like it should be empty we've just got this connected its purpose is music
+creation so we come back and see where it gets to now it's going straight in
+to development mode probably not what I wanted I would have preferred to have a
+requirement document but when I had a look at the interface nothing's changed
+and I can see here that even though it's done a whole lot of coding it's calling
+it a mock design it hasn't implemented it yet and we can see the basic idea of
+how it look this looks maybe more complex than I want but it will be a
+great way to start and then it's asking us if we want to develop it what I'll do
+is I will just go straight into the product owner first and the reason for
+that is the product owner should have better clarity in how to write up
+everything for the developer in regards to this project and it's come up with
+some options we'll go with number one let's create functional requirement
+number 11
+you
+you
+you
+you
+you want to know why my friends are coming out like this
+I answered their question in a comment, but I want to elaborate for everybody so we can all learn.
+Why the heck are they getting these tiger stripes on their prints?
+A lot of folks would say, oh, it's a Z axis issue, because it's so repeatable.
+But it's not that.
+Could it be filament?
+Yes, but no.
+See these holes in the side?
+That's what told me what's happening here.
+To demonstrate for you, a model to mock up in Fusion,
+then sliced it in Bamboo Studio at a 0.2 standard profile with PLA.
+Our preview looks normal until we change from summary to layer time.
+Now we have tiger stripes.
+Layers without a hole in them are printing somewhere around 8 to 10 seconds,
+whereas when they have a hole interrupting the wall, it's more like 18 to 27 seconds.
+This is, of course, because when there's no hole,
+the nozzle can just quickly run all the way around there, never stopping.
+Whereas when there is a hole interrupting the wall,
+it has to go from one hole to the other, then back,
+spending a lot more time and slowly accelerating.
+Oh, while all of this plastic is being printed at the same temperature,
+the effective heat input is different between these sections
+because the nozzle spending more time on some layers than it...
+
+So the development has kicked in and one of the items have already been checked off.
+So we've got our type definitions, then the ability to store the music,
+the ability to communicate with either of the API systems.
+It had already made the changes to this screen so it's just going to wire it up to the server.
+And it's in the middle of writing the notes but I've noticed it's updated the user interface
+so we might be able to test it.
+Now a quick look through our interface says that if we're on CHI we've got something slightly different
+to if we're on FAL. I think we can choose different models, that's great.
+We can have a gender.
+I think to come up with the music we'll go back to the text to speech
+where we've got our narration text for the quick brown fox.
+Head over to Claude and just say can you come up with a musical style
+and maybe the lyrics for this little phrase.
+The song only needs to be about 10 seconds long and we'll put that in and we'll paste that in.
+And we'll add one more part to it and say can you also come up with some sort of prompt
+that we can use with our music system to describe what musical style we're going to have.
+We'll let that come in and we'll press enter.
+Now this is great, we've got all this information that we could be copying over into our tools.
+So let's go back to the tool and we'll change the prompt to this whimsical orchestral style.
+I've grabbed the lyrics and we've got this little button here.
+I'm not sure if we're meant to follow this format but I'll just paste what we've got.
+And we'll come down to this and just put those style tags in.
+Let's see what happens when we test it by generating some music.
+And it fails straight away with an unprocessable entity.
+
+So we're trying the generate again I think a fix got put into place we'll
+have a look at it in a moment if this works. It's still generating but if we go
+down to the code what we can see is that the API for foul doesn't allow all three
+values at the same time. Now we've had one more error it's different this time
+so I'm just going to paste in the server log failed to generate music no audio
+URL in the response. While that's doing its coding we can go down and have a
+look at the server as well one of the things that you notice is that we've got
+more configurations in place than we did yesterday. Now hopefully it'll work next
+time but it looks like it came back with a URL so we might even be able to test
+that. And it's doing something and I think it's about to go into the lyrics that was
+fairly cool that was a 1 minute 30 song but it that was pretty cool that was a
+1 minute 30 song with lyrics but this time we'll try it again we'll get a
+different song I'm assuming and hopefully the application can now load
+it in what we want to do is see it go into our library.
+
+And we now have this new interface. I'll turn off the microphone and we'll hit play.
+Quick, so sly, so free.
+That is just brilliant. I love what this is doing. Let's save this to library, see what it does.
+And currently we're getting another error. We can see that it's a payload to big issue.
+So we're just going to grab that information, go on up and paste it in to see what it can do
+So it seems like it's fixed it. It was just an increase in the JSON body limit to 50 MB.
+I wonder if we can just save again.
+And if we go and look at our Visual Studio, we have these new areas called Music Library.
+So there it is and we can see what's in it.
+We can also see where that data was being stored. It's right here. So it's a fairly big line in the JSON document.
+We've got the prompt, we've got the lyrics and we can come through and click on the audio.
+And we should be able to come through and click on the audio and we'll just move to the middle of it and hit play.
+So that's working really well. Let's test out this Sunu, see what happens.
+We've got different versions. Let's go with five. We'll stay with a female because the last one was a man.
+And we will press generate, I guess. And now we've run into another error. So we'll copy that.
+And we come down to the server log and we're just grabbing everything we can see and we'll just pop in over here and paste it in.
+So it's found the error. It just had the wrong API endpoint. Let's come through and run another generation.
+And we've got a error again. We'll copy that. So it's coming through and making changes to the code.
+Now I've restarted the server. We'll come back. We're on CHI. We'll click on generate, see if it works now.
+It's looking better, at least it's saying generating.
+Now, when I refreshed the server, one of the things that happened was that these fields got removed and that's because we're not persisting them.
+But the good thing is the saved library is working. So there might be a little bit of work to make this more persisted.
+Now we've got our new audio track coming through. Let's hit play on that.
+I think that is awesome. We will put that at the end of this video with the FOTS running back, with the FOTS running down the road.
+Let's hit save. It says track one, track one. It says both track one and track one, so that's a bit of a problem.
+
+as per some of the other sessions we've got a couple of bugs but generally this
+is working well so when we look at our quest progress what we can see is that
+music is now done and so what that tells us is that the four areas of creativity
+being image generation the lyrics or the narration the video and now the music
+are all created they're all individual we've also got our brains that we
+already worked on so what we could be working on over the next couple of days
+are integration ideas so tomorrow I'd like to work on generating thumbnails
+using probably so tomorrow I'd like to be working on thumbnails after that we
+can look at interrupt and that's the idea of maybe communicating with other
+applications then we could go into much more advanced workflows with N8N and
+then maybe put it all together in some sort of story and then I'd love to
+finish this off with the 12 days of Christmas song but it'll be the 12 days
+of Claudemus
+
+Now if you're interested in learning more about prompt engineering or vibe
+coding then you might want to check out the link in the description, it will take
+you over to my community. Otherwise I'm Appy Dave, please like and subscribe, I'll
+see you in the next video.
+
+Let's see if we can play this all together.
+That's interesting. We've only got five seconds of video, but we can see how this is all going to come together.
+I'm Happy Dave. I'll see you in the next video.
+

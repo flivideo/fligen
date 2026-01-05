@@ -1,0 +1,256 @@
+It's the 12 days of Claude-ness and we are up to day 9 of Vibe Coding using Claude Code,
+little applications and tools to help us with content creation.
+And we're doing that using the FlyGen system and essentially we started off with a harness.
+From there we created a couple of brains, primary brain and a second brain.
+After that we've done a bunch of the generation systems.
+We've had images, we've had text to speech.
+We've got video generation and we've got music.
+Now yesterday we built the thumbnail system and today what we're going to do is interrupt.
+And today what we're going to do is interrupt with other applications.
+
+Now, when I say interrupt,
+what I mean is connection to other applications
+to get context that we can use in our Vibe coding.
+So today, what we're going to be working with is FlyHub.
+And what FlyHub is, is a video recording system
+that I've created, I've Vibe coded,
+that will allow us to take the video recordings
+we're doing right now and capture the transcripts.
+And those transcripts can either be seen
+in the video recording,
+and the transcripts can either be seen
+in each of the recordings,
+or for us to use it in the FlyGen application,
+what we're going to want is to access them through,
+is to get access to them through an API.
+Now, the interesting thing is that
+when I needed to have this API
+just before I started writing the video,
+I ended up Vibe coding the screen that you're seeing here.
+So we'll see this screen in action,
+knowing full well that this was Vibe coded
+in about 10 minutes.
+
+Now let's go and have a look at how this is going to integrate into the Flygen
+application. Now for context let's just go back a little bit and look at the
+idea that we've already been able to create text-to-speech. We've been able to
+turn images like this into different videos. We've also been able to create
+music and we've also been able to create music and on day four we
+were able to generate images. So what I'm going to do is I'm just going to paste
+in a prompt. I want to see what sort of images we get from this prompt. Now the
+prompt that we're looking at was done by someone else. We're going to use it for a
+foundation.
+
+So at the moment four images are about to come through and here they come
+through from different models from different providers and while these are
+not the images I want to create and while these are not the images that we'll
+be creating. Now the images that we're looking at here may be the foundation
+for whatever we create tomorrow in the N8N workflow. Now while they're not the
+ones we will create what we'll do is we'll just make sure they're all added
+into the shot list up above just so they're saved as reference.
+
+Now I have not written the prompt that is here but what I do want to do is be
+able to create a prompt similar to this but I want to do it from just a simple
+conversation to get to here. Now I also don't want to do it just for creating it
+now I also don't want to do it just for creating the image what I want to be
+able to do is also edit the image into something quite a bit different and then
+afterwards animate from the first image through to the second image.
+
+Now if you're thinking that that sounds similar to what we did on day six, where we might
+have had an image on the left and an image on the right, and we'd put in some sort of
+animation prompt and generate a video this way.
+
+you'd be right from the point of view that we've been able to take an image on
+the left turn it into a video joining up to an image on the right
+
+But the problem with all the examples we did using this technique was there was questionable
+quality and scene consistency between each of the videos.
+
+Now tomorrow we will do that improvement using NA-10 and we'll do it using
+prompts provided by Steve from Dreaming Computers who is a professional in the
+area of movie making and I'll provide a link to his Instagram and website in the
+description below but right now let's get straight on to the interop but right
+now let's get straight into the interop
+
+Now the main goal of today is just to take prompts that are spoken in a video
+and have them ready so that they can be converted to other format. Now I'm
+planning that we will have three different prompts. The first one will set
+a scene location. The second one will... Now I'm thinking we'll have three
+different prompts. The first one will allow us to set the scene location. The
+second one will edit it. So whatever we get in the first one we want to edit it
+with this second one. And then the third one will be the animation instruction.
+The ability to get from the first image to the second image. Now because I'm
+going to be speaking them into a little video and we're going to capture the
+transcript, what I don't want to do is have to be a prompt expert. So I don't
+want it to... I don't want to write... I don't want to speak a professional prompt.
+What I want to do is speak like a human but have it turned into a professional
+prompt. Now because this is all going to be done with a different application. Now
+because this is all going to be done with a different application being
+FlyHub, we're going to need to capture each of the prompts that we want to say
+into a project and we'll just do the video we're recording right now and then
+we're going to need to grab the transcripts and the transcripts are
+going to come from the chapter that we're recording right now and then we'll
+probably have... and then we'll probably have each of the prompts in segment one,
+two and three. Now if I tried to grab the transcripts right now it would probably
+fail because... now if I tried to get the prompts as transcripts right now we'd
+probably get no data and the reason is we haven't recorded a prompt yet. So what
+I'm going to do is I'm going to get a set up with a new chapter we'll call it
+chapter three and it'll just have the prompts and in this application we would
+do it by just coming over and clicking on the new chapter button and calling it
+prompts and what will happen is as soon as I say a prompt and I save the video
+it'll go into a file called 03-1 prompts and we will see it listed... and we
+will see it listed down here. So let's just start saying the prompts we want
+to say. So let's just start speaking the prompts we would like to see visualised.
+
+Prompt, I want a wide shot of a big modern living room.
+It's empty, concrete floors, minimal architecture, big glass windows all around looking onto
+a tropical jungle.
+It's daytime, sunlight is coming in, it feels clean and quiet.
+
+Editing prompt. Keep the room exactly the same. Same angles, same windows, but make it night outside with moonlight.
+Add furniture that looks like it grew from plants, vines and roots.
+Add a warm lamp inside and keep it realistic.
+
+Prompt for animation of the room, with the roots and the vines growing into the furniture, moss spreads into the cushions.
+Day turns into night outside, the jungle gets darker and misty, a lamp turns on inside with a warm amber light.
+Keep it cinematic and realistic, like a time lapse.
+
+Now me recording those three different prompts as video have ended up in this
+three separate videos within the 03 chapter and if we head over to the watch
+page what we can see is that each of the prompts that I recorded has been
+transcribed and so we have the exact words that were said in the video and
+as it goes on to the next video we'll just see that pop up it's a different
+set of words so this is where the editing prompt will go and then the last
+prompt will be where the animation prompt is and so we can see prompt for
+animation kicking in here and what I want to do with each of these is turn
+them into a much more complex prompt that we can turn into better
+visualizations
+
+What we can do now is get ready to start developing and before we do that we'll want to take some
+sort of brief and I have done one ahead of time and make it available to the product
+owner so they can turn it into a requirements document.
+Once that's done we'll hand it to the developer for developing.
+So what I've set up right ahead of time is just a Clawdor instance and we're ready to
+go with the product owner.
+We'll just give him some information to read and it's essentially the brief for the day
+nine creates the... and so the basic idea for day nine is that we have prompt intake
+so we're taking it in from the flyer... so we're taking it in from the fly hub application
+and the three different inputs we're going to get will be for the seed image where we
+start from, then from the editing of the image to make it into a second but different image.
+And lastly it'll be the animation prompt which we said which is the animated transition from
+first prompt... which is the animated transition from the first image to the second image.
+Now also when I wrote this planning document I also wanted it to understand that there
+would be compiler prompts.
+So we're only giving simple prompts, we're going to run them through a compiler prompt
+so that we get an advanced prompt out the other end which should give us a pretty good
+image, a pretty good secondary image and animation.
+Which should give us a pretty good first and second image plus the animation prompt.
+
+So our product owner has prepared all the documentation for our developer and we can
+see the basic workflow so it's about reading in the three different video segments.
+We'll need some sort of import button for all three of the different prompts and we've
+got a little bit of an idea of where the outputs will go at the end so at the moment it's just
+going through and developing a bunch of information.
+So at the moment it's just doing a lot of development.
+So we can see here it's doing the client to talk to Flyhub and that's probably related
+to this code here.
+You can see that I'm running it on localhost 5101.
+At the moment it's going through and creating a bunch of type definitions for the shape
+of the data that we want to communicate between the other server and our server.
+Now I know when I talked to Steve about the N8N workflow that we were going to go with
+prompt A, prompt B and prompt C. Though that might have been better off saying master prompt,
+edit prompt and animation prompt.
+One thing we can see happening right here we've got this little log of the new server
+Flyhub status and that'll probably show up in here.
+I believe it's coming through right now.
+And right now we're about to change the screen so the screen should get wired up into this
+location here.
+So the code has been written right here and the wiring up is happening with the app.
+And here's something coming together.
+Not exactly sure how it's planning to do this connection to the Flyhub.
+The Flyhub is online at the moment because we can see it running over here.
+We can refresh it and see different stuff happening there.
+One of the things I can see is that it wants a project code, a chapter ID and what segments
+to work with.
+We could come back to our video which is C04 for a project code.
+
+Now I am ready to start testing this with project C04 and I know we're working with
+chapter 3 and then segment 1, 2 and 3 is where I want to get the prompts for but I'm a little
+concerned about the Flyhub offline so what we'll do is we'll go and have a look at what
+the developer has produced and we can see there's a bunch of code coming through here
+and I'm just going to give it a little question at the moment and what I want to know is what
+does it think the end point is for Flyhub and the other thing I want to know is if we
+were doing a curl command how could we talk to that particular application and a curl
+command is just a command line tool that can hit an end point like a URL with parameters
+and return the results and so if we could run that in the terminal here we would know
+whether it's working or not working.
+
+So the information looks good. We've got localhost 5101. I know that's where the application runs
+We've got a endpoint of the API transcript where you would pass in the chapter ID and you would pass in the segment ID
+But I can already see where the issue is because we're getting the transcript
+But we're not giving the project and that's the project where I'm recording my videos
+So if we go over to the fly hub system where I've got my little API
+Endpoint helper what we can do is put in the chapter that we want
+So it's number three put in the segments we want which is 1 2 & 3. We know that the
+We know that the project code is C04 and in this case
+It's the 12 days of Clawgmus09 and if we hit the curl here
+We could copy it and make it available, but we can also see it visually and this is the bit that's missing I believe
+So what I'm going to do is go down to the terminal and tell it
+Firstly, I think you've got the wrong endpoint. You're missing the project code
+This is what it should look like
+So we'll just put that bit of the prompt in and we'll paste in our information from before
+And we're also putting this other prompt also it says that the server that we're trying to connect to is offline
+I know that the server is online
+So what's going on here and what we'll do is we'll paste in a little message
+That I found up here and see whether this is an issue as well and see what the issue is with this
+So we'll just let that go through
+Now the other thing is trying to figure out is this health now
+I know I don't have an endpoint that just starts with health. It would be API or something
+Let's go over to our API endpoints
+See if we've got them. This was all generated using vibe coding. So I haven't checked it fully. There we go
+We've got a health endpoint. Let's click on that and
+What's the send request or we'll see what the curl comes up with
+So we just need to give it that information right there
+Get down to the terminal and just say health endpoint is here
+I didn't tell it to read it to find out the structure probably should
+Now that could work on its own
+But I also want to just make sure it understands the structure of the data for each of the endpoints
+So whatever that's returning it needs to be conforming to it
+Now whether that finishes or not part of this seems to have improved anyway, because we've got a green here
+But it's still writing a fair bit of code. So I won't test it until it's finished
+I'm glad I asked it to check the data types because notice it's also changing
+Concepts that it thought it is changing concepts that it came up with like segments
+to transcripts or segments here to size
+
+now it's gone through to the end it's made pretty extensive changes let's see
+if it's changed anything on the interface and we can see two concepts
+that are a bit different so it's got the fly hub project code and chapter and
+it's giving us suggestion I know I should just be able to put in a code and
+we put in chapter 3 I know that to be true and I'm not sure what this should
+be so we'll just put in we'll do what it says VSS 001 and we'll leave it at
+segment 1 2 & 3 this is reading from this chapter and let's press the import
+and this looks like the correct information now it's also got this save
+project I'm just going to go down to VS code for a second and we get a little
+projects folder here and we get a little projects folder here it's currently
+empty let's see what happens if we save project and that's what that project
+code was VSS 001 we've got the human prompts so this is what came in from the
+transcript this is some sort of project document okay and what's the source
+transcription this is also what was said so a little bit of redundancy between
+there and there but that'll be okay for now so now we've got prompts that we've
+taken purely from my voice or from a video recording and you can see that
+original recording and highlighted is the test that it's brought down for us
+now what we would like to do is take each of these human prompts put them
+through a prompt compiler that can convert them into a much richer prompt
+that would work better with image and animation generation
+
+Now I'd like to go into the advanced compile prompts but it's currently 1030
+at night so we're going to do that tomorrow when we move back over to the
+N8n workflows. Now the way we're going to do the N8n workflows is that we're
+going to use an API that's been provided for us by a mate of mine, Steve from
+Dream Computers and he's someone that does a lot of work with RT, he also does
+a lot of work and he's someone that does a lot of work with art and
+professional light shows and he's also got some interesting movies that he's
+been doing. So I'll see you tomorrow when we work with the N8n to build better
+video animations than we've seen with our own generations. I'm Happy Dave
+please like and subscribe I'll see you in the next video
+

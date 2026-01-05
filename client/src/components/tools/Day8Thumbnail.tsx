@@ -143,19 +143,27 @@ function LayerStack({ selectedLayer, onSelectLayer, visibility, onToggleVisibili
             }`}
           >
             {/* Visibility Toggle */}
-            <button
+            <span
               onClick={(e) => {
                 e.stopPropagation();
                 onToggleVisibility(layer.id);
               }}
-              className={`w-5 h-5 flex items-center justify-center rounded transition-colors ${
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.stopPropagation();
+                  onToggleVisibility(layer.id);
+                }
+              }}
+              className={`w-5 h-5 flex items-center justify-center rounded transition-colors cursor-pointer ${
                 visibility[layer.id]
                   ? 'text-amber-400 hover:text-amber-300'
                   : 'text-slate-600 hover:text-slate-400'
               }`}
             >
               {visibility[layer.id] ? '◉' : '○'}
-            </button>
+            </span>
 
             {/* Layer Icon */}
             <span

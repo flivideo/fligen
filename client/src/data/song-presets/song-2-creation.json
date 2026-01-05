@@ -1,0 +1,14 @@
+{
+  "provider": "kie",
+  "model": "V4.5",
+  "title": "The Creation - 12 Days of Claudemas",
+  "style": "Indie Rock with Electronic elements, energetic and creative, 125 BPM, guitar and synths",
+  "instrumental": false,
+  "vocalGender": "male",
+  "outputFormat": "mp3",
+  "lyrics": "[Intro]\nCreative tools come alive\n\n[Verse 1]\nDay five, voices speaking, ElevenLabs on cue\nText to speech flowing, narration coming through\nDay six, videos dancing, animations breaking free\nKling and Veo rendering, motion we can see\n\n[Verse 2]\nDay seven, music playing, Suno takes the stage\nMelodies and rhythms, setting up the gauge\nDay eight, thumbnails shining, designs that engage\nHTML and canvas, art upon the page\n\n[Chorus]\nCreating magic, bringing life to code\nFour more days, we're on a roll\nBuilding tools with vision clear\nTwelve days of Claudemas, we're halfway here!\n\n[Outro]\nEight days down, four to go",
+  "prompt": "An energetic indie rock track with electronic elements, creative and vibrant energy, celebrating innovation and artistic expression",
+  "days": [5, 6, 7, 8],
+  "theme": "Creation",
+  "description": "Indie Rock/Electronic fusion celebrating the creative tools built in days 5-8. More energetic than the first song, representing the shift from infrastructure to creative expression."
+}

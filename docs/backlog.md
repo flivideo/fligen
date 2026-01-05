@@ -22,9 +22,10 @@ Requirements index for FliGen.
 | 14 | [FR-14: Day 10 N8N Workflow Integration](prd/fr-14-day-10-n8n-workflow.md) | 2026-01-03 | Complete |
 | 15 | [FR-15: Prompt Refinement UI](prd/fr-15-prompt-refinement-ui.md) | 2026-01-03 | Complete |
 | 16 | [FR-16: Unified Asset Catalog Infrastructure](prd/fr-16-unified-asset-catalog.md) | 2026-01-04 | Complete |
-| 17 | [FR-17: Asset Persistence Implementation](prd/fr-17-asset-persistence-implementation.md) | 2026-01-04 | Pending |
-| 18 | [FR-18: Asset Browser UI](prd/fr-18-asset-browser-ui.md) | 2026-01-04 | Pending |
+| 17 | [FR-17: Asset Persistence Implementation](prd/fr-17-asset-persistence-implementation.md) | 2026-01-04 | Complete |
+| 18 | [FR-18: Asset Browser UI](prd/fr-18-asset-browser-ui.md) | 2026-01-04 | Complete |
 | 19 | [FR-19: Thumbnail Persistence & History](prd/fr-19-thumbnail-persistence.md) | 2026-01-04 | Pending |
+| 20 | [FR-20: Story Builder - Video Assembly](prd/fr-20-story-builder-video-assembly.md) | 2026-01-04 | Pending |
 
 ## Non-Functional Requirements
 
@@ -39,6 +40,21 @@ Requirements index for FliGen.
 - **UAT** - Implemented, awaiting testing
 - **Complete** - Tested and verified
 - **Blocked** - Waiting on dependencies
+
+---
+
+## Next Workflow
+
+**Day 11: Story Builder** - See `docs/prd/fr-20-story-builder-video-assembly.md`
+
+Day 11 combines existing assets (Days 5, 7, 6/10) into complete videos:
+- Select 1-3 video files
+- Select music track (with volume control)
+- Optionally select narration track
+- Assemble into 15-second story video using FFmpeg
+- Save to catalog
+
+This is the next major feature to implement.
 
 ---
 

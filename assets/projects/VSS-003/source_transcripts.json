@@ -1,0 +1,20 @@
+{
+  "projectCode": "VSS-003",
+  "transcripts": {
+    "prompt_a": {
+      "segmentId": 4,
+      "text": "Prompt, show 3 media files, one is a narration, one is a music file and one is an image.\nShow them in a Venn diagram where there is something overlapping but we don't know what.\n",
+      "fetchedAt": "2026-01-04T12:25:34.051Z"
+    },
+    "prompt_b": {
+      "segmentId": 5,
+      "text": "Prompt, edit the image so that a video is showing on top of the Venn diagram showing the narration, the music and the image file.\n",
+      "fetchedAt": "2026-01-04T12:25:34.051Z"
+    },
+    "prompt_c": {
+      "segmentId": 6,
+      "text": "Prompt. The narration, the music and the image file all start moving and coming together to form a video production and a final video.\n",
+      "fetchedAt": "2026-01-04T12:25:34.051Z"
+    }
+  }
+}

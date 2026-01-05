@@ -211,10 +211,11 @@ export async function generateVideo(
     await updateVideoTask(task.id, { status: 'processing' });
 
     // Submit the task
+    const prompt = task.prompt || `Smooth cinematic transition with natural motion, duration ${task.duration} seconds`;
     const kieTaskId = await submitVeoTask(
       startImageUrl,
       endImageUrl,
-      `Smooth cinematic transition with natural motion, duration ${task.duration} seconds`
+      prompt
     );
 
     // Poll for result

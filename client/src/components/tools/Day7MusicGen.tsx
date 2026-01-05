@@ -2,6 +2,20 @@ import { useState, useEffect, useRef } from 'react';
 import { ToolPanel } from '../ui/ToolPanel';
 
 // ============================================
+// Song Presets
+// ============================================
+
+import song1 from '../../data/song-presets/song-1-foundation.json';
+import song2 from '../../data/song-presets/song-2-creation.json';
+import song3 from '../../data/song-presets/song-3-integration.json';
+
+const SONG_PRESETS = [
+  { id: 'song-1', name: 'Song 1: The Foundation (Days 1-4)', data: song1 },
+  { id: 'song-2', name: 'Song 2: The Creation (Days 5-8)', data: song2 },
+  { id: 'song-3', name: 'Song 3: The Integration (Days 9-12)', data: song3 },
+];
+
+// ============================================
 // Types
 // ============================================
 
@@ -27,7 +41,7 @@ interface GeneratedTrack {
 }
 
 interface SavedTrack extends GeneratedTrack {
-  savedAt: Date;
+  savedAt: string; // ISO date string from server
   filename: string;
 }
 
@@ -326,14 +340,18 @@ function TrackCard({
 function SavedTrackRow({
   track,
   onDelete,
+  onRename,
 }: {
   track: SavedTrack;
   onDelete: (id: string) => void;
+  onRename: (id: string, newName: string) => void;
 }) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [audioDuration, setAudioDuration] = useState(0);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editName, setEditName] = useState(track.name);
 
   const togglePlay = () => {
     if (audioRef.current) {
@@ -382,9 +400,50 @@ function SavedTrackRow({
 
       {/* Track info */}
       <div className="flex-1 min-w-0">
-        <div className="font-medium text-white truncate">{track.name}</div>
+        {isEditing ? (
+          <div className="flex gap-2 items-center">
+            <input
+              type="text"
+              value={editName}
+              onChange={(e) => setEditName(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  onRename(track.id, editName);
+                  setIsEditing(false);
+                } else if (e.key === 'Escape') {
+                  setEditName(track.name);
+                  setIsEditing(false);
+                }
+              }}
+              className="flex-1 bg-slate-700 border border-slate-600 rounded px-2 py-1 text-sm text-white focus:outline-none focus:border-blue-500"
+              autoFocus
+            />
+            <button
+              onClick={() => {
+                onRename(track.id, editName);
+                setIsEditing(false);
+              }}
+              className="px-2 py-1 bg-blue-600 hover:bg-blue-500 rounded text-xs text-white"
+              title="Save (Enter)"
+            >
+              ✓
+            </button>
+            <button
+              onClick={() => {
+                setEditName(track.name);
+                setIsEditing(false);
+              }}
+              className="px-2 py-1 bg-slate-600 hover:bg-slate-500 rounded text-xs text-white"
+              title="Cancel (Esc)"
+            >
+              ✕
+            </button>
+          </div>
+        ) : (
+          <div className="font-medium text-white truncate">{track.name || 'Untitled Track'}</div>
+        )}
         <div className="text-xs text-slate-500">
-          {track.provider === 'fal' ? 'SonAuto' : 'Suno'} · Saved {new Date(track.savedAt).toLocaleDateString()}
+          {track.provider === 'fal' ? 'SonAuto' : 'Suno'} · Saved {track.savedAt ? new Date(track.savedAt).toLocaleDateString() : 'Unknown'}
         </div>
       </div>
 
@@ -403,6 +462,13 @@ function SavedTrackRow({
 
       {/* Actions */}
       <div className="flex gap-2">
+        <button
+          onClick={() => setIsEditing(!isEditing)}
+          className="p-2 text-slate-400 hover:text-white transition-colors"
+          title="Rename"
+        >
+          ✏
+        </button>
         <button
           onClick={() => {
             const a = document.createElement('a');
@@ -505,6 +571,9 @@ export function Day7MusicGen() {
       };
 
       setGeneratedTracks((prev) => [track, ...prev]);
+
+      // Reload library to show auto-saved track (FR-17)
+      await loadSavedTracks();
     } catch (error) {
       console.error('Failed to generate music:', error);
       alert(`Failed to generate music: ${error instanceof Error ? error.message : 'Unknown error'}`);
@@ -571,6 +640,58 @@ export function Day7MusicGen() {
     }
   };
 
+  const handleRenameSavedTrack = async (id: string, newName: string) => {
+    try {
+      await fetch(`${SERVER_URL}/api/catalog/assets/${id}/rename`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: newName }),
+      });
+      setSavedTracks((prev) =>
+        prev.map((t) => (t.id === id ? { ...t, name: newName } : t))
+      );
+    } catch (error) {
+      console.error('Failed to rename track:', error);
+    }
+  };
+
+  const loadSongPreset = (presetId: string) => {
+    const preset = SONG_PRESETS.find(p => p.id === presetId);
+    if (!preset) return;
+
+    const song = preset.data;
+
+    // Set provider and common fields
+    setProvider(song.provider as MusicProvider);
+    setPrompt(song.prompt || '');
+    setStyle(song.style || '');
+    setInstrumental(song.instrumental || false);
+    setOutputFormat((song.outputFormat as OutputFormat) || 'mp3');
+    setTitle(song.title || '');
+
+    // Set lyrics if available
+    if (song.lyrics) {
+      setLyrics(song.lyrics);
+      setShowLyrics(true);
+    } else {
+      setLyrics('');
+      setShowLyrics(false);
+    }
+
+    // Set KIE-specific options
+    if (song.provider === 'kie') {
+      setKieModel(song.model || 'V4.5');
+      if (song.vocalGender) {
+        setVocalGender(song.vocalGender as 'male' | 'female');
+      }
+    }
+
+    // Set BPM if specified
+    if (song.bpm) {
+      setBpm(song.bpm);
+    }
+  };
+
   return (
     <div className="h-full overflow-auto p-4">
       <div className="max-w-4xl mx-auto space-y-6">
@@ -585,6 +706,34 @@ export function Day7MusicGen() {
         {/* Provider Selection */}
         <ToolPanel title="Provider">
           <ProviderToggle selected={provider} onChange={setProvider} />
+        </ToolPanel>
+
+        {/* Song Presets */}
+        <ToolPanel title="12 Days of Claudemas Presets">
+          <div className="space-y-3">
+            <p className="text-sm text-slate-400">
+              Load a predefined song from the 12 Days of Claudemas series
+            </p>
+            <select
+              onChange={(e) => {
+                if (e.target.value) {
+                  loadSongPreset(e.target.value);
+                }
+              }}
+              className="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white text-sm focus:outline-none focus:border-blue-500"
+              defaultValue=""
+            >
+              <option value="">Select a song preset...</option>
+              {SONG_PRESETS.map((preset) => (
+                <option key={preset.id} value={preset.id}>
+                  {preset.name}
+                </option>
+              ))}
+            </select>
+            <div className="text-xs text-slate-500">
+              Presets will automatically populate all fields below including provider, style, lyrics, and vocals.
+            </div>
+          </div>
         </ToolPanel>
 
         {/* Generation Form */}
@@ -785,6 +934,7 @@ export function Day7MusicGen() {
                   key={track.id}
                   track={track}
                   onDelete={handleDeleteSavedTrack}
+                  onRename={handleRenameSavedTrack}
                 />
               ))}
             </div>

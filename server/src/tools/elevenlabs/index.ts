@@ -8,3 +8,6 @@ export {
   checkHealth,
   generateSpeech,
 } from './client.js';
+export {
+  saveAudioToCatalog,
+} from './save-to-catalog.js';

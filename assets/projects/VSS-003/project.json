@@ -1,0 +1,13 @@
+{
+  "projectCode": "VSS-003",
+  "createdAt": "2026-01-04T12:25:39.454Z",
+  "updatedAt": "2026-01-04T12:25:39.454Z",
+  "flihub": {
+    "chapterId": "c06-ch3",
+    "segments": {
+      "prompt_a": 4,
+      "prompt_b": 5,
+      "prompt_c": 6
+    }
+  }
+}

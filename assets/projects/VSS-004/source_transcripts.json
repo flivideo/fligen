@@ -1,0 +1,20 @@
+{
+  "projectCode": "VSS-004",
+  "transcripts": {
+    "prompt_a": {
+      "segmentId": 7,
+      "text": "Prompt, show Claude code in a terminal with the title 12 GIFs.\n",
+      "fetchedAt": "2026-01-04T12:25:57.458Z"
+    },
+    "prompt_b": {
+      "segmentId": 8,
+      "text": "Prompt. Edit the image so it has the words Foundation, Brain, Creative, Integration and Finale.\n",
+      "fetchedAt": "2026-01-04T12:25:57.458Z"
+    },
+    "prompt_c": {
+      "segmentId": 9,
+      "text": "Prompt, Claude Code Terminal breaks up to become Foundation Brain Creative Integration\nand Finale.\n",
+      "fetchedAt": "2026-01-04T12:25:57.458Z"
+    }
+  }
+}

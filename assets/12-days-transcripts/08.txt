@@ -1,0 +1,228 @@
+Welcome to day 8 of the 12 days of Claude-mas and what we've been doing over the last 7 days is we've been building this application called FlyGen
+and we started off by creating a couple of brains, a primary brain and a second brain.
+And everything we've been doing has been done using Claude code and vibe coding techniques.
+For the last 4 days we've been working on the creatives, so we did image generation.
+After that we did text to speech, video generation and yesterday we created our own songs.
+
+Now as we move out of the creative into the integration, what I'm considering is the idea of creating some sort of compound tool that could build thumbnails for me.
+Now if you look at thumbnails on the AppyDave channel, they generally follow this simple formula.
+What we have behind the scenes is some sort of background.
+And I do that in Canva, so it'll look something like this and I'll be able to put images somewhere.
+And over the last six months I've said this has generally been the format I've used.
+
+Now the next thing I like to do is get an image and we'll just capture something right
+now and we'll paste it in and the idea is this image will just go into the background
+somewhere.
+
+After I've got the image in place, the next thing I would do is put in some text and put it into some sort of location on the screen.
+
+So with the three layers in place the last area I might do is go and add an
+image of me and I essentially have these different poses that I did a few years
+ago that I could use however I like. Now for this project I've also been doing
+
+Now, for this project, I've also been playing around with a slightly different version.
+It's still just an image, it's still just got the background, it doesn't have thumbnail
+test and rather than me, it's just got a graphic.
+You can see that those graphics are just being generated over in ChatGPT.
+
+So let's work through what it is we're going to build.
+So when we look at this...
+
+Now in today's video I'm not looking to create a replacement for Canva but I
+think I can start down the path of having a full-blown thumbnail generator
+and when I look at what we've got here where we've got this logo we've got this
+little shape and we've got these shapes down behind what I can see is that
+we've got one square which can be rendered probably using HTML because
+other than the logo itself everything else is just a square on different
+angles after that we just need to have a frame somewhere where we can inject an
+image and that image if it overlaps and if that image is too big for the frame
+and it gets cut off so if we double click on these images we can see there's
+more to it than what you actually see on the screen
+
+Now the next part is what is the thumbnail test that we're going to show
+and normally what we've got is maybe one or two of these little panels and the
+panels will be in one of the three brand colors which will be the light brown the
+dark brown or the yellow sometimes even white and then there will be a
+contrasting color sitting on top of it with the Bebaz new font.
+
+So the last layer that I put on which is a bit random in its positioning will be some
+sort of image so it will either be an image of me or it will be some sort of symbolic
+image of what the video is going to be about.
+
+So layer 1 is going to be some sort of background that we can use for a template.
+Layer 2 will be the area where we can put our main image that takes up the bulk of the screen.
+Layer 3 will be somewhere where we can put different types of thumbnail text, each with different contrasting colour panels.
+And layer 4 will either be an image of me or an image of the concept being talked about.
+
+Now, to get started today, what we're going to need is some sort of requirements based
+on everything I just talked about.
+So we'll come into Claude Code as usual and we'll just do progress and we'll just see
+where Claude Code thinks we're up to.
+So it's come up, it understands that we worked on FR11 which was the music generator.
+What we're doing today is working on the thumbnail generator.
+Now to come up with our requirements today, what I thought we'd do is do a little bit
+of a planning mode directly in that window but rather than having to type everything,
+what I'd like to do is introduce us to where interrupt which is part of tomorrow.
+What I'd like to do is introduce us to, what I thought we could do is introduce you to
+interrupt.
+Now, interrupt is something that we'll be talking about tomorrow and this is the idea
+of can we get information or context for our applications from other applications.
+
+Now, as I've been recording this video, another application that I Vibe coded being FlyHub
+has been taking copies of each of these recordings and what it's been doing is building up a
+bit of a chapter list and it's been building up a bunch of transcripts.
+And so the good thing is if we were to actually read those transcripts and put them into Claude,
+we would have all the context we need for this application because I've been talking
+about it through the beginning of this video.
+So what I'll do is we'll come back to the FlyHub system.
+The last recording I just did, we'll do a rename on it at the moment.
+We'll discard one that wasn't really relevant and it's just popped in here in planning.
+This is what we're doing.
+Right now a transcription should be kicking in and if we wanted to watch that video, we
+could come over here and we can see that that recording is definitely sitting
+there being transcribed right now.
+And we've got two ways we could gather the information from this application and use
+it in the other one.
+So we could go and just get the transcript here, copy and paste it.
+This is the way we can do it and this is the way we're going to do it today.
+But tomorrow what I'm going to do is show you how we can use skills directly in the
+terminal to get the same information.
+
+So, let's start our planning with a simple prompt that goes, can you read the following
+transcript and what you're trying to do is assess what sort of requirements or at least
+the mock interface that we would like to build for a thumbnail generator and we'll just pop
+that in and what I'm going to do is just do a paste and so now everything that we've said
+in the video should actually be coming in as context and you can see at the beginning
+it says welcome to day 8 of the 12 days of Clawdmas, that's how I started and then we
+got into the requirements and the planning that we've been talking about.
+So we've got these clear ideas that we talked about.
+So we've got the clear ideas that we discussed, we've got layer 1 for the background, we've
+got layer 2 for the main background image.
+So now we've got these ideas that we discussed, we've got layer 1 for the background template,
+layer 2 is the image that fits on the template, layer 3 are any text panels and layer 4 is
+an overlay image.
+
+Now the first thing is we need this background template so what I've done is
+taken a screenshot of it it's called image 2 here and we'll just say image 2
+happens to be the background template that we want to use don't worry about
+the logo be more aware of the three different colored blocks that we got
+there. The first one being dark brown then we've got the light brown then
+we've got another dark brown the first one being light brown the first one
+being dark brown the second one light brown and the third one dark brown and
+if you actually want to know the colors then can you go and read my branding
+guidelines to learn what the dark brown and the light brown color actually are
+so we'll put that in and that should use a skill to find that information. Next I
+want it to understand this background image so I've just pasted in image 3
+and we'll say I've given you image 3 that shows you exactly how one of the
+images that we want to use on top of the template would look we'll just paste
+that in there. Now what I'm doing is I'm pasting in image number 4 and with 4 in
+what we've got is this little image that we show on top of the background so
+we'll come back to the conversation and say please note that layer 1 the
+background is fixed in position note that layer 2 which is the image that we
+put on top is also fixed in position I've now given you image 3 and what that
+is is the image that we want to put somewhere on the page but please
+remember that I've also told you this out of order because that's for layer
+4. Now I probably should come back and edit this for that particular issue but
+we'll keep going but we'll keep going and we'll talk about layer 3 and for
+layer 3 what we're putting on is the thumbnail text so when you do the
+thumbnail text you'll notice that it can come in different background colors and
+foreground colors so these colors need to be configurable you can also see
+that the text is a little bit different in each of them that needs to be
+configurable and we can have up to three of these panels so we'll just paste in
+that part of the prompt what we'll do is we'll come to one of these and what
+we'll do is we'll take a screenshot of one of these and come down and just
+paste that in as image 5 and the last part of this prompt should be can you
+look through this information and come up with the shape of the data that we
+probably have to have are there any fields are there any check boxes
+generally how would you configure this and then can you just create a simple
+little mock for me in an ASCII layout and we'll just put that in and let's see
+what happens when it reads that information
+
+So the first thing it's done for us is come up with the colors from my brand
+system. Now if we pop over to Canva for a second you'll be able to see that that
+is actually correct as I have it in Canva as well and that's because I have
+it documented in the system and there's a skill that can go and grab that
+information whenever I need. It's come up with some sort of idea for the
+configuration, the structure of it and then it's presenting to us an ASCII
+mock so we've got the thumbnail generator. Now ASCII doesn't really give
+us a great representation of the shapes but this feels right. We've got generator
+PNG, download, reset, this sounds good and then we've got all this
+configuration going on on the right.
+
+So what we have so far is kind of an understanding of how the layout could
+work, the configuration. We also have an understand of how the different layers
+of the thumbnail could work and we know from yesterday when we were working with
+the music generator that one of the skills from Anthropic, the front-end
+design I think it was called, kicked in and helped to build a better design for
+us. So what I think we'll do is while we're still in the planning mode I might
+just put in a prompt that says can you use the front-end design skill and
+consolidate all this information around the design of what the edit space looks
+like, the screen where we're doing all the editing and also an understanding of
+all the four layers and the way this is all going to be and the way
+thumbnails, the way I create them are all layered together. So we'll put
+that in place and let's see what Claude Code comes up with and
+there it is kicking in right now. This is the front-end design skill and that
+skill will be able to articulate how to do a user experience and the UI much
+better than I can. I like this idea here so the professional composter aesthetic
+it's Figma meets After Effects. We're going to have some sort of layer stack.
+
+Now normally I would like to use the PO to do the requirements and the
+developer to do the development but this has gone in and done it
+automatically. It could be because I wasn't explicit in saying just do
+exploration but that's okay it's gone and built something for us. So the
+architecture is four layers, composter and the UI layout is what we're seeing
+here so let's just see what that could look like. We'll come over to our
+application and we are on day eight and hey look at that that is pretty good I
+wonder if it works so can I drag stuff no I can't drag stuff. It's like we can
+drag an image let's click on the background so nothing's editable but we
+do have the configured values correct so it wouldn't be a hard task to change
+this or maybe have some sort of theme that we could drop down when we get to
+the test panels what do we got we got these let's see what happens if we
+change it okay so it's not a drag and drop it's going to be a position as you
+need it to be so we'll go and change that one and let's see what happens with
+an overlay image we'll enable it and we can drag it okay I think we'll go and add
+a background so to test the background image we'll click on this button and
+what we'll do is we'll just go to a folder where I put a file called one PNG
+and what it is is just a screenshot of what we're seeing on the screen already
+we'll go and change our text panels so that they're up in the top I think so
+we've got Claude code up in the top top can we change the color of it or we can
+and we'll change this one to say thumb to say thumbnail generator and we will
+also move that up to the top center I guess we might also move this one to the
+I was just about to move this to the right and the drop down which you can't
+see in the video didn't have it so I've just asked it to go and make a change
+for me we'll come back and I now have a top right so we'll see what happens that
+just worked this is great now in updating the code it cleared everything so
+we don't have persistence which we haven't been doing in these which we
+haven't been doing in these sessions which we haven't been doing in these
+sessions anyway but what we can do is get ourselves back up and running so we
+got our thumbnail generator which we'll put in the middle and we will make it
+yellow as a background and we'll try a black as a foreground and we will take
+Claude code and put it over on the right
+
+And then the last area would be some sort of overlay image, which might be an image
+of me, but what we'll do is we'll just head down to ChatGPT and I've said, can you just
+summarize into 150 words what we've already talked about in this video?
+And so we've got that information, I'm just going to copy it.
+And I've just come over to ChatGPT where I've said, can you come up with three image prompts
+based on the information here?
+
+Now ChatGPT has come up with some designer ideas and we've got this
+thumbnail stack layout tool or brand panels I think that's the one I want to
+download so we'll come back over here looks like we've got to enable it we'll
+just click here and it's to foreground let's see what happens if we load that
+in so it's made a slight mistake in that what it's done is thought of it more
+like the logo what I told it not to do but this is actually really interesting
+in its own right it's even got some sort of a scale that's pretty cool I reckon I
+think let's try this export that's not available yet so I think we could call
+this an end anyway because this was the idea can we in each session
+
+So to be honest, I think that's enough for day 8, we've got a thumbnail generator, there's
+plenty I could do to extend it, there's a few improvements that I would love to make
+with it.
+But the great thing is that we VibeCoded that in about an hour and that's the power of using
+Claude Code and VibeCoding.
+If you're interested in more advanced forms of coding using context engineering and maybe
+something like the B-MAD method, then check out the videos on my channel or join the Skill
+Community, there is a link down in the description.
+I'm Happy Dave, please like and subscribe, I'll see you in the next video.
+

@@ -1,0 +1,207 @@
+It's day 5 of the 12 days of Clawedmas.
+This is a project in which we're trying to build tools or micro
+applications every day for 12 days
+using vibe coding and nothing but Claude code.
+Now to have a look at where we're up to in our quest progress
+we started day one with building a little harness
+in which to put all our tools and our applications.
+After that we went on to brain related objects. So the first one was the
+primary brain
+which was related to just talking to chatbots
+and then the secondary brain was related to talking to memory.
+So what that means is that we've got the harness
+it has concepts like configuration and settings
+after that we went to the brain and if we had a little bit of a conversation
+of what do I have available for me
+in the Kybernesis brain and we just let this conversation
+go through on the chatbot.
+The chatbot is the day 2 brain
+while the memory that we're talking to right now Kybernesis
+is a graph memory store and we're using it
+externally to get information that's in that store.
+And we can see that information
+in the Kybernesis brain and we can see that
+information in the graph
+brain that is Kybernesis right here. Then on day four what we did was we moved
+into image generation where we used
+two different routers for image and video models. So we got
+FAL AI and we got
+CHI AI and then we were able to use it with different models.
+But the idea of the FlyGen system that we're putting together is
+ultimately to go down to storytelling
+which I hope to get to on day 11 but at the moment we're on day 5.
+So day 5 is going to be about text to speech.
+So day 5 is going to be about text to speech
+and what we're going to use for that is 11Laps.
+So now that we know what we're up to let's come up with a little bit of a
+plan of action and we'll jump on down to the Claude
+terminal where I've just started a brand new Claude code
+and I've got a little bit of progress on where we're at and we'll figure out what
+we're doing today.
+
+I think the way we'll go about it today is that we'll go into a planning phase.
+What I'll do is I'll use a voice agent, meaning I'll talk into the microphone and whatever
+I say will go directly into Claude Code.
+Now what we want to do is maybe create some sort of story narrative, something short,
+and with that story narrative being created, we want to split it up into what I call beats,
+these visual sections that we can define, and with that we could maybe create an image
+at the beginning, an image in the middle, and an image at the end, and the reason this
+would be interesting is that tomorrow when we do the video creation, we could use those
+images and the narration to make a little movie.
+
+So let's start talking to Cloud Code. We're down in the terminal and we're
+going to say today what we're going to do is create some sort of tool related
+to 11 Labs. The way we're going to do that is to create a tiny story. This
+little story will be narrated by 11 Labs and I'm just letting this come through
+and I'm pressing shift to enter twice because I want to start the next
+sentence. The story that we're creating today will be the quick brown fox jumps
+over the lazy dog and what you need to notice about this story that I just gave
+you is that it is only two beats in length and with that I also want you to
+develop three visual concepts. The first one will be the beginning of the scene,
+the second one will be the middle between the two beats and the third one
+will be the end of the scene. You are allowed to creatively modify the story
+slightly so long as it remains as two beats. You will then go into visual
+development so the first thing that you will do is come up with a comic style
+that's easy to draw, very colourful and something that we could use consistently
+in any of the images that we generate. Then because we have three different
+images that we want to create what I want you to do is develop two different
+styles for each of the three images. Then I want you to come up with just
+image ideas for the three different images we need to create. Once you've
+come up with the ideas I want you to develop two distinct prompts that are
+slightly different from each other to give us variation for each of the three
+image ideas and make sure that each of the image prompts use the style of
+comics that you've gone with. It's very important that when you create the image
+prompts that the second one is a continuation of the first one from a
+visual perspective and that the third one is a continuation of the second one
+from a visual perspective because what we're going to use is image to image
+video generation models and it's important that the scenes make sense. Can
+you now develop a multi-part plan of which in part of it we will be using 11
+labs and we'll deal with that when we do the requirements document but so long as
+everything's in the plan I'll be happy. So what I've really been doing with that
+particular plan is getting ready for a few different video concepts so we know
+we can do images we did that yesterday. We're in the middle of doing the 11 labs
+which is the test of speech but tomorrow we want to create some sort of video
+stuff so if we can bring these three concepts together with a story and then
+maybe later on do the music then it means when we get to day 11 the idea of
+doing a story becomes really easy. So all we need to do now is go back down to the
+terminal and press enter now all we have to do is go back to the temp now all we
+have to do is go back to the terminal and we can press enter and see what it
+comes up with.
+
+So we have our creative brief developed for day five. This is excellent and it's
+the fox and the lazy dog as a mini story. So the original is the quick brown fox
+jumps over the lazy dog but it's developed it into two different beats. A
+quick brown fox discovers a lazy hound dozing beneath an old oak tree and with
+one graceful leap the fox soars over the sleeping dog and it disappears into a
+golden meadow. With that we have the full script narrative that we'll go over
+to 11 laps.
+
+Now we have this little plan that we've created what we can do is just cherry
+pick the area we need for the 11 labs and we'll build a requirements document
+so it should be as simple as going back to our conversation and we'll use the
+PO so the product owners developed in such a way that it knows how to write
+functional requirement specs and the interesting thing is as soon as the PO
+loaded it just started building a functional requirement spec for number
+11 something we should probably tell it can you make sure that you use an API
+key that I already have in the environment I'll let that come through
+and I'm just going to paste in the 11 labs API key
+
+So it's written a requirements document for us. I'm not paying too much attention to what's
+going on in there. We will look at it in a moment. What we'll do is we'll go over to a new version
+of Claw and we'll go straight into our developer agent and ask him to implement FR11 I believe.
+
+Now, I don't know whether it's going to come up with a visual interface for us, but we
+can go talk about what it could do by coming back to our FlyGen application.
+So yesterday we were working on the images and this is the sort of stuff we're going
+to need before we can do our video generation, but today we're working on the test of speech.
+At the moment there's nothing there, but what I'm hoping we could at least get done by the
+end of this session is some sort of audio playback button, some sort of audio player
+that could just play whatever lyrics, some sort of audio player that could just play
+the narration back to us.
+
+So, it looks like it's finished some coding, I'm not sure what it's done.
+What we'll do is we'll pop over to a new window and I'm just going to start the server.
+Let's see if it starts first.
+So, we've got our server kicking off and look at that, it's saying that 11 Labs is configured
+down the bottom, so this is a good thing.
+And we'll just come over to our website, it's saying it's connected and we'll click on the
+TTS, see what comes up.
+And that's looking really promising.
+So, we've got some sort of voices and we've got a sentence, let's just click on that and
+generate the audio.
+How perfect is this?
+We've got a play button but we've also got a download, let's see if it works.
+A quick brown fox discovers a lazy hound dozing beneath an old oak tree.
+With one graceful leap, the fox soars over the sleeping dog and disappears into the golden
+meadow.
+How cool is that?
+And we can do a download on it, so we could even use that audio exactly how it is tomorrow
+when we do the video.
+So we can almost call this closed off but what we'll do one more time is we'll use the
+download button, we'll bring it down and that's just gone into my downloads directory.
+We'll go back to the terminal and we'll just have one little question.
+If I wanted to put the mp3 files somewhere so that we can serve them more readily in
+our application tomorrow, where would you put it?
+And for the following narration, how would you rename this file?
+What I'll do is I'll just press shift enter twice and I'll put in the original file which
+is in the downloads directory but the other thing I'll do is just put in the narration
+as well.
+We should be able to figure out that the narration is what we want to develop a file name around.
+It knows where the original is.
+I have no idea where it's going to put it, probably in a server directory and hopefully
+named correctly.
+This is perfect.
+So we've got audio, we'll go into the audio directory and it's come up with a name.
+We can just press tab and hopefully we will now have this new structure in place.
+So it looks like it's going to think of it as assets with the fox story and so anything
+we do for the fox story would all be in one location.
+While we're waiting on that, I'm just going to make sure that I've got a visual studio
+open and I do and that will allow us to go and have a look at this assets directory,
+fox story, audio, there's our asset and let's see what happens if we play it, nine seconds
+long.
+Perfect, that's the one we wanted.
+So one more thing just to close things off, we'd better say, can you create a handover
+conversation for the product owner?
+We'd better let the product owner know what we've done, especially this new section that
+we've added, that way he can document it correctly so then when we're doing our movies or whatever,
+we know where all the files are going to get stored.
+Now that's a pretty extensive document that we're bringing through so I think we can just
+go down to the bottom, we'll copy that and we'll just paste it in and make sure that
+the backlog or the changelog or even just the story itself gets updated and that's exactly
+what's happening, the backlog and the changelog are being read right now.
+Hopefully there's some sort of statuses and we can just update it, backlog's just been
+updated now.
+We're also updating the ClaudeMD, so this is the system prompt for this particular application,
+so whenever we open up a new Claude instance in this folder and we can see the folder just
+here, it will have whatever information was in that ClaudeMD available and see right here
+that the changelog is updating and at the very end of this what we'll do is we'll do
+a commit so that we can make sure that the code is up in the repository.
+We'll be able to access everything from the repository anyway.
+So that's looking good, we'll just do a commit.
+So it's just adding the files and creating the commit message right here, it's doing
+a git status, it's letting us know that we've probably got to do a push.
+There's the commit message that it's done so we'll just run the git push ourselves.
+That's done and my GHB and then I run GHB but let's just do it and then I run a little
+alias called GHB but let's run a which on it so that we can see what it is and it's
+just alias to github browse so GHB and you can see it's just opening and you can see
+our repository in the browser so we can see it right here and it says day 5 11 labs tester
+speech has been added one minute ago.
+By the way if you ever want to get any of the code you can just go over to this repository.
+I usually like to use the github CLI to do a github repo clone and you can bring the
+information down to your system.
+
+So that brings us to the end of day five. So that's now implemented. Tomorrow
+we're going to work on the video system. Now if you're ever interested in working
+with me you may want to join my community. There should be a link in the
+description or if you'd like to and we could just generate the audio like and
+subscribe or if you like to please like and subscribe and I'll see you in the next video.
+I'm Abbey Dave I'll see you in the next video.
+
+Or if you like please like and like and subscribe and I'll see you in the next video
+What he said
+
+Now, if you want to follow anything else that I'm doing on Vibe Coding, Context Engineering
+or this 12 Days of Clawdmas, then please like and subscribe and I'll see you in the next
+video.
+What he said, I'll see you in the next video, I'm Appy Dave.
+

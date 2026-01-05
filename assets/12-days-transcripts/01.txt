@@ -1,0 +1,484 @@
+Can you create 12 different applications in 12 days and as a content creator can
+I do it in such a way that it automates the content creation process? You know
+images, videos, audio files, speaking, that sort of stuff. In this series the 12
+days of Clawdmas we're going to test the idea but today it's Clawdmas Eve so
+let's get into planning. I'm EpiDave, let's get into it.
+
+Now the application and tooling that we're going to create today is going to
+be part of the fly video range of micro apps that I've been building and the one
+we're going to do is going to be called fly gen and what that's going to be is
+for generative AI it's going to be generating images, music, we'll do
+thumbnails, we'll do animations all the sorts of stuff that a content creator
+might want to create.
+
+Now I'd like to have a look at the type of application we might build and also
+the constraints that I'm putting on myself. So currently it's 11 a.m. on the
+25th of December so it's Christmas Day and I've just recorded the intro just a
+moment ago 18 seconds according to this and I've also got a little bit of a
+scenario that I set up on the 15th of December which was when I was meant to
+start this project.
+
+Now, the main constraint that I've put on myself is that we need to build a tool or
+a little application every day.
+We need to use Claude code and it should be done in about one to two hours at max.
+Otherwise, I'm going to run into conflicts with other things that I've got to get done
+over the next 12 days.
+Now, the nature of the AppyDave channel when it first started was the idea of could you
+build an app a day?
+That was what AppyDave was meant to be and I've never been able to do it.
+It was more a reach goal that I could do in the future.
+So what we're doing today over the next 12 days is potentially putting that into action,
+maybe not with full applications, but definitely with feature complete functionality in the
+form of tools or little applications.
+
+Now, one of the other reasons that I picked this particular application to build over
+12 days is that in the new year, I've got to start generating online movies.
+And to do that, I'm going to need some sort of automation tools.
+So what we can do right now is maybe move into the setup, which I recorded on the 15th,
+and that'll give you a grounding of how we're going to use cloud code.
+
+So we're going to start in this ugly black box and what this is is a terminal on my Mac computer
+now if you're new to this sort of
+Coding you might get a little bit intimidated
+But if you're a professional you'll go this is just a simple terminal window where we can run applications
+We can list files on the system and this is a place
+We're going to live during the 12 days of Clawdmas
+And so if we do a little tree from this folder
+What we're going to see is that I've prepared it with just a couple of little files
+We're going to use this as a seed information to doing our research today
+
+We are also going to use other terminals during the 12 days and what they're generally going to be are just instances of Claude code.
+And the idea here is that if we need different conversations or different agents, we'll probably keep them all isolated.
+
+If you've used Anthropic Clawed on the web, you might be wondering what is Clawed Code?
+Well essentially it's an agent and as an agent it has all the capabilities that we see in
+ChatGPT sort of interfaces, that's that conversational bots, but it also has extras like it's got
+tooling.
+So the tooling that comes by default are things like reading and writing from the file system.
+You can also search the file system.
+On top of that we could search the internet.
+It then has all these capabilities within the conversation like setting up a set of
+tasks and executing them, having question and answer sessions.
+We can also branch out to skills that can automate different processes or we might want
+to use a sub-agent to go off and think on its own and come back with the result.
+
+A couple of things to pay attention to when you open up Claude code for the first time
+is that you'll see things like the version number and we're on version 2.0.69 and this
+is changing pretty frequently because they're pushing new versions of the application almost
+daily.
+It will also tell you what folder, which is the root folder of where this Claude session
+is operating.
+It'll tell you what plan you're on, so I'm on a max 100 plan.
+That means I pay US$100 a month and for that I can run four or five different projects
+and two of them on a daily basis, almost eight hours a day, so it's a really generous tier.
+You can also find the model that you're using within the session and for most of this we're
+going to use the Opus model 4.5 because it's incredibly powerful.
+But again, this is the sort of thing that might change before the 12 days are out.
+We might get up to 4.6, halfway through the process.
+
+If you want to change your model you can come over and start typing model with a
+slash in front of it and you can just set it or if you press enter it will
+give you a list. So we can also work with Sonnet which is a good worker horse
+model or we could work with Haiku which is incredibly quick but at the moment
+the default model which is Opus 4.5 is both quick it can think and it's a work
+horse so generally this is where we'll be doing most of our work.
+
+Another useful command is the unit command and what it is is creating for us a system prompt in the current directory.
+And it does that by storing all the information into a Claude MD file.
+We can have Claude MD files in other folders but this one is the root prompt or the root,
+but this one is the root system prompt for all sorts of conversation that we do in the session.
+So at the moment it's just analysing the few files that we've got and coming up with an idea of where they are
+and what this project is going to be about and making it available to Claude code.
+
+So let's have a look at what we're planning to build. So I have some
+documentation that I've been putting together in the 12 days of Clawedmas
+and I've just recently had it renamed so it'll sound more like Christmas. I've
+had it looked for three different reference applications so we've got
+Flyhub, Flydeck and we've got the Clawed Agent SDK. I knew that when I was
+working with the Clawed Agent SDK I had a bit of drama in one of the stories so
+I've made sure that we've identified what those dramas were. I've had it come
+up with a basic plan of what we could do over the next 12 days so what I think
+we'll do is we'll work with the FlyGen harness today and this is why I needed
+to know about these three projects. So what could the harness actually look
+like?
+
+Now firstly, it could look like flyhub, and flyhub is the tool that I'm using for my recordings.
+So that section of video that you just heard has just landed in the incoming recordings.
+If I hit rename with it right now, it's going to end up in my recording directory as a new
+chapter of what we're going to build.
+And we could come over and watch that video.
+Or we could go over and have a look at the transcripts that it's building.
+So we could be modelling it off the flyhub.
+But then the next application that I got in the list is the fly deck.
+
+Now flydeck is an application that I vibe coded and it's designed to turn
+context into infographics. So when I was doing this long two-hour video which was
+all about the BMAD agent SDK building application, I needed a set of chapters
+and here they all are, they're all visual and this is the idea of this
+particular application. How do we visualize a particular agent like Mary
+or maybe Winston the architect? And so I've asked Claude Code and so I've asked
+Claude Code to reference that application as well. It might be useful
+when we build the current application.
+
+Now flyhub and flydeck probably have all the information I need to scaffold flygen
+but I've also included another one and this is the BMAD agent SDK which was
+based off this particular video that I did a few weeks ago using the BMAD
+method to create an agent SDK application and the reason I wanted to
+include that particular reference is partly because I want the agent SDK
+maybe in day two or three this will become the real brain of the
+application but the other reason is that there were a bunch of problems with
+Tailwind CSS and ShadCN so I've referenced it to get some learnings
+
+So if all goes well, today we'll be building out the FlyGen harness built
+off FlyHub and FlyDeck as an idea. Tomorrow we might look at second
+brains and this is really what memory is in AI and on day three we'll look at
+actual orchestration or the front brain and hopefully we can use Claude code
+SDK. If we can't we might just use Claude code the way we're using it right now
+with a combination of skills and then when we get to the rest of the series
+it's just going to be about generative sort of tools. Can we build an image? Can
+we turn it into a video? Can we have a sound effect or a musical score? Can we
+have the computer talking to us? And then can we maybe bring them together with
+other tools? Maybe we can have a real thumbnail generator or we can work with
+N8n or Comfy UI workflows.
+
+and if all this works what we'll do towards the end is a bit of a
+storytelling sort of application and what that's doing is preparing us for
+next year when I start rebuilding the fly story application and the fly story
+application is how I make online movies so this is a five minute video it's got
+a whole lot of character consistency scene consistency and when you go down
+and look at the story prompts and the animations there's a lot of information
+in here to be used by audio sound files and transcribers there's a lot of rich
+context here that can be used by music making machines audio sound effects and
+also the graphics generators
+
+And if all 12 applications or tools are created, I'd like to do an overview movie.
+
+If we can build all 12 tools over the 12 days, I'd like to finish up on the 13th day by doing the song called the 12 days of Christmas.
+Maybe using something like Suno so that it sounds like on the 12 days of Claude-mas, my code bot said to me.
+
+So with that plan of action laid out, let's get into day one, which is scaffolding of the underlying application.
+
+I'm heading down to a terminal and we've just created the flygem folder earlier.
+What we'll do is we will jump into that. That's an alias I have and so if we do a
+tree we shouldn't have anything there and we can get ourselves started with
+just a clawed code and we'll run it with dangerously skipped permissions and
+you'll notice how quickly we go through the version. So on the 15th if it was on
+the 69 we're now on the 25th and we're on version 76 and because I was doing
+all the documentation over in the 12 days of Clawedmas I'm just going to grab
+as context all the information that it just summarized for me and we'll copy
+that down. We're probably also going to get the folder name. We'll just paste that in
+just say where that information was found.
+
+I'll be using a lot of voice dictation as I go so what we'll type in is
+I've given you a whole lot of information about the project that we're
+going to build within the FlyGen folder which is currently empty at the
+moment. What I'd like you to do is be aware that the first application that
+we're working on today and your main priority is just setting up the harness.
+It's day one. Now I've also given you information about FlyDeck and FlyHub.
+They're going to be great applications to reference for the tech stack that we
+want to have. I've also given you information around the agent SDK and some
+of the challenges I have. You should be reading the challenges to understand any
+problems that we might have with Tailwind CSS and with ShadCN but you
+don't have to reference it too much further because we'll do more of that on
+day three when we start looking at building the brain. When we start
+building the brain or the orchestrator and what I'm going to do is let the
+keyboard go and all that I just said just got typed in and we're just going
+to press enter.
+
+So what you can see is that everything that I pasted in I gave it reference to where it
+should find that documentation.
+Now it is in a subdirectory but the subdirectory has been listed right here and we've got all
+the information about the two applications I wanted to reference plus the third one that
+has the information about Tailwind and Shadseam and then everything else has just been described
+in the conversational prompt.
+We can see here it's using a whole lot of tools.
+If we press Ctrl O we should be able to expand and see what's going on and the main thing
+is it's just searching for files, it's reading files along the way, it then starts once it's
+got information go into thinking mode and if we press Ctrl O again we go back to the
+conversation and it's already completed with a lot of useful information.
+
+So we've essentially got a clone of the tech stack that I've been using for a little while now.
+I'm not a JavaScript developer but I really like this tech stack as we go through it.
+So for the front end we're going to use React and we're going to use Vite.
+This is going to give us good access to hot module reloading.
+So any time a change happens it's instantaneously in the browser.
+We're going to use the latest version of Tailwind CSS4 and note it says not Tailwind 3.
+The reason this is important is because Claude Code as a model has had a problem with always writing out a lot of CSS3.
+Maybe that's changed in Opus 4.5 but before then I've always had a lot of problem here.
+Our back end is going to be a simple express server with socket IO.
+So what this application will give us the feeling of is it's like a desktop application but we're not doing it using Electron.
+And that gives us the benefits that we're not going to have the heavy handed approach that Electron has.
+But we're also not going to have native controls and interaction with the operating system.
+But I find this flow where if I change a file on my system it can be instantaneously shown in the browser to be a good compromise for me.
+And rather than using JavaScript directly we're going to use TypeScript which will give us access to object oriented coding conventions and type safety.
+And rather than using JavaScript we'll use TypeScript.
+And rather than using JavaScript we'll use TypeScript so we'll have type safety built in.
+And then we will use a mono repo.
+So part of the repository will be the client application, part of it will be the server application and part of it will be the shared of types between the two applications.
+Some extras are we're using TanStack query and we're using Sona for any colorful toast messages.
+The warnings are all in place.
+One of the things about port confusion is I'm going to use port 5400.
+This is not an application for the cloud, this is an application to run on my computer.
+So finally it's asking what we need to do and it's at this point that I'd like to bring in an agent to write up a proper requirements document for it.
+
+Now at this point, let's talk about what agents are and what I mean by agents.
+Now the problem with the term agents is that it can depend a lot about context and the
+point of view that you're going through things.
+But if we have a look at a video that I did recently, the BMAD method where I used the
+agent SDK, well the Claude SDK agent is an agent and in Claude code that we're looking
+at here, this too is the master agent, it's the orchestrator, it's controlling everything.
+So it has concepts like tools that can read the file system, search the internet.
+But if you go up to a system like the BMAD method, which is a context engineering framework,
+it too has agents.
+So it has a bunch of planning agents, Mary, John, Winston and Sarah.
+It has a bunch of development agents and you can go and create your own agents.
+
+So, if you looked at that, you might think, well, that's what an agent is.
+Well, if you were in Claude code, that would not be an agent because an agent in Claude
+code would be something called a sub-agent.
+It's usually something that runs asynchronously in the background.
+What a BMAD method agent is in Claude code is something called a command.
+And what that means is it's just a prompt that gets injected into the conversation stream.
+And the issue with that is that as the conversation stream gets longer, aspects of the actual
+agent get forgotten about.
+But for all intents and purposes, I find that your average BMAD agent works just the way
+I think agents should work, which is they have tools, they have workflows, and then
+they have their own little commands that can do stuff.
+Now, if you want to understand proper context engineering frameworks, you can go and watch
+the video that I did on that particular topic.
+But for this particular project, what we're going to do is have our own little agents
+that were built as commands.
+We're going to have some that were built as sub-agents so that they can run in the background.
+And we're going to use a lot of skills, which for us will be more about data pipelines between
+different systems, reading data from a command line tool, writing it to an API, or just encapsulating
+some shared capability that a command or a sub-agent might want to access.
+
+Now, because we're in the FlyVideo ecosystem, I already have some basic agents that I've
+created for use with FlyHub and with FlyDeck.
+Now, they're not currently installed in FlyGen, but recently I put them into the Claude Marketplace,
+though only on my computer at the moment.
+And I'm still learning how to use that, so what I'm going to do is start typing in Marketplace
+and see whether we can figure it out.
+And it looks like you can go into Installed, we've got nothing in this repository.
+We've got Marketplaces, this is the one I want to go into, we'll press Enter.
+Let's just browse and see what we've got.
+We've got BrandDave, and BrandDave is how you're seeing a lot of these visualizations.
+So the application up in the top left-hand corner is FlyDeck, but the actual visualizations
+are being done from a particular agent I've got in BrandDave called the SoloDeck.
+But that's not of import today, today is FlyVideo, so we'll press Enter on that.
+And I've never used this before, so I'm figuring it out on the fly, so we've got Install for
+all collaborators of the repository.
+And I can already see the mistake as I went, because I'm in the wrong location, so let's
+head over to FlyGen, we'll put in Marketplace, we'll press Enter.
+We'll tap over twice, we'll press Enter on AppyDave, we'll browse AppyDave, we'll go
+down to here, and we can see that it's already installed, so that means what we can do is
+just start typing in PO.
+
+Now I've just had about 40 minutes of drama with the plug-in system so what
+I'm going to do is work with my agents directly as commands so we're going to
+be working with the PO but at the moment we don't have a foundation of knowledge
+we don't have a backlog we don't have a changelog we don't have a starting
+requirements document.
+
+So, what I'm going to do is give it a little bit of a prompt to get it bootstrapped with
+information.
+So, I said, I'm going to hand it over to the Product Donor.
+If we do it right now, the Product Donor will try to read files that don't exist.
+So, I'm going to say that it needs to go and model the best practices of those documentation.
+It can go and look at Flydeck, it can go and look at Flyhub.
+We're essentially looking for the change log or we're looking for the backlog.
+There may be other documents, so I'm just going to see what happens if we give it this
+prompt.
+And this should really only be a once off.
+From this point onwards, we should be able to just work with Product Donors and Developers
+to create requirements and then to develop based on the requirements.
+Now, this is perfect.
+Not only has it found the main documents, so it's after it's realized that we should
+have a brainstorming document and that we should have the product requirement document
+folder.
+There I'll put individual feature documents, anything for user acceptance testing, and
+if we needed to, anything for planning.
+So a lot of the planning could have come out of the 12 days of Clawdmas.
+We could bring it over to this project, but I'll leave that for now.
+Instead, I'll do as it suggests and we'll just hand over to the Product Donor.
+
+Now, the product owner has created the FR1, so feature request number 1.
+We can do a show on that to see what it's going to look like.
+And while it's doing that, I'm just going to start a new Claude context over on the
+right, and with that, we're going to load in that feature request and use the developer.
+And of course, there's a lot of information there, but the story card should be enough.
+As a developer building the 12 Days of Claude-mask tools, I want a foundational harness so that
+I can add new capabilities each day with a consistent tech stack.
+So this is all the information it's going to do.
+We'll use our other window to start the developer.
+And he's just reading the backlog, the changelog, the Claude MD, which it didn't find.
+We haven't done a Claude init, that's probably something we should do.
+And you'll notice in light grey that it says yes to implement FR1, so the good thing about
+using Claude code is it'll autosuggest, but I think we should do the init first.
+It could have been done in another conversation, but it might be useful in this conversation
+to have it in place.
+
+Now we have our Clawdmd file in place, what we can do is just press tab to say yes and
+now we're developing our first feature which hopefully will be the foundation of our new
+application using React and Socket.io and Express and all these sorts of capabilities.
+So we can see everything it's going to do, what we'll do is close down this window at
+the moment, I'll just press exit and we'll clear the screen and we'll start it again
+and this is going to come back to our product owner but the reason we're doing this is we
+wanted to reload the Clawdmd that we just created on the other conversation.
+
+So, it looks like it's built everything. I've just done a quick read through.
+The only thing I want to change is that value.
+So, I'm just asking it to reconfigure the environment variables so that the local host will be on 5400
+and the server, which is the socket IO connection, will be just one port number higher at 5401.
+Now, while it's doing that, we should just be able to follow the other instruction it told us,
+which is that we can do an npm install, so let's kick that off.
+The next thing it says is we can do an npm run dev.
+Now, if I just do a which nrd, what you'll see is it's alias to npm run dev anyway,
+though in this case it looks like it's using pnpm, but let's just do an nrd
+and we should be able to kick off this application.
+And while we weren't watching that conversation, we can see that it's using the right port numbers,
+so this looks good.
+
+We've also got this health check, let's also click on that and we'll head over to the web
+server so we can see that something's coming up on the client, it doesn't quite look right
+to me and the reason for that is that if it's got Tailwind CSS it probably should look different
+to this.
+The other thing is that we've got the health check and the server or the backend server
+is running.
+
+in the situation where something isn't looking correct we've got a couple of
+options we can either press F12 and see if there's errors look at that there are
+some errors and that may be where our issue is I was just going to paste
+through this image but at the moment it's trying to hit 5400 it should be
+hitting 5401 I'm assuming so I'm just going to copy all of that information
+put into the clipboard head down to the terminal where I'm going to put in two
+different statements head down to the terminal where I'm going to put in two
+different statements I'm going to say I think we have an issue with talking to
+the port with the server I'm going to give you some console log but we also
+have some visualization image or visualization style issues with tailwind
+CSS it could be the same problem or it could be a misalignment with the version
+of tailwind that you're using so I'm just putting that in right now we'll put
+in the log that we got we'll also press ctrl V on the Mac so normally when you
+paste it's with command V but for images it's different and what will happen is
+that this little image is there and if you hold the command key and click I'm
+not sure what it is on the windows that will show that image for you but it's
+really just a screenshot when we're looking at so the context of both the
+image plus the stuff from the console log is going through to Claude it's in
+the developer context at the moment because he is the person that did the
+actual creation of this code so most likely to be able to fix it would be him
+we can see one fix in place we've got the server connections working correctly
+but we still don't have visualization going on let's see what it's thinking
+through it's currently reading through a bunch of CSS style guides notice every
+now and then that there'll be changes over here as the CSS changes it's
+figured out potentially an issue with tailwind when you see green you can see
+that it's changed from the red to the green it doesn't necessarily mean it's
+right but hopefully it's testing something out here we can see it's doing
+a curl command so essentially this is just a little terminal command that
+will talk to any web server oh boom that just worked so that just popped up right
+now let's press f12 to get rid of the development area and we've got fly gem
+day one foundation harness 12 days of Claude miss the status is okay this is
+the status of the server so these are two applications the client that we're
+seeing and talking to the actual server well look at that we got a bit of a
+connection going on what's going on here we'll press f12 notice that the web
+socket connection just failed and this may still be an issue with that 5400
+coming through we can see the 5400 and it's not making any changes to code
+which means I'm going to take all the information here will pop will pop back
+we'll pop back over and say looks like you fix the start style issues but there
+could be an issue with the server now I just realized as I said this it might
+not be the right thing to do what we'll do is just follow a different strategy
+ourselves based on something I just read so I've got this little command that I'm
+running it's just looking for anything on 5400 or 5401 and it's killing it and
+then it's running the NRD we'll just see whether that improves things we'll pop
+over we'll pop open the web server web servers now connected says connected to
+fly gem this says connected as well we'll press f12 let's just stop this
+video and recap on a couple of things
+
+and I brought us back to here because we're
+are essentially finished the development I wanted to figure out how long it's
+been taken
+so I'm just going to rename that it's going to pop over into the recordings
+now the first recording we did right at the very top here
+was at 11 o'clock well 10.49 I then started
+talking at 11 o'clock and the time right now
+is one o'clock and part of the problem I had was
+in the hour between 12 and 1 I just got caught up
+in this plugin issue from the plugin marketplace
+from Claude Code so this goal that I've had
+of trying to build an aspect of the application
+in one to two hours is
+generally on track if we take out an hour of wasted time we're at two hours
+and if we then think about that most of this video has really just been talking
+about scenarios setting it up
+what to build and then we start the building
+which didn't really kick off until after we'd installed the plugin
+so this is the setup of the product owner at
+12.51 and it's now
+1.15 so essentially 30 minutes to build that part of the application
+once some of the other guesswork and once some of the other orchestration
+once some of the other sorts of setup
+were put in place once some of the
+other setups were put in place
+
+Let's do a little bit of a recap and what's next.
+So the FlightGen application structure is in place.
+By the end of tonight, what I'll probably do is make minor changes to this because what
+I want to see is some sort of menu over on the left.
+I don't just want to see that we have an application harness and that it works.
+Now we do know that the server is working because we've got a little bit of a status
+code.
+We have been looking at the way we could have done applications in the past with BMAD Method
+and Claude SDK.
+That led us to talking a little bit about agents.
+So we can have agents for planning, we can have agents for development, we can have agents
+for planning and development and even though we didn't use the complexity of BMAD, this
+is what we did.
+Our left hand side was the product owner and our right hand side was the developer in the
+system we're doing.
+We also know that as we built out the harness, we used as a foundation concepts like this
+flight deck application that we're seeing here.
+We also use the storyline application for a little bit of ideas.
+We also use the fly hub application for a lot of the design considerations.
+We also use the fly hub application for a lot of the tech stack considerations and we
+took away some of the learnings that were done in the original BMAD Claude SDK video.
+
+So with us that far what we'll do is I'll make a couple of changes and then
+tomorrow we'll either work on the second brain which is memory or we'll work on
+the primary brain which is the Clawed Agent SDK. I'm Appy Dave, I'll see you in
+the next video.
+
+Now it's nine o'clock at night we're still on day one of Clawdmas but what
+I've decided to do is maybe come up with some sort of menu on the left and some
+sort of the content area and areas for configuration. So I've just come over had
+a little bit of a conversation with the product owner. First thing I've done is
+moved all the documentation from 12 days of Clawdmas over into the FlyGen
+system and I've made sure everything has just landed in the planning area and I
+let Clawd do all this for me. I then let the PO evaluate all the colors all the
+ideas that were in the Clawdmas document and come up with a little bit of a shape
+to how this application should work. So I'm assuming we're going to have a side
+bar on the left some sort of title area with some statuses. We might have the
+status of whether we're connected to the server through socket IO and any other
+capabilities such as whether we're on FAL AI or CHI AI when we're doing our API
+calls and it essentially read the fly hub the fly deck and the Clawdmas
+documentation to come up with the reasons for that. So we get the reasons
+why it picked it. We've got the areas that have been identified. We've got an
+appropriate color palette put in place and I've just finished by asking it to
+create the functional requirement number two. So in theory we should just be able
+to go over here we'll clear the screen and we'll just we're on the developer at
+the moment so we'll just say implement FR2 layout and navigation.
+
+So it's finished doing the development and unfortunately it took quite a while
+to do and it's because it was running into the issues I was talking about
+earlier with Tailwind CSS it took a little while to get it working
+ultimately it was a little bit of a configuration issue. Now what it means is
+that we've got the old version sitting here and we've got the new one being
+created we've got these menus going on down the left I'm not sure that they're
+doing very much right now but this will be perfect as a menuing system it is
+changing the it is changing the title and the thump it is changing the title
+it is changing the breadcrumb so this is great. I'm also just going to alter it so
+it has a little cog so that we can see the settings they should pop and they
+should pop up in the top right hand corner in a moment and there's our cog
+and it looks like it's going to pre-populate a bunch of ideas for API
+keys probably not what I want and if we click on it it's going and filling in
+some sample keys it's identified that we're going to have all these different
+API so maybe we need API keys to them
+

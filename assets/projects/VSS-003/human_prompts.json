@@ -1,0 +1,6 @@
+{
+  "projectCode": "VSS-003",
+  "prompt_a": "Prompt, show 3 media files, one is a narration, one is a music file and one is an image.\nShow them in a Venn diagram where there is something overlapping but we don't know what.\n",
+  "prompt_b": "Prompt, edit the image so that a video is showing on top of the Venn diagram showing the narration, the music and the image file.\n",
+  "prompt_c": "Prompt. The narration, the music and the image file all start moving and coming together to form a video production and a final video.\n"
+}

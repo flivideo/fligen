@@ -1,0 +1,293 @@
+Welcome to day 6 of the 12 days of Clawdmas.
+This is the project where we're vibe coding every day using Clawdcode
+and today being day 6 is video generation day.
+I'm happy Dave, let's get into it.
+
+Now if we check out our progress we'll see that video animation is day 6 and what we'll
+probably use for that is similar tools to what we used with image generator.
+We'll use either FAL, AI or CHI AI to generate videos and see how it performs.
+
+So, our simple flow up to now has been that we did the harness, then over two days we
+did the brains, both the primary brain and the secondary brain.
+After that we got into the creative where we are at the moment, so we've done images,
+we've done voices and now we're working on the video.
+
+So one of the things we did yesterday when we were on the text of speech was that we worked on coming up with a plan for a story.
+And the story came up with this narrative that you see right now.
+A quick brown fox discovers a lazy hound dozing beneath an old oak tree.
+And all of that planning we were doing came together in a document that we created yesterday in the planning folder called,
+Fox and the Lazy Dog Story.
+
+So, when I kicked off this conversation just before the video, I asked a question, what's
+our plan of action for doing a test of video sort of system and basing it off the plan
+of action we've got.
+And this is what it's come up with for today.
+And this is what it's come up with.
+It has understanding that we have a narration mp3 file, which we may use in the video, I'm
+not sure.
+We currently don't have any images generated, but we do have an image generation system
+and at the moment we don't have video capability.
+Now it's saying here that we should be able to generate some images just based off the
+prompts we already have in the plan and if we go over to the plan from yesterday, we
+can see that a bunch, we can see that a variety of prompts were done for each part of the
+scene.
+So that's the beginning, the middle and the end.
+
+Now, if we consider the fact that we do have some prompts and that we do have an image
+generator, we then need to think, is the image generator in such a position that we could
+use it with video generation?
+And at the moment, I would suggest that it's not because what we've got is this tool that
+we can use to generate images, is this tool that we can use to generate images, is this
+tool that we could use to generate images, but currently none of these images get saved
+anywhere.
+So while we're waiting for these images to generate right now, what I'm thinking we need
+is some sort of short list so that when we find an image we want, we should be able to
+click on it and say, you're part of a storyboard.
+So I think if we had the ability, say, with this image to click on it, add it to a storyboard,
+maybe label it as image number one, we'd then be able to have a collection of images
+ready so that when we do get to the video integration, and this is where we might want
+to do image to video generation, we'd have a list of images ready to go.
+
+So the way I've started is loaded in our product owner and I've also asked for the product owner to wait for instructions.
+And the instructions we're going to start off with is we're going to describe some changes that we want for day four.
+And what I think I want to see is the ability to click on any of these images and just see a little storyline pop up between the headings and the generate all.
+Now, if we generate a new image, these should remain there and that way we can just add more images as we like.
+And we're essentially building up the stories and and we're and we're essentially building up a shot list that we'll use for the and we're essentially building up a shot list.
+And we're essentially building up a shot list that we'll use for the video generation.
+So let's come back to the terminal and figure out what the prompt will be.
+
+So we're going to start with a prompt and the first thing I'm going to do is
+press command V so that we've got this little image put in.
+
+So the first thing I'm going to do is take a picture of this entire screen and
+then we're going to go down to the terminal and we're just going to paste
+it in as a starting image and we'll start writing our prompt as I would like
+to create a clickable link for each of the images that we generate and if we
+click on one it adds it to a shot list. Now where that shot list should show up
+is as little icons horizontally just underneath the generate all button and
+just above the headings fowl.ai and kyde.ai so if I click on the second
+image the second image should show up in the shot list now if I generate more
+images and then pick a different image that too should show up in the shot
+list and the good thing is and and the other thing is that if we go to another
+page like day six where the videos are though that shot list is still available
+for us so we'll just let that prompt go into the system and we'll add to the
+prompt and say can you at least design a mock in ASCII format for me so that I
+can see what this could look like and how it could work and we'll just let
+that come through
+
+And so now what we have is a mock representation and the way it's done it
+is it said this is what it currently looks like and this is it we've got the
+prompt we've got the generate all button we've got our two headings and we've got
+the four images. It's then making a suggestion that afterwards we'll have
+this shot list we'll have the ability to remove some icons we've got hover it
+doesn't say what we're going to do other than this little add here we've got
+this hover here and we can see we could either add or it's already added and
+then it's even gone further and said what could day six which is the video
+page look like as well. It's then got a view of what this shot list could look
+like if we zoomed in and afterwards it's got the day six which is the video page
+that we want to generate and the interesting thing about how it's thought
+it through is that it's got the images that we just added to the shot list
+from the day four page we've got the ability to select an image we've got the
+ability to drop down how long the video should be and what model we should use
+and then there's the generated video with a player to see it and up until
+here everything has been pretty much exactly what I want the only thing
+that's a little bit wrong is in the workflow and the problem is this one
+line it's saying select a shot to generate a video but what we'll really
+want to do is select two different shots because what we're going to do is image
+to image video generation so I've put in a prompt that affirms that everything
+it's talked about is correct except for the one fact that we should be able to
+put in a starting image and we should be able to put in an ending image and the
+video is and the video is generated based on those two images so we'll put
+that in see what it comes up with
+
+Now, a new ASCII design has come through and this is now starting to make sense.
+We've still got our shot list on the Day6 video generator, we've got the start frame,
+we've got the end frame, we've got the duration, we've got the model, we've got the generate
+button and then we've got the preview and then we get to see the interaction flows.
+And it's given us a flow, it's also given us a simpler idea, it hasn't stated which
+one it would select.
+And the other thing we haven't been too clear on right now is the idea of how the technology
+is going to work, the fact that we need a beginning frame, end frame sort of model to
+work with or even how the APIs work.
+But most of the APIs were documented on Day4.
+Now I think we will just do one big requirements document that makes both changes so we'll
+come back here and we'll say this is all looking really good.
+Can you make a requirements document for me please that will update page or Day4 which
+is the image generator based on what you said, we'll let that come through.
+Can you also make sure that the requirement deals with the Day6 visualisation screens,
+we'll go with the simpler drag and drop into slots that you talked about.
+And lastly can you make sure that you've investigated any models from either CHI AI or FAL AI that
+allow image to image video generation where we have a begin frame and an end frame.
+So we'll put that in.
+I might also just get it to ask one other question of me.
+Before you start, are there any other questions that you have of me before we finish this?
+I'd like it to be a one shot requirement that allows us to build both the Day4 modifications
+and the new Day6 page.
+I'll press enter on that and just see if it comes up with any questions that I haven't
+thought of.
+So the first area it wants to talk about is shot list behaviour.
+Can we persist it somewhere?
+Do we have capacity?
+It's given some ideas and I've really given it a long statement saying we already have
+a client server arrangement.
+We should be able to save it into our folder in the assets directory.
+We can go with the shot list subfolder if we like.
+And the good thing is because we're using socket IO, if we were to reload the application,
+they should automatically come into focus.
+And I've given it no limits on the number of files that could go into the shot list.
+I think we should have a delete button so we can remove them any time we want.
+Now when it comes to this video generation, what I've decided to do is that we will just
+generate them into a video scenes because what we've got is just one five second video.
+It is a scene essentially.
+And what I want to do is just name it 1-2.mp4 if the images happen to be named 1.jpeg and
+2.jpeg, then the video could be named 1-2.mp4.
+It's simplistic but we haven't decided what we're going to do with the full video generation.
+It's simplistic but we haven't decided what we're going to do with movie generation.
+Now for the audio generation, we're not going to include it anywhere.
+The files have already been saved which is good.
+And when it comes to the API priority, we're just going to make sure it uses both of them.
+Funnily enough though, I haven't given it...
+Funnily enough though, unfortunately I didn't think to give it a drop down for selecting
+whether it's FAL or CHI AI.
+Hopefully it can work that out.
+
+So we can see it's starting to investigate with FAL AI and it's using the MCP server to do that.
+And it's using the MCP server to do that research.
+One thing that I noticed is that when I was looking for information on CHI,
+it did a web search but we had set up a second brain so I have told it just to try and use that.
+So it's finished building the document so it's going to be functional request number 10.
+Part one is going to be the shot list infrastructure.
+Part two will be any changes that we make to the day four user interface.
+And part three will be the day six video generation user interface.
+There's also a bunch of video API research.
+So what we're going to do is run a new Claude code.
+We'll use the progress command just to bring the conversation up to date.
+And so it's come up to date and notice that it has a suggestion on what to do.
+So we'll press tab and that's to start the day six video animation with FR10.
+So currently it's reading both the requirements document and the planning documents.
+And now it's just going to work through this list of tasks, do a whole lot of research and development.
+
+Now, we have finished all the coding, so it did it all in one long conversation, to the
+point that it's nearly run out of context.
+And there's a claim that the Shotlist infrastructure is included, we've got the Day 4 UI modifications,
+and we've got the Day 6 video generation.
+Now, I've just come through and done a little test just to see how things are going, and
+I do, and I am aware that there is one problem at the very least, because we've got an issue
+with the Shotlist not saving correctly.
+What it was doing was saving as PNGs, but the files are actually JPEGs, and I've just
+checked that in another conversation, so I'm just going to ask it to try and fix it based
+on the analysis in the other conversation, and I did it in the other conversation purely
+because of this 4%.
+And we're currently at 1%, so this could auto-compact any time now.
+And it did a Compact, and we are now got a finished system.
+So what we'll do is we'll just go and test it.
+I've got debug going on.
+I think we can just go and test it anyway.
+We'll just put in a prompt, and this is one of the new prompts from the planning session.
+And so it's generated some images.
+When we hover over, we can add it to the Shotlist, which I assume is going to be here.
+Let's click on this one, see what happens.
+And that just added.
+This is great.
+Let's go down to VS Code.
+So we've got this little index.json file.
+We've got the image coming through here.
+What I think we'll do now is pick another prompt, and we'll paste it in there.
+What we're hoping is that everything stays in place here.
+We'll get new images.
+We're getting new images coming in right now.
+I don't like any of them, so we'll generate a different one.
+And one of the things that we haven't really considered here is how are we going to do
+character and scene consistency.
+So whatever video we come up with is not as good as it could be if we had a proper working
+process.
+But we really are only demonstrating that we can get some sort of video generation going.
+So I think we will use this one.
+Let's click on it.
+And we should get another video.
+We should get another image in the Shotlist.
+And I'm just currently testing the third image prompt, and the idea of this is that the fox
+is now running away.
+And the images are kicking in right now.
+I think we can try with that one.
+
+So, the next step is to check what's going on with this video generator and this is exactly
+what we want to see.
+We want to see the items from the previous area and it looks like we can just drag.
+We can.
+Let's try the second one.
+And we've got three different models.
+One from CHI, two from FAL AI.
+Let's go with this VO3 one.
+And we can see that these frames are terrible like the trees on the left here, the trees
+on the right.
+So, there will be issues, but we'll put in a prompt that says, can the fox start running
+towards the dog and then finally jump over the dog and we'll just put that in.
+And let's see what happens if we generate this transition.
+And we've got an error.
+
+now we've had a bunch of changes that was all done in one prompt but and
+we've got an update on our server running here so we'll go and have a look
+at what's going on in the system go to the images we have lost the images that
+are here because we haven't done anything to persist them but the shot
+list is still available so we should be able to come so we should be able to
+come back to the video area we can just drag this one in and we can drag this
+one in again and we'll see whether the second attempt works okay we haven't
+got an error yet and that's interesting we haven't had an error as such from our
+corruption we haven't had an error from the code not working it's just a file
+size limit wonder what would happen if we picked a different model so we don't
+have a key and this time all I've done is made sure that the right key was
+being referenced and it looks like with foul AI we might be working and
+something just appeared is this playable look at that very cool so why have we
+got two no maybe that's just it we'll hit play let's see what happens
+oh this is very cool and that's as far as it went okay not as cool as I thought
+I think what we'll do is just see if we can change the prompt a little bit so
+now it's not a question it's just an action we'll run this one more time the
+Fox runs in a flash to the job to the dog and then jumps over the dog so one
+of the things I'm noticing is it says 10% and you would think it's streaming
+but I don't think it is streaming I think it all comes through in one hit
+and there it is all right there's a little bit of streaming but it just went
+straight from 10% all the way to 80 and then it's finished and here we have
+something let's see if this new animation prompt helps and I don't think
+it's any different to be honest and it's hardly any different really but what we
+could do is just pick a different model and while we're doing it let's also pick
+10 seconds and we'll run the generation so we're at 10% so we've got our 10
+second video just coming through right now let's test it out see what happens
+and the dog disappeared that's odd and that's really weird but it's an
+interesting video it's not 10 seconds I don't know why
+
+But this is not a session in fixing all the different issues related to vibe coding.
+So I guess what we've been able to do today with a few flaws, but that's okay, is that
+we've got the image generation updated so that we've got this shot list sort of idea
+going on.
+And the good thing is it persists.
+So even though these images are not persisting, we've never, but we've never asked to have
+that capability.
+So that's okay.
+They are now available for us when we do the video generation.
+So we should be able to do something like that and say, run away and see what it creates
+for us.
+And while it's doing that, we can also see that there's a bunch of other issues down
+here, such as the numbering system, we've got the same numbers.
+I've never tried to download, maybe it works.
+The other thing I noticed is that as soon as you create one, the other ones stop working.
+So if I hit play here, nothing, I hit play here, nothing and nothing.
+And what about this one?
+I think as soon as you start rendering something, anything else before disappears.
+But again, we've not given any purposeful instructions in our coding to deal with that
+sort of stuff.
+And this one is now coming through.
+So we'll be able to see what this, what these two scenes will look like in a video.
+Here it is.
+It's going the wrong direction, but let's run away.
+Hey, that's perfect.
+
+Well there we are that's day six on the 12 days of Clawdmas and we do have the
+FlyGen application generating some little videos there's a bunch of bugs
+there I know that but if you're interested in learning more about Vibe
+coding or context engineering then I do have a link to the school community down
+in the description otherwise please like and subscribe I'll see you in the next
+video but let's just play the last video one more time in full screen but let's
+just play this last video in full screen and I think that is incredible
+see you in the next video
+

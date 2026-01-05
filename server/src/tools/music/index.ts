@@ -8,6 +8,9 @@ import { listLibrary, saveTrack, deleteTrack } from './storage.js';
 // Re-export types
 export type { MusicGenerationRequest, GeneratedTrack, SavedTrack } from './types.js';
 
+// Re-export catalog save functions
+export { saveMusicToCatalog, downloadAndSaveMusicToCatalog } from './save-to-catalog.js';
+
 /**
  * Check if FAL.AI music is configured
  */

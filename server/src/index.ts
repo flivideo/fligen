@@ -21,6 +21,8 @@ import { checkFliHubHealth, fetchTranscripts, isFliHubConfigured } from './tools
 import { saveProject, loadProject, listProjects, projectExists } from './tools/projects/index.js';
 import type { SaveProjectRequest, ProjectData, SourceTranscript, RefinePromptsRequest, RefinePromptsResponse } from '@fligen/shared';
 import { SYSTEM_PROMPTS, refinePrompts } from './tools/prompts/index.js';
+import { assembleVideo, saveStoryToCatalog } from './tools/story/index.js';
+import type { AssemblyRequest, AssemblyResponse } from '@fligen/shared';
 import * as catalog from './tools/catalog/index.js';
 import type { Asset } from '@fligen/shared';
 
@@ -146,7 +148,7 @@ app.get('/api/tts/voices', (_req, res) => {
 // TTS generate endpoint - convert text to speech and save to catalog
 app.post('/api/tts/generate', async (req, res) => {
   try {
-    const { text, voiceId } = req.body as GenerateSpeechRequest;
+    const { text, voiceId, name } = req.body as GenerateSpeechRequest;
 
     if (!text || typeof text !== 'string') {
       res.status(400).json({ success: false, error: 'Missing or invalid text' });
@@ -158,7 +160,7 @@ app.post('/api/tts/generate', async (req, res) => {
       return;
     }
 
-    console.log(`[API] /api/tts/generate - voiceId: "${voiceId}", text length: ${text.length}`);
+    console.log(`[API] /api/tts/generate - voiceId: "${voiceId}", text length: ${text.length}, name: "${name || 'none'}"`);
     const result = await generateSpeech(text, voiceId);
 
     if (!result.success || !result.audioBase64) {
@@ -174,7 +176,9 @@ app.post('/api/tts/generate', async (req, res) => {
       result.voiceName || 'Unknown',
       result.model || 'eleven_multilingual_v2',
       result.characterCount || text.length,
-      result.durationMs || 0
+      result.durationMs || 0,
+      {},
+      name
     );
 
     // Return asset info instead of base64
@@ -636,6 +640,46 @@ app.post('/api/prompts/refine', async (req, res) => {
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     console.error('[API] /api/prompts/refine - error:', message);
+    res.status(500).json({ error: message });
+  }
+});
+
+// ============================================
+// Story Builder API Endpoints (FR-20 / Day 11)
+// ============================================
+
+app.post('/api/story/assemble', async (req, res) => {
+  try {
+    const assemblyRequest = req.body as AssemblyRequest;
+
+    console.log('[API] /api/story/assemble - assembling video story');
+    console.log('  Videos:', assemblyRequest.videos.length);
+    console.log('  Music:', assemblyRequest.music.file);
+    console.log('  Narration:', assemblyRequest.narration?.enabled ? assemblyRequest.narration.file : 'none');
+
+    // Assemble the video
+    const result = await assembleVideo(assemblyRequest);
+
+    if (!result.success) {
+      res.status(500).json({ error: result.error || 'Assembly failed' });
+      return;
+    }
+
+    // Save to catalog
+    await saveStoryToCatalog(result, assemblyRequest);
+
+    const response: AssemblyResponse = {
+      success: true,
+      outputPath: result.outputPath,
+      duration: result.duration,
+      catalogId: result.catalogId,
+    };
+
+    res.json(response);
+
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('[API] /api/story/assemble - error:', message);
     res.status(500).json({ error: message });
   }
 });

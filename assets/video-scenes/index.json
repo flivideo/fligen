@@ -210,6 +210,58 @@
       "createdAt": "2026-01-02T14:13:49.958Z",
       "url": "/assets/video-scenes/005-004.mp4",
       "completedAt": "2026-01-02T14:14:35.150Z"
+    },
+    {
+      "id": "video_1767515955006_kh52hf",
+      "filename": "009-009-kh52hf.mp4",
+      "startShot": "shot-009",
+      "endShot": "shot-009",
+      "provider": "kie",
+      "model": "veo3",
+      "duration": 5,
+      "status": "failed",
+      "createdAt": "2026-01-04T08:39:15.006Z",
+      "error": "Failed to submit task: Images size exceeds limit"
+    },
+    {
+      "id": "video_1767515964405_01z7zg",
+      "filename": "009-009-01z7zg.mp4",
+      "startShot": "shot-009",
+      "endShot": "shot-009",
+      "provider": "fal",
+      "model": "wan-flf2v",
+      "duration": 5,
+      "status": "completed",
+      "createdAt": "2026-01-04T08:39:24.405Z",
+      "url": "/assets/video-scenes/009-009-01z7zg.mp4",
+      "completedAt": "2026-01-04T08:40:05.856Z"
+    },
+    {
+      "id": "video_1767516135465_77y8ay",
+      "filename": "008-009-77y8ay.mp4",
+      "startShot": "shot-008",
+      "endShot": "shot-009",
+      "provider": "kie",
+      "model": "veo3",
+      "duration": 5,
+      "prompt": "Smooth cinematic transition with natural motion and in the middle of it a little bit of a glowing boom as they transition from one image to the other.",
+      "status": "failed",
+      "createdAt": "2026-01-04T08:42:15.466Z",
+      "error": "Failed to submit task: Images size exceeds limit"
+    },
+    {
+      "id": "video_1767516146727_mhbvcs",
+      "filename": "008-009-mhbvcs.mp4",
+      "startShot": "shot-008",
+      "endShot": "shot-009",
+      "provider": "fal",
+      "model": "kling-o1",
+      "duration": 5,
+      "prompt": "Smooth cinematic transition with natural motion and in the middle of it a little bit of a glowing boom as they transition from one image to the other.",
+      "status": "completed",
+      "createdAt": "2026-01-04T08:42:26.727Z",
+      "url": "/assets/video-scenes/008-009-mhbvcs.mp4",
+      "completedAt": "2026-01-04T08:43:41.573Z"
     }
   ]
 }

@@ -21,6 +21,70 @@ Any important context or decisions made during implementation.
 
 ---
 
+## 2026-01-04 - FR-17: Asset Persistence Implementation (History UI)
+
+**Reference:** [FR-17: Asset Persistence Implementation](prd/fr-17-asset-persistence-implementation.md)
+
+**Handover:** [FR-17 Handover Document](uat/fr-17-handover.md)
+
+### Changes
+
+#### Backend Persistence
+- Created `server/src/tools/elevenlabs/save-to-catalog.ts` - TTS audio persistence
+- Refactored `/api/tts/generate` endpoint to use `saveAudioToCatalog()`
+- Updated `/api/music/generate` to auto-save to catalog (FR-17 requirement)
+- Updated `/api/music/library` to load from BOTH old storage + new catalog
+- Video persistence already existed via `saveVideoToCatalog()`
+- Image persistence already existed via `saveImageToCatalog()`
+
+#### Frontend History UIs
+- **Day 4 (Images):** Added grid history UI with thumbnail display, "Reuse Prompt" functionality
+- **Day 5 (TTS):** Added list history UI with audio players, "Reuse Text" functionality, queries both `type=audio` and `type=narration`
+- **Day 6 (Videos):** Enhanced to load from catalog + old storage, filters out N8N workflow videos
+- **Day 7 (Music):** Enhanced library to load from catalog + old storage, auto-refreshes after generation
+- **Day 10 (N8N):** Added workflow history with grouping (2 images + 1 video), "Reuse Prompts" functionality
+
+#### UX Improvements
+- All history UIs auto-refresh after generation
+- All history UIs sorted by date (newest first)
+- Day 4 comparison grid now hidden until first generation
+- Day 6 properly separates transition videos from N8N workflow videos
+- Day 10 workflow videos now have playback controls
+
+### Files Created
+```
+server/src/tools/elevenlabs/save-to-catalog.ts
+docs/uat/fr-17-handover.md
+```
+
+### Files Modified
+```
+server/src/tools/elevenlabs/index.ts
+server/src/index.ts (TTS + music endpoints)
+client/src/components/tools/Day4ImageGen.tsx
+client/src/components/tools/Day5TTS.tsx
+client/src/components/tools/Day6Video.tsx
+client/src/components/tools/Day7MusicGen.tsx
+client/src/components/tools/Day10N8N.tsx
+```
+
+### Status
+- ✅ Day 4 (Images) - Complete
+- ✅ Day 5 (TTS/Audio) - Complete
+- ✅ Day 6 (Videos) - Complete
+- ✅ Day 7 (Music) - Complete
+- ✅ Day 10 (N8N) - Complete
+- ⚠️ Day 8 (Thumbnails) - Not implemented (requires separate PRD)
+
+### Notes
+- Implemented backward compatibility by loading from both old storage and new catalog
+- Asset type inconsistency: some legacy assets saved as `type: 'audio'` instead of `type: 'narration'`
+- Day 8 (Thumbnails) needs server-side persistence (currently client-side only)
+- Video types properly separated: Day 6 transition videos vs N8N workflow videos
+- All user data preserved and visible across page refreshes
+
+---
+
 ## 2026-01-03 - FR-15: Prompt Refinement UI
 
 **Reference:** [FR-15: Prompt Refinement UI](prd/fr-15-prompt-refinement-ui.md)

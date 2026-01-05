@@ -1,0 +1,80 @@
+Welcome to the finale of the 12 Days of Clawdmas, a series in which we've been using Vibecoding and Clawdcode to build a bunch of applications and tools for a project called FlyGen.
+
+Now at the end of this video what we want to do is have a final song for the 12 Days of Chloedmus
+and a little bit of a showcase of everything that we've done over the 12 days.
+So let's get in and have a look at what we've done over the last 12 days
+and see what we can do to build a song quickly and easily using the context of the videos we've already created.
+
+Now working our way backwards what we did yesterday was we built a story
+essentially an 18 second video made up of animations and music. Now the way we
+did the animations came from the day before where what we did was we used an
+NADN workflow to create multiple images and do an animation prompt between them
+but to build those images we needed prompts and the way we did that was by
+recording videos in another application called FlyHub and then using the
+interrupt to bring the transcripts through to the intake form for those
+for those prompts for the prompts that built those particular videos. Now before
+that now the day before we've done another combination application and that
+application was a thumbnail builder again it was just generating some of the
+image generation we've done along with some of the text layering that we could
+do with Vibe coding.
+
+Now the basic building blocks of everything we've done in these integration days were
+done in the previous four days.
+So we had a music generator which will be the primary tool we use today when we build
+the song.
+We had an animation generator which was a basic idea of just taking two images, merging
+them together with an animation prompt to get some sort of animation going.
+We also used 11 labs to do some text to speech and on the first day of the creative process
+we worked with basic image generation.
+
+Now everything I've talked about from day 4 through to day 11 are all creative
+processes some of them are basic building blocks some of them are
+compound building blocks but before that we also worked on the brains so the
+second brain was the idea of how do we bring in information from an external
+memory store we were using kybernesis at this stage to bring in information say
+branding information before that we then worked on the actual brain the main
+brain that we could use and we use this for prompt generation systems and this
+was using the agent SDK using my own Claude Code account and then we got to
+day one where we really started and that was about building a foundation
+application on which everything else we've discussed could be placed
+
+So, what I think we should do today is pretty much go through and grab the transcripts from
+every video that we've done up to now because I think from that we have a lot of context
+in which we could develop this song.
+And to get started we're going to do that by using Claude code and we'll probably use
+which will allow us to talk to the video generation system that we use.
+
+Now the video generation tool that I'm talking about is the FlyGen application
+which is another vibe coded application and at the moment all the recordings so
+far have all green Ts meaning they have a transcript except for this one which
+is in the middle of transcribing at the moment. So what that means is that all
+the other videos we did which should all be in the projects directory all named
+with the word Claude-ness should all have these little icons that look like a
+notepad and if I was to click on any of them what I would end up getting is the
+exact transcript of the words that were said in each of the videos.
+
+but if we want to use this information from Claude code then what we probably
+need is a skill that can talk to an API and briefly the way that tool would work
+is if we were using the video we're currently recording and we did a send
+request we would end up with all the transcript of everything I've said but
+if we go back to a different video like B87 what we should be able to get is the
+transcript from the very first video that we did and what we can see from
+that very first video is how I started it. Can you create 12 different
+applications in 12 days as a content creator? So to generate the lyrics for
+this song I'm going to scrape the information from any video that I've
+done that has the word Claude Massey in it and we'll use that as context to build
+just the right song for the project we've been doing.
+
+So to get started we're going to go to Claude code like we normally do but
+unlike before where we started off with product owners or developers we're just
+going to ask a question of the skills related to FlyHub. So we'll just say can
+you give me a little bit of help around the FlyHub system and we'll just let
+this prompt go in. Now what should happen is that it should hear the word FlyHub
+and go there is a skill already in the system for Claude and that that skill
+will then go and talk to the API's from FlyHub and find out whether there's a
+little bit of help information. So we can see that the FlyHub skill has been
+called right here and information has suddenly come through we've got an
+overview of it and if I look for the word transcript you'll see that it's
+scattered throughout the help documentation so there are capabilities
+to look for it that way.
+

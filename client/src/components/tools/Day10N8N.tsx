@@ -21,6 +21,7 @@ export default function Day10N8N() {
   const [statusMessage, setStatusMessage] = useState('');
   const [result, setResult] = useState<WorkflowResult | null>(null);
   const [error, setError] = useState('');
+  const [workflowHistory, setWorkflowHistory] = useState<any[]>([]);
 
   // Project loading state
   const [projects, setProjects] = useState<ProjectListItem[]>([]);
@@ -30,9 +31,10 @@ export default function Day10N8N() {
     error: null,
   });
 
-  // Load projects list on mount
+  // Load projects list and workflow history on mount
   useEffect(() => {
     loadProjectsList();
+    loadWorkflowHistory();
   }, []);
 
   // Simulate progress during processing
@@ -100,6 +102,49 @@ export default function Day10N8N() {
         loading: false,
         error: error instanceof Error ? error.message : 'Load failed',
       });
+    }
+  };
+
+  const loadWorkflowHistory = async () => {
+    try {
+      // Load all N8N workflow assets from catalog
+      const response = await fetch(`${SERVER_URL}/api/catalog`);
+      const data = await response.json();
+
+      // Group assets by workflowId
+      const n8nAssets = (data.assets || []).filter((a: any) => a.metadata?.workflowId);
+      const workflows = new Map<string, any[]>();
+
+      n8nAssets.forEach((asset: any) => {
+        const wid = asset.metadata.workflowId;
+        if (!workflows.has(wid)) {
+          workflows.set(wid, []);
+        }
+        workflows.get(wid)!.push(asset);
+      });
+
+      // Convert to array and sort by workflow ID (descending = newest first)
+      const workflowArray = Array.from(workflows.entries())
+        .map(([workflowId, assets]) => ({
+          workflowId,
+          assets: assets.sort((a, b) => {
+            // Sort within workflow: images first, then video
+            if (a.type === 'image' && b.type !== 'image') return -1;
+            if (a.type !== 'image' && b.type === 'image') return 1;
+            return 0;
+          }),
+          createdAt: assets[0].createdAt,
+          prompts: {
+            seed: assets[0].metadata.seedPrompt || '',
+            edit: assets[0].metadata.editPrompt || '',
+            animation: assets[0].metadata.animationPrompt || ''
+          }
+        }))
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+      setWorkflowHistory(workflowArray);
+    } catch (error) {
+      console.error('[Day10] Failed to load workflow history:', error);
     }
   };
 
@@ -479,6 +524,88 @@ export default function Day10N8N() {
               </div>
             </section>
           )}
+
+          {/* Workflow History */}
+          <section className="rounded-lg border border-slate-800 bg-slate-900/30 p-6">
+            <div className="mb-4 flex items-center justify-between">
+              <h2 className="font-mono text-lg font-semibold text-slate-200">
+                WORKFLOW HISTORY ({workflowHistory.length})
+              </h2>
+            </div>
+
+            {workflowHistory.length === 0 ? (
+              <p className="text-center py-8 text-slate-400 font-mono text-sm">
+                No workflows generated yet
+              </p>
+            ) : (
+              <div className="space-y-4">
+                {workflowHistory.map((workflow) => {
+                  const images = workflow.assets.filter((a: any) => a.type === 'image');
+                  const videos = workflow.assets.filter((a: any) => a.type === 'video');
+
+                  return (
+                    <div
+                      key={workflow.workflowId}
+                      className="rounded border border-slate-700 bg-slate-800/50 p-4"
+                    >
+                      <div className="mb-3 flex items-center justify-between">
+                        <div className="font-mono text-xs text-slate-400">
+                          Workflow #{workflow.workflowId} •{' '}
+                          {new Date(workflow.createdAt).toLocaleString()}
+                        </div>
+                        <button
+                          onClick={() => {
+                            setSeedImage(workflow.prompts.seed);
+                            setEditInstruction(workflow.prompts.edit);
+                            setAnimation(workflow.prompts.animation);
+                          }}
+                          className="rounded bg-blue-600 px-3 py-1 font-mono text-xs font-medium text-white hover:bg-blue-500"
+                        >
+                          Reuse Prompts
+                        </button>
+                      </div>
+
+                      <div className="grid grid-cols-3 gap-3">
+                        {/* Images */}
+                        {images.map((img: any) => (
+                          <div
+                            key={img.id}
+                            className="relative overflow-hidden rounded border border-slate-600"
+                          >
+                            <img
+                              src={`${SERVER_URL}${img.url}`}
+                              alt="Workflow image"
+                              className="aspect-video w-full object-cover"
+                            />
+                            <div className="absolute left-2 top-2 rounded bg-slate-950/70 px-2 py-1 font-mono text-xs text-slate-300">
+                              IMG
+                            </div>
+                          </div>
+                        ))}
+
+                        {/* Video */}
+                        {videos.map((vid: any) => (
+                          <div
+                            key={vid.id}
+                            className="relative overflow-hidden rounded border border-slate-600"
+                          >
+                            <video
+                              src={`${SERVER_URL}${vid.url}`}
+                              controls
+                              className="aspect-video w-full object-cover"
+                            />
+                            <div className="absolute left-2 top-2 rounded bg-slate-950/70 px-2 py-1 font-mono text-xs text-slate-300">
+                              VID
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </section>
         </div>
       </div>
     </div>

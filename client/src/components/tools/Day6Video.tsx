@@ -96,21 +96,51 @@ export function Day6Video() {
   const [startDragOver, setStartDragOver] = useState(false);
   const [endDragOver, setEndDragOver] = useState(false);
 
-  // Load existing videos on mount
+  // Load existing videos from catalog on mount
   useEffect(() => {
-    console.log('[Day6Video] Loading existing videos...');
-    fetch(`${SERVER_URL}/api/video/list`)
-      .then(res => res.json())
-      .then(data => {
-        console.log('[Day6Video] Videos loaded:', data.videos?.length ?? 0);
-        if (data.videos) {
-          const completed = data.videos.filter((v: VideoTask) => v.status === 'completed');
-          console.log('[Day6Video] Completed videos:', completed.length);
-          setGeneratedVideos(completed);
-        }
-      })
-      .catch(err => console.error('[Day6Video] Failed to load videos:', err));
+    loadVideoHistory();
   }, []);
+
+  const loadVideoHistory = async () => {
+    try {
+      console.log('[Day6Video] Loading videos from catalog and old storage...');
+
+      // Load from NEW catalog (EXCLUDE N8N workflow videos)
+      const catalogResponse = await fetch(`${SERVER_URL}/api/catalog/filter?type=video`);
+      const catalogData = await catalogResponse.json();
+
+      const catalogVideos: VideoTask[] = (catalogData.assets || [])
+        .filter((asset: any) => !asset.metadata?.workflowId) // Exclude N8N workflow videos
+        .map((asset: any) => ({
+          id: asset.id,
+          filename: asset.filename,
+          url: asset.url,
+          startShot: asset.metadata?.startShotId || '',
+          endShot: asset.metadata?.endShotId || '',
+          provider: asset.provider as 'fal' | 'kie',
+          model: asset.model,
+          duration: asset.metadata?.duration || 5,
+          status: 'completed' as const,
+          createdAt: asset.createdAt,
+          animationPrompt: asset.prompt,
+        }));
+
+      // Load from OLD storage (for backward compatibility)
+      const oldResponse = await fetch(`${SERVER_URL}/api/video/list`);
+      const oldData = await oldResponse.json();
+      const oldVideos = (oldData.videos || []).filter((v: VideoTask) => v.status === 'completed');
+
+      // Combine both sources (catalog first, then old)
+      const allVideos = [...catalogVideos, ...oldVideos];
+
+      console.log('[Day6Video] Loaded', catalogVideos.length, 'from catalog,', oldVideos.length, 'from old storage');
+      setGeneratedVideos(allVideos.sort((a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      ));
+    } catch (err) {
+      console.error('[Day6Video] Failed to load videos:', err);
+    }
+  };
 
   // Listen for video events
   useEffect(() => {
@@ -132,6 +162,8 @@ export function Day6Video() {
       setProgress(100);
       setCompletedVideo(video);
       setGeneratedVideos(prev => [...prev, video]);
+      // Reload history to show newly saved video from catalog
+      loadVideoHistory();
     };
 
     const handleFailed = (data: { taskId: string; error: string }) => {

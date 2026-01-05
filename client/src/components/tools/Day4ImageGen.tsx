@@ -200,7 +200,25 @@ function ComparisonTab() {
   const [results, setResults] = useState<CompareResult[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [addedIds, setAddedIds] = useState<Set<string>>(new Set());
+  const [imageHistory, setImageHistory] = useState<any[]>([]);
   const { addShot } = useShots();
+
+  // Load history on mount
+  useEffect(() => {
+    loadHistory();
+  }, []);
+
+  const loadHistory = async () => {
+    try {
+      const response = await fetch(`${SERVER_URL}/api/catalog/filter?type=image`);
+      const data = await response.json();
+      setImageHistory(data.assets.sort((a: any, b: any) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      ));
+    } catch (error) {
+      console.error('[Day4] Failed to load history:', error);
+    }
+  };
 
   const generateAll = async () => {
     setIsGenerating(true);
@@ -216,6 +234,44 @@ function ComparisonTab() {
 
       const data: CompareResponse = await response.json();
       setResults(data.results);
+
+      // Auto-save all successful images to catalog
+      const savePromises = data.results
+        .filter(result => result.imageUrl && !result.error)
+        .map(async (result) => {
+          try {
+            const saveResponse = await fetch(`${SERVER_URL}/api/images/save-to-catalog`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                imageUrl: result.imageUrl,
+                prompt,
+                provider: result.provider,
+                model: result.model,
+                width: result.resolution.width,
+                height: result.resolution.height,
+                metadata: {
+                  tier: result.tier,
+                  estimatedCost: result.estimatedCost,
+                  generationTimeMs: result.durationMs,
+                },
+              }),
+            });
+
+            const saveData = await saveResponse.json();
+            console.log('[Day4] Image saved to catalog:', saveData.asset?.id);
+            return saveData.asset;
+          } catch (err) {
+            console.error('[Day4] Failed to save image to catalog:', err);
+            return null;
+          }
+        });
+
+      await Promise.all(savePromises);
+      console.log('[Day4] All images saved to catalog');
+
+      // Reload history to show newly generated images
+      await loadHistory();
     } catch (error) {
       console.error('Failed to generate comparison:', error);
     } finally {
@@ -275,51 +331,53 @@ function ComparisonTab() {
       {/* Shot List Strip */}
       <ShotListStrip />
 
-      {/* 2x2 Comparison Grid */}
-      <div className="grid grid-cols-[auto_1fr_1fr] gap-4">
-        {/* Header Row */}
-        <div></div>
-        <div className="text-center text-sm font-medium text-slate-400">FAL.AI</div>
-        <div className="text-center text-sm font-medium text-slate-400">KIE.AI</div>
+      {/* 2x2 Comparison Grid - only show after first generation */}
+      {(results.length > 0 || isGenerating) && (
+        <div className="grid grid-cols-[auto_1fr_1fr] gap-4">
+          {/* Header Row */}
+          <div></div>
+          <div className="text-center text-sm font-medium text-slate-400">FAL.AI</div>
+          <div className="text-center text-sm font-medium text-slate-400">KIE.AI</div>
 
-        {/* Advanced Row */}
-        <div className="flex items-center justify-end pr-2 text-sm font-medium text-slate-400">
-          ADVANCED
-        </div>
-        <ComparisonCell
-          result={getResult('fal', 'advanced')}
-          isLoading={isGenerating}
-          prompt={prompt}
-          onAddToShots={handleAddToShots}
-          addedIds={addedIds}
-        />
-        <ComparisonCell
-          result={getResult('kie', 'advanced')}
-          isLoading={isGenerating}
-          prompt={prompt}
-          onAddToShots={handleAddToShots}
-          addedIds={addedIds}
-        />
+          {/* Advanced Row */}
+          <div className="flex items-center justify-end pr-2 text-sm font-medium text-slate-400">
+            ADVANCED
+          </div>
+          <ComparisonCell
+            result={getResult('fal', 'advanced')}
+            isLoading={isGenerating}
+            prompt={prompt}
+            onAddToShots={handleAddToShots}
+            addedIds={addedIds}
+          />
+          <ComparisonCell
+            result={getResult('kie', 'advanced')}
+            isLoading={isGenerating}
+            prompt={prompt}
+            onAddToShots={handleAddToShots}
+            addedIds={addedIds}
+          />
 
-        {/* Mid-range Row */}
-        <div className="flex items-center justify-end pr-2 text-sm font-medium text-slate-400">
-          MID-RANGE
+          {/* Mid-range Row */}
+          <div className="flex items-center justify-end pr-2 text-sm font-medium text-slate-400">
+            MID-RANGE
+          </div>
+          <ComparisonCell
+            result={getResult('fal', 'midrange')}
+            isLoading={isGenerating}
+            prompt={prompt}
+            onAddToShots={handleAddToShots}
+            addedIds={addedIds}
+          />
+          <ComparisonCell
+            result={getResult('kie', 'midrange')}
+            isLoading={isGenerating}
+            prompt={prompt}
+            onAddToShots={handleAddToShots}
+            addedIds={addedIds}
+          />
         </div>
-        <ComparisonCell
-          result={getResult('fal', 'midrange')}
-          isLoading={isGenerating}
-          prompt={prompt}
-          onAddToShots={handleAddToShots}
-          addedIds={addedIds}
-        />
-        <ComparisonCell
-          result={getResult('kie', 'midrange')}
-          isLoading={isGenerating}
-          prompt={prompt}
-          onAddToShots={handleAddToShots}
-          addedIds={addedIds}
-        />
-      </div>
+      )}
 
       {/* Summary Stats */}
       {results.length > 0 && (
@@ -340,6 +398,46 @@ function ComparisonTab() {
           </div>
         </ToolPanel>
       )}
+
+      {/* Generation History */}
+      <div className="border-t border-slate-700 pt-6">
+        <h3 className="text-lg font-semibold mb-4">Generation History ({imageHistory.length})</h3>
+
+        {imageHistory.length === 0 ? (
+          <p className="text-slate-400 text-center py-8">No images generated yet</p>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {imageHistory.map((asset: any) => (
+              <div key={asset.id} className="bg-slate-800 rounded-lg border border-slate-700 p-3 hover:border-slate-600 transition-colors">
+                <div className="aspect-square w-full rounded mb-2 border border-slate-600 overflow-hidden">
+                  <img
+                    src={`http://localhost:5401${asset.url}`}
+                    alt={asset.prompt}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <p className="text-xs text-slate-400 truncate mb-1" title={asset.prompt}>
+                  {asset.prompt}
+                </p>
+                <p className="text-xs text-slate-500 mb-2">
+                  {new Date(asset.createdAt).toLocaleString()}
+                </p>
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-slate-500">
+                    {asset.provider} • {asset.metadata?.width}×{asset.metadata?.height}
+                  </span>
+                  <button
+                    onClick={() => setPrompt(asset.prompt)}
+                    className="text-blue-400 hover:text-blue-300 font-medium"
+                  >
+                    Reuse
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

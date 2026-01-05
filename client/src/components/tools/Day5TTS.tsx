@@ -158,9 +158,13 @@ export function Day5TTS() {
   const [voices, setVoices] = useState<Voice[]>([]);
   const [selectedVoiceId, setSelectedVoiceId] = useState<string>('');
   const [text, setText] = useState(DEFAULT_TEXT);
+  const [name, setName] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [result, setResult] = useState<GenerateSpeechResult | null>(null);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const [audioHistory, setAudioHistory] = useState<any[]>([]);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editingName, setEditingName] = useState('');
 
   // Load voices on mount
   useEffect(() => {
@@ -175,49 +179,59 @@ export function Day5TTS() {
       .catch((err) => {
         console.error('Failed to fetch voices:', err);
       });
+
+    // Load audio history
+    loadHistory();
   }, []);
 
-  // Cleanup audio URL on unmount or when generating new audio
-  useEffect(() => {
-    return () => {
-      if (audioUrl) {
-        URL.revokeObjectURL(audioUrl);
-      }
-    };
-  }, [audioUrl]);
+  const loadHistory = async () => {
+    try {
+      // Query for both 'audio' (old) and 'narration' (new) types for backward compatibility
+      const [audioResponse, narrationResponse] = await Promise.all([
+        fetch(`${SERVER_URL}/api/catalog/filter?type=audio`),
+        fetch(`${SERVER_URL}/api/catalog/filter?type=narration`)
+      ]);
+
+      const audioData = await audioResponse.json();
+      const narrationData = await narrationResponse.json();
+
+      // Filter audio assets to only include TTS (elevenlabs provider)
+      const ttsAudio = (audioData.assets || []).filter((a: any) => a.provider === 'elevenlabs');
+
+      // Combine and sort
+      const allAudio = [...ttsAudio, ...(narrationData.assets || [])];
+      setAudioHistory(allAudio.sort((a: any, b: any) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      ));
+    } catch (error) {
+      console.error('[Day5] Failed to load history:', error);
+    }
+  };
+
+  // No cleanup needed - using server URLs now (not blob URLs)
 
   const generateAudio = async () => {
     if (!text.trim() || !selectedVoiceId) return;
 
     setIsGenerating(true);
     setResult(null);
-
-    // Cleanup previous audio URL
-    if (audioUrl) {
-      URL.revokeObjectURL(audioUrl);
-      setAudioUrl(null);
-    }
+    setAudioUrl(null);
 
     try {
       const response = await fetch(`${SERVER_URL}/api/tts/generate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text, voiceId: selectedVoiceId }),
+        body: JSON.stringify({ text, voiceId: selectedVoiceId, name: name.trim() || undefined }),
       });
 
       const data: GenerateSpeechResult = await response.json();
       setResult(data);
 
-      // Convert base64 to blob URL for audio playback
-      if (data.success && data.audioBase64) {
-        const binaryString = atob(data.audioBase64);
-        const bytes = new Uint8Array(binaryString.length);
-        for (let i = 0; i < binaryString.length; i++) {
-          bytes[i] = binaryString.charCodeAt(i);
-        }
-        const blob = new Blob([bytes], { type: data.mimeType || 'audio/mpeg' });
-        const url = URL.createObjectURL(blob);
-        setAudioUrl(url);
+      // Use server URL directly (audio now saved to catalog)
+      if (data.success && data.audioUrl) {
+        setAudioUrl(`${SERVER_URL}${data.audioUrl}`);
+        // Reload history to show newly generated audio
+        await loadHistory();
       }
     } catch (error) {
       console.error('Failed to generate audio:', error);
@@ -242,6 +256,45 @@ export function Day5TTS() {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+  };
+
+  const startEditing = (asset: any) => {
+    setEditingId(asset.id);
+    setEditingName(asset.metadata.name || '');
+  };
+
+  const cancelEditing = () => {
+    setEditingId(null);
+    setEditingName('');
+  };
+
+  const saveRename = async (assetId: string) => {
+    try {
+      const response = await fetch(`${SERVER_URL}/api/catalog/assets/${assetId}/rename`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: editingName.trim() }),
+      });
+
+      if (response.ok) {
+        // Reload history to show updated name
+        await loadHistory();
+        setEditingId(null);
+        setEditingName('');
+      } else {
+        console.error('Failed to rename asset');
+      }
+    } catch (error) {
+      console.error('Failed to rename asset:', error);
+    }
+  };
+
+  const getDisplayName = (asset: any): string => {
+    if (asset.metadata?.name) {
+      return asset.metadata.name;
+    }
+    // Fallback: filename - voice
+    return `${asset.filename} - ${asset.metadata.voice}`;
   };
 
   const selectedVoice = voices.find((v) => v.voiceId === selectedVoiceId);
@@ -274,6 +327,22 @@ export function Day5TTS() {
                 </option>
               ))}
             </select>
+          </div>
+        </ToolPanel>
+
+        {/* Name Input */}
+        <ToolPanel title="Audio Name (Optional)">
+          <div className="space-y-3">
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="e.g., Fox and Lazy Dog Intro"
+              className="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white text-sm focus:outline-none focus:border-blue-500"
+            />
+            <p className="text-xs text-slate-500">
+              Give this narration a descriptive name. If left empty, it will use the filename + voice name.
+            </p>
           </div>
         </ToolPanel>
 
@@ -346,6 +415,91 @@ export function Day5TTS() {
             </div>
           </ToolPanel>
         )}
+
+        {/* Audio History */}
+        <ToolPanel title={`Audio History (${audioHistory.length})`}>
+          {audioHistory.length === 0 ? (
+            <p className="text-slate-400 text-center py-8">No audio generated yet</p>
+          ) : (
+            <div className="space-y-3">
+              {audioHistory.map((asset: any) => (
+                <div key={asset.id} className="bg-slate-900 rounded-lg border border-slate-700 p-4">
+                  <div className="flex items-center gap-4 mb-3">
+                    <audio
+                      controls
+                      src={`${SERVER_URL}${asset.url}`}
+                      className="flex-1"
+                    />
+                  </div>
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1 min-w-0">
+                      {/* Display Name (editable) */}
+                      {editingId === asset.id ? (
+                        <div className="flex gap-2 mb-2">
+                          <input
+                            type="text"
+                            value={editingName}
+                            onChange={(e) => setEditingName(e.target.value)}
+                            className="flex-1 bg-slate-800 border border-slate-600 rounded px-2 py-1 text-sm text-white focus:outline-none focus:border-blue-500"
+                            autoFocus
+                          />
+                          <button
+                            onClick={() => saveRename(asset.id)}
+                            className="px-2 py-1 bg-green-600 hover:bg-green-500 rounded text-xs font-medium transition-colors"
+                          >
+                            Save
+                          </button>
+                          <button
+                            onClick={cancelEditing}
+                            className="px-2 py-1 bg-slate-600 hover:bg-slate-500 rounded text-xs font-medium transition-colors"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-2 mb-1">
+                          <p className="text-sm font-medium text-slate-200">
+                            {getDisplayName(asset)}
+                          </p>
+                          <button
+                            onClick={() => startEditing(asset)}
+                            className="text-slate-400 hover:text-blue-400 transition-colors"
+                            title="Rename"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+                              <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                            </svg>
+                          </button>
+                        </div>
+                      )}
+
+                      {/* Filename and Voice */}
+                      <p className="text-xs text-slate-500 mb-1">
+                        {asset.filename} • Voice: {asset.metadata.voice}
+                      </p>
+
+                      {/* Narration Text */}
+                      <p className="text-xs text-slate-400 line-clamp-2 mb-2" title={asset.prompt}>
+                        {asset.prompt}
+                      </p>
+
+                      {/* Metadata */}
+                      <p className="text-xs text-slate-500">
+                        {new Date(asset.createdAt).toLocaleString()} • {asset.metadata.characterCount} chars
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => setText(asset.prompt)}
+                      className="px-3 py-1 bg-blue-600 hover:bg-blue-500 rounded text-xs font-medium transition-colors flex-shrink-0"
+                    >
+                      Reuse Text
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </ToolPanel>
 
         {/* Configuration Info */}
         <ToolPanel title="Configuration">

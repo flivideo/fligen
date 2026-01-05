@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastUpdated": "2026-01-04T11:20:21.206Z",
+  "lastUpdated": "2026-01-05T13:07:16.506Z",
   "assets": [
     {
       "id": "asset_image_1767515187647_mlv946",
@@ -427,6 +427,740 @@
         "endShot": "shot-009",
         "duration": 5,
         "migratedFrom": "video-scenes"
+      }
+    },
+    {
+      "id": "asset_image_1767530228109_nyh1um",
+      "type": "image",
+      "filename": "image-start.png",
+      "url": "/assets/catalog/n8n/0002/image-start.png",
+      "provider": "n8n",
+      "model": "flux-pro",
+      "prompt": "A minimalist iceberg diagram illustration, 8-bit pixel art style, retro arcade game aesthetic, vibrant neon colors against dark blue ocean background, crisp pixel grid, above water: floating text labels \"vibe coding prompts\" in colorful retro gaming font with glowing effects, below waterline: dense blocks of green monospace code text scrolling downward, massive underwater code structure, sharp contrast between visible tip and hidden depth, isometric perspective, clean geometric shapes, classic 1980s video game graphics, dithered shading, limited color palette, scanline effects, high contrast, sharp pixels, nostalgic retro computing vibes, dramatic lighting from above water surface, professional digital art, trending on artstation",
+      "status": "ready",
+      "createdAt": "2026-01-04T12:37:08.109Z",
+      "completedAt": "2026-01-04T12:37:08.109Z",
+      "estimatedCost": 0.04,
+      "generationTimeMs": 0,
+      "metadata": {
+        "workflowId": "0002",
+        "workflowType": "image-edit-and-animate",
+        "workflowName": "A minimalist iceberg diagram illustration, 8-bit p",
+        "runDate": "2026-01-04T12:36:57.963Z",
+        "prompts": {
+          "seedImage": {
+            "human": "A minimalist iceberg diagram illustration, 8-bit pixel art style, retro arcade game aesthetic, vibrant neon colors against dark blue ocean background, crisp pixel grid, above water: floating text labels \"vibe coding prompts\" in colorful retro gaming font with glowing effects, below waterline: dense blocks of green monospace code text scrolling downward, massive underwater code structure, sharp contrast between visible tip and hidden depth, isometric perspective, clean geometric shapes, classic 1980s video game graphics, dithered shading, limited color palette, scanline effects, high contrast, sharp pixels, nostalgic retro computing vibes, dramatic lighting from above water surface, professional digital art, trending on artstation",
+            "cleaned": "A minimalist iceberg diagram illustration 8bit pixel art style retro arcade game aesthetic vibrant neon colors against dark blue ocean background crisp pixel grid above water floating text labels vibe coding prompts in colorful retro gaming font with glowing effects below waterline dense blocks of green monospace code text scrolling downward massive underwater code structure sharp contrast between visible tip and hidden depth isometric perspective clean geometric shapes classic 1980s video game graphics dithered shading limited color palette scanline effects high contrast sharp pixels nostalgic retro computing vibes dramatic lighting from above water surface professional digital art trending on artstation"
+          },
+          "editInstruction": {
+            "human": "Add extreme zoom focus on the code section only, remove all background elements and surrounding areas. Enhance text clarity and sharpness with 8-bit arcade pixel art style rendering, high contrast retro gaming aesthetic with vibrant colors and crisp pixelated edges for maximum code detail visibility.",
+            "cleaned": "Add extreme zoom focus on the code section only remove all background elements and surrounding areas Enhance text clarity and sharpness with 8bit arcade pixel art style rendering high contrast retro gaming aesthetic with vibrant colors and crisp pixelated edges for maximum code detail visibility"
+          },
+          "animation": {
+            "human": "A cinematic downward pan starting from text reading \"vibe prompt\" positioned at the peak of a massive iceberg, slowly descending along the icy surface revealing the structure's full scale, continuing beneath the waterline into the darker depths where intricate code and technical details are embedded in the ice, culminating in a smooth zoom into the code at the iceberg's base, transitioning from bright surface lighting to deep blue subsurface atmosphere, fluid camera movement maintaining focus throughout the vertical descent.",
+            "cleaned": "A cinematic downward pan starting from text reading vibe prompt positioned at the peak of a massive iceberg slowly descending along the icy surface revealing the structures full scale continuing beneath the waterline into the darker depths where intricate code and technical details are embedded in the ice culminating in a smooth zoom into the code at the icebergs base transitioning from bright surface lighting to deep blue subsurface atmosphere fluid camera movement maintaining focus throughout the vertical descent"
+          }
+        },
+        "position": "start",
+        "step": "seed-image",
+        "humanPrompt": "A minimalist iceberg diagram illustration, 8-bit pixel art style, retro arcade game aesthetic, vibrant neon colors against dark blue ocean background, crisp pixel grid, above water: floating text labels \"vibe coding prompts\" in colorful retro gaming font with glowing effects, below waterline: dense blocks of green monospace code text scrolling downward, massive underwater code structure, sharp contrast between visible tip and hidden depth, isometric perspective, clean geometric shapes, classic 1980s video game graphics, dithered shading, limited color palette, scanline effects, high contrast, sharp pixels, nostalgic retro computing vibes, dramatic lighting from above water surface, professional digital art, trending on artstation",
+        "cleanedPrompt": "A minimalist iceberg diagram illustration 8bit pixel art style retro arcade game aesthetic vibrant neon colors against dark blue ocean background crisp pixel grid above water floating text labels vibe coding prompts in colorful retro gaming font with glowing effects below waterline dense blocks of green monospace code text scrolling downward massive underwater code structure sharp contrast between visible tip and hidden depth isometric perspective clean geometric shapes classic 1980s video game graphics dithered shading limited color palette scanline effects high contrast sharp pixels nostalgic retro computing vibes dramatic lighting from above water surface professional digital art trending on artstation"
+      }
+    },
+    {
+      "id": "asset_image_1767530228486_jn8tyr",
+      "type": "image",
+      "filename": "image-end.png",
+      "url": "/assets/catalog/n8n/0002/image-end.png",
+      "provider": "n8n",
+      "model": "flux-edit",
+      "prompt": "Add extreme zoom focus on the code section only, remove all background elements and surrounding areas. Enhance text clarity and sharpness with 8-bit arcade pixel art style rendering, high contrast retro gaming aesthetic with vibrant colors and crisp pixelated edges for maximum code detail visibility.",
+      "status": "ready",
+      "createdAt": "2026-01-04T12:37:08.486Z",
+      "completedAt": "2026-01-04T12:37:08.486Z",
+      "estimatedCost": 0.04,
+      "generationTimeMs": 0,
+      "metadata": {
+        "workflowId": "0002",
+        "workflowType": "image-edit-and-animate",
+        "workflowName": "A minimalist iceberg diagram illustration, 8-bit p",
+        "runDate": "2026-01-04T12:36:57.963Z",
+        "prompts": {
+          "seedImage": {
+            "human": "A minimalist iceberg diagram illustration, 8-bit pixel art style, retro arcade game aesthetic, vibrant neon colors against dark blue ocean background, crisp pixel grid, above water: floating text labels \"vibe coding prompts\" in colorful retro gaming font with glowing effects, below waterline: dense blocks of green monospace code text scrolling downward, massive underwater code structure, sharp contrast between visible tip and hidden depth, isometric perspective, clean geometric shapes, classic 1980s video game graphics, dithered shading, limited color palette, scanline effects, high contrast, sharp pixels, nostalgic retro computing vibes, dramatic lighting from above water surface, professional digital art, trending on artstation",
+            "cleaned": "A minimalist iceberg diagram illustration 8bit pixel art style retro arcade game aesthetic vibrant neon colors against dark blue ocean background crisp pixel grid above water floating text labels vibe coding prompts in colorful retro gaming font with glowing effects below waterline dense blocks of green monospace code text scrolling downward massive underwater code structure sharp contrast between visible tip and hidden depth isometric perspective clean geometric shapes classic 1980s video game graphics dithered shading limited color palette scanline effects high contrast sharp pixels nostalgic retro computing vibes dramatic lighting from above water surface professional digital art trending on artstation"
+          },
+          "editInstruction": {
+            "human": "Add extreme zoom focus on the code section only, remove all background elements and surrounding areas. Enhance text clarity and sharpness with 8-bit arcade pixel art style rendering, high contrast retro gaming aesthetic with vibrant colors and crisp pixelated edges for maximum code detail visibility.",
+            "cleaned": "Add extreme zoom focus on the code section only remove all background elements and surrounding areas Enhance text clarity and sharpness with 8bit arcade pixel art style rendering high contrast retro gaming aesthetic with vibrant colors and crisp pixelated edges for maximum code detail visibility"
+          },
+          "animation": {
+            "human": "A cinematic downward pan starting from text reading \"vibe prompt\" positioned at the peak of a massive iceberg, slowly descending along the icy surface revealing the structure's full scale, continuing beneath the waterline into the darker depths where intricate code and technical details are embedded in the ice, culminating in a smooth zoom into the code at the iceberg's base, transitioning from bright surface lighting to deep blue subsurface atmosphere, fluid camera movement maintaining focus throughout the vertical descent.",
+            "cleaned": "A cinematic downward pan starting from text reading vibe prompt positioned at the peak of a massive iceberg slowly descending along the icy surface revealing the structures full scale continuing beneath the waterline into the darker depths where intricate code and technical details are embedded in the ice culminating in a smooth zoom into the code at the icebergs base transitioning from bright surface lighting to deep blue subsurface atmosphere fluid camera movement maintaining focus throughout the vertical descent"
+          }
+        },
+        "position": "end",
+        "step": "edit-image",
+        "humanPrompt": "Add extreme zoom focus on the code section only, remove all background elements and surrounding areas. Enhance text clarity and sharpness with 8-bit arcade pixel art style rendering, high contrast retro gaming aesthetic with vibrant colors and crisp pixelated edges for maximum code detail visibility.",
+        "cleanedPrompt": "Add extreme zoom focus on the code section only remove all background elements and surrounding areas Enhance text clarity and sharpness with 8bit arcade pixel art style rendering high contrast retro gaming aesthetic with vibrant colors and crisp pixelated edges for maximum code detail visibility",
+        "sourceImageUrl": "https://tempfile.aiquickdraw.com/image-format-converter/1767529992447-iowv7opeud.png"
+      }
+    },
+    {
+      "id": "asset_video_1767530229826_mxjb7n",
+      "type": "video",
+      "filename": "video.mp4",
+      "url": "/assets/catalog/n8n/0002/video.mp4",
+      "provider": "n8n",
+      "model": "veo-3",
+      "prompt": "A cinematic downward pan starting from text reading \"vibe prompt\" positioned at the peak of a massive iceberg, slowly descending along the icy surface revealing the structure's full scale, continuing beneath the waterline into the darker depths where intricate code and technical details are embedded in the ice, culminating in a smooth zoom into the code at the iceberg's base, transitioning from bright surface lighting to deep blue subsurface atmosphere, fluid camera movement maintaining focus throughout the vertical descent.",
+      "status": "ready",
+      "createdAt": "2026-01-04T12:37:09.826Z",
+      "completedAt": "2026-01-04T12:37:09.826Z",
+      "estimatedCost": 0.15,
+      "generationTimeMs": 0,
+      "metadata": {
+        "workflowId": "0002",
+        "workflowType": "image-edit-and-animate",
+        "workflowName": "A minimalist iceberg diagram illustration, 8-bit p",
+        "runDate": "2026-01-04T12:36:57.963Z",
+        "prompts": {
+          "seedImage": {
+            "human": "A minimalist iceberg diagram illustration, 8-bit pixel art style, retro arcade game aesthetic, vibrant neon colors against dark blue ocean background, crisp pixel grid, above water: floating text labels \"vibe coding prompts\" in colorful retro gaming font with glowing effects, below waterline: dense blocks of green monospace code text scrolling downward, massive underwater code structure, sharp contrast between visible tip and hidden depth, isometric perspective, clean geometric shapes, classic 1980s video game graphics, dithered shading, limited color palette, scanline effects, high contrast, sharp pixels, nostalgic retro computing vibes, dramatic lighting from above water surface, professional digital art, trending on artstation",
+            "cleaned": "A minimalist iceberg diagram illustration 8bit pixel art style retro arcade game aesthetic vibrant neon colors against dark blue ocean background crisp pixel grid above water floating text labels vibe coding prompts in colorful retro gaming font with glowing effects below waterline dense blocks of green monospace code text scrolling downward massive underwater code structure sharp contrast between visible tip and hidden depth isometric perspective clean geometric shapes classic 1980s video game graphics dithered shading limited color palette scanline effects high contrast sharp pixels nostalgic retro computing vibes dramatic lighting from above water surface professional digital art trending on artstation"
+          },
+          "editInstruction": {
+            "human": "Add extreme zoom focus on the code section only, remove all background elements and surrounding areas. Enhance text clarity and sharpness with 8-bit arcade pixel art style rendering, high contrast retro gaming aesthetic with vibrant colors and crisp pixelated edges for maximum code detail visibility.",
+            "cleaned": "Add extreme zoom focus on the code section only remove all background elements and surrounding areas Enhance text clarity and sharpness with 8bit arcade pixel art style rendering high contrast retro gaming aesthetic with vibrant colors and crisp pixelated edges for maximum code detail visibility"
+          },
+          "animation": {
+            "human": "A cinematic downward pan starting from text reading \"vibe prompt\" positioned at the peak of a massive iceberg, slowly descending along the icy surface revealing the structure's full scale, continuing beneath the waterline into the darker depths where intricate code and technical details are embedded in the ice, culminating in a smooth zoom into the code at the iceberg's base, transitioning from bright surface lighting to deep blue subsurface atmosphere, fluid camera movement maintaining focus throughout the vertical descent.",
+            "cleaned": "A cinematic downward pan starting from text reading vibe prompt positioned at the peak of a massive iceberg slowly descending along the icy surface revealing the structures full scale continuing beneath the waterline into the darker depths where intricate code and technical details are embedded in the ice culminating in a smooth zoom into the code at the icebergs base transitioning from bright surface lighting to deep blue subsurface atmosphere fluid camera movement maintaining focus throughout the vertical descent"
+          }
+        },
+        "position": "video",
+        "step": "animate",
+        "duration": 5,
+        "humanPrompt": "A cinematic downward pan starting from text reading \"vibe prompt\" positioned at the peak of a massive iceberg, slowly descending along the icy surface revealing the structure's full scale, continuing beneath the waterline into the darker depths where intricate code and technical details are embedded in the ice, culminating in a smooth zoom into the code at the iceberg's base, transitioning from bright surface lighting to deep blue subsurface atmosphere, fluid camera movement maintaining focus throughout the vertical descent.",
+        "cleanedPrompt": "A cinematic downward pan starting from text reading vibe prompt positioned at the peak of a massive iceberg slowly descending along the icy surface revealing the structures full scale continuing beneath the waterline into the darker depths where intricate code and technical details are embedded in the ice culminating in a smooth zoom into the code at the icebergs base transitioning from bright surface lighting to deep blue subsurface atmosphere fluid camera movement maintaining focus throughout the vertical descent",
+        "sourceImages": [
+          "https://tempfile.aiquickdraw.com/image-format-converter/1767529992447-iowv7opeud.png",
+          "https://tempfile.aiquickdraw.com/image-format-converter/1767530056305-r724cv6ayq.png"
+        ]
+      }
+    },
+    {
+      "id": "asset_image_1767530655341_ci85l7",
+      "type": "image",
+      "filename": "image-start.png",
+      "url": "/assets/catalog/n8n/0003/image-start.png",
+      "provider": "n8n",
+      "model": "flux-pro",
+      "prompt": "A glowing 8-bit pixel art Venn diagram on a dark arcade screen background, three intersecting circles in vibrant neon colors - electric blue, hot magenta, and lime green, retro pixel icons floating in each circle: a speech bubble with sound waves (narration), a musical note with equalizer bars (music), a photograph frame with mountain landscape (image), mysterious question mark symbols in the overlapping intersection areas, crisp pixel grid texture, CRT scanline effect, arcade cabinet aesthetic, high contrast lighting, sharp edges, nostalgic 1980s video game style, top-down centered composition, dramatic glow effects, professional digital illustration, 4K quality",
+      "status": "ready",
+      "createdAt": "2026-01-04T12:44:15.341Z",
+      "completedAt": "2026-01-04T12:44:15.341Z",
+      "estimatedCost": 0.04,
+      "generationTimeMs": 0,
+      "metadata": {
+        "workflowId": "0003",
+        "workflowType": "image-edit-and-animate",
+        "workflowName": "A glowing 8-bit pixel art Venn diagram on a dark a",
+        "runDate": "2026-01-04T12:44:14.276Z",
+        "prompts": {
+          "seedImage": {
+            "human": "A glowing 8-bit pixel art Venn diagram on a dark arcade screen background, three intersecting circles in vibrant neon colors - electric blue, hot magenta, and lime green, retro pixel icons floating in each circle: a speech bubble with sound waves (narration), a musical note with equalizer bars (music), a photograph frame with mountain landscape (image), mysterious question mark symbols in the overlapping intersection areas, crisp pixel grid texture, CRT scanline effect, arcade cabinet aesthetic, high contrast lighting, sharp edges, nostalgic 1980s video game style, top-down centered composition, dramatic glow effects, professional digital illustration, 4K quality",
+            "cleaned": "A glowing 8bit pixel art Venn diagram on a dark arcade screen background three intersecting circles in vibrant neon colors electric blue hot magenta and lime green retro pixel icons floating in each circle a speech bubble with sound waves narration a musical note with equalizer bars music a photograph frame with mountain landscape image mysterious question mark symbols in the overlapping intersection areas crisp pixel grid texture CRT scanline effect arcade cabinet aesthetic high contrast lighting sharp edges nostalgic 1980s video game style topdown centered composition dramatic glow effects professional digital illustration 4K quality"
+          },
+          "editInstruction": {
+            "human": "Add an 8-bit arcade style video screen displaying on top of the Venn diagram, showing three labeled elements: narration, music, and image file. The video screen should have a retro pixelated aesthetic with classic arcade game graphics, featuring bright neon colors and a CRT monitor appearance with scan lines. Position the screen prominently above or overlaying the Venn diagram intersection, maintaining visibility of the diagram below.",
+            "cleaned": "Add an 8bit arcade style video screen displaying on top of the Venn diagram showing three labeled elements narration music and image file The video screen should have a retro pixelated aesthetic with classic arcade game graphics featuring bright neon colors and a CRT monitor appearance with scan lines Position the screen prominently above or overlaying the Venn diagram intersection maintaining visibility of the diagram below"
+          },
+          "animation": {
+            "human": "I need to understand better what you're looking for. Are you asking me to:\n\n1. **Refine this as a prompt for image-to-video generation** (convert your description into camera/motion terms)?\n2. **Help you actually create such a video** from narration, music, and image files you have?\n3. **Something else related to video production**?\n\nIf you want option 1 (prompt refinement), here it is:\n\n---\n\n**Camera begins with a static wide shot of three distinct elements positioned separately in frame: narration waveform visualization on left, music frequency bars in center, image thumbnail on right. Slow push-in (dolly forward) over 2 seconds as elements begin subtle drift toward center. Camera holds steady as subjects animate: waveforms pulse and flow, frequency bars dance rhythmically, image scales up and rotates gently. At 3-second mark, camera executes smooth arc rotation (15 degrees clockwise) while subjects accelerate their convergence, merging and layering in center frame. Transition to final reveal through quick zoom-in (1 second) as merged elements coalesce into unified video player interface displaying completed production. Camera settles on static medium shot of final video playing, all elements now harmoniously integrated.**\n\n---\n\nIf you meant options 2 or 3, please clarify what files you have and what you need help with!",
+            "cleaned": "I need to understand better what youre looking for Are you asking me to 1 Refine this as a prompt for imagetovideo generation convert your description into cameramotion terms 2 Help you actually create such a video from narration music and image files you have 3 Something else related to video production If you want option 1 prompt refinement here it is Camera begins with a static wide shot of three distinct elements positioned separately in frame narration waveform visualization on left music frequency bars in center image thumbnail on right Slow pushin dolly forward over 2 seconds as elements begin subtle drift toward center Camera holds steady as subjects animate waveforms pulse and flow frequency bars dance rhythmically image scales up and rotates gently At 3second mark camera executes smooth arc rotation 15 degrees clockwise while subjects accelerate their convergence merging and layering in center frame Transition to final reveal through quick zoomin 1 second as merged elements coalesce into unified video player interface displaying completed production Camera settles on static medium shot of final video playing all elements now harmoniously integrated If you meant options 2 or 3 please clarify what files you have and what you need help with"
+          }
+        },
+        "position": "start",
+        "step": "seed-image",
+        "humanPrompt": "A glowing 8-bit pixel art Venn diagram on a dark arcade screen background, three intersecting circles in vibrant neon colors - electric blue, hot magenta, and lime green, retro pixel icons floating in each circle: a speech bubble with sound waves (narration), a musical note with equalizer bars (music), a photograph frame with mountain landscape (image), mysterious question mark symbols in the overlapping intersection areas, crisp pixel grid texture, CRT scanline effect, arcade cabinet aesthetic, high contrast lighting, sharp edges, nostalgic 1980s video game style, top-down centered composition, dramatic glow effects, professional digital illustration, 4K quality",
+        "cleanedPrompt": "A glowing 8bit pixel art Venn diagram on a dark arcade screen background three intersecting circles in vibrant neon colors electric blue hot magenta and lime green retro pixel icons floating in each circle a speech bubble with sound waves narration a musical note with equalizer bars music a photograph frame with mountain landscape image mysterious question mark symbols in the overlapping intersection areas crisp pixel grid texture CRT scanline effect arcade cabinet aesthetic high contrast lighting sharp edges nostalgic 1980s video game style topdown centered composition dramatic glow effects professional digital illustration 4K quality"
+      }
+    },
+    {
+      "id": "asset_image_1767530684074_j623mi",
+      "type": "image",
+      "filename": "image-end.png",
+      "url": "/assets/catalog/n8n/0003/image-end.png",
+      "provider": "n8n",
+      "model": "flux-edit",
+      "prompt": "Add an 8-bit arcade style video screen displaying on top of the Venn diagram, showing three labeled elements: narration, music, and image file. The video screen should have a retro pixelated aesthetic with classic arcade game graphics, featuring bright neon colors and a CRT monitor appearance with scan lines. Position the screen prominently above or overlaying the Venn diagram intersection, maintaining visibility of the diagram below.",
+      "status": "ready",
+      "createdAt": "2026-01-04T12:44:44.074Z",
+      "completedAt": "2026-01-04T12:44:44.074Z",
+      "estimatedCost": 0.04,
+      "generationTimeMs": 0,
+      "metadata": {
+        "workflowId": "0003",
+        "workflowType": "image-edit-and-animate",
+        "workflowName": "A glowing 8-bit pixel art Venn diagram on a dark a",
+        "runDate": "2026-01-04T12:44:14.276Z",
+        "prompts": {
+          "seedImage": {
+            "human": "A glowing 8-bit pixel art Venn diagram on a dark arcade screen background, three intersecting circles in vibrant neon colors - electric blue, hot magenta, and lime green, retro pixel icons floating in each circle: a speech bubble with sound waves (narration), a musical note with equalizer bars (music), a photograph frame with mountain landscape (image), mysterious question mark symbols in the overlapping intersection areas, crisp pixel grid texture, CRT scanline effect, arcade cabinet aesthetic, high contrast lighting, sharp edges, nostalgic 1980s video game style, top-down centered composition, dramatic glow effects, professional digital illustration, 4K quality",
+            "cleaned": "A glowing 8bit pixel art Venn diagram on a dark arcade screen background three intersecting circles in vibrant neon colors electric blue hot magenta and lime green retro pixel icons floating in each circle a speech bubble with sound waves narration a musical note with equalizer bars music a photograph frame with mountain landscape image mysterious question mark symbols in the overlapping intersection areas crisp pixel grid texture CRT scanline effect arcade cabinet aesthetic high contrast lighting sharp edges nostalgic 1980s video game style topdown centered composition dramatic glow effects professional digital illustration 4K quality"
+          },
+          "editInstruction": {
+            "human": "Add an 8-bit arcade style video screen displaying on top of the Venn diagram, showing three labeled elements: narration, music, and image file. The video screen should have a retro pixelated aesthetic with classic arcade game graphics, featuring bright neon colors and a CRT monitor appearance with scan lines. Position the screen prominently above or overlaying the Venn diagram intersection, maintaining visibility of the diagram below.",
+            "cleaned": "Add an 8bit arcade style video screen displaying on top of the Venn diagram showing three labeled elements narration music and image file The video screen should have a retro pixelated aesthetic with classic arcade game graphics featuring bright neon colors and a CRT monitor appearance with scan lines Position the screen prominently above or overlaying the Venn diagram intersection maintaining visibility of the diagram below"
+          },
+          "animation": {
+            "human": "I need to understand better what you're looking for. Are you asking me to:\n\n1. **Refine this as a prompt for image-to-video generation** (convert your description into camera/motion terms)?\n2. **Help you actually create such a video** from narration, music, and image files you have?\n3. **Something else related to video production**?\n\nIf you want option 1 (prompt refinement), here it is:\n\n---\n\n**Camera begins with a static wide shot of three distinct elements positioned separately in frame: narration waveform visualization on left, music frequency bars in center, image thumbnail on right. Slow push-in (dolly forward) over 2 seconds as elements begin subtle drift toward center. Camera holds steady as subjects animate: waveforms pulse and flow, frequency bars dance rhythmically, image scales up and rotates gently. At 3-second mark, camera executes smooth arc rotation (15 degrees clockwise) while subjects accelerate their convergence, merging and layering in center frame. Transition to final reveal through quick zoom-in (1 second) as merged elements coalesce into unified video player interface displaying completed production. Camera settles on static medium shot of final video playing, all elements now harmoniously integrated.**\n\n---\n\nIf you meant options 2 or 3, please clarify what files you have and what you need help with!",
+            "cleaned": "I need to understand better what youre looking for Are you asking me to 1 Refine this as a prompt for imagetovideo generation convert your description into cameramotion terms 2 Help you actually create such a video from narration music and image files you have 3 Something else related to video production If you want option 1 prompt refinement here it is Camera begins with a static wide shot of three distinct elements positioned separately in frame narration waveform visualization on left music frequency bars in center image thumbnail on right Slow pushin dolly forward over 2 seconds as elements begin subtle drift toward center Camera holds steady as subjects animate waveforms pulse and flow frequency bars dance rhythmically image scales up and rotates gently At 3second mark camera executes smooth arc rotation 15 degrees clockwise while subjects accelerate their convergence merging and layering in center frame Transition to final reveal through quick zoomin 1 second as merged elements coalesce into unified video player interface displaying completed production Camera settles on static medium shot of final video playing all elements now harmoniously integrated If you meant options 2 or 3 please clarify what files you have and what you need help with"
+          }
+        },
+        "position": "end",
+        "step": "edit-image",
+        "humanPrompt": "Add an 8-bit arcade style video screen displaying on top of the Venn diagram, showing three labeled elements: narration, music, and image file. The video screen should have a retro pixelated aesthetic with classic arcade game graphics, featuring bright neon colors and a CRT monitor appearance with scan lines. Position the screen prominently above or overlaying the Venn diagram intersection, maintaining visibility of the diagram below.",
+        "cleanedPrompt": "Add an 8bit arcade style video screen displaying on top of the Venn diagram showing three labeled elements narration music and image file The video screen should have a retro pixelated aesthetic with classic arcade game graphics featuring bright neon colors and a CRT monitor appearance with scan lines Position the screen prominently above or overlaying the Venn diagram intersection maintaining visibility of the diagram below",
+        "sourceImageUrl": "https://tempfile.aiquickdraw.com/image-format-converter/1767530458995-fo1b0fn22u7.png"
+      }
+    },
+    {
+      "id": "asset_video_1767530750963_k88z6d",
+      "type": "video",
+      "filename": "video.mp4",
+      "url": "/assets/catalog/n8n/0003/video.mp4",
+      "provider": "n8n",
+      "model": "veo-3",
+      "prompt": "I need to understand better what you're looking for. Are you asking me to:\n\n1. **Refine this as a prompt for image-to-video generation** (convert your description into camera/motion terms)?\n2. **Help you actually create such a video** from narration, music, and image files you have?\n3. **Something else related to video production**?\n\nIf you want option 1 (prompt refinement), here it is:\n\n---\n\n**Camera begins with a static wide shot of three distinct elements positioned separately in frame: narration waveform visualization on left, music frequency bars in center, image thumbnail on right. Slow push-in (dolly forward) over 2 seconds as elements begin subtle drift toward center. Camera holds steady as subjects animate: waveforms pulse and flow, frequency bars dance rhythmically, image scales up and rotates gently. At 3-second mark, camera executes smooth arc rotation (15 degrees clockwise) while subjects accelerate their convergence, merging and layering in center frame. Transition to final reveal through quick zoom-in (1 second) as merged elements coalesce into unified video player interface displaying completed production. Camera settles on static medium shot of final video playing, all elements now harmoniously integrated.**\n\n---\n\nIf you meant options 2 or 3, please clarify what files you have and what you need help with!",
+      "status": "ready",
+      "createdAt": "2026-01-04T12:45:50.963Z",
+      "completedAt": "2026-01-04T12:45:50.963Z",
+      "estimatedCost": 0.15,
+      "generationTimeMs": 0,
+      "metadata": {
+        "workflowId": "0003",
+        "workflowType": "image-edit-and-animate",
+        "workflowName": "A glowing 8-bit pixel art Venn diagram on a dark a",
+        "runDate": "2026-01-04T12:44:14.276Z",
+        "prompts": {
+          "seedImage": {
+            "human": "A glowing 8-bit pixel art Venn diagram on a dark arcade screen background, three intersecting circles in vibrant neon colors - electric blue, hot magenta, and lime green, retro pixel icons floating in each circle: a speech bubble with sound waves (narration), a musical note with equalizer bars (music), a photograph frame with mountain landscape (image), mysterious question mark symbols in the overlapping intersection areas, crisp pixel grid texture, CRT scanline effect, arcade cabinet aesthetic, high contrast lighting, sharp edges, nostalgic 1980s video game style, top-down centered composition, dramatic glow effects, professional digital illustration, 4K quality",
+            "cleaned": "A glowing 8bit pixel art Venn diagram on a dark arcade screen background three intersecting circles in vibrant neon colors electric blue hot magenta and lime green retro pixel icons floating in each circle a speech bubble with sound waves narration a musical note with equalizer bars music a photograph frame with mountain landscape image mysterious question mark symbols in the overlapping intersection areas crisp pixel grid texture CRT scanline effect arcade cabinet aesthetic high contrast lighting sharp edges nostalgic 1980s video game style topdown centered composition dramatic glow effects professional digital illustration 4K quality"
+          },
+          "editInstruction": {
+            "human": "Add an 8-bit arcade style video screen displaying on top of the Venn diagram, showing three labeled elements: narration, music, and image file. The video screen should have a retro pixelated aesthetic with classic arcade game graphics, featuring bright neon colors and a CRT monitor appearance with scan lines. Position the screen prominently above or overlaying the Venn diagram intersection, maintaining visibility of the diagram below.",
+            "cleaned": "Add an 8bit arcade style video screen displaying on top of the Venn diagram showing three labeled elements narration music and image file The video screen should have a retro pixelated aesthetic with classic arcade game graphics featuring bright neon colors and a CRT monitor appearance with scan lines Position the screen prominently above or overlaying the Venn diagram intersection maintaining visibility of the diagram below"
+          },
+          "animation": {
+            "human": "I need to understand better what you're looking for. Are you asking me to:\n\n1. **Refine this as a prompt for image-to-video generation** (convert your description into camera/motion terms)?\n2. **Help you actually create such a video** from narration, music, and image files you have?\n3. **Something else related to video production**?\n\nIf you want option 1 (prompt refinement), here it is:\n\n---\n\n**Camera begins with a static wide shot of three distinct elements positioned separately in frame: narration waveform visualization on left, music frequency bars in center, image thumbnail on right. Slow push-in (dolly forward) over 2 seconds as elements begin subtle drift toward center. Camera holds steady as subjects animate: waveforms pulse and flow, frequency bars dance rhythmically, image scales up and rotates gently. At 3-second mark, camera executes smooth arc rotation (15 degrees clockwise) while subjects accelerate their convergence, merging and layering in center frame. Transition to final reveal through quick zoom-in (1 second) as merged elements coalesce into unified video player interface displaying completed production. Camera settles on static medium shot of final video playing, all elements now harmoniously integrated.**\n\n---\n\nIf you meant options 2 or 3, please clarify what files you have and what you need help with!",
+            "cleaned": "I need to understand better what youre looking for Are you asking me to 1 Refine this as a prompt for imagetovideo generation convert your description into cameramotion terms 2 Help you actually create such a video from narration music and image files you have 3 Something else related to video production If you want option 1 prompt refinement here it is Camera begins with a static wide shot of three distinct elements positioned separately in frame narration waveform visualization on left music frequency bars in center image thumbnail on right Slow pushin dolly forward over 2 seconds as elements begin subtle drift toward center Camera holds steady as subjects animate waveforms pulse and flow frequency bars dance rhythmically image scales up and rotates gently At 3second mark camera executes smooth arc rotation 15 degrees clockwise while subjects accelerate their convergence merging and layering in center frame Transition to final reveal through quick zoomin 1 second as merged elements coalesce into unified video player interface displaying completed production Camera settles on static medium shot of final video playing all elements now harmoniously integrated If you meant options 2 or 3 please clarify what files you have and what you need help with"
+          }
+        },
+        "position": "video",
+        "step": "animate",
+        "duration": 5,
+        "humanPrompt": "I need to understand better what you're looking for. Are you asking me to:\n\n1. **Refine this as a prompt for image-to-video generation** (convert your description into camera/motion terms)?\n2. **Help you actually create such a video** from narration, music, and image files you have?\n3. **Something else related to video production**?\n\nIf you want option 1 (prompt refinement), here it is:\n\n---\n\n**Camera begins with a static wide shot of three distinct elements positioned separately in frame: narration waveform visualization on left, music frequency bars in center, image thumbnail on right. Slow push-in (dolly forward) over 2 seconds as elements begin subtle drift toward center. Camera holds steady as subjects animate: waveforms pulse and flow, frequency bars dance rhythmically, image scales up and rotates gently. At 3-second mark, camera executes smooth arc rotation (15 degrees clockwise) while subjects accelerate their convergence, merging and layering in center frame. Transition to final reveal through quick zoom-in (1 second) as merged elements coalesce into unified video player interface displaying completed production. Camera settles on static medium shot of final video playing, all elements now harmoniously integrated.**\n\n---\n\nIf you meant options 2 or 3, please clarify what files you have and what you need help with!",
+        "cleanedPrompt": "I need to understand better what youre looking for Are you asking me to 1 Refine this as a prompt for imagetovideo generation convert your description into cameramotion terms 2 Help you actually create such a video from narration music and image files you have 3 Something else related to video production If you want option 1 prompt refinement here it is Camera begins with a static wide shot of three distinct elements positioned separately in frame narration waveform visualization on left music frequency bars in center image thumbnail on right Slow pushin dolly forward over 2 seconds as elements begin subtle drift toward center Camera holds steady as subjects animate waveforms pulse and flow frequency bars dance rhythmically image scales up and rotates gently At 3second mark camera executes smooth arc rotation 15 degrees clockwise while subjects accelerate their convergence merging and layering in center frame Transition to final reveal through quick zoomin 1 second as merged elements coalesce into unified video player interface displaying completed production Camera settles on static medium shot of final video playing all elements now harmoniously integrated If you meant options 2 or 3 please clarify what files you have and what you need help with",
+        "sourceImages": [
+          "https://tempfile.aiquickdraw.com/image-format-converter/1767530458995-fo1b0fn22u7.png",
+          "https://tempfile.aiquickdraw.com/image-format-converter/1767530518876-gq0r3rdymja.png"
+        ]
+      }
+    },
+    {
+      "id": "asset_image_1767531206154_hu0vi8",
+      "type": "image",
+      "filename": "image-start.png",
+      "url": "/assets/catalog/n8n/0004/image-start.png",
+      "provider": "n8n",
+      "model": "flux-pro",
+      "prompt": "A glowing retro computer terminal displaying Claude Code interface, neon green text on black screen, title banner reading \"12 GIFTs\" in pixelated 8-bit arcade font, vibrant cyan and magenta accents, scanline CRT effects, vintage 1980s arcade game aesthetic, pixel art style, dramatic rim lighting, high contrast, sharp details, nostalgic gaming atmosphere, isometric view, professional digital art, 4k quality",
+      "status": "ready",
+      "createdAt": "2026-01-04T12:53:26.154Z",
+      "completedAt": "2026-01-04T12:53:26.154Z",
+      "estimatedCost": 0.04,
+      "generationTimeMs": 0,
+      "metadata": {
+        "workflowId": "0004",
+        "workflowType": "image-edit-and-animate",
+        "workflowName": "A glowing retro computer terminal displaying Claud",
+        "runDate": "2026-01-04T12:53:24.985Z",
+        "prompts": {
+          "seedImage": {
+            "human": "A glowing retro computer terminal displaying Claude Code interface, neon green text on black screen, title banner reading \"12 GIFTs\" in pixelated 8-bit arcade font, vibrant cyan and magenta accents, scanline CRT effects, vintage 1980s arcade game aesthetic, pixel art style, dramatic rim lighting, high contrast, sharp details, nostalgic gaming atmosphere, isometric view, professional digital art, 4k quality",
+            "cleaned": "A glowing retro computer terminal displaying Claude Code interface neon green text on black screen title banner reading 12 GIFTs in pixelated 8bit arcade font vibrant cyan and magenta accents scanline CRT effects vintage 1980s arcade game aesthetic pixel art style dramatic rim lighting high contrast sharp details nostalgic gaming atmosphere isometric view professional digital art 4k quality"
+          },
+          "editInstruction": {
+            "human": "Replace any existing text in the image with the words \"Foundation\", \"Brain\", \"Creative\", \"Integration\", and \"Finale\" styled as 8-bit arcade game text. Use pixelated retro gaming fonts with bright, vibrant colors typical of classic arcade games from the 1980s. Arrange the text in a visually appealing layout that resembles vintage video game title screens or level indicators. Add scanlines, pixel-perfect letterforms, and high-contrast color combinations like neon blue, hot pink, electric yellow, or bright green against dark backgrounds to enhance the 8-bit arcade aesthetic.",
+            "cleaned": "Replace any existing text in the image with the words Foundation Brain Creative Integration and Finale styled as 8bit arcade game text Use pixelated retro gaming fonts with bright vibrant colors typical of classic arcade games from the 1980s Arrange the text in a visually appealing layout that resembles vintage video game title screens or level indicators Add scanlines pixelperfect letterforms and highcontrast color combinations like neon blue hot pink electric yellow or bright green against dark backgrounds to enhance the 8bit arcade aesthetic"
+          },
+          "animation": {
+            "human": "I need to convert your animation description into a refined prompt with camera and motion terms for image-to-video generation.\n\n**Refined Prompt:**\n\nWide establishing shot of a sleek terminal interface labeled \"Claude Code Terminal\" in sharp focus. Camera slowly pushes in as the terminal begins to fragment and dissolve into luminous particles. The fragments separate and reorganize mid-frame, transitioning through three distinct phases: first coalescing into an abstract neural network structure labeled \"Foundation Brain\" with pulsing synaptic connections, then morphing into swirling creative energy patterns labeled \"Creative Integration\" with fluid, organic motion, and finally crystallizing into a bold, centered title card reading \"Finale\" with a subtle camera pull-back to reveal the complete composition. Smooth cross-dissolve transitions between each phase over 8-10 seconds. Particles maintain consistent lighting and color palette throughout the transformation. Cinematic depth of field with slight bokeh effect in background elements.",
+            "cleaned": "I need to convert your animation description into a refined prompt with camera and motion terms for imagetovideo generation Refined Prompt Wide establishing shot of a sleek terminal interface labeled Claude Code Terminal in sharp focus Camera slowly pushes in as the terminal begins to fragment and dissolve into luminous particles The fragments separate and reorganize midframe transitioning through three distinct phases first coalescing into an abstract neural network structure labeled Foundation Brain with pulsing synaptic connections then morphing into swirling creative energy patterns labeled Creative Integration with fluid organic motion and finally crystallizing into a bold centered title card reading Finale with a subtle camera pullback to reveal the complete composition Smooth crossdissolve transitions between each phase over 810 seconds Particles maintain consistent lighting and color palette throughout the transformation Cinematic depth of field with slight bokeh effect in background elements"
+          }
+        },
+        "position": "start",
+        "step": "seed-image",
+        "humanPrompt": "A glowing retro computer terminal displaying Claude Code interface, neon green text on black screen, title banner reading \"12 GIFTs\" in pixelated 8-bit arcade font, vibrant cyan and magenta accents, scanline CRT effects, vintage 1980s arcade game aesthetic, pixel art style, dramatic rim lighting, high contrast, sharp details, nostalgic gaming atmosphere, isometric view, professional digital art, 4k quality",
+        "cleanedPrompt": "A glowing retro computer terminal displaying Claude Code interface neon green text on black screen title banner reading 12 GIFTs in pixelated 8bit arcade font vibrant cyan and magenta accents scanline CRT effects vintage 1980s arcade game aesthetic pixel art style dramatic rim lighting high contrast sharp details nostalgic gaming atmosphere isometric view professional digital art 4k quality"
+      }
+    },
+    {
+      "id": "asset_image_1767531340060_0jr1xu",
+      "type": "image",
+      "filename": "image-end.png",
+      "url": "/assets/catalog/n8n/0004/image-end.png",
+      "provider": "n8n",
+      "model": "flux-edit",
+      "prompt": "Replace any existing text in the image with the words \"Foundation\", \"Brain\", \"Creative\", \"Integration\", and \"Finale\" styled as 8-bit arcade game text. Use pixelated retro gaming fonts with bright, vibrant colors typical of classic arcade games from the 1980s. Arrange the text in a visually appealing layout that resembles vintage video game title screens or level indicators. Add scanlines, pixel-perfect letterforms, and high-contrast color combinations like neon blue, hot pink, electric yellow, or bright green against dark backgrounds to enhance the 8-bit arcade aesthetic.",
+      "status": "ready",
+      "createdAt": "2026-01-04T12:55:40.060Z",
+      "completedAt": "2026-01-04T12:55:40.060Z",
+      "estimatedCost": 0.04,
+      "generationTimeMs": 0,
+      "metadata": {
+        "workflowId": "0004",
+        "workflowType": "image-edit-and-animate",
+        "workflowName": "A glowing retro computer terminal displaying Claud",
+        "runDate": "2026-01-04T12:53:24.985Z",
+        "prompts": {
+          "seedImage": {
+            "human": "A glowing retro computer terminal displaying Claude Code interface, neon green text on black screen, title banner reading \"12 GIFTs\" in pixelated 8-bit arcade font, vibrant cyan and magenta accents, scanline CRT effects, vintage 1980s arcade game aesthetic, pixel art style, dramatic rim lighting, high contrast, sharp details, nostalgic gaming atmosphere, isometric view, professional digital art, 4k quality",
+            "cleaned": "A glowing retro computer terminal displaying Claude Code interface neon green text on black screen title banner reading 12 GIFTs in pixelated 8bit arcade font vibrant cyan and magenta accents scanline CRT effects vintage 1980s arcade game aesthetic pixel art style dramatic rim lighting high contrast sharp details nostalgic gaming atmosphere isometric view professional digital art 4k quality"
+          },
+          "editInstruction": {
+            "human": "Replace any existing text in the image with the words \"Foundation\", \"Brain\", \"Creative\", \"Integration\", and \"Finale\" styled as 8-bit arcade game text. Use pixelated retro gaming fonts with bright, vibrant colors typical of classic arcade games from the 1980s. Arrange the text in a visually appealing layout that resembles vintage video game title screens or level indicators. Add scanlines, pixel-perfect letterforms, and high-contrast color combinations like neon blue, hot pink, electric yellow, or bright green against dark backgrounds to enhance the 8-bit arcade aesthetic.",
+            "cleaned": "Replace any existing text in the image with the words Foundation Brain Creative Integration and Finale styled as 8bit arcade game text Use pixelated retro gaming fonts with bright vibrant colors typical of classic arcade games from the 1980s Arrange the text in a visually appealing layout that resembles vintage video game title screens or level indicators Add scanlines pixelperfect letterforms and highcontrast color combinations like neon blue hot pink electric yellow or bright green against dark backgrounds to enhance the 8bit arcade aesthetic"
+          },
+          "animation": {
+            "human": "I need to convert your animation description into a refined prompt with camera and motion terms for image-to-video generation.\n\n**Refined Prompt:**\n\nWide establishing shot of a sleek terminal interface labeled \"Claude Code Terminal\" in sharp focus. Camera slowly pushes in as the terminal begins to fragment and dissolve into luminous particles. The fragments separate and reorganize mid-frame, transitioning through three distinct phases: first coalescing into an abstract neural network structure labeled \"Foundation Brain\" with pulsing synaptic connections, then morphing into swirling creative energy patterns labeled \"Creative Integration\" with fluid, organic motion, and finally crystallizing into a bold, centered title card reading \"Finale\" with a subtle camera pull-back to reveal the complete composition. Smooth cross-dissolve transitions between each phase over 8-10 seconds. Particles maintain consistent lighting and color palette throughout the transformation. Cinematic depth of field with slight bokeh effect in background elements.",
+            "cleaned": "I need to convert your animation description into a refined prompt with camera and motion terms for imagetovideo generation Refined Prompt Wide establishing shot of a sleek terminal interface labeled Claude Code Terminal in sharp focus Camera slowly pushes in as the terminal begins to fragment and dissolve into luminous particles The fragments separate and reorganize midframe transitioning through three distinct phases first coalescing into an abstract neural network structure labeled Foundation Brain with pulsing synaptic connections then morphing into swirling creative energy patterns labeled Creative Integration with fluid organic motion and finally crystallizing into a bold centered title card reading Finale with a subtle camera pullback to reveal the complete composition Smooth crossdissolve transitions between each phase over 810 seconds Particles maintain consistent lighting and color palette throughout the transformation Cinematic depth of field with slight bokeh effect in background elements"
+          }
+        },
+        "position": "end",
+        "step": "edit-image",
+        "humanPrompt": "Replace any existing text in the image with the words \"Foundation\", \"Brain\", \"Creative\", \"Integration\", and \"Finale\" styled as 8-bit arcade game text. Use pixelated retro gaming fonts with bright, vibrant colors typical of classic arcade games from the 1980s. Arrange the text in a visually appealing layout that resembles vintage video game title screens or level indicators. Add scanlines, pixel-perfect letterforms, and high-contrast color combinations like neon blue, hot pink, electric yellow, or bright green against dark backgrounds to enhance the 8-bit arcade aesthetic.",
+        "cleanedPrompt": "Replace any existing text in the image with the words Foundation Brain Creative Integration and Finale styled as 8bit arcade game text Use pixelated retro gaming fonts with bright vibrant colors typical of classic arcade games from the 1980s Arrange the text in a visually appealing layout that resembles vintage video game title screens or level indicators Add scanlines pixelperfect letterforms and highcontrast color combinations like neon blue hot pink electric yellow or bright green against dark backgrounds to enhance the 8bit arcade aesthetic",
+        "sourceImageUrl": "https://tempfile.aiquickdraw.com/image-format-converter/1767531003219-car6b9hjfad.png"
+      }
+    },
+    {
+      "id": "asset_video_1767531342920_h9gytt",
+      "type": "video",
+      "filename": "video.mp4",
+      "url": "/assets/catalog/n8n/0004/video.mp4",
+      "provider": "n8n",
+      "model": "veo-3",
+      "prompt": "I need to convert your animation description into a refined prompt with camera and motion terms for image-to-video generation.\n\n**Refined Prompt:**\n\nWide establishing shot of a sleek terminal interface labeled \"Claude Code Terminal\" in sharp focus. Camera slowly pushes in as the terminal begins to fragment and dissolve into luminous particles. The fragments separate and reorganize mid-frame, transitioning through three distinct phases: first coalescing into an abstract neural network structure labeled \"Foundation Brain\" with pulsing synaptic connections, then morphing into swirling creative energy patterns labeled \"Creative Integration\" with fluid, organic motion, and finally crystallizing into a bold, centered title card reading \"Finale\" with a subtle camera pull-back to reveal the complete composition. Smooth cross-dissolve transitions between each phase over 8-10 seconds. Particles maintain consistent lighting and color palette throughout the transformation. Cinematic depth of field with slight bokeh effect in background elements.",
+      "status": "ready",
+      "createdAt": "2026-01-04T12:55:42.920Z",
+      "completedAt": "2026-01-04T12:55:42.920Z",
+      "estimatedCost": 0.15,
+      "generationTimeMs": 0,
+      "metadata": {
+        "workflowId": "0004",
+        "workflowType": "image-edit-and-animate",
+        "workflowName": "A glowing retro computer terminal displaying Claud",
+        "runDate": "2026-01-04T12:53:24.985Z",
+        "prompts": {
+          "seedImage": {
+            "human": "A glowing retro computer terminal displaying Claude Code interface, neon green text on black screen, title banner reading \"12 GIFTs\" in pixelated 8-bit arcade font, vibrant cyan and magenta accents, scanline CRT effects, vintage 1980s arcade game aesthetic, pixel art style, dramatic rim lighting, high contrast, sharp details, nostalgic gaming atmosphere, isometric view, professional digital art, 4k quality",
+            "cleaned": "A glowing retro computer terminal displaying Claude Code interface neon green text on black screen title banner reading 12 GIFTs in pixelated 8bit arcade font vibrant cyan and magenta accents scanline CRT effects vintage 1980s arcade game aesthetic pixel art style dramatic rim lighting high contrast sharp details nostalgic gaming atmosphere isometric view professional digital art 4k quality"
+          },
+          "editInstruction": {
+            "human": "Replace any existing text in the image with the words \"Foundation\", \"Brain\", \"Creative\", \"Integration\", and \"Finale\" styled as 8-bit arcade game text. Use pixelated retro gaming fonts with bright, vibrant colors typical of classic arcade games from the 1980s. Arrange the text in a visually appealing layout that resembles vintage video game title screens or level indicators. Add scanlines, pixel-perfect letterforms, and high-contrast color combinations like neon blue, hot pink, electric yellow, or bright green against dark backgrounds to enhance the 8-bit arcade aesthetic.",
+            "cleaned": "Replace any existing text in the image with the words Foundation Brain Creative Integration and Finale styled as 8bit arcade game text Use pixelated retro gaming fonts with bright vibrant colors typical of classic arcade games from the 1980s Arrange the text in a visually appealing layout that resembles vintage video game title screens or level indicators Add scanlines pixelperfect letterforms and highcontrast color combinations like neon blue hot pink electric yellow or bright green against dark backgrounds to enhance the 8bit arcade aesthetic"
+          },
+          "animation": {
+            "human": "I need to convert your animation description into a refined prompt with camera and motion terms for image-to-video generation.\n\n**Refined Prompt:**\n\nWide establishing shot of a sleek terminal interface labeled \"Claude Code Terminal\" in sharp focus. Camera slowly pushes in as the terminal begins to fragment and dissolve into luminous particles. The fragments separate and reorganize mid-frame, transitioning through three distinct phases: first coalescing into an abstract neural network structure labeled \"Foundation Brain\" with pulsing synaptic connections, then morphing into swirling creative energy patterns labeled \"Creative Integration\" with fluid, organic motion, and finally crystallizing into a bold, centered title card reading \"Finale\" with a subtle camera pull-back to reveal the complete composition. Smooth cross-dissolve transitions between each phase over 8-10 seconds. Particles maintain consistent lighting and color palette throughout the transformation. Cinematic depth of field with slight bokeh effect in background elements.",
+            "cleaned": "I need to convert your animation description into a refined prompt with camera and motion terms for imagetovideo generation Refined Prompt Wide establishing shot of a sleek terminal interface labeled Claude Code Terminal in sharp focus Camera slowly pushes in as the terminal begins to fragment and dissolve into luminous particles The fragments separate and reorganize midframe transitioning through three distinct phases first coalescing into an abstract neural network structure labeled Foundation Brain with pulsing synaptic connections then morphing into swirling creative energy patterns labeled Creative Integration with fluid organic motion and finally crystallizing into a bold centered title card reading Finale with a subtle camera pullback to reveal the complete composition Smooth crossdissolve transitions between each phase over 810 seconds Particles maintain consistent lighting and color palette throughout the transformation Cinematic depth of field with slight bokeh effect in background elements"
+          }
+        },
+        "position": "video",
+        "step": "animate",
+        "duration": 5,
+        "humanPrompt": "I need to convert your animation description into a refined prompt with camera and motion terms for image-to-video generation.\n\n**Refined Prompt:**\n\nWide establishing shot of a sleek terminal interface labeled \"Claude Code Terminal\" in sharp focus. Camera slowly pushes in as the terminal begins to fragment and dissolve into luminous particles. The fragments separate and reorganize mid-frame, transitioning through three distinct phases: first coalescing into an abstract neural network structure labeled \"Foundation Brain\" with pulsing synaptic connections, then morphing into swirling creative energy patterns labeled \"Creative Integration\" with fluid, organic motion, and finally crystallizing into a bold, centered title card reading \"Finale\" with a subtle camera pull-back to reveal the complete composition. Smooth cross-dissolve transitions between each phase over 8-10 seconds. Particles maintain consistent lighting and color palette throughout the transformation. Cinematic depth of field with slight bokeh effect in background elements.",
+        "cleanedPrompt": "I need to convert your animation description into a refined prompt with camera and motion terms for imagetovideo generation Refined Prompt Wide establishing shot of a sleek terminal interface labeled Claude Code Terminal in sharp focus Camera slowly pushes in as the terminal begins to fragment and dissolve into luminous particles The fragments separate and reorganize midframe transitioning through three distinct phases first coalescing into an abstract neural network structure labeled Foundation Brain with pulsing synaptic connections then morphing into swirling creative energy patterns labeled Creative Integration with fluid organic motion and finally crystallizing into a bold centered title card reading Finale with a subtle camera pullback to reveal the complete composition Smooth crossdissolve transitions between each phase over 810 seconds Particles maintain consistent lighting and color palette throughout the transformation Cinematic depth of field with slight bokeh effect in background elements",
+        "sourceImages": [
+          "https://tempfile.aiquickdraw.com/image-format-converter/1767531003219-car6b9hjfad.png",
+          "https://tempfile.aiquickdraw.com/image-format-converter/1767531064708-24m52f5kvhlh.png"
+        ]
+      }
+    },
+    {
+      "id": "asset_narration_1767531961152_u5sx34",
+      "type": "narration",
+      "filename": "narration-1767531961152-elevenlabs-eleven_multilingual_v2.mp3",
+      "url": "/assets/catalog/narration/narration-1767531961152-elevenlabs-eleven_multilingual_v2.mp3",
+      "provider": "elevenlabs",
+      "model": "eleven_multilingual_v2",
+      "prompt": "Prompts above, code below\n  Watch the magic start to flow\n  Narration, music, images unite\n  Twelve gifts emerge into the light",
+      "status": "ready",
+      "createdAt": "2026-01-04T13:06:01.153Z",
+      "completedAt": "2026-01-04T13:06:01.153Z",
+      "estimatedCost": 0.003,
+      "generationTimeMs": 1831,
+      "metadata": {
+        "voice": "Rachel",
+        "voiceId": "21m00Tcm4TlvDq8ikWAM",
+        "narrationText": "Prompts above, code below\n  Watch the magic start to flow\n  Narration, music, images unite\n  Twelve gifts emerge into the light",
+        "characterCount": 127,
+        "durationSeconds": 8,
+        "format": "mp3",
+        "outputFormat": "mp3_44100_128"
+      }
+    },
+    {
+      "id": "asset_narration_1767532056562_1p979i",
+      "type": "narration",
+      "filename": "narration-1767532056562-elevenlabs-eleven_multilingual_v2.mp3",
+      "url": "/assets/catalog/narration/narration-1767532056562-elevenlabs-eleven_multilingual_v2.mp3",
+      "provider": "elevenlabs",
+      "model": "eleven_multilingual_v2",
+      "prompt": "Up above the waterline, simple prompts begin to shine\n  Deep below where secrets hide, that's where all the code resides\n\n  Narration flows and music plays, images in their Venn displays\n  Watch them merge and intertwine, forming videos so divine\n\n  Twelve gifts of Claudemas appear\n  Foundation, brains are crystal clear\n  Creative tools and integration\n  Leading to our celebration",
+      "status": "ready",
+      "createdAt": "2026-01-04T13:07:36.564Z",
+      "completedAt": "2026-01-04T13:07:36.564Z",
+      "estimatedCost": 0.003,
+      "generationTimeMs": 4813,
+      "metadata": {
+        "voice": "Rachel",
+        "voiceId": "21m00Tcm4TlvDq8ikWAM",
+        "narrationText": "Up above the waterline, simple prompts begin to shine\n  Deep below where secrets hide, that's where all the code resides\n\n  Narration flows and music plays, images in their Venn displays\n  Watch them merge and intertwine, forming videos so divine\n\n  Twelve gifts of Claudemas appear\n  Foundation, brains are crystal clear\n  Creative tools and integration\n  Leading to our celebration",
+        "characterCount": 383,
+        "durationSeconds": 27,
+        "format": "mp3",
+        "outputFormat": "mp3_44100_128",
+        "name": "iceberg-rachel"
+      }
+    },
+    {
+      "id": "asset_narration_1767532166905_hq29ei",
+      "type": "narration",
+      "filename": "narration-1767532166905-elevenlabs-eleven_multilingual_v2.mp3",
+      "url": "/assets/catalog/narration/narration-1767532166905-elevenlabs-eleven_multilingual_v2.mp3",
+      "provider": "elevenlabs",
+      "model": "eleven_multilingual_v2",
+      "prompt": "Prompts above and code below\n  Watch the magic start to flow\n  Narration, music, images unite\n  Coming together, shining bright\n  Twelve gifts emerge into the light\n  Foundation, brains, and creative might",
+      "status": "ready",
+      "createdAt": "2026-01-04T13:09:26.906Z",
+      "completedAt": "2026-01-04T13:09:26.906Z",
+      "estimatedCost": 0.003,
+      "generationTimeMs": 2735,
+      "metadata": {
+        "voice": "Bella",
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "narrationText": "Prompts above and code below\n  Watch the magic start to flow\n  Narration, music, images unite\n  Coming together, shining bright\n  Twelve gifts emerge into the light\n  Foundation, brains, and creative might",
+        "characterCount": 205,
+        "durationSeconds": 15,
+        "format": "mp3",
+        "outputFormat": "mp3_44100_128",
+        "name": "iceberg-bella"
+      }
+    },
+    {
+      "id": "asset_music_1767532389649_s6q97c",
+      "type": "music",
+      "filename": "music-1767532389649-kie-v5.mp3",
+      "url": "/assets/catalog/music/music-1767532389649-kie-v5.mp3",
+      "provider": "kie",
+      "model": "V5",
+      "prompt": "Upbeat 8-bit chiptune in the style of classic NES games, energetic tempo around 140-160 BPM, nostalgic retro arcade vibes, square wave leads, triangle bass, chip drums, Game Boy aesthetic, electronic gaming soundtrack",
+      "status": "ready",
+      "createdAt": "2026-01-04T13:13:09.648Z",
+      "completedAt": "2026-01-04T13:13:09.652Z",
+      "estimatedCost": 0.06,
+      "generationTimeMs": 56465,
+      "metadata": {
+        "name": "Track 1",
+        "duration": 45.44,
+        "style": "  chiptune, 8-bit, retro gaming, arcade, energetic, upbeat, electronic, fast tempo, nostalgic, NES-style",
+        "format": "mp3"
+      }
+    },
+    {
+      "id": "asset_music_1767532442916_s0c200",
+      "type": "music",
+      "filename": "music-1767532442916-kie-v5.mp3",
+      "url": "/assets/catalog/music/music-1767532442916-kie-v5.mp3",
+      "provider": "kie",
+      "model": "V5",
+      "prompt": "Upbeat 8-bit chiptune in the style of classic NES games, energetic tempo around 140-160 BPM, nostalgic retro arcade vibes, square wave leads, triangle bass, chip drums, Game Boy aesthetic, electronic gaming soundtrack",
+      "status": "ready",
+      "createdAt": "2026-01-04T13:14:02.919Z",
+      "completedAt": "2026-01-04T13:14:02.919Z",
+      "metadata": {
+        "name": "8-bit-no-lyrics",
+        "style": "  chiptune, 8-bit, retro gaming, arcade, energetic, upbeat, electronic, fast tempo, nostalgic, NES-style",
+        "format": "mp3",
+        "duration": 39.92
+      }
+    },
+    {
+      "id": "asset_music_1767532529309_xx4yrq",
+      "type": "music",
+      "filename": "music-1767532529309-kie-v5.mp3",
+      "url": "/assets/catalog/music/music-1767532529309-kie-v5.mp3",
+      "provider": "kie",
+      "model": "V5",
+      "prompt": "Upbeat 8-bit chiptune in the style of classic NES games, energetic tempo around 140-160 BPM, nostalgic retro arcade vibes, square wave leads, triangle bass, chip drums, Game Boy aesthetic, electronic gaming soundtrack",
+      "status": "ready",
+      "createdAt": "2026-01-04T13:15:29.309Z",
+      "completedAt": "2026-01-04T13:15:29.313Z",
+      "estimatedCost": 0.06,
+      "generationTimeMs": 56111,
+      "metadata": {
+        "name": "Track 2",
+        "duration": 39.92,
+        "lyrics": "Prompts above and code below\nWatch the magic start to flow\nNarration, music, images unite\nComing together, shining bright\nTwelve gifts emerge into the light\nFoundation, brains, and creative might",
+        "style": "  chiptune, 8-bit, retro gaming, arcade, energetic, upbeat, electronic, fast tempo, nostalgic, NES-style",
+        "format": "mp3"
+      }
+    },
+    {
+      "id": "asset_music_1767532907236_utosg5",
+      "type": "music",
+      "filename": "music-1767532907236-kie-v5.mp3",
+      "url": "/assets/catalog/music/music-1767532907236-kie-v5.mp3",
+      "provider": "kie",
+      "model": "V5",
+      "prompt": "Upbeat 8-bit chiptune in the style of classic NES games, energetic tempo around 140-160 BPM, nostalgic retro arcade vibes, square wave leads, triangle bass, chip drums, Game Boy aesthetic, electronic gaming soundtrack",
+      "status": "ready",
+      "createdAt": "2026-01-04T13:21:47.239Z",
+      "completedAt": "2026-01-04T13:21:47.239Z",
+      "metadata": {
+        "name": "8-bit-lyrics",
+        "lyrics": "Prompts above and code below\nWatch the magic start to flow\nNarration, music, images unite\nComing together, shining bright\nTwelve gifts emerge into the light\nFoundation, brains, and creative might",
+        "style": "  chiptune, 8-bit, retro gaming, arcade, energetic, upbeat, electronic, fast tempo, nostalgic, NES-style",
+        "format": "mp3",
+        "duration": 39.92
+      }
+    },
+    {
+      "id": "asset_image_1767577705902_syqo1e",
+      "type": "image",
+      "filename": "image-1767577705902-kie-flux-kontext-max.jpg",
+      "url": "/assets/catalog/images/image-1767577705902-kie-flux-kontext-max.jpg",
+      "provider": "kie",
+      "model": "Flux Kontext Max",
+      "prompt": "A red sports car on a mountain road at sunset",
+      "status": "ready",
+      "createdAt": "2026-01-05T01:48:26.499Z",
+      "completedAt": "2026-01-05T01:48:26.499Z",
+      "estimatedCost": 0.03,
+      "generationTimeMs": 597,
+      "metadata": {
+        "width": 1024,
+        "height": 1024,
+        "tier": "advanced",
+        "estimatedCost": 0.025,
+        "generationTimeMs": 25343
+      }
+    },
+    {
+      "id": "asset_image_1767577705905_9gr8tp",
+      "type": "image",
+      "filename": "image-1767577705905-kie-flux-kontext-pro.jpg",
+      "url": "/assets/catalog/images/image-1767577705905-kie-flux-kontext-pro.jpg",
+      "provider": "kie",
+      "model": "Flux Kontext Pro",
+      "prompt": "A red sports car on a mountain road at sunset",
+      "status": "ready",
+      "createdAt": "2026-01-05T01:48:26.605Z",
+      "completedAt": "2026-01-05T01:48:26.605Z",
+      "estimatedCost": 0.03,
+      "generationTimeMs": 700,
+      "metadata": {
+        "width": 512,
+        "height": 512,
+        "tier": "midrange",
+        "estimatedCost": 0.004,
+        "generationTimeMs": 14121
+      }
+    },
+    {
+      "id": "asset_image_1767577705899_5ha5je",
+      "type": "image",
+      "filename": "image-1767577705899-fal-flux-schnell.jpg",
+      "url": "/assets/catalog/images/image-1767577705899-fal-flux-schnell.jpg",
+      "provider": "fal",
+      "model": "Flux Schnell",
+      "prompt": "A red sports car on a mountain road at sunset",
+      "status": "ready",
+      "createdAt": "2026-01-05T01:48:28.357Z",
+      "completedAt": "2026-01-05T01:48:28.357Z",
+      "estimatedCost": 0.05,
+      "generationTimeMs": 2458,
+      "metadata": {
+        "width": 512,
+        "height": 512,
+        "tier": "midrange",
+        "estimatedCost": 0.000786432,
+        "generationTimeMs": 2119
+      }
+    },
+    {
+      "id": "asset_image_1767577705895_rwt51f",
+      "type": "image",
+      "filename": "image-1767577705895-fal-flux-pro-v1.1.jpg",
+      "url": "/assets/catalog/images/image-1767577705895-fal-flux-pro-v1.1.jpg",
+      "provider": "fal",
+      "model": "Flux Pro v1.1",
+      "prompt": "A red sports car on a mountain road at sunset",
+      "status": "ready",
+      "createdAt": "2026-01-05T01:48:28.518Z",
+      "completedAt": "2026-01-05T01:48:28.518Z",
+      "estimatedCost": 0.05,
+      "generationTimeMs": 2624,
+      "metadata": {
+        "width": 1024,
+        "height": 1024,
+        "tier": "advanced",
+        "estimatedCost": 0.04194304,
+        "generationTimeMs": 7555
+      }
+    },
+    {
+      "id": "asset_music_1767617054920_tnm8jk",
+      "type": "music",
+      "filename": "music-1767617054920-kie-v5.mp3",
+      "url": "/assets/catalog/music/music-1767617054920-kie-v5.mp3",
+      "provider": "kie",
+      "model": "V5",
+      "prompt": "An upbeat electronic pop track with modern synths and inspiring melodies, building excitement and momentum",
+      "status": "ready",
+      "createdAt": "2026-01-05T12:44:14.920Z",
+      "completedAt": "2026-01-05T12:44:14.925Z",
+      "estimatedCost": 0.06,
+      "generationTimeMs": 72809,
+      "metadata": {
+        "name": "The Foundation - 12 Days of Claudemas 5-8",
+        "duration": 78.52,
+        "lyrics": "[Intro]\nTwelve days to build a dream\n\n[Verse 1]\nOn day one built the harness, FliGen came alive\nReact and Vite together, Express on the line\nDay two added brains, Claude SDK arrived\nAgent conversations, intelligence defined\n\n[Verse 2]\nDay three, second brain, Kybernesis in flight\nMemory and context, keeping knowledge tight\nDay four, images flowing, FAL and KIE unite\nPixels come to play, creating day and night\n\n[Chorus]\nFoundation's set, the journey's begun\nFour days down, we're having fun\nBuilding tools with Claude by my side\nTwelve days of Claudemas, what a ride!\n\n[Outro]\nFour days done, eight more to go",
+        "style": "Electronic Pop, upbeat and inspiring, 120 BPM, modern production with synths",
+        "format": "mp3"
+      }
+    },
+    {
+      "id": "asset_music_1767617241130_hrogti",
+      "type": "music",
+      "filename": "music-1767617241130-kie-v5.mp3",
+      "url": "/assets/catalog/music/music-1767617241130-kie-v5.mp3",
+      "provider": "kie",
+      "model": "V5",
+      "prompt": "An upbeat electronic pop track with modern synths and inspiring melodies, building excitement and momentum",
+      "status": "ready",
+      "createdAt": "2026-01-05T12:47:21.135Z",
+      "completedAt": "2026-01-05T12:47:21.135Z",
+      "metadata": {
+        "name": "The Foundation - 12 Days of Claudemas - 1-4",
+        "lyrics": "[Intro]\nTwelve days to build a dream\n\n[Verse 1]\nOn day one built the harness, FliGen came alive\nReact and Vite together, Express on the line\nDay two added brains, Claude SDK arrived\nAgent conversations, intelligence defined\n\n[Verse 2]\nDay three, second brain, Kybernesis in flight\nMemory and context, keeping knowledge tight\nDay four, images flowing, FAL and KIE unite\nPixels come to play, creating day and night\n\n[Chorus]\nFoundation's set, the journey's begun\nFour days down, we're having fun\nBuilding tools with Claude by my side\nTwelve days of Claudemas, what a ride!\n\n[Outro]\nFour days done, eight more to go",
+        "style": "Electronic Pop, upbeat and inspiring, 120 BPM, modern production with synths",
+        "format": "mp3"
+      }
+    },
+    {
+      "id": "asset_image_1767617686959_czubkm",
+      "type": "image",
+      "filename": "image-1767617686959-fal-flux-schnell.jpg",
+      "url": "/assets/catalog/images/image-1767617686959-fal-flux-schnell.jpg",
+      "provider": "fal",
+      "model": "Flux Schnell",
+      "prompt": "kermet the frog",
+      "status": "ready",
+      "createdAt": "2026-01-05T12:54:49.412Z",
+      "completedAt": "2026-01-05T12:54:49.412Z",
+      "estimatedCost": 0.05,
+      "generationTimeMs": 2453,
+      "metadata": {
+        "width": 512,
+        "height": 512,
+        "tier": "midrange",
+        "estimatedCost": 0.000786432,
+        "generationTimeMs": 1749
+      }
+    },
+    {
+      "id": "asset_image_1767617686956_07et7m",
+      "type": "image",
+      "filename": "image-1767617686956-fal-flux-pro-v1.1.jpg",
+      "url": "/assets/catalog/images/image-1767617686956-fal-flux-pro-v1.1.jpg",
+      "provider": "fal",
+      "model": "Flux Pro v1.1",
+      "prompt": "kermet the frog",
+      "status": "ready",
+      "createdAt": "2026-01-05T12:54:50.014Z",
+      "completedAt": "2026-01-05T12:54:50.014Z",
+      "estimatedCost": 0.05,
+      "generationTimeMs": 3058,
+      "metadata": {
+        "width": 1024,
+        "height": 1024,
+        "tier": "advanced",
+        "estimatedCost": 0.04194304,
+        "generationTimeMs": 4862
+      }
+    },
+    {
+      "id": "asset_music_1767617943116_xipsfj",
+      "type": "music",
+      "filename": "music-1767617943118-kie-v5.mp3",
+      "url": "/assets/catalog/music/music-1767617943118-kie-v5.mp3",
+      "provider": "kie",
+      "model": "V5",
+      "prompt": "An energetic indie rock track with electronic elements, creative and vibrant energy, celebrating innovation and artistic expression",
+      "status": "ready",
+      "createdAt": "2026-01-05T12:59:03.115Z",
+      "completedAt": "2026-01-05T12:59:03.123Z",
+      "estimatedCost": 0.06,
+      "generationTimeMs": 72774,
+      "metadata": {
+        "name": "The Creation - 12 Days of Claudemas",
+        "duration": 101.84,
+        "lyrics": "[Intro]\nCreative tools come alive\n\n[Verse 1]\nDay five, voices speaking, ElevenLabs on cue\nText to speech flowing, narration coming through\nDay six, videos dancing, animations breaking free\nKling and Veo rendering, motion we can see\n\n[Verse 2]\nDay seven, music playing, Suno takes the stage\nMelodies and rhythms, setting up the gauge\nDay eight, thumbnails shining, designs that engage\nHTML and canvas, art upon the page\n\n[Chorus]\nCreating magic, bringing life to code\nFour more days, we're on a roll\nBuilding tools with vision clear\nTwelve days of Claudemas, we're halfway here!\n\n[Outro]\nEight days down, four to go",
+        "style": "Indie Rock with Electronic elements, energetic and creative, 125 BPM, guitar and synths",
+        "format": "mp3"
+      }
+    },
+    {
+      "id": "asset_music_1767618419389_97zdux",
+      "type": "music",
+      "filename": "music-1767618419389-kie-v4.5.mp3",
+      "url": "/assets/catalog/music/music-1767618419389-kie-v4.5.mp3",
+      "provider": "kie",
+      "model": "V4.5",
+      "prompt": "A triumphant epic cinematic rock anthem with soaring orchestral strings, powerful guitar riffs, and victorious energy",
+      "status": "ready",
+      "createdAt": "2026-01-05T13:06:59.388Z",
+      "completedAt": "2026-01-05T13:06:59.398Z",
+      "estimatedCost": 0.06,
+      "generationTimeMs": 115685,
+      "metadata": {
+        "name": "The Integration - 12 Days of Claudemas",
+        "duration": 193.64,
+        "lyrics": "[Intro - Building]\nBringing it all together\n\n[Verse 1]\nDay nine, connection, FliHub interop\nAPIs talking, data never stops\nDay ten, automation, N8N workflows run\nOrchestration magic, many tasks as one\n\n[Verse 2]\nDay eleven, storytelling, narratives unite\nImages and voices, videos in flight\nDay twelve, completion, everything's just right\nTwelve tools together, shining in the light\n\n[Chorus - Epic]\nJourney's done, twelve tools complete\nClaudemas magic, can't be beat\nFrom harness to story, we built it all\nTwelve days of Claudemas, hear the call!\n\n[Bridge - Instrumental build]\n\n[Final Chorus - Full power]\nBuilt it with Claude, day by day\nTwelve tools born, along the way\nFrom code to creation, watched it grow\nTwelve days of Claudemas, now you know!\n\n[Outro - Triumphant]\nTwelve days, one journey, mission complete",
+        "style": "Epic Cinematic Rock, triumphant and powerful, 130 BPM, orchestral strings with rock guitar",
+        "format": "mp3"
+      }
+    },
+    {
+      "id": "asset_music_1767618436494_unmjw6",
+      "type": "music",
+      "filename": "music-1767618436494-kie-v4.5.mp3",
+      "url": "/assets/catalog/music/music-1767618436494-kie-v4.5.mp3",
+      "provider": "kie",
+      "model": "V4.5",
+      "prompt": "A triumphant epic cinematic rock anthem with soaring orchestral strings, powerful guitar riffs, and victorious energy",
+      "status": "ready",
+      "createdAt": "2026-01-05T13:07:16.502Z",
+      "completedAt": "2026-01-05T13:07:16.502Z",
+      "metadata": {
+        "name": "The Integration - 12 Days of Claudemas - 9-12",
+        "lyrics": "[Intro - Building]\nBringing it all together\n\n[Verse 1]\nDay nine, connection, FliHub interop\nAPIs talking, data never stops\nDay ten, automation, N8N workflows run\nOrchestration magic, many tasks as one\n\n[Verse 2]\nDay eleven, storytelling, narratives unite\nImages and voices, videos in flight\nDay twelve, completion, everything's just right\nTwelve tools together, shining in the light\n\n[Chorus - Epic]\nJourney's done, twelve tools complete\nClaudemas magic, can't be beat\nFrom harness to story, we built it all\nTwelve days of Claudemas, hear the call!\n\n[Bridge - Instrumental build]\n\n[Final Chorus - Full power]\nBuilt it with Claude, day by day\nTwelve tools born, along the way\nFrom code to creation, watched it grow\nTwelve days of Claudemas, now you know!\n\n[Outro - Triumphant]\nTwelve days, one journey, mission complete",
+        "style": "Epic Cinematic Rock, triumphant and powerful, 130 BPM, orchestral strings with rock guitar",
+        "format": "mp3"
       }
     }
   ]
