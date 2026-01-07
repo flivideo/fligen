@@ -91,7 +91,8 @@ function renderBackground(
 
     // Glow effect behind text
     if (config.glowEnabled && template.effects.glow) {
-      const glowColor = template.colors[config.glowColor] || template.effects.glow.color;
+      // Support both template color keys and custom hex colors
+      const glowColor = template.colors[config.glowColor] || config.glowColor || template.effects.glow.color;
       const glowIntensity = config.glowIntensity;
       const spread = template.effects.glow.spread * glowIntensity;
 
@@ -175,7 +176,8 @@ function renderTextSegments(
     let xOffset = startX;
     for (const segment of lineSegments) {
       const segmentText = applyCaseTransform(segment.text, config.caseTransform);
-      const color = template.colors[segment.color] || template.colors[template.defaultColor];
+      // Support both template color keys and custom hex colors
+      const color = template.colors[segment.color] || segment.color || template.colors[template.defaultColor];
 
       for (const char of segmentText) {
         renderBrickLetter(

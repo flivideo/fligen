@@ -86,6 +86,30 @@ export default function Day13BrandText() {
     }
   };
 
+  const moveSegmentUp = (id: string) => {
+    setConfig(prev => {
+      const index = prev.segments.findIndex(seg => seg.id === id);
+      if (index <= 0) return prev; // Already at top
+
+      const newSegments = [...prev.segments];
+      [newSegments[index - 1], newSegments[index]] = [newSegments[index], newSegments[index - 1]];
+
+      return { ...prev, segments: newSegments };
+    });
+  };
+
+  const moveSegmentDown = (id: string) => {
+    setConfig(prev => {
+      const index = prev.segments.findIndex(seg => seg.id === id);
+      if (index === -1 || index >= prev.segments.length - 1) return prev; // Already at bottom
+
+      const newSegments = [...prev.segments];
+      [newSegments[index], newSegments[index + 1]] = [newSegments[index + 1], newSegments[index]];
+
+      return { ...prev, segments: newSegments };
+    });
+  };
+
   const handleCanvasPresetChange = (preset: CanvasPresetKey) => {
     setCanvasPreset(preset);
     if (preset !== 'custom') {
@@ -137,7 +161,7 @@ export default function Day13BrandText() {
       {/* Two-column layout */}
       <div className="flex-1 flex overflow-hidden">
         {/* Left: Controls (scrollable) */}
-        <div className="w-80 overflow-y-auto border-r border-slate-700 p-4">
+        <div className="w-96 overflow-y-auto border-r border-slate-700 p-4">
         <div className="space-y-4">
         {/* Template Selector */}
         <div>
@@ -187,6 +211,34 @@ export default function Day13BrandText() {
           <div className="space-y-1.5">
             {config.segments.map((segment, idx) => (
               <div key={segment.id} className="flex gap-1 items-center text-xs">
+                {/* Move Up/Down Buttons */}
+                <div className="flex flex-col gap-0.5">
+                  <button
+                    onClick={() => moveSegmentUp(segment.id)}
+                    disabled={idx === 0}
+                    className={`px-1 py-0 rounded text-xs leading-none ${
+                      idx === 0
+                        ? 'text-slate-600 cursor-not-allowed'
+                        : 'text-slate-400 hover:text-white hover:bg-slate-600'
+                    }`}
+                    title="Move up"
+                  >
+                    ▲
+                  </button>
+                  <button
+                    onClick={() => moveSegmentDown(segment.id)}
+                    disabled={idx === config.segments.length - 1}
+                    className={`px-1 py-0 rounded text-xs leading-none ${
+                      idx === config.segments.length - 1
+                        ? 'text-slate-600 cursor-not-allowed'
+                        : 'text-slate-400 hover:text-white hover:bg-slate-600'
+                    }`}
+                    title="Move down"
+                  >
+                    ▼
+                  </button>
+                </div>
+
                 <input
                   type="text"
                   value={segment.text}
@@ -194,17 +246,31 @@ export default function Day13BrandText() {
                   placeholder="Text..."
                   className="flex-1 px-2 py-1 bg-slate-700 border border-slate-600 rounded text-white text-xs"
                 />
-                <select
-                  value={segment.color}
-                  onChange={(e) => updateSegment(segment.id, { color: e.target.value })}
-                  className="px-1.5 py-1 bg-slate-700 border border-slate-600 rounded text-white text-xs w-20"
-                >
-                  {Object.keys(template.colors).map(colorKey => (
-                    <option key={colorKey} value={colorKey}>
-                      {colorKey}
-                    </option>
-                  ))}
-                </select>
+                <div className="flex gap-1">
+                  <select
+                    value={Object.keys(template.colors).includes(segment.color) ? segment.color : 'custom'}
+                    onChange={(e) => {
+                      if (e.target.value !== 'custom') {
+                        updateSegment(segment.id, { color: e.target.value });
+                      }
+                    }}
+                    className="px-1.5 py-1 bg-slate-700 border border-slate-600 rounded text-white text-xs w-20"
+                  >
+                    {Object.keys(template.colors).map(colorKey => (
+                      <option key={colorKey} value={colorKey}>
+                        {colorKey}
+                      </option>
+                    ))}
+                    <option value="custom">custom</option>
+                  </select>
+                  <input
+                    type="color"
+                    value={Object.keys(template.colors).includes(segment.color) ? template.colors[segment.color] : segment.color}
+                    onChange={(e) => updateSegment(segment.id, { color: e.target.value })}
+                    className="w-8 h-7 bg-slate-700 border border-slate-600 rounded cursor-pointer"
+                    title="Pick custom color"
+                  />
+                </div>
                 <button
                   onClick={() => updateSegment(segment.id, { newLine: !segment.newLine })}
                   className={`px-1.5 py-1 rounded text-white text-xs ${
@@ -342,15 +408,29 @@ export default function Day13BrandText() {
 
             {config.glowEnabled && (
               <div className="ml-5 space-y-1">
-                <select
-                  value={config.glowColor}
-                  onChange={(e) => updateConfig({ glowColor: e.target.value })}
-                  className="w-full px-1.5 py-0.5 bg-slate-700 border border-slate-600 rounded text-white text-xs"
-                >
-                  {Object.keys(template.colors).map(colorKey => (
-                    <option key={colorKey} value={colorKey}>{colorKey}</option>
-                  ))}
-                </select>
+                <div className="flex gap-1">
+                  <select
+                    value={Object.keys(template.colors).includes(config.glowColor) ? config.glowColor : 'custom'}
+                    onChange={(e) => {
+                      if (e.target.value !== 'custom') {
+                        updateConfig({ glowColor: e.target.value });
+                      }
+                    }}
+                    className="flex-1 px-1.5 py-0.5 bg-slate-700 border border-slate-600 rounded text-white text-xs"
+                  >
+                    {Object.keys(template.colors).map(colorKey => (
+                      <option key={colorKey} value={colorKey}>{colorKey}</option>
+                    ))}
+                    <option value="custom">custom</option>
+                  </select>
+                  <input
+                    type="color"
+                    value={Object.keys(template.colors).includes(config.glowColor) ? template.colors[config.glowColor] : config.glowColor}
+                    onChange={(e) => updateConfig({ glowColor: e.target.value })}
+                    className="w-8 h-6 bg-slate-700 border border-slate-600 rounded cursor-pointer"
+                    title="Pick custom glow color"
+                  />
+                </div>
                 <input
                   type="range"
                   min="0"
@@ -423,7 +503,7 @@ export default function Day13BrandText() {
 
         {/* Canvas Size */}
         <div className="border-t border-slate-700 pt-2">
-          <h3 className="text-xs font-medium text-slate-300 mb-1">Canvas</h3>
+          <h3 className="text-xs font-medium text-slate-300 mb-1">Canvas Size</h3>
           <select
             value={canvasPreset}
             onChange={(e) => handleCanvasPresetChange(e.target.value as CanvasPresetKey)}
@@ -434,31 +514,43 @@ export default function Day13BrandText() {
             ))}
           </select>
 
-          {canvasPreset === 'custom' && (
-            <div className="flex gap-1 text-xs">
-              <input
-                type="number"
-                value={customWidth}
-                onChange={(e) => setCustomWidth(Number(e.target.value))}
-                placeholder="W"
-                className="flex-1 px-1.5 py-1 bg-slate-700 border border-slate-600 rounded text-white text-xs"
-              />
-              <span className="text-slate-400 self-center">×</span>
-              <input
-                type="number"
-                value={customHeight}
-                onChange={(e) => setCustomHeight(Number(e.target.value))}
-                placeholder="H"
-                className="flex-1 px-1.5 py-1 bg-slate-700 border border-slate-600 rounded text-white text-xs"
-              />
-              <button
-                onClick={handleCustomSizeApply}
-                className="px-2 py-1 bg-blue-600 hover:bg-blue-700 rounded text-white text-xs"
-              >
-                ✓
-              </button>
-            </div>
-          )}
+          {/* Width Slider */}
+          <div className="mb-2">
+            <label className="block text-xs text-slate-400 mb-1">
+              Width: {config.canvasSize.width}px
+            </label>
+            <input
+              type="range"
+              min="400"
+              max="1920"
+              step="20"
+              value={config.canvasSize.width}
+              onChange={(e) => {
+                updateConfig({ canvasSize: { ...config.canvasSize, width: Number(e.target.value) } });
+                setCanvasPreset('custom');
+              }}
+              className="w-full accent-blue-500"
+            />
+          </div>
+
+          {/* Height Slider */}
+          <div>
+            <label className="block text-xs text-slate-400 mb-1">
+              Height: {config.canvasSize.height}px
+            </label>
+            <input
+              type="range"
+              min="200"
+              max="1080"
+              step="20"
+              value={config.canvasSize.height}
+              onChange={(e) => {
+                updateConfig({ canvasSize: { ...config.canvasSize, height: Number(e.target.value) } });
+                setCanvasPreset('custom');
+              }}
+              className="w-full accent-blue-500"
+            />
+          </div>
         </div>
 
         {/* Export Controls */}
