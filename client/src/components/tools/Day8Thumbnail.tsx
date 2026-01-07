@@ -16,6 +16,36 @@ const BRAND = {
 type BrandColor = keyof typeof BRAND;
 
 // ============================================
+// Font System (AppyDave Brand Typography)
+// ============================================
+const FONTS = {
+  BebasNeue: {
+    family: '"Bebas Neue", sans-serif',
+    defaultSize: 72,
+    weight: 700,
+    style: 'normal',
+    transform: 'uppercase' as const,
+  },
+  Oswald: {
+    family: '"Oswald", sans-serif',
+    defaultSize: 64,
+    weight: 700,
+    style: 'normal',
+    transform: 'uppercase' as const,
+  },
+  Roboto: {
+    family: '"Roboto", sans-serif',
+    defaultSize: 56,
+    weight: 400,
+    style: 'normal',
+    transform: 'none' as const,
+  },
+} as const;
+
+type FontFamily = keyof typeof FONTS;
+type OverflowMode = 'wrap' | 'scale' | 'scroll';
+
+// ============================================
 // Types
 // ============================================
 
@@ -36,9 +66,11 @@ interface TextPanel {
   customX: number;
   customY: number;
   // Style controls
+  fontFamily: FontFamily;
   fontSize: number;
   paddingX: number;
   paddingY: number;
+  overflow: OverflowMode;
 }
 
 interface OverlayConfig {
@@ -76,17 +108,19 @@ const createDefaultTextPanel = (id: string): TextPanel => ({
   position: 'top-left',
   customX: 2.5,  // percentage (maps to ~30px at 1280)
   customY: 4.2,  // percentage (maps to ~30px at 720)
-  fontSize: 36,
-  paddingX: 16,
-  paddingY: 8,
+  fontFamily: 'BebasNeue',
+  fontSize: 72,
+  paddingX: 24,
+  paddingY: 12,
+  overflow: 'wrap',
 });
 
 const initialConfig: ThumbnailConfig = {
   mainImageUrl: null,
   textPanels: [
-    { ...createDefaultTextPanel('panel-1'), enabled: true, text: 'CLAUDE CODE', position: 'top-left' },
-    { ...createDefaultTextPanel('panel-2'), enabled: true, text: '12 DAYS', bgColor: 'black', textColor: 'white', position: 'top-left', customY: 11 },
-    { ...createDefaultTextPanel('panel-3'), enabled: false, text: 'PANEL 3', position: 'bottom-left' },
+    { ...createDefaultTextPanel('panel-1'), enabled: true, text: 'CLAUDE CODE', fontFamily: 'BebasNeue', fontSize: 72, position: 'top-left' },
+    { ...createDefaultTextPanel('panel-2'), enabled: true, text: '12 DAYS', fontFamily: 'BebasNeue', fontSize: 72, bgColor: 'black', textColor: 'white', position: 'top-left', customY: 11 },
+    { ...createDefaultTextPanel('panel-3'), enabled: false, text: 'PANEL 3', fontFamily: 'Oswald', fontSize: 64, position: 'bottom-left' },
   ],
   overlay: {
     enabled: false,
@@ -383,6 +417,10 @@ function PreviewCanvas({ config, visibility, onUpdatePanel }: PreviewCanvasProps
                 const scaledPaddingX = panel.paddingX * scaleFactor;
                 const scaledPaddingY = panel.paddingY * scaleFactor;
 
+                // Apply font transform
+                const font = FONTS[panel.fontFamily];
+                const displayText = font.transform === 'uppercase' ? panel.text.toUpperCase() : panel.text;
+
                 return (
                   <div
                     key={panel.id}
@@ -392,19 +430,20 @@ function PreviewCanvas({ config, visibility, onUpdatePanel }: PreviewCanvasProps
                     style={{
                       ...posStyle,
                       backgroundColor: BRAND[panel.bgColor],
-                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontFamily: font.family,
+                      fontWeight: font.weight,
                       padding: `${scaledPaddingY}px ${scaledPaddingX}px`,
                     }}
                     onMouseDown={onUpdatePanel ? (e) => handleDragStart(e, panel.id, panel) : undefined}
                   >
                     <span
-                      className="font-bold tracking-wide whitespace-nowrap"
+                      className="tracking-wide whitespace-nowrap"
                       style={{
                         color: BRAND[panel.textColor],
                         fontSize: `${scaledFontSize}px`,
                       }}
                     >
-                      {panel.text}
+                      {displayText}
                     </span>
                   </div>
                 );
@@ -601,6 +640,18 @@ function TextPanelEditor({ panels, onChange }: TextPanelEditorProps) {
     { value: 'white', label: 'White', color: BRAND.white },
   ];
 
+  const fontOptions: { value: FontFamily; label: string; description: string }[] = [
+    { value: 'BebasNeue', label: 'BebasNeue', description: 'Bold display font (h1/buttons)' },
+    { value: 'Oswald', label: 'Oswald', description: 'Uppercase subheading (h2-h6)' },
+    { value: 'Roboto', label: 'Roboto', description: 'Body text' },
+  ];
+
+  const overflowOptions: { value: OverflowMode; label: string }[] = [
+    { value: 'wrap', label: 'Wrap (multi-line)' },
+    { value: 'scale', label: 'Scale to Fit' },
+    { value: 'scroll', label: 'Scroll (preview only)' },
+  ];
+
   const positionOptions: { value: PresetPosition; label: string }[] = [
     { value: 'top-left', label: 'Top Left' },
     { value: 'top-center', label: 'Top Center' },
@@ -646,10 +697,58 @@ function TextPanelEditor({ panels, onChange }: TextPanelEditorProps) {
                 <input
                   type="text"
                   value={panel.text}
-                  onChange={(e) => updatePanel(panel.id, { text: e.target.value.toUpperCase() })}
+                  onChange={(e) => updatePanel(panel.id, { text: e.target.value })}
                   className="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white text-sm focus:outline-none focus:border-amber-500"
-                  placeholder="ENTER TEXT"
+                  placeholder="Enter text"
                 />
+              </div>
+
+              {/* Font Family Selector */}
+              <div>
+                <label className="block text-xs text-slate-500 mb-1">Font</label>
+                <select
+                  value={panel.fontFamily}
+                  onChange={(e) => updatePanel(panel.id, { fontFamily: e.target.value as FontFamily })}
+                  className="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white text-sm focus:outline-none focus:border-amber-500"
+                >
+                  {fontOptions.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label} — {opt.description}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Font Size Slider */}
+              <div>
+                <label className="block text-xs text-slate-500 mb-1">
+                  Font Size: {panel.fontSize}px
+                </label>
+                <input
+                  type="range"
+                  min="72"
+                  max="200"
+                  step="4"
+                  value={panel.fontSize}
+                  onChange={(e) => updatePanel(panel.id, { fontSize: parseInt(e.target.value) })}
+                  className="w-full accent-amber-500"
+                />
+              </div>
+
+              {/* Overflow Mode Selector */}
+              <div>
+                <label className="block text-xs text-slate-500 mb-1">Text Overflow</label>
+                <select
+                  value={panel.overflow}
+                  onChange={(e) => updatePanel(panel.id, { overflow: e.target.value as OverflowMode })}
+                  className="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white text-sm focus:outline-none focus:border-amber-500"
+                >
+                  {overflowOptions.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               {/* Color Selectors */}
@@ -709,22 +808,6 @@ function TextPanelEditor({ panels, onChange }: TextPanelEditorProps) {
                 )}
               </div>
 
-              {/* Font Size Slider */}
-              <div>
-                <label className="block text-xs text-slate-500 mb-1">
-                  Font Size: {panel.fontSize}px
-                </label>
-                <input
-                  type="range"
-                  min="20"
-                  max="80"
-                  step="2"
-                  value={panel.fontSize}
-                  onChange={(e) => updatePanel(panel.id, { fontSize: parseInt(e.target.value) })}
-                  className="w-full accent-amber-500"
-                />
-              </div>
-
               {/* Padding Controls */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
@@ -733,9 +816,9 @@ function TextPanelEditor({ panels, onChange }: TextPanelEditorProps) {
                   </label>
                   <input
                     type="range"
-                    min="4"
-                    max="48"
-                    step="2"
+                    min="8"
+                    max="80"
+                    step="4"
                     value={panel.paddingX}
                     onChange={(e) => updatePanel(panel.id, { paddingX: parseInt(e.target.value) })}
                     className="w-full accent-amber-500"
@@ -747,9 +830,9 @@ function TextPanelEditor({ panels, onChange }: TextPanelEditorProps) {
                   </label>
                   <input
                     type="range"
-                    min="2"
-                    max="32"
-                    step="2"
+                    min="4"
+                    max="60"
+                    step="4"
                     value={panel.paddingY}
                     onChange={(e) => updatePanel(panel.id, { paddingY: parseInt(e.target.value) })}
                     className="w-full accent-amber-500"
@@ -937,6 +1020,79 @@ function ConfigPanel({ selectedLayer, config, onChange, shots }: ConfigPanelProp
 }
 
 // ============================================
+// Text Rendering Helper Functions
+// ============================================
+
+function renderWrappedText(
+  ctx: CanvasRenderingContext2D,
+  text: string,
+  x: number,
+  y: number,
+  maxWidth: number,
+  fontSize: number,
+  textColor: BrandColor
+): number {
+  const words = text.split(' ');
+  let line = '';
+  let lineY = y;
+  const lineHeight = fontSize * 1.2; // 120% line height
+
+  ctx.fillStyle = BRAND[textColor];
+  ctx.textBaseline = 'top';
+
+  for (const word of words) {
+    const testLine = line + (line ? ' ' : '') + word;
+    const metrics = ctx.measureText(testLine);
+
+    if (metrics.width > maxWidth && line !== '') {
+      // Draw current line
+      ctx.fillText(line, x, lineY);
+      line = word;
+      lineY += lineHeight;
+    } else {
+      line = testLine;
+    }
+  }
+
+  // Draw last line
+  if (line) {
+    ctx.fillText(line, x, lineY);
+    lineY += lineHeight;
+  }
+
+  return lineY - y; // Return total height used
+}
+
+function renderScaledText(
+  ctx: CanvasRenderingContext2D,
+  text: string,
+  x: number,
+  y: number,
+  maxWidth: number,
+  fontSize: number,
+  fontFamily: string,
+  fontWeight: number,
+  textColor: BrandColor
+): number {
+  // Measure text at current size
+  ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
+  const metrics = ctx.measureText(text);
+
+  // Scale down if needed
+  let scaledFontSize = fontSize;
+  if (metrics.width > maxWidth) {
+    scaledFontSize = Math.floor(fontSize * (maxWidth / metrics.width));
+    ctx.font = `${fontWeight} ${scaledFontSize}px ${fontFamily}`;
+  }
+
+  ctx.fillStyle = BRAND[textColor];
+  ctx.textBaseline = 'top';
+  ctx.fillText(text, x, y);
+
+  return scaledFontSize; // Return used font size
+}
+
+// ============================================
 // Canvas Rendering Function
 // ============================================
 
@@ -949,7 +1105,15 @@ async function renderToCanvas(config: ThumbnailConfig, visibility: LayerVisibili
   canvas.height = HEIGHT;
   const ctx = canvas.getContext('2d')!;
 
-  // Wait for fonts to be ready
+  // Preload all fonts used in text panels
+  const fontsToLoad = config.textPanels
+    .filter(p => p.enabled)
+    .map(p => {
+      const font = FONTS[p.fontFamily];
+      return document.fonts.load(`${font.weight} ${p.fontSize}px ${font.family}`);
+    });
+
+  await Promise.all(fontsToLoad);
   await document.fonts.ready;
 
   // Layer 1: Background
@@ -999,18 +1163,32 @@ async function renderToCanvas(config: ThumbnailConfig, visibility: LayerVisibili
       const panel = enabledPanels[i];
       const offset = i * 50; // Stack offset for preset positions
 
+      // Get font configuration
+      const font = FONTS[panel.fontFamily];
+      const displayText = font.transform === 'uppercase' ? panel.text.toUpperCase() : panel.text;
+
       // Use panel's font size and padding
       const fontSize = panel.fontSize;
       const paddingX = panel.paddingX;
       const paddingY = panel.paddingY;
 
       // Set up text measurement
-      ctx.font = `bold ${fontSize}px "Bebas Neue", sans-serif`;
-      const textMetrics = ctx.measureText(panel.text);
+      ctx.font = `${font.weight} ${fontSize}px ${font.family}`;
+      const textMetrics = ctx.measureText(displayText);
       const textWidth = textMetrics.width;
-      const textHeight = fontSize;
-      const boxWidth = textWidth + paddingX * 2;
-      const boxHeight = textHeight + paddingY * 2;
+
+      // Calculate max width for text (canvas width minus margins and padding)
+      const maxTextWidth = WIDTH - 60 - (paddingX * 2); // 30px margin each side
+
+      // Determine box dimensions based on overflow mode
+      let boxWidth = Math.min(textWidth + paddingX * 2, WIDTH - 60);
+      let boxHeight = fontSize + paddingY * 2;
+
+      // For wrap mode, estimate height (will be precise when rendering)
+      if (panel.overflow === 'wrap' && textWidth > maxTextWidth) {
+        const estimatedLines = Math.ceil(textWidth / maxTextWidth);
+        boxHeight = (fontSize * 1.2 * estimatedLines) + paddingY * 2;
+      }
 
       // Calculate position
       let x = 0, y = 0;
@@ -1037,11 +1215,49 @@ async function renderToCanvas(config: ThumbnailConfig, visibility: LayerVisibili
       ctx.roundRect(x, y, boxWidth, boxHeight, 8);
       ctx.fill();
 
-      // Draw text
-      ctx.fillStyle = BRAND[panel.textColor];
-      ctx.font = `bold ${fontSize}px "Bebas Neue", sans-serif`;
-      ctx.textBaseline = 'middle';
-      ctx.fillText(panel.text, x + paddingX, y + boxHeight / 2);
+      // Draw text with overflow handling
+      ctx.font = `${font.weight} ${fontSize}px ${font.family}`;
+
+      switch (panel.overflow) {
+        case 'wrap':
+          renderWrappedText(
+            ctx,
+            displayText,
+            x + paddingX,
+            y + paddingY,
+            maxTextWidth,
+            fontSize,
+            panel.textColor
+          );
+          break;
+        case 'scale':
+          renderScaledText(
+            ctx,
+            displayText,
+            x + paddingX,
+            y + paddingY,
+            maxTextWidth,
+            fontSize,
+            font.family,
+            font.weight,
+            panel.textColor
+          );
+          break;
+        case 'scroll':
+          // For export, treat scroll same as scale (no animation in PNG)
+          renderScaledText(
+            ctx,
+            displayText,
+            x + paddingX,
+            y + paddingY,
+            maxTextWidth,
+            fontSize,
+            font.family,
+            font.weight,
+            panel.textColor
+          );
+          break;
+      }
     }
   }
 

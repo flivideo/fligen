@@ -262,6 +262,18 @@
       "createdAt": "2026-01-04T08:42:26.727Z",
       "url": "/assets/video-scenes/008-009-mhbvcs.mp4",
       "completedAt": "2026-01-04T08:43:41.573Z"
+    },
+    {
+      "id": "video_1767665578328_gudmyg",
+      "filename": "001-008-gudmyg.mp4",
+      "startShot": "shot-001",
+      "endShot": "shot-008",
+      "provider": "kie",
+      "model": "veo3",
+      "duration": 5,
+      "status": "failed",
+      "createdAt": "2026-01-06T02:12:58.328Z",
+      "error": "Failed to submit task: Images size exceeds limit"
     }
   ]
 }

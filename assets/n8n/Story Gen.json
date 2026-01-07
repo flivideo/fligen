@@ -1,0 +1,979 @@
+{
+  "name": "Story Gen",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.kie.ai/api/v1/jobs/createTask",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"nano-banana-pro\",\n  \"callBackUrl\": \"https://your-domain.com/api/callback\",\n  \"input\": {\n    \"prompt\": \"{{ $json.prompt_a }}\",\n    \"image_input\": [],\n    \"aspect_ratio\": \"{{ $json.aspect }}\",\n    \"resolution\": \"{{ $json.resolution }}\",\n    \"output_format\": \"png\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        496,
+        96
+      ],
+      "id": "ed7a55fc-0068-49c4-a74c-0ecf2023ab73",
+      "name": "Create Image",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "3huglVWofGU0Ov4e",
+          "name": "Kie Key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.kie.ai/api/v1/jobs/recordInfo",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "taskId",
+              "value": "={{ $('Create Image').item.json.data.taskId }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        912,
+        96
+      ],
+      "id": "d67a613d-8b09-4273-841c-cb8504e7541e",
+      "name": "Check Image",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "3huglVWofGU0Ov4e",
+          "name": "Kie Key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Get Request, Create Image with Nano Banana Pro, then save to Google Drive",
+        "height": 512,
+        "width": 1472
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        16
+      ],
+      "id": "374d2e55-3f7d-433c-8825-39c16a906ec8",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.kie.ai/api/v1/jobs/createTask",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"nano-banana-pro\",\n  \"callBackUrl\": \"https://your-domain.com/api/callback\",\n  \"input\": {\n    \"prompt\": \"{{ $('Set Data').item.json.prompt_b }}\",\n    \"image_input\": [\"{{ JSON.parse($('Get Image 1').item.json.url).resultUrls[0] }}\"],\n    \"aspect_ratio\": \"{{ $('Set Data').item.json.aspect }}\",\n    \"resolution\": \"{{ $('Set Data').item.json.resolution }}\",\n    \"output_format\": \"png\"\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        64,
+        656
+      ],
+      "id": "1755f82f-0313-4ce7-86fd-b0a1da68ccd3",
+      "name": "Create Image 2 - Edit",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "3huglVWofGU0Ov4e",
+          "name": "Kie Key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.kie.ai/api/v1/jobs/recordInfo",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "taskId",
+              "value": "={{ $('Create Image 2 - Edit').item.json.data.taskId }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        464,
+        656
+      ],
+      "id": "ba671985-d5d2-49d7-86ad-c568b89f7472",
+      "name": "Check Image 2",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "3huglVWofGU0Ov4e",
+          "name": "Kie Key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "={{ $('Check Image').item.json.data.taskId }}-2.png",
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "14bDILykPklTIQzi0d8SWekul2HO0F_Vz",
+          "mode": "list",
+          "cachedResultName": "demo",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/14bDILykPklTIQzi0d8SWekul2HO0F_Vz"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1264,
+        640
+      ],
+      "id": "778c9a38-e63e-4867-a7e1-5bab87c85244",
+      "name": "Save Image 2 to Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ko3MiPqdUWsqqE2l",
+          "name": "Drive Credentials"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "={{ $('Check Image').item.json.data.taskId }}-1.png",
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "14bDILykPklTIQzi0d8SWekul2HO0F_Vz",
+          "mode": "list",
+          "cachedResultName": "demo",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/14bDILykPklTIQzi0d8SWekul2HO0F_Vz"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        368,
+        304
+      ],
+      "id": "f9e28d73-21b0-4001-996e-426ed423b60f",
+      "name": "Save Image 1 to Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ko3MiPqdUWsqqE2l",
+          "name": "Drive Credentials"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Create Image 2 and save to Google Drive\n",
+        "height": 352,
+        "width": 1472,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        544
+      ],
+      "id": "f39707f9-d0b9-4f9c-9101-cf6f1750be57",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ab88b98c-0ea1-415a-b3f7-638d6bed5c06",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        64,
+        96
+      ],
+      "id": "064b685c-924f-4bc4-9c36-fcc822ec3c56",
+      "name": "Webhook1",
+      "webhookId": "ab88b98c-0ea1-415a-b3f7-638d6bed5c06"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "c5647a70-334e-40c4-9acb-85a96e2f9e00",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "success",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        880,
+        656
+      ],
+      "id": "ca7c1d11-3c8c-4851-a679-deaef9cfa21d",
+      "name": "Check Status 2"
+    },
+    {
+      "parameters": {
+        "url": "={{ JSON.parse($json.url).resultUrls[0] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        144,
+        304
+      ],
+      "id": "a5f9927c-8ced-4975-8dc3-3cd3d7e66d5c",
+      "name": "Get Image 1"
+    },
+    {
+      "parameters": {
+        "url": "={{ JSON.parse($json.url2).resultUrls[0] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1072,
+        640
+      ],
+      "id": "3dd25ad2-15e2-4fd8-8215-f804809db40f",
+      "name": "Get Image 2"
+    },
+    {
+      "parameters": {
+        "url": "https://api.kie.ai/api/v1/jobs/recordInfo",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "taskId",
+              "value": "={{ $('Create video').item.json.data.taskId }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2000,
+        272
+      ],
+      "id": "bee381f5-6f25-4546-b6a5-86d10dce67f6",
+      "name": "Check Video",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "3huglVWofGU0Ov4e",
+          "name": "Kie Key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b7f9d068-1a73-4536-b068-3f6ec435edc8",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "success",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2368,
+        272
+      ],
+      "id": "6e52e5d9-b1b6-4a18-96dd-975104d69b50",
+      "name": "Check Video Status "
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6f41ae6c-74d0-4082-be40-8feb9acdf103",
+              "name": "=url",
+              "value": "={{ $json.data.resultJson }}",
+              "type": "string"
+            },
+            {
+              "id": "17661142-68dc-45d5-9c76-d27bdd4de429",
+              "name": "status",
+              "value": "={{ $json.data.state }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1088,
+        96
+      ],
+      "id": "40c4cf82-c43a-41f7-bd13-c313dff18ea7",
+      "name": "Set API"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "162545c4-2bd2-420d-973d-6c0ef562720b",
+              "name": "prompt_a",
+              "value": "={{ $json.body.prompt_a }}",
+              "type": "string"
+            },
+            {
+              "id": "55642b4e-36da-47b2-8a69-29d8d3169ba3",
+              "name": "prompt_b",
+              "value": "={{ $json.body.prompt_b }}",
+              "type": "string"
+            },
+            {
+              "id": "7b429515-78d3-494a-8043-300f0f27c59b",
+              "name": "aspect",
+              "value": "16:9",
+              "type": "string"
+            },
+            {
+              "id": "b24e6d45-4b6f-4edd-a360-a0fb44967b6d",
+              "name": "resolution",
+              "value": "2K",
+              "type": "string"
+            },
+            {
+              "id": "bc3186c0-13d6-441e-93a7-bcc1775fe5d0",
+              "name": "prompt_c",
+              "value": "={{ $json.body.prompt_c }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        288,
+        96
+      ],
+      "id": "68114a74-97c5-4b90-949a-2dcf584fa553",
+      "name": "Set Data"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6f41ae6c-74d0-4082-be40-8feb9acdf103",
+              "name": "=url2",
+              "value": "={{ $json.data.resultJson }}",
+              "type": "string"
+            },
+            {
+              "id": "17661142-68dc-45d5-9c76-d27bdd4de429",
+              "name": "status",
+              "value": "={{ $json.data.state }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        672,
+        656
+      ],
+      "id": "915aafc2-a7dc-4ea7-9427-fb4d2e652a56",
+      "name": "Set API Data"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "60edf8a6-879a-46dd-8161-60222982f7b2",
+              "name": "status",
+              "value": "={{ $json.data.state }}",
+              "type": "string"
+            },
+            {
+              "id": "35353676-1e40-4e69-88ac-4c10961818a9",
+              "name": "url3",
+              "value": "={{ $json.data.resultJson }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2176,
+        272
+      ],
+      "id": "87722a34-3ea8-40ba-9b57-3180bed4f28b",
+      "name": "Set API 2"
+    },
+    {
+      "parameters": {
+        "url": "={{ JSON.parse($json.url3).resultUrls[0] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1648,
+        544
+      ],
+      "id": "b825018e-9891-46ce-a58c-ee54f5ee79d6",
+      "name": "Get Video"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.kie.ai/api/v1/jobs/createTask",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"kling/v2-5-turbo-image-to-video-pro\",\n  \"callBackUrl\": \"https://your-domain.com/api/callback\",\n  \"input\": {\n    \"prompt\": \"{{ $('Set Data').item.json.prompt_c }}\",\n    \"image_url\": \"{{ JSON.parse($('Get Image 1').item.json.url).resultUrls[0] }}\",\n    \"tail_image_url\": \"{{ JSON.parse($('Get Image 2').item.json.url2).resultUrls[0] }}\",\n    \"duration\": \"5\",\n    \"negative_prompt\": \"blur, distort, and low quality\",\n    \"cfg_scale\": 0.5\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1600,
+        272
+      ],
+      "id": "adbb3bd0-bf7f-43b2-b9d3-d7e27aebf223",
+      "name": "Create video",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "3huglVWofGU0Ov4e",
+          "name": "Kie Key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"image1\": \"{{ JSON.parse($('Get Image 1').item.json.url).resultUrls[0] }}\",\n  \"image2\": \"{{ JSON.parse($('Get Image 2').item.json.url2).resultUrls[0] }}\",\n  \"video\": \"{{ JSON.parse($('Get Video').item.json.url3).resultUrls[0] }}\"\n}\n",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        2064,
+        544
+      ],
+      "id": "899957ef-24f6-403f-a7cd-bd16c9832c18",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        288,
+        656
+      ],
+      "id": "2374a2ff-0348-43dc-8721-c1efef55261b",
+      "name": "Wait Image 2",
+      "webhookId": "985d8b31-7616-41c4-85a8-d2a44f96fd79"
+    },
+    {
+      "parameters": {
+        "amount": 15
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        720,
+        96
+      ],
+      "id": "a150397a-600a-4b00-9657-0b3122e2fae2",
+      "name": "Wait Image 1",
+      "webhookId": "985d8b31-7616-41c4-85a8-d2a44f96fd79"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b7f9d068-1a73-4536-b068-3f6ec435edc8",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "success",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1296,
+        96
+      ],
+      "id": "77d47f6c-a8a2-4a7d-9e88-5fc9b1f7736d",
+      "name": "Check Status"
+    },
+    {
+      "parameters": {
+        "amount": 20
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1808,
+        272
+      ],
+      "id": "50ce322b-2e80-4871-8cce-b612e4dcda11",
+      "name": "Wait for Video",
+      "webhookId": "ae57336a-0f36-4b22-a46a-d31da466d802"
+    },
+    {
+      "parameters": {
+        "name": "={{ $('Check Image').item.json.data.taskId }}.mp4",
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "14bDILykPklTIQzi0d8SWekul2HO0F_Vz",
+          "mode": "list",
+          "cachedResultName": "demo",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/14bDILykPklTIQzi0d8SWekul2HO0F_Vz"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1856,
+        544
+      ],
+      "id": "45f3a9b5-f356-4331-9dad-094f8e2132df",
+      "name": "Save Video",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ko3MiPqdUWsqqE2l",
+          "name": "Drive Credentials"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Create video with first frame last frame, save to Google Drive and respond to webhook",
+        "height": 560,
+        "width": 1104
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1504,
+        176
+      ],
+      "id": "82d0bb6a-f836-491f-ba80-50f0036e64ed",
+      "name": "Sticky Note2"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Create Image": {
+      "main": [
+        [
+          {
+            "node": "Wait Image 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Image": {
+      "main": [
+        [
+          {
+            "node": "Set API",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Create Image 2 - Edit": {
+      "main": [
+        [
+          {
+            "node": "Wait Image 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Image 2": {
+      "main": [
+        [
+          {
+            "node": "Set API Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Image 1 to Drive": {
+      "main": [
+        [
+          {
+            "node": "Create Image 2 - Edit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Set Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Status 2": {
+      "main": [
+        [
+          {
+            "node": "Get Image 2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait Image 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Image 2 to Drive": {
+      "main": [
+        [
+          {
+            "node": "Create video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Image 1": {
+      "main": [
+        [
+          {
+            "node": "Save Image 1 to Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Image 2": {
+      "main": [
+        [
+          {
+            "node": "Save Image 2 to Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Video": {
+      "main": [
+        [
+          {
+            "node": "Set API 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Video Status ": {
+      "main": [
+        [
+          {
+            "node": "Get Video",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait for Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set API": {
+      "main": [
+        [
+          {
+            "node": "Check Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Data": {
+      "main": [
+        [
+          {
+            "node": "Create Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set API Data": {
+      "main": [
+        [
+          {
+            "node": "Check Status 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set API 2": {
+      "main": [
+        [
+          {
+            "node": "Check Video Status ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Video": {
+      "main": [
+        [
+          {
+            "node": "Save Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create video": {
+      "main": [
+        [
+          {
+            "node": "Wait for Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook": {
+      "main": [
+        []
+      ]
+    },
+    "Wait Image 2": {
+      "main": [
+        [
+          {
+            "node": "Check Image 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait Image 1": {
+      "main": [
+        [
+          {
+            "node": "Check Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Status": {
+      "main": [
+        [
+          {
+            "node": "Get Image 1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait Image 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait for Video": {
+      "main": [
+        [
+          {
+            "node": "Check Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Video": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "5e0f11f0-f269-4153-9bcc-5f416179f48e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3dc1184facc61b91800e33796f6b5ee837371879e7bf35a9cad0dfd0b59b8a68"
+  },
+  "id": "p7EmjlCBdMH79k5K",
+  "tags": [
+    {
+      "updatedAt": "2026-01-02T03:25:04.458Z",
+      "createdAt": "2026-01-02T03:25:04.458Z",
+      "id": "PjPqCwplXRdBA6TL",
+      "name": "Demo"
+    }
+  ]
+}

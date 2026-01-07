@@ -125,6 +125,16 @@
       "route": "#day-12",
       "purpose": "Final integration",
       "apisTech": ["All previous tools", "Music generation", "Voice synthesis", "Video creation"]
+    },
+    {
+      "day": 13,
+      "name": "Brand Text Generator",
+      "shortName": "BrandText",
+      "icon": "🔤",
+      "status": "next",
+      "route": "#day-13",
+      "purpose": "Brand-styled text graphics",
+      "apisTech": ["Canvas API", "Clipboard API", "HTML5"]
     }
   ],
   "settings": [
