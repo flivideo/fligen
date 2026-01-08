@@ -29,6 +29,7 @@ Requirements index for FliGen.
 | 21 | [FR-21: Thumbnail Typography Enhancements](prd/fr-21-thumbnail-typography-enhancements.md) | 2026-01-06 | Pending |
 | 22 | [FR-22: Brand Text Generator (HTML)](prd/fr-22-brand-text-generator.md) | 2026-01-06 | Pending |
 | 23 | [FR-23: Widget Generator](prd/fr-23-widget-generator.md) | 2026-01-07 | Complete |
+| 24 | [FR-24: Aspect Ratio Calculator](prd/fr-24-aspect-ratio-calculator.md) | 2026-01-08 | Pending |
 
 ## Non-Functional Requirements
 
@@ -61,4 +62,4 @@ This is the next major feature to implement.
 
 ---
 
-**Last updated:** 2026-01-07
+**Last updated:** 2026-01-08
