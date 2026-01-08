@@ -21,6 +21,144 @@ Any important context or decisions made during implementation.
 
 ---
 
+## 2026-01-07 - FR-23: Widget Generator
+
+**Reference:** [FR-23: Widget Generator](prd/fr-23-widget-generator.md)
+
+### Changes
+
+#### Template System
+- Created widget template infrastructure with dynamic parameter forms
+- Implemented "Social Media Post" template (Twitter/X-style)
+- Template definition includes metadata, parameters, and render function
+- Support for text, number, checkbox, radio, url, and textarea input types
+
+#### Widget Components
+- Created `Day14Widget.tsx` - Main widget generator UI with live preview
+- Created `WidgetTemplateSelector.tsx` - Template selection radio buttons
+- Created `WidgetConfigForm.tsx` - Dynamic form generation based on template params
+- Created `WidgetPreview.tsx` - Real-time HTML preview in iframe
+- Created `WidgetHistory.tsx` - History sidebar with saved widgets
+
+#### Widget Storage
+- Implemented widget persistence at `assets/widgets/`
+- Each widget saved as `.html` (standalone file) and `.json` (configuration)
+- Widget catalog (`index.json`) tracks all saved widgets
+- Sequential widget IDs (widget-001, widget-002, etc.)
+
+#### Server Implementation
+- Created `server/src/tools/widgets/storage.ts` - Widget CRUD operations
+- Created `server/src/tools/widgets/templates/` - Template definitions
+- Implemented template registry with social media post template
+- Added API endpoints:
+  - `GET /api/widgets` - List all saved widgets
+  - `POST /api/widgets` - Save new widget
+  - `GET /api/widgets/:id` - Get widget HTML and config
+  - `DELETE /api/widgets/:id` - Delete widget
+  - `GET /api/widget-templates` - List available templates
+  - `GET /api/widget-templates/:id` - Get template definition
+
+#### Social Media Post Template
+- Configurable parameters: author name, handle, timestamp, verified badge
+- Post text with multiline support
+- Engagement metrics: comments, retweets, likes, views
+- Avatar URL support (with emoji fallback)
+- Theme switching: dark (#1e293b) and light (#ffffff)
+- Number formatting (1000 → 1k, 135000 → 135k)
+
+#### Brand Design System Integration
+- AppyDave brand colors: dark brown (#342d2d), light brown (#ccba9d), yellow (#ffde59)
+- Google Fonts integration: Bebas Neue, Oswald, Roboto
+- Verification badge: blue (#3b82f6)
+- Responsive design (max-width: 600px)
+
+#### Export & Reuse
+- Export HTML button downloads standalone HTML5 files
+- Self-contained widgets (embedded CSS, CDN fonts)
+- History sidebar with widget preview cards
+- "Reuse Configuration" button loads previous settings
+- Delete widget functionality
+
+### Files Created
+```
+client/src/components/tools/Day14Widget.tsx
+client/src/components/tools/widget/WidgetTemplateSelector.tsx
+client/src/components/tools/widget/WidgetConfigForm.tsx
+client/src/components/tools/widget/WidgetPreview.tsx
+client/src/components/tools/widget/WidgetHistory.tsx
+server/src/tools/widgets/storage.ts
+server/src/tools/widgets/index.ts
+server/src/tools/widgets/templates/social-media-post.ts
+server/src/tools/widgets/templates/index.ts
+shared/src/types/widget.ts (added to shared/src/index.ts)
+assets/widgets/ (directory with 29 sample widgets)
+```
+
+### Files Modified
+```
+client/src/App.tsx - Added Day 14 routing
+server/src/index.ts - Added widget API endpoints
+shared/src/index.ts - Added widget types
+shared/src/config.json - Updated Day 14 status
+docs/backlog.md - Updated FR-23 status to Complete
+```
+
+### Technical Highlights
+
+**Template-Based Architecture:**
+- Templates are configuration objects, not visual templates
+- Each template defines its own parameters and render function
+- Dynamic form generation based on parameter definitions
+- Type-safe parameter validation
+
+**HTML Generation:**
+- Server-side rendering via template render functions
+- Returns complete HTML5 documents with embedded styles
+- Google Fonts loaded via CDN
+- Responsive design patterns
+
+**Persistence Pattern:**
+- Follows Day 13 (Brand Text Generator) pattern
+- Dual storage: HTML output + JSON configuration
+- Catalog index for fast lookups
+- Reusable configurations
+
+### Default Widget Configuration
+```json
+{
+  "template": "social-media-post",
+  "params": {
+    "author_name": "Claude",
+    "handle": "@claudeai",
+    "timestamp": "Today",
+    "verified": true,
+    "post_text": "Claude Opus 4.5 just got released",
+    "avatar_url": "",
+    "comments": 1203,
+    "retweets": 1204,
+    "likes": 135000,
+    "views": 1000,
+    "theme": "dark"
+  }
+}
+```
+
+### Notes
+Day 14 of "12 Days of Claudemas" - Widget generator complete. Users can:
+1. Select template (currently only Social Media Post)
+2. Configure parameters via dynamic form
+3. See live preview with real-time updates
+4. Switch between dark/light themes
+5. Export standalone HTML files
+6. View history and reuse previous configurations
+7. Delete unwanted widgets
+
+The system is extensible - adding new templates requires only defining parameter schemas and render functions. Future templates could include quote cards, stat displays, CTA banners, and code snippets.
+
+Key design decision: HTML-based widgets (not canvas/PNG like Day 13) for better editability, accessibility, and file size. Widgets are self-contained and can be opened directly in browsers or embedded via iframes.
+
+---
+
 ## 2026-01-04 - FR-17: Asset Persistence Implementation (History UI)
 
 **Reference:** [FR-17: Asset Persistence Implementation](prd/fr-17-asset-persistence-implementation.md)
@@ -677,4 +815,4 @@ This is Day 1 of the "12 Days of Claudemas" series. The FliGen harness will serv
 
 ---
 
-**Last updated:** 2025-12-28
+**Last updated:** 2026-01-07

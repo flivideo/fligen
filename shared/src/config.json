@@ -3,7 +3,7 @@
     "id": "fligen-config",
     "version": "1.0.0",
     "source": "claudemas-12-days",
-    "lastUpdated": "2026-01-02"
+    "lastUpdated": "2026-01-07"
   },
   "days": [
     {
@@ -131,10 +131,20 @@
       "name": "Brand Text Generator",
       "shortName": "BrandText",
       "icon": "🔤",
-      "status": "next",
+      "status": "complete",
       "route": "#day-13",
       "purpose": "Brand-styled text graphics",
       "apisTech": ["Canvas API", "Clipboard API", "HTML5"]
+    },
+    {
+      "day": 14,
+      "name": "Widget Generator",
+      "shortName": "Widget",
+      "icon": "📱",
+      "status": "complete",
+      "route": "#day-14",
+      "purpose": "HTML widget creation",
+      "apisTech": ["HTML5", "Google Fonts", "Template System"]
     }
   ],
   "settings": [

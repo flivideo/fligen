@@ -1,0 +1,19 @@
+{
+  "id": "widget-021",
+  "template": "social-media-post",
+  "created": "2026-01-07T07:37:44.928Z",
+  "preview": "Claude Opus 4.5 just got released",
+  "params": {
+    "author_name": "Claude",
+    "handle": "@",
+    "timestamp": "Today",
+    "verified": true,
+    "post_text": "Claude Opus 4.5 just got released",
+    "avatar_url": "",
+    "comments": 1203,
+    "retweets": 1204,
+    "likes": 135000,
+    "views": 1000,
+    "theme": "dark"
+  }
+}

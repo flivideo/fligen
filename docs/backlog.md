@@ -28,6 +28,7 @@ Requirements index for FliGen.
 | 20 | [FR-20: Story Builder - Video Assembly](prd/fr-20-story-builder-video-assembly.md) | 2026-01-04 | Pending |
 | 21 | [FR-21: Thumbnail Typography Enhancements](prd/fr-21-thumbnail-typography-enhancements.md) | 2026-01-06 | Pending |
 | 22 | [FR-22: Brand Text Generator (HTML)](prd/fr-22-brand-text-generator.md) | 2026-01-06 | Pending |
+| 23 | [FR-23: Widget Generator](prd/fr-23-widget-generator.md) | 2026-01-07 | Complete |
 
 ## Non-Functional Requirements
 
@@ -60,4 +61,4 @@ This is the next major feature to implement.
 
 ---
 
-**Last updated:** 2026-01-06
+**Last updated:** 2026-01-07

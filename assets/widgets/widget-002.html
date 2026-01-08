@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Widget: CClaude - Claude Opus 4.5 just got released</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: transparent;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .widget {
+      max-width: 600px;
+      width: 100%;
+      background: #1e293b;
+      color: #f1f5f9;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff6b35, #ffde59);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .author-info {
+      flex: 1;
+    }
+    .author-name {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .verified {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      background: #3b82f6;
+      border-radius: 50%;
+      color: white;
+      font-size: 12px;
+    }
+    .meta {
+      font-size: 14px;
+      color: #94a3b8;
+      font-family: 'Roboto', sans-serif;
+    }
+    .post-text {
+      font-size: 16px;
+      line-height: 1.5;
+      margin-bottom: 16px;
+      white-space: pre-wrap;
+    }
+    .engagement {
+      display: flex;
+      gap: 24px;
+      padding-top: 16px;
+      border-top: 1px solid #334155;
+      color: #94a3b8;
+      font-size: 14px;
+    }
+    .engagement-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="widget">
+    <div class="header">
+      <div class="avatar">
+        🟠
+      </div>
+      <div class="author-info">
+        <div class="author-name">
+          CClaude
+          <span class="verified">✓</span>
+        </div>
+        <div class="meta">@claudeai · Today</div>
+      </div>
+    </div>
+    <div class="post-text">Claude Opus 4.5 just got released</div>
+    
+    <div class="engagement">
+      <div class="engagement-item">💬 1.2k</div>
+      <div class="engagement-item">🔁 1.2k</div>
+      <div class="engagement-item">❤️ 135k</div>
+      <div class="engagement-item">📊 1k</div>
+    </div>
+    
+  </div>
+</body>
+</html>

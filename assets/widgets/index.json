@@ -1,0 +1,574 @@
+{
+  "widgets": [
+    {
+      "id": "widget-001",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:26.421Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "Claude",
+        "handle": "@claudeai",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-002",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:33.186Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "CClaude",
+        "handle": "@claudeai",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-003",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:33.401Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "CrClaude",
+        "handle": "@claudeai",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-004",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:33.517Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "CraClaude",
+        "handle": "@claudeai",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-005",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:33.885Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "CrazClaude",
+        "handle": "@claudeai",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-006",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:34.112Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "CrazyClaude",
+        "handle": "@claudeai",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-007",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:34.235Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "Crazy Claude",
+        "handle": "@claudeai",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-008",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:34.787Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "Crazy DClaude",
+        "handle": "@claudeai",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-009",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:34.977Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "Crazy DaClaude",
+        "handle": "@claudeai",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-010",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:35.068Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "Crazy DavClaude",
+        "handle": "@claudeai",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-011",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:35.204Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "Crazy DaveClaude",
+        "handle": "@claudeai",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-012",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:36.202Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "Crazy Dave",
+        "handle": "@claudeai",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-013",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:41.544Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "Claude",
+        "handle": "@claudeai",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-014",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:44.010Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "Claude",
+        "handle": "@claudea",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-015",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:44.261Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "Claude",
+        "handle": "@claude",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-016",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:44.300Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "Claude",
+        "handle": "@claud",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-017",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:44.341Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "Claude",
+        "handle": "@clau",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-018",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:44.362Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "Claude",
+        "handle": "@cla",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-019",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:44.576Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "Claude",
+        "handle": "@cl",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-020",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:44.735Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "Claude",
+        "handle": "@c",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-021",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:44.928Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "Claude",
+        "handle": "@",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-022",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:45.378Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "Claude",
+        "handle": "@a",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-023",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:45.750Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "Claude",
+        "handle": "@ap",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-024",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:45.927Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "Claude",
+        "handle": "@app",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-025",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:46.084Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "Claude",
+        "handle": "@appy",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-026",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:46.316Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "Claude",
+        "handle": "@appyd",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-027",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:46.423Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "Claude",
+        "handle": "@appyda",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-028",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:46.503Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "Claude",
+        "handle": "@appydav",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-029",
+      "template": "social-media-post",
+      "created": "2026-01-07T07:37:46.647Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "Claude",
+        "handle": "@appydave",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    },
+    {
+      "id": "widget-030",
+      "template": "social-media-post",
+      "created": "2026-01-08T01:34:33.673Z",
+      "preview": "Claude Opus 4.5 just got released",
+      "params": {
+        "author_name": "Claude",
+        "handle": "@claudeai",
+        "timestamp": "Today",
+        "verified": true,
+        "post_text": "Claude Opus 4.5 just got released",
+        "avatar_url": "",
+        "comments": 1203,
+        "retweets": 1204,
+        "likes": 135000,
+        "views": 1000,
+        "theme": "dark"
+      }
+    }
+  ]
+}

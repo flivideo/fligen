@@ -262,6 +262,59 @@ export interface AssemblyResponse {
   error?: string;
 }
 
+// ============================================
+// Widget Generator Types (FR-23)
+// ============================================
+
+export type WidgetParamType = 'text' | 'number' | 'checkbox' | 'radio' | 'url' | 'textarea';
+
+export interface WidgetParamValidation {
+  min?: number;
+  max?: number;
+  pattern?: string;
+}
+
+export interface WidgetParam {
+  key: string;
+  label: string;
+  type: WidgetParamType;
+  default: any;
+  required?: boolean;
+  validation?: WidgetParamValidation;
+  options?: string[]; // For radio type
+}
+
+export interface WidgetTemplate {
+  id: string;
+  name: string;
+  description: string;
+  params: WidgetParam[];
+}
+
+export interface WidgetConfig {
+  id: string;
+  template: string;
+  created: string;
+  preview: string;
+  params: Record<string, any>;
+}
+
+export interface SaveWidgetRequest {
+  template: string;
+  params: Record<string, any>;
+}
+
+export interface SaveWidgetResponse {
+  id: string;
+  htmlPath: string;
+  configPath: string;
+  preview: string;
+}
+
+export interface WidgetCatalog {
+  widgets: WidgetConfig[];
+}
+
 // Socket.io event types
 export interface ServerToClientEvents {
   'connection:established': (data: { message: string }) => void;
