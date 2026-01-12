@@ -1,0 +1,10 @@
+# Exclude large directories to prevent Claude Code JSON parser overflow
+docs/prd/
+docs/architecture/
+docs/planning/
+docs/analysis/
+docs/testing/
+node_modules/
+.git/
+*.log
+*.jsonl
