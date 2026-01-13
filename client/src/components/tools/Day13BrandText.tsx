@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { getTemplate, getAvailableTemplates } from './BrandTextGenerator/templates';
 import { renderToCanvas } from './BrandTextGenerator/rendering/canvas-renderer';
 import { copyToClipboard, exportAndDownload } from './BrandTextGenerator/rendering/export';
@@ -39,8 +39,6 @@ export default function Day13BrandText() {
   });
 
   const [canvasPreset, setCanvasPreset] = useState<CanvasPresetKey>('youtube-thumb');
-  const [customWidth, setCustomWidth] = useState(1280);
-  const [customHeight, setCustomHeight] = useState(720);
 
   const template = getTemplate(config.templateId);
   const availableTemplates = getAvailableTemplates();
@@ -116,10 +114,6 @@ export default function Day13BrandText() {
       const size = CANVAS_PRESETS[preset];
       updateConfig({ canvasSize: { width: size.width, height: size.height } });
     }
-  };
-
-  const handleCustomSizeApply = () => {
-    updateConfig({ canvasSize: { width: customWidth, height: customHeight } });
   };
 
   const handleCopyToClipboard = async () => {

@@ -2,7 +2,7 @@
 
 export async function exportToPng(
   canvas: HTMLCanvasElement,
-  transparent: boolean = false
+  _transparent: boolean = false
 ): Promise<Blob> {
   return new Promise((resolve, reject) => {
     canvas.toBlob((blob) => {

@@ -25,3 +25,6 @@ npm-debug.log*
 
 # Vite
 vite.config.ts.timestamp-*
+
+# Git worktrees
+.worktrees/

@@ -19,6 +19,8 @@ interface GenerateSpeechResult {
   success: boolean;
   audioBase64?: string;
   mimeType?: string;
+  audioUrl?: string;
+  assetId?: string;
   durationMs?: number;
   voiceId?: string;
   voiceName?: string;

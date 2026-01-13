@@ -23,6 +23,22 @@ type MusicProvider = 'fal' | 'kie';
 type OutputFormat = 'wav' | 'mp3' | 'flac';
 type TrackStatus = 'generating' | 'ready' | 'saved' | 'error';
 
+interface SongPresetData {
+  provider: string;
+  model: string;
+  title: string;
+  style: string;
+  instrumental: boolean;
+  vocalGender?: string;
+  outputFormat: string;
+  lyrics?: string;
+  prompt: string;
+  days: number[];
+  theme: string;
+  description: string;
+  bpm?: number;
+}
+
 interface GeneratedTrack {
   id: string;
   name: string;
@@ -659,7 +675,7 @@ export function Day7MusicGen() {
     const preset = SONG_PRESETS.find(p => p.id === presetId);
     if (!preset) return;
 
-    const song = preset.data;
+    const song = preset.data as SongPresetData;
 
     // Set provider and common fields
     setProvider(song.provider as MusicProvider);

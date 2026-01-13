@@ -18,13 +18,13 @@ export async function saveStoryToCatalog(
   // The video file is already saved by the assembler
   // We just need to move it to the catalog and add metadata
 
-  const id = catalog.generateAssetId('story');
+  const id = catalog.generateAssetId('video');
   const filename = path.basename(result.outputPath);
 
   // Move file from video-scenes to catalog/stories
   const assetsDir = path.resolve(process.cwd(), '..', 'assets');
   const oldPath = path.join(assetsDir, result.outputPath);
-  const newFilename = catalog.generateFilename('story', 'ffmpeg', 'assembled', 'mp4');
+  const newFilename = catalog.generateFilename('video', 'ffmpeg', 'assembled', 'mp4');
   const newPath = path.join(assetsDir, 'catalog', 'stories', newFilename);
 
   // Ensure catalog/stories directory exists
@@ -77,17 +77,12 @@ export async function saveStoryToCatalog(
 /**
  * Gets all story videos from the catalog
  */
-export function getStoriesFromCatalog(): CatalogAsset[] {
+export async function getStoriesFromCatalog(): Promise<Asset[]> {
   try {
-    if (!fs.existsSync(CATALOG_PATH)) {
-      return [];
-    }
+    const allAssets = await catalog.getAllAssets();
 
-    const catalogData = fs.readFileSync(CATALOG_PATH, 'utf-8');
-    const catalog: Catalog = JSON.parse(catalogData);
-
-    return catalog.assets.filter(
-      asset => asset.type === 'video' && asset.subtype === 'story'
+    return allAssets.filter(
+      asset => asset.type === 'video' && asset.metadata?.type === 'story'
     );
 
   } catch (error) {

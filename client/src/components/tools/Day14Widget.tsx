@@ -193,7 +193,6 @@ export function Day14Widget() {
   return (
     <ToolPanel
       title="Widget Generator"
-      description="Create social media widgets and branded graphics"
     >
       <div className="flex h-full">
         {/* Left: Preview */}
