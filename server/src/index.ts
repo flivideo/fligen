@@ -1367,3 +1367,30 @@ httpServer.listen(PORT, () => {
 └─────────────────────────────────────┘
   `);
 });
+
+// Graceful shutdown handling
+function gracefulShutdown(signal: string) {
+  console.log(`\n[Server] Received ${signal}, starting graceful shutdown...`);
+
+  // Close Socket.io server (stops accepting new connections and closes existing ones)
+  io.close(() => {
+    console.log('[Server] Socket.io server closed');
+  });
+
+  // Close HTTP server (stops accepting new connections)
+  httpServer.close(() => {
+    console.log('[Server] HTTP server closed');
+    console.log('[Server] Graceful shutdown complete');
+    process.exit(0);
+  });
+
+  // Force exit after 3 seconds if graceful shutdown hangs
+  setTimeout(() => {
+    console.error('[Server] Graceful shutdown timeout, forcing exit');
+    process.exit(1);
+  }, 3000);
+}
+
+// Listen for termination signals
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
