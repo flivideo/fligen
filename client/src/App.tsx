@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { DAYS } from '@fligen/shared';
 import { ConfigModal } from './components/ui/ConfigModal';
+import { AppyDaveLogo } from './components/ui/AppyDaveLogo';
 import { SettingsProvider, useSettings } from './contexts/SettingsContext';
 import { useSocket } from './hooks/useSocket';
 import { Day2AgentSDK } from './components/tools/Day2AgentSDK';
@@ -74,7 +75,8 @@ function AppContent() {
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
         <header className="h-12 shrink-0 bg-slate-800 border-b border-slate-700 flex items-center justify-between px-4">
-          <div className="flex items-center">
+          <div className="flex items-center gap-3">
+            <AppyDaveLogo size={28} />
             <span className="font-bold text-blue-400">FliGen</span>
             <span className="mx-2 text-slate-500">›</span>
             <span className="text-slate-400">
