@@ -145,6 +145,16 @@
       "route": "#day-14",
       "purpose": "HTML widget creation",
       "apisTech": ["HTML5", "Google Fonts", "Template System"]
+    },
+    {
+      "day": 15,
+      "name": "Batch Generation",
+      "shortName": "Batch",
+      "icon": "📦",
+      "status": "complete",
+      "route": "#day-15",
+      "purpose": "CSV batch image generation",
+      "apisTech": ["FAL.AI", "KIE.AI", "CSV Upload", "Queue Management"]
     }
   ],
   "settings": [

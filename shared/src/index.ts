@@ -1,6 +1,18 @@
 // Shared types for FliGen
 import config from './config.json';
 
+// API Registry (FR-119)
+export {
+  type HttpMethod,
+  type ParameterType,
+  type DataType,
+  type ApiParameter,
+  type ApiEndpoint,
+  API_ENDPOINTS,
+  getEndpointGroups,
+  getEndpointById
+} from './apiRegistry';
+
 export interface HealthResponse {
   status: 'ok' | 'error';
   timestamp: string;
@@ -386,6 +398,77 @@ export interface FliGenConfig {
   };
   days: DayTool[];
   settings: SettingConfig[];
+}
+
+// ============================================
+// Batch Generation Types (FR-25)
+// ============================================
+
+export interface BatchJob {
+  id: string;
+  status: 'queued' | 'processing' | 'completed' | 'failed';
+  progress: {
+    total: number;
+    completed: number;
+    failed: number;
+    pending: number;
+  };
+  results: BatchResult[];
+  totalCost: number;
+  totalTimeMs: number;
+  createdAt: string;
+  startedAt?: string;
+  completedAt?: string;
+}
+
+export interface BatchResult {
+  id: string;
+  status: 'pending' | 'processing' | 'completed' | 'failed';
+  asset_id?: string;
+  file_path?: string;
+  generation_time_ms?: number;
+  cost?: number;
+  error?: {
+    code: string;
+    message: string;
+    retries: number;
+  };
+}
+
+export interface BatchCreateRequest {
+  prompts: Array<{
+    id: string;
+    prompt: string;
+    provider: 'fal' | 'kie';
+    model: string;
+    category?: string;
+    filename?: string;
+    metadata?: Record<string, any>;
+  }>;
+  options?: {
+    save_to_catalog?: boolean;
+    parallel?: boolean;
+    delay_seconds?: number;
+  };
+}
+
+export interface BatchCreateResponse {
+  batch_id: string;
+  total_prompts: number;
+  estimated_cost: number;
+  estimated_time_seconds: number;
+  status: string;
+}
+
+export interface CostEstimate {
+  total_prompts: number;
+  total_cost: number;
+  cost_breakdown: Record<string, {
+    count: number;
+    cost_per_image: number;
+    total: number;
+  }>;
+  estimated_time_seconds: number;
 }
 
 // Export config data

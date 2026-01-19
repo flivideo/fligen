@@ -160,6 +160,48 @@ export const MODELS: Record<Provider, Record<ModelTier, ModelConfig>> = {
 };
 
 /**
+ * FR-25: Extended model registry for batch generation
+ * Maps specific model IDs to their configurations
+ */
+export const MODEL_REGISTRY: Record<string, { provider: Provider; cost: number; name: string }> = {
+  // FAL.AI models
+  'fal-ai/flux-pro/v1.1': { provider: 'fal', cost: 0.04, name: 'FLUX Pro v1.1' },
+  'fal-ai/flux/schnell': { provider: 'fal', cost: 0.003, name: 'FLUX Schnell' },
+  'fal-ai/flux-2-turbo': { provider: 'fal', cost: 0.008, name: 'FLUX.2 Turbo' },
+
+  // KIE.AI models
+  'flux-kontext-max': { provider: 'kie', cost: 0.025, name: 'FLUX Kontext Max' },
+  'flux-kontext-pro': { provider: 'kie', cost: 0.004, name: 'FLUX Kontext Pro' },
+};
+
+/**
+ * FR25.6: Get model cost with fallback for unknown models
+ *
+ * @param provider - Provider ID (fal or kie)
+ * @param model - Model ID
+ * @returns Estimated cost per image (generic fallback: $0.01)
+ */
+export function getModelCost(provider: Provider, model: string): number {
+  const modelInfo = MODEL_REGISTRY[model];
+
+  if (modelInfo && modelInfo.provider === provider) {
+    return modelInfo.cost;
+  }
+
+  // Generic fallback for unknown models
+  return 0.01;
+}
+
+/**
+ * Get all supported models for a provider
+ */
+export function getProviderModels(provider: Provider): Array<{ id: string; name: string; cost: number }> {
+  return Object.entries(MODEL_REGISTRY)
+    .filter(([_, info]) => info.provider === provider)
+    .map(([id, info]) => ({ id, name: info.name, cost: info.cost }));
+}
+
+/**
  * Single comparison result
  */
 export interface CompareResult {

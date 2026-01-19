@@ -27,6 +27,8 @@ import * as catalog from './tools/catalog/index.js';
 import type { Asset } from '@fligen/shared';
 import { WIDGET_TEMPLATES, getTemplate, renderWidget, saveWidget, listWidgets, getWidget, deleteWidget } from './tools/widgets/index.js';
 import type { SaveWidgetRequest, SaveWidgetResponse } from '@fligen/shared';
+import batchRouter from './routes/batch.js';
+import queryRouter from './routes/query/index.js';
 
 const PORT = parseInt(process.env.PORT || '5401', 10);
 const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5400';
@@ -1271,6 +1273,16 @@ app.delete('/api/widgets/:id', async (req, res) => {
     res.status(500).json({ error: message });
   }
 });
+
+// ============================================
+// Batch Generation API Routes (FR-25)
+// ============================================
+app.use('/api/image', batchRouter);
+
+// ============================================
+// Query API Routes (FR-25)
+// ============================================
+app.use('/api/query', queryRouter);
 
 // Socket.io connection handling
 io.on('connection', async (socket) => {

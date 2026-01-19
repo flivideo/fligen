@@ -30,6 +30,7 @@ Requirements index for FliGen.
 | 22 | [FR-22: Brand Text Generator (HTML)](prd/fr-22-brand-text-generator.md) | 2026-01-06 | Pending |
 | 23 | [FR-23: Widget Generator](prd/fr-23-widget-generator.md) | 2026-01-07 | Complete |
 | 24 | [FR-24: Aspect Ratio Calculator](prd/fr-24-aspect-ratio-calculator.md) | 2026-01-08 | Pending |
+| 25 | [FR-25: Batch Generation and Query API](prd/fr-25-batch-generation-query-api.md) | 2026-01-16 | Pending |
 
 ## Non-Functional Requirements
 
@@ -49,17 +50,21 @@ Requirements index for FliGen.
 
 ## Next Workflow
 
-**Day 11: Story Builder** - See `docs/prd/fr-20-story-builder-video-assembly.md`
+**PRIORITY: FR-25 Batch Generation and Query API** - See `docs/prd/fr-25-batch-generation-query-api.md`
 
-Day 11 combines existing assets (Days 5, 7, 6/10) into complete videos:
-- Select 1-3 video files
-- Select music track (with volume control)
-- Optionally select narration track
-- Assemble into 15-second story video using FFmpeg
-- Save to catalog
+Extends FliGen with batch image generation for VibeDeck mockup workflows:
+- CSV queue processing (upload → process → update)
+- Async job tracking with progress polling
+- Query API tier (discovery, health, catalog access)
+- Cost estimation before generation
+- Model flexibility (custom models beyond hardcoded list)
 
-This is the next major feature to implement.
+**VibeDeck Use Case**: Generate 60 design mockups via CSV batch processing
+**Estimated Cost**: $0.24-$0.40 using KIE.AI flux-kontext-pro
+**Estimated Effort**: 5-8 days
+
+**Alternative Workflow: Day 11 Story Builder** - See `docs/prd/fr-20-story-builder-video-assembly.md`
 
 ---
 
-**Last updated:** 2026-01-08
+**Last updated:** 2026-01-16
