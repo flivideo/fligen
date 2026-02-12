@@ -1,4 +1,6 @@
 import { env } from './config/env.js';
+import { log } from './config/logger.js';
+import { addRequestId, httpLogger } from './middleware/requestLogger.js';
 import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
@@ -45,6 +47,8 @@ const io = new Server<ClientToServerEvents, ServerToClientEvents>(httpServer, {
 });
 
 // Middleware
+app.use(addRequestId);
+app.use(httpLogger);
 app.use(cors({ origin: CLIENT_URL }));
 app.use(express.json({ limit: '50mb' })); // Increased for base64 audio files
 
@@ -1360,7 +1364,7 @@ httpServer.listen(PORT, () => {
     ? '✓ N8N webhook configured'
     : '⚠ N8N webhook not configured';
 
-  console.log(`
+  log.info(`
 ┌─────────────────────────────────────┐
 │  FliGen Server                      │
 ├─────────────────────────────────────┤
@@ -1382,23 +1386,23 @@ httpServer.listen(PORT, () => {
 
 // Graceful shutdown handling
 function gracefulShutdown(signal: string) {
-  console.log(`\n[Server] Received ${signal}, starting graceful shutdown...`);
+  log.info(`\nReceived ${signal}, starting graceful shutdown...`, { signal });
 
   // Close Socket.io server (stops accepting new connections and closes existing ones)
   io.close(() => {
-    console.log('[Server] Socket.io server closed');
+    log.info('Socket.io server closed');
   });
 
   // Close HTTP server (stops accepting new connections)
   httpServer.close(() => {
-    console.log('[Server] HTTP server closed');
-    console.log('[Server] Graceful shutdown complete');
+    log.info('HTTP server closed');
+    log.info('Graceful shutdown complete');
     process.exit(0);
   });
 
   // Force exit after 3 seconds if graceful shutdown hangs
   setTimeout(() => {
-    console.error('[Server] Graceful shutdown timeout, forcing exit');
+    log.error('Graceful shutdown timeout, forcing exit');
     process.exit(1);
   }, 3000);
 }
