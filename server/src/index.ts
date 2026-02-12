@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import { env } from './config/env.js';
 import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
@@ -30,8 +30,8 @@ import type { SaveWidgetRequest, SaveWidgetResponse } from '@fligen/shared';
 import batchRouter from './routes/batch.js';
 import queryRouter from './routes/query/index.js';
 
-const PORT = parseInt(process.env.PORT || '5401', 10);
-const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5400';
+const PORT = env.PORT;
+const CLIENT_URL = env.CLIENT_URL;
 
 const app = express();
 const httpServer = createServer(app);
