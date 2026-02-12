@@ -15,11 +15,20 @@
     "test": "npm test -w client && npm test -w server",
     "test:client": "npm test -w client",
     "test:server": "npm test -w server",
-    "test:ui": "npm run test:ui -w client"
+    "test:ui": "npm run test:ui -w client",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\""
   },
   "devDependencies": {
     "@types/node-fetch": "^2.6.13",
-    "concurrently": "^9.1.0"
+    "@typescript-eslint/eslint-plugin": "^8.55.0",
+    "@typescript-eslint/parser": "^8.55.0",
+    "concurrently": "^9.1.0",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.8.1"
   },
   "engines": {
     "node": ">=20.0.0"
