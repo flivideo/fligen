@@ -16,6 +16,7 @@
     "test:client": "npm test -w client",
     "test:server": "npm test -w server",
     "test:ui": "npm run test:ui -w client",
+    "test:coverage": "npm run test:coverage -w client && npm run test:coverage -w server",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
