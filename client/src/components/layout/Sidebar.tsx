@@ -42,9 +42,10 @@ export function Sidebar({ currentDay, isCollapsed, onNavigate }: SidebarProps) {
               onClick={() => onNavigate(day.day)}
               className={`
                 w-full flex flex-row items-center gap-2 px-3 py-2 text-left transition-colors
-                ${isActive
-                  ? 'bg-slate-700 text-white'
-                  : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
+                ${
+                  isActive
+                    ? 'bg-slate-700 text-white'
+                    : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
                 }
               `}
               aria-current={isActive ? 'page' : undefined}

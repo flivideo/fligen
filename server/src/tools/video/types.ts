@@ -140,7 +140,7 @@ export interface VideoModelConfig {
  * Available video models
  */
 export const VIDEO_MODELS: Record<VideoModel, VideoModelConfig> = {
-  'veo3': {
+  veo3: {
     id: 'veo3',
     name: 'Veo 3.1',
     provider: 'kie',

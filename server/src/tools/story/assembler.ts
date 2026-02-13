@@ -50,7 +50,9 @@ export async function assembleVideo(request: AssemblyRequest): Promise<AssemblyR
     if (request.narration?.enabled && request.narration.file) {
       const narrationPath = resolveAssetPath(request.narration.file);
       if (!fs.existsSync(narrationPath)) {
-        throw new Error(`Narration file not found: ${request.narration.file} (resolved to: ${narrationPath})`);
+        throw new Error(
+          `Narration file not found: ${request.narration.file} (resolved to: ${narrationPath})`
+        );
       }
     }
 
@@ -91,7 +93,6 @@ export async function assembleVideo(request: AssemblyRequest): Promise<AssemblyR
       duration,
       catalogId,
     };
-
   } catch (error) {
     console.error('[Story Assembler] Error:', error);
     return {
@@ -117,13 +118,13 @@ function buildFFmpegCommand(request: AssemblyRequest, outputPath: string): strin
   };
 
   // Convert URL paths to absolute file paths
-  const videoPaths = videos.map(v => resolveAssetPath(v));
+  const videoPaths = videos.map((v) => resolveAssetPath(v));
   const musicPath = resolveAssetPath(music.file);
 
   let cmd = 'ffmpeg';
 
   // Add video inputs
-  videoPaths.forEach(video => {
+  videoPaths.forEach((video) => {
     cmd += ` -i "${video}"`;
   });
 

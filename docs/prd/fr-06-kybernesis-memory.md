@@ -19,6 +19,7 @@ The LocalDocs MCP server (FR-05) provides access to local project documentation,
 - No way to store learnings or insights from conversations
 
 Kybernesis is a cloud-based AI memory platform that solves these problems by providing:
+
 - Persistent memory storage with intelligent aggregation
 - Hybrid search (semantic + keyword)
 - Cross-session knowledge retrieval
@@ -39,13 +40,13 @@ This enables the agent to query the user's "second brain" for relevant context w
 
 ## Scope
 
-| Parameter | Value | Notes |
-|-----------|-------|-------|
-| MCP Endpoint | `https://api.kybernesis.ai/mcp` | Kybernesis MCP server |
-| Authentication | Bearer token via env var | `KYBERNESIS_API_KEY` |
-| Primary tool | `kybernesis_search` | Hybrid retrieval |
-| Secondary tool | `kybernesis_store` | Memory ingestion (optional) |
-| Result limit | 10 (default) | Configurable per query |
+| Parameter      | Value                           | Notes                       |
+| -------------- | ------------------------------- | --------------------------- |
+| MCP Endpoint   | `https://api.kybernesis.ai/mcp` | Kybernesis MCP server       |
+| Authentication | Bearer token via env var        | `KYBERNESIS_API_KEY`        |
+| Primary tool   | `kybernesis_search`             | Hybrid retrieval            |
+| Secondary tool | `kybernesis_store`              | Memory ingestion (optional) |
+| Result limit   | 10 (default)                    | Configurable per query      |
 
 ---
 
@@ -75,6 +76,7 @@ This enables the agent to query the user's "second brain" for relevant context w
 - [ ] Handles API errors with user-friendly messages
 
 **Input schema:**
+
 ```typescript
 {
   query: z.string().describe('Search query for memory retrieval'),
@@ -84,11 +86,13 @@ This enables the agent to query the user's "second brain" for relevant context w
 ```
 
 **Example input:**
+
 ```json
 { "query": "React state management patterns", "limit": 5 }
 ```
 
 **Example output:**
+
 ```json
 {
   "query": "React state management patterns",
@@ -115,6 +119,7 @@ This enables the agent to query the user's "second brain" for relevant context w
 - [ ] Handles API errors gracefully
 
 **Input schema:**
+
 ```typescript
 {
   content: z.string().describe('Content to store in memory'),
@@ -123,11 +128,13 @@ This enables the agent to query the user's "second brain" for relevant context w
 ```
 
 **Example input:**
+
 ```json
 { "content": "User prefers TypeScript strict mode for all projects", "priority": 0.8 }
 ```
 
 **Example output:**
+
 ```json
 {
   "success": true,
@@ -159,16 +166,20 @@ This enables the agent to query the user's "second brain" for relevant context w
 Kybernesis exposes an MCP server at `https://api.kybernesis.ai/mcp`. The Claude Agent SDK can connect to this using the `mcp-remote` bridge:
 
 **Claude Desktop config (for reference):**
+
 ```json
 {
   "mcpServers": {
     "kybernesis-brain": {
       "command": "npx",
       "args": [
-        "-y", "mcp-remote",
+        "-y",
+        "mcp-remote",
         "https://api.kybernesis.ai/mcp",
-        "--header", "Authorization:${KYBERNESIS_AUTH}",
-        "--transport", "http-only"
+        "--header",
+        "Authorization:${KYBERNESIS_AUTH}",
+        "--transport",
+        "http-only"
       ],
       "env": {
         "KYBERNESIS_AUTH": "Bearer kb_your_api_key"
@@ -179,6 +190,7 @@ Kybernesis exposes an MCP server at `https://api.kybernesis.ai/mcp`. The Claude 
 ```
 
 **For FliGen**, we'll create an in-process wrapper that:
+
 1. Makes HTTP calls to the Kybernesis API endpoints
 2. Exposes them as MCP tools via `createSdkMcpServer()`
 
@@ -199,7 +211,7 @@ const kybernesisSearchTool = tool(
   {
     query: z.string().describe('Search query for memory retrieval'),
     limit: z.number().optional().describe('Max results (default 10)'),
-    includeSummaries: z.boolean().optional().describe('Include summaries (default true)')
+    includeSummaries: z.boolean().optional().describe('Include summaries (default true)'),
   },
   async ({ query, limit = 10, includeSummaries = true }) => {
     // Implementation calls /retrieval/hybrid
@@ -226,7 +238,9 @@ const kybernesisServer = createKybernesisServer();
 const options: Options = {
   // ... existing options
   allowedTools: [
-    'Read', 'Write', 'Bash',
+    'Read',
+    'Write',
+    'Bash',
     'mcp__local_docs__local_docs_index',
     'mcp__local_docs__local_docs_content',
     'mcp__kybernesis__kybernesis_search',
@@ -268,42 +282,42 @@ KYBERNESIS_API_KEY=kb_your_api_key_here
 
 ### Configuration Tests
 
-| Test | Scenario | Expected |
-|------|----------|----------|
+| Test            | Scenario                     | Expected                          |
+| --------------- | ---------------------------- | --------------------------------- |
 | Missing API key | `KYBERNESIS_API_KEY` not set | Tool returns config error message |
-| Valid config | API key set in env | Tools work normally |
+| Valid config    | API key set in env           | Tools work normally               |
 
 ### Search Tests
 
-| Test | Input | Expected |
-|------|-------|----------|
-| Search happy path | `{ query: "React patterns" }` | Array of results with scores |
-| Empty results | `{ query: "xyzzy123nonexistent" }` | `{ results: [], totalResults: 0 }` |
-| Custom limit | `{ query: "test", limit: 3 }` | Max 3 results returned |
-| Without summaries | `{ query: "test", includeSummaries: false }` | Raw chunks only |
+| Test              | Input                                        | Expected                           |
+| ----------------- | -------------------------------------------- | ---------------------------------- |
+| Search happy path | `{ query: "React patterns" }`                | Array of results with scores       |
+| Empty results     | `{ query: "xyzzy123nonexistent" }`           | `{ results: [], totalResults: 0 }` |
+| Custom limit      | `{ query: "test", limit: 3 }`                | Max 3 results returned             |
+| Without summaries | `{ query: "test", includeSummaries: false }` | Raw chunks only                    |
 
 ### Store Tests (if implemented)
 
-| Test | Input | Expected |
-|------|-------|----------|
-| Store happy path | `{ content: "Test memory" }` | Success with memory ID |
-| With priority | `{ content: "Important", priority: 0.9 }` | Success, priority applied |
-| Empty content | `{ content: "" }` | Validation error |
+| Test             | Input                                     | Expected                  |
+| ---------------- | ----------------------------------------- | ------------------------- |
+| Store happy path | `{ content: "Test memory" }`              | Success with memory ID    |
+| With priority    | `{ content: "Important", priority: 0.9 }` | Success, priority applied |
+| Empty content    | `{ content: "" }`                         | Validation error          |
 
 ### Error Handling Tests
 
-| Test | Scenario | Expected |
-|------|----------|----------|
-| Invalid API key | Wrong key in env | 401 with friendly message |
-| Network timeout | API unreachable | Timeout error message |
-| Rate limited | Too many requests | 429 with retry message |
+| Test            | Scenario          | Expected                  |
+| --------------- | ----------------- | ------------------------- |
+| Invalid API key | Wrong key in env  | 401 with friendly message |
+| Network timeout | API unreachable   | Timeout error message     |
+| Rate limited    | Too many requests | 429 with retry message    |
 
 ### Integration Tests
 
-| Test | Description | Expected |
-|------|-------------|----------|
-| Agent uses search | Ask "What do I know about X?" | Agent calls `kybernesis_search` |
-| Agent stores memory | Ask "Remember that I prefer Y" | Agent calls `kybernesis_store` |
+| Test                    | Description                           | Expected                            |
+| ----------------------- | ------------------------------------- | ----------------------------------- |
+| Agent uses search       | Ask "What do I know about X?"         | Agent calls `kybernesis_search`     |
+| Agent stores memory     | Ask "Remember that I prefer Y"        | Agent calls `kybernesis_store`      |
 | Combined with LocalDocs | Ask about project + general knowledge | Agent uses both tools appropriately |
 
 ---
@@ -342,6 +356,7 @@ KYBERNESIS_API_KEY=kb_your_api_key_here
 ## Completion Notes
 
 **What was done:**
+
 - Created Kybernesis MCP server module following FR-05 LocalDocs pattern
 - Implemented `kybernesis_search` tool (hybrid search across memories)
 - Implemented `kybernesis_store` tool (store new memories)
@@ -351,15 +366,18 @@ KYBERNESIS_API_KEY=kb_your_api_key_here
 - Added startup status indicator for Kybernesis configuration
 
 **Files created:**
+
 - `server/src/tools/kybernesis/types.ts` - API response type definitions
 - `server/src/tools/kybernesis/client.ts` - HTTP client for Kybernesis API
 - `server/src/tools/kybernesis/index.ts` - MCP tool definitions and server
 
 **Files modified:**
+
 - `server/src/agent/handler.ts` - Added Kybernesis tools and updated system prompt
 - `server/src/index.ts` - Added startup configuration status
 
 **Testing notes:**
+
 1. Start server with `npm run dev`
 2. Verify startup shows Kybernesis status (configured or warning)
 3. In chat, ask "Search my memories for React patterns"
@@ -367,6 +385,7 @@ KYBERNESIS_API_KEY=kb_your_api_key_here
 5. If API key not set, tool returns config error gracefully
 
 **Error handling verified:**
+
 - Missing API key → CONFIG_ERROR with friendly message
 - Invalid API key → AUTH_ERROR (when API returns 401)
 - Network issues → TIMEOUT or NETWORK_ERROR

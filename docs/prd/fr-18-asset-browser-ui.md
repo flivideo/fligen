@@ -21,11 +21,13 @@ As a user, I want to browse, search, and manage all my generated assets (images,
 ## Problem
 
 **After FR-16 and FR-17:**
+
 - All assets are saved to catalog with full metadata ✅
 - Assets can be queried via API ✅
 - But no UI to browse/search/manage assets ❌
 
 **Need:**
+
 - Visual asset browser (grid view)
 - Search and filtering
 - Preview and details
@@ -151,10 +153,11 @@ export function AssetBrowser({ filterType, selectionMode, onSelect }: AssetBrows
     let filtered = data.assets;
     if (filters.search) {
       const search = filters.search.toLowerCase();
-      filtered = filtered.filter(a =>
-        a.prompt.toLowerCase().includes(search) ||
-        a.filename.toLowerCase().includes(search) ||
-        a.metadata.customName?.toLowerCase().includes(search)
+      filtered = filtered.filter(
+        (a) =>
+          a.prompt.toLowerCase().includes(search) ||
+          a.filename.toLowerCase().includes(search) ||
+          a.metadata.customName?.toLowerCase().includes(search)
       );
     }
 
@@ -180,10 +183,14 @@ interface AssetCardProps {
 export function AssetCard({ asset, selected, onClick, onSelect }: AssetCardProps) {
   const getIcon = () => {
     switch (asset.type) {
-      case 'image': return '🖼️';
-      case 'video': return '🎬';
-      case 'audio': return '🎵';
-      case 'thumbnail': return '🖼️';
+      case 'image':
+        return '🖼️';
+      case 'video':
+        return '🎬';
+      case 'audio':
+        return '🎵';
+      case 'thumbnail':
+        return '🖼️';
     }
   };
 
@@ -219,11 +226,7 @@ export function AssetCard({ asset, selected, onClick, onSelect }: AssetCardProps
       )}
 
       <div className="aspect-square overflow-hidden rounded bg-slate-900">
-        <img
-          src={getThumbnail()}
-          alt={asset.filename}
-          className="h-full w-full object-cover"
-        />
+        <img src={getThumbnail()} alt={asset.filename} className="h-full w-full object-cover" />
       </div>
 
       <div className="mt-2 flex items-center gap-2">
@@ -268,7 +271,12 @@ interface AssetDetailPanelProps {
   onTagsUpdate?: (tags: string[]) => void;
 }
 
-export function AssetDetailPanel({ asset, onClose, onDelete, onTagsUpdate }: AssetDetailPanelProps) {
+export function AssetDetailPanel({
+  asset,
+  onClose,
+  onDelete,
+  onTagsUpdate,
+}: AssetDetailPanelProps) {
   const [tags, setTags] = useState(asset.tags || []);
   const [newTag, setNewTag] = useState('');
 
@@ -294,7 +302,7 @@ export function AssetDetailPanel({ asset, onClose, onDelete, onTagsUpdate }: Ass
   };
 
   const handleRemoveTag = (tag: string) => {
-    const updatedTags = tags.filter(t => t !== tag);
+    const updatedTags = tags.filter((t) => t !== tag);
     setTags(updatedTags);
     onTagsUpdate?.(updatedTags);
   };
@@ -304,19 +312,12 @@ export function AssetDetailPanel({ asset, onClose, onDelete, onTagsUpdate }: Ass
       {/* Header */}
       <div className="sticky top-0 border-b border-slate-800 bg-slate-900 p-4">
         <div className="flex items-center justify-between">
-          <h2 className="font-mono text-lg font-semibold uppercase text-slate-200">
-            {asset.type}
-          </h2>
-          <button
-            onClick={onClose}
-            className="text-slate-400 hover:text-slate-200"
-          >
+          <h2 className="font-mono text-lg font-semibold uppercase text-slate-200">{asset.type}</h2>
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-200">
             ✕
           </button>
         </div>
-        <p className="mt-1 truncate font-mono text-xs text-slate-500">
-          {asset.filename}
-        </p>
+        <p className="mt-1 truncate font-mono text-xs text-slate-500">{asset.filename}</p>
       </div>
 
       {/* Preview */}
@@ -366,7 +367,9 @@ export function AssetDetailPanel({ asset, onClose, onDelete, onTagsUpdate }: Ass
         </div>
 
         <div>
-          <label className="block font-mono text-xs uppercase text-slate-500">Generation Time</label>
+          <label className="block font-mono text-xs uppercase text-slate-500">
+            Generation Time
+          </label>
           <p className="mt-1 font-mono text-sm text-slate-300">
             {(asset.generationTimeMs / 1000).toFixed(1)}s
           </p>
@@ -376,7 +379,7 @@ export function AssetDetailPanel({ asset, onClose, onDelete, onTagsUpdate }: Ass
         <div>
           <label className="block font-mono text-xs uppercase text-slate-500">Tags</label>
           <div className="mt-2 flex flex-wrap gap-2">
-            {tags.map(tag => (
+            {tags.map((tag) => (
               <span
                 key={tag}
                 className="inline-flex items-center gap-1 rounded bg-slate-800 px-2 py-1 font-mono text-xs text-slate-300"
@@ -458,6 +461,7 @@ export function AssetDetailPanel({ asset, onClose, onDelete, onTagsUpdate }: Ass
 ## Features
 
 ### 1. Grid View
+
 - Responsive grid (4-6 columns depending on screen size)
 - Thumbnail previews for images/videos
 - Placeholder icons for audio
@@ -465,6 +469,7 @@ export function AssetDetailPanel({ asset, onClose, onDelete, onTagsUpdate }: Ass
 - Pagination (20 assets per page)
 
 ### 2. Filters
+
 - **Type**: All, Images, Videos, Audio, Thumbnails
 - **Provider**: All, FAL.AI, KIE.AI, ElevenLabs, N8N
 - **Date Range**: Last 24h, Last 7d, Last 30d, Custom
@@ -472,6 +477,7 @@ export function AssetDetailPanel({ asset, onClose, onDelete, onTagsUpdate }: Ass
 - **Status**: All, Ready, Failed, Generating
 
 ### 3. Search
+
 - Full-text search on:
   - Prompt text
   - Filename
@@ -481,6 +487,7 @@ export function AssetDetailPanel({ asset, onClose, onDelete, onTagsUpdate }: Ass
 - Clear button
 
 ### 4. Detail Panel
+
 - Slides in from right
 - Full-size preview
 - Complete metadata display
@@ -488,6 +495,7 @@ export function AssetDetailPanel({ asset, onClose, onDelete, onTagsUpdate }: Ass
 - Actions: Download, Copy URL, Delete
 
 ### 5. Selection Mode (for Day 11)
+
 - Multi-select checkboxes
 - "Select All" button
 - "Add to Story" button (passes selected assets to parent)
@@ -497,12 +505,14 @@ export function AssetDetailPanel({ asset, onClose, onDelete, onTagsUpdate }: Ass
 ## API Requirements
 
 **Already exists in FR-16:**
+
 - ✅ `GET /api/catalog` - Get all assets
 - ✅ `GET /api/catalog/:id` - Get asset by ID
 - ✅ `GET /api/catalog/filter` - Filter assets
 - ✅ `DELETE /api/catalog/:id` - Delete asset
 
 **Need to add:**
+
 - `PUT /api/catalog/:id/tags` - Update asset tags
 
 ```typescript
@@ -554,6 +564,7 @@ Add nav button:
 ## Testing Checklist
 
 ### UI Tests
+
 - [ ] Grid displays assets correctly
 - [ ] Filters work (type, provider, date, tags)
 - [ ] Search filters assets
@@ -567,6 +578,7 @@ Add nav button:
 - [ ] Selection mode works
 
 ### Edge Cases
+
 - [ ] Empty catalog (no assets)
 - [ ] Single asset
 - [ ] 1000+ assets (performance)
@@ -576,6 +588,7 @@ Add nav button:
 - [ ] Generating assets (show spinner)
 
 ### Responsive
+
 - [ ] Mobile (1 column)
 - [ ] Tablet (2-3 columns)
 - [ ] Desktop (4-6 columns)
@@ -630,10 +643,12 @@ server/src/index.ts (add PUT /api/catalog/:id/tags endpoint)
 ## Dependencies
 
 **Requires:**
+
 - FR-16 (Unified Asset Catalog Infrastructure)
 - FR-17 (Asset Persistence Implementation)
 
 **Blocks:**
+
 - None (Day 11 can access catalog via API without UI)
 
 ---
@@ -645,20 +660,24 @@ server/src/index.ts (add PUT /api/catalog/:id/tags endpoint)
 **What was done:**
 
 **Frontend Components:**
+
 - Created `AssetCard.tsx` - Grid card component with thumbnails, metadata display, selection checkbox support, and status overlays (generating/failed)
 - Created `AssetDetailPanel.tsx` - Slide-in detail panel with full asset preview, metadata display, tag editing, and actions (download, copy URL, delete)
 - Created `AssetBrowser.tsx` - Main browser component with responsive grid, filters (type, provider, search), pagination, and detail panel integration
 
 **Backend API:**
+
 - Added `PUT /api/catalog/:id/tags` endpoint for updating asset tags with validation
 
 **Integration:**
+
 - Added Asset Library navigation button to sidebar (📚 icon)
 - Integrated AssetBrowser into App.tsx with viewingLibrary state management
 - Updated header to show "Asset Library" when viewing library
 - Library accessible from sidebar, separate from day navigation
 
 **Key Features Implemented:**
+
 - Responsive grid (1-6 columns depending on screen width)
 - Client-side filtering by type and provider
 - Client-side search across prompts, filenames, custom names, and tags
@@ -672,15 +691,18 @@ server/src/index.ts (add PUT /api/catalog/:id/tags endpoint)
 - Placeholder thumbnails for video/audio assets
 
 **Files Created:**
+
 - `client/src/components/tools/AssetCard.tsx`
 - `client/src/components/tools/AssetDetailPanel.tsx`
 - `client/src/components/tools/AssetBrowser.tsx`
 
 **Files Modified:**
+
 - `server/src/index.ts` - Added PUT /api/catalog/:id/tags endpoint
 - `client/src/App.tsx` - Added library navigation and routing
 
 **Testing Notes:**
+
 - Grid renders assets correctly with responsive columns
 - Filters work independently and in combination
 - Search filters across multiple fields with instant results
@@ -692,6 +714,7 @@ server/src/index.ts (add PUT /api/catalog/:id/tags endpoint)
 - Selection mode ready for Day 11 integration
 
 **Technical Implementation:**
+
 - Uses `useMemo` for optimized filtering and searching
 - Client-side filtering/pagination (server returns all, client filters)
 - SVG data URIs for video/audio placeholder thumbnails

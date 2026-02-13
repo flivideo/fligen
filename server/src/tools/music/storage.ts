@@ -126,7 +126,7 @@ export async function saveTrack(
  */
 export async function deleteTrack(id: string): Promise<boolean> {
   const index = await readIndex();
-  const trackIndex = index.tracks.findIndex(t => t.id === id);
+  const trackIndex = index.tracks.findIndex((t) => t.id === id);
 
   if (trackIndex === -1) {
     return false;

@@ -12,13 +12,15 @@ async function test() {
   const index = await scanDocsDirectory();
   console.log(`Found ${index.totalFiles} files, total size: ${index.totalSize} bytes`);
   console.log('First 3 files:');
-  index.files.slice(0, 3).forEach(f => console.log(`  - ${f.path} (${f.sizeBytes} bytes)`));
+  index.files.slice(0, 3).forEach((f) => console.log(`  - ${f.path} (${f.sizeBytes} bytes)`));
 
   // Test 2: Content - valid file
   console.log('\n--- Test 2: local_docs_content (valid) ---');
   const content = await readFileContent('docs/backlog.md');
   if ('content' in content) {
-    console.log(`Read ${content.path}: ${content.totalLines} lines, chunk ${content.chunk}/${content.totalChunks}`);
+    console.log(
+      `Read ${content.path}: ${content.totalLines} lines, chunk ${content.chunk}/${content.totalChunks}`
+    );
     console.log('First 100 chars:', content.content.substring(0, 100));
   } else {
     console.log('Error:', content.error);

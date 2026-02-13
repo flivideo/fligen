@@ -7,21 +7,21 @@
 
 ## Day Structure
 
-| Day | Tool/Focus | Status | APIs/Tech |
-|-----|-----------|--------|-----------|
-| 1 | **FliGen Harness** - Scaffolding + Intro | ✅ | React/Vite, Express, Socket.io |
-| 2 | **Primary Brain** - Claude Agent SDK | ✅ | Claude Agent SDK, Chat UI |
-| 3 | **Second Brain** - Kybernesis | ⏳ | Smart memory/knowledge |
-| 4 | **Image Generator** | | FAL.AI, KIE.AI (Flux, Nano Banana) |
-| 5 | **Text-to-Speech** | | 11 Labs |
-| 6 | **Video Animation** | | KIE.AI (VO3), ComfyUI patterns |
-| 7 | **Music Generator** | | Suno via FAL/KIE |
-| 8 | **Thumbnail Generator** | | Compound (layout + imagery + text) |
-| 9 | **Interop** | | FliHub, DAM, FliDeck connectors |
-| 10 | **N8N/ComfyUI** | | Orchestration patterns |
-| 11 | **Story Builder** | | "A day in the life of..." narrative |
-| 12 | **12 Days Song** | | Final visual story + generated song |
-| 13 | **Wrap-up** | | Overview video of all 12 tools |
+| Day | Tool/Focus                               | Status | APIs/Tech                           |
+| --- | ---------------------------------------- | ------ | ----------------------------------- |
+| 1   | **FliGen Harness** - Scaffolding + Intro | ✅     | React/Vite, Express, Socket.io      |
+| 2   | **Primary Brain** - Claude Agent SDK     | ✅     | Claude Agent SDK, Chat UI           |
+| 3   | **Second Brain** - Kybernesis            | ⏳     | Smart memory/knowledge              |
+| 4   | **Image Generator**                      |        | FAL.AI, KIE.AI (Flux, Nano Banana)  |
+| 5   | **Text-to-Speech**                       |        | 11 Labs                             |
+| 6   | **Video Animation**                      |        | KIE.AI (VO3), ComfyUI patterns      |
+| 7   | **Music Generator**                      |        | Suno via FAL/KIE                    |
+| 8   | **Thumbnail Generator**                  |        | Compound (layout + imagery + text)  |
+| 9   | **Interop**                              |        | FliHub, DAM, FliDeck connectors     |
+| 10  | **N8N/ComfyUI**                          |        | Orchestration patterns              |
+| 11  | **Story Builder**                        |        | "A day in the life of..." narrative |
+| 12  | **12 Days Song**                         |        | Final visual story + generated song |
+| 13  | **Wrap-up**                              |        | Overview video of all 12 tools      |
 
 ---
 
@@ -29,43 +29,43 @@
 
 ### Planning Documents (`planning/`)
 
-| File | Purpose | Status |
-|------|---------|--------|
-| `claude-agent-sdk-integration.md` | Agent SDK patterns, auth, frontend options | **Day 2-3 Guide** |
-| `project-concept-and-candidates.md` | Song metaphors, team, 12 capabilities draft | Reference |
-| `day-0-intro-and-day-1-planning.md` | Steve's ComfyUI/N8N workflows, diffusion models | **Most complete** |
-| `fligen-harness-and-12-days-framing.md` | FliGen MVP scope, tool modules | Current |
-| `multimodal-api-platforms-research.md` | FAL.AI, KIE.AI research | Reference |
-| `resources.md` | Links to brains, skills, reference projects | Reference |
-| `credits.md` | Video credits checklist | Reference |
+| File                                    | Purpose                                         | Status            |
+| --------------------------------------- | ----------------------------------------------- | ----------------- |
+| `claude-agent-sdk-integration.md`       | Agent SDK patterns, auth, frontend options      | **Day 2-3 Guide** |
+| `project-concept-and-candidates.md`     | Song metaphors, team, 12 capabilities draft     | Reference         |
+| `day-0-intro-and-day-1-planning.md`     | Steve's ComfyUI/N8N workflows, diffusion models | **Most complete** |
+| `fligen-harness-and-12-days-framing.md` | FliGen MVP scope, tool modules                  | Current           |
+| `multimodal-api-platforms-research.md`  | FAL.AI, KIE.AI research                         | Reference         |
+| `resources.md`                          | Links to brains, skills, reference projects     | Reference         |
+| `credits.md`                            | Video credits checklist                         | Reference         |
 
 ### PRD Documents (`prd/`)
 
-| File | Purpose | Status |
-|------|---------|--------|
-| `fr-01-initial-harness.md` | Day 1: Foundation harness setup | ✅ Complete |
-| `fr-02-layout-and-navigation.md` | Day 1: Layout shell and sidebar navigation | ✅ Complete |
-| `fr-03-claude-agent-sdk-integration.md` | Day 2: Claude Agent SDK server integration | ✅ Complete |
-| `fr-04-frontend-chat-ui.md` | Day 2: React chat UI for Claude interaction | ✅ Complete |
+| File                                    | Purpose                                     | Status      |
+| --------------------------------------- | ------------------------------------------- | ----------- |
+| `fr-01-initial-harness.md`              | Day 1: Foundation harness setup             | ✅ Complete |
+| `fr-02-layout-and-navigation.md`        | Day 1: Layout shell and sidebar navigation  | ✅ Complete |
+| `fr-03-claude-agent-sdk-integration.md` | Day 2: Claude Agent SDK server integration  | ✅ Complete |
+| `fr-04-frontend-chat-ui.md`             | Day 2: React chat UI for Claude interaction | ✅ Complete |
 
 ### Other Docs
 
-| File | Purpose |
-|------|---------|
-| `backlog.md` | Requirements tracking |
-| `changelog.md` | Implementation history |
-| `brainstorming-notes.md` | Ideas and exploration |
+| File                     | Purpose                |
+| ------------------------ | ---------------------- |
+| `backlog.md`             | Requirements tracking  |
+| `changelog.md`           | Implementation history |
+| `brainstorming-notes.md` | Ideas and exploration  |
 
 ---
 
 ## Reference Projects
 
-| Project | Location | What to Learn |
-|---------|----------|---------------|
+| Project                 | Location                                      | What to Learn                                        |
+| ----------------------- | --------------------------------------------- | ---------------------------------------------------- |
 | **007-bmad-claude-sdk** | `/ad/appydave-app-a-day/007-bmad-claude-sdk/` | Claude Agent SDK patterns, **avoid ShadCN pitfalls** |
-| **FliHub** | `/ad/flivideo/flihub/` | Menu/asset flow patterns, Socket.io |
-| **FliDeck** | `/ad/flivideo/flideck/` | Presentation patterns |
-| **Storyline App** | `/ad/storyline-app/` | Video planning |
+| **FliHub**              | `/ad/flivideo/flihub/`                        | Menu/asset flow patterns, Socket.io                  |
+| **FliDeck**             | `/ad/flivideo/flideck/`                       | Presentation patterns                                |
+| **Storyline App**       | `/ad/storyline-app/`                          | Video planning                                       |
 
 ---
 
@@ -82,12 +82,14 @@ External Services (FAL, KIE, 11 Labs, Suno, Claude)
 ### ShadCN Warning (from 007 post-mortem)
 
 **Prefer plain Tailwind CSS over ShadCN** due to:
+
 - TailwindCSS v4 migration complexity
 - Radix UI z-index/stacking context issues
 - Prop spreading order bugs
 - Time lost debugging CSS instead of building features
 
 If using ShadCN:
+
 - Check Tailwind version (v4 syntax: `@import "tailwindcss"`)
 - Use inline styles for critical positioning
 - Put custom styles AFTER `...props.style` spread
@@ -96,12 +98,12 @@ If using ShadCN:
 
 ## Team
 
-| Person | Role |
-|--------|------|
-| David | Lead builder, presenter |
-| Mary | Team member |
-| Jan | Team member |
-| Steve | Day 12 integration - ComfyUI workflows |
+| Person | Role                                   |
+| ------ | -------------------------------------- |
+| David  | Lead builder, presenter                |
+| Mary   | Team member                            |
+| Jan    | Team member                            |
+| Steve  | Day 12 integration - ComfyUI workflows |
 
 ---
 

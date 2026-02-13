@@ -129,10 +129,10 @@ export interface BrandTextConfig {
 // Preset canvas sizes
 export const CANVAS_PRESETS = {
   'youtube-thumb': { width: 1280, height: 720, label: 'YouTube Thumbnail (1280×720)' },
-  'square': { width: 1024, height: 1024, label: 'Square (1024×1024)' },
-  'portrait': { width: 1080, height: 1920, label: 'Portrait (1080×1920)' },
+  square: { width: 1024, height: 1024, label: 'Square (1024×1024)' },
+  portrait: { width: 1080, height: 1920, label: 'Portrait (1080×1920)' },
   'twitter-header': { width: 1500, height: 500, label: 'Twitter Header (1500×500)' },
-  'custom': { width: 1280, height: 720, label: 'Custom' },
+  custom: { width: 1280, height: 720, label: 'Custom' },
 } as const;
 
 export type CanvasPresetKey = keyof typeof CANVAS_PRESETS;

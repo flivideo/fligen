@@ -18,7 +18,10 @@ interface PromptRefinementPanelProps {
   onMachinePromptsGenerated: (prompts: MachinePrompts) => void;
 }
 
-export function PromptRefinementPanel({ humanPrompts, onMachinePromptsGenerated }: PromptRefinementPanelProps) {
+export function PromptRefinementPanel({
+  humanPrompts,
+  onMachinePromptsGenerated,
+}: PromptRefinementPanelProps) {
   const [systemPrompts, setSystemPrompts] = useState<SystemPrompts | null>(null);
   const [machinePrompts, setMachinePrompts] = useState<MachinePrompts | null>(null);
   const [generating, setGenerating] = useState(false);

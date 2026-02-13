@@ -24,6 +24,7 @@ This is Day 7 of the 12 Days of Claudemas, focusing on AI music generation capab
 ## Solution
 
 Create a Music Generation tool supporting two providers:
+
 - **FAL.AI SonAuto v2** - Text-to-music with prompt, lyrics, and style tags
 - **KIE.AI Suno** - Music generation with model selection and vocal options
 
@@ -120,6 +121,7 @@ Create a Music Generation tool supporting two providers:
 | `balance_strength` | float | No | 0-1 (default: varies) |
 
 **Response:**
+
 ```json
 {
   "seed": 12345,
@@ -138,6 +140,7 @@ Create a Music Generation tool supporting two providers:
 **Cost:** $0.075 per generation
 
 **Implementation:**
+
 ```typescript
 import { fal } from '@fal-ai/client';
 
@@ -147,8 +150,8 @@ const result = await fal.subscribe('sonauto/v2/text-to-music', {
     tags: ['electronic', 'synth', 'upbeat'],
     lyrics_prompt: 'Dancing through the night...',
     bpm: 'auto',
-    output_format: 'mp3'
-  }
+    output_format: 'mp3',
+  },
 });
 ```
 
@@ -170,6 +173,7 @@ Uses async polling pattern (same as KIE.AI video generation).
 | `vocalGender` | enum | No | male, female |
 
 **Response (async):**
+
 ```json
 {
   "taskId": "task_abc123",
@@ -178,6 +182,7 @@ Uses async polling pattern (same as KIE.AI video generation).
 ```
 
 **Poll for completion:**
+
 ```json
 {
   "taskId": "task_abc123",
@@ -209,17 +214,18 @@ server/src/tools/music/
 
 ### API Endpoints
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/music/health` | GET | Check FAL.AI and KIE.AI music API status |
-| `/api/music/generate` | POST | Generate music track |
-| `/api/music/library` | GET | List saved tracks |
-| `/api/music/save` | POST | Save track to library |
-| `/api/music/library/:id` | DELETE | Delete saved track |
+| Endpoint                 | Method | Description                              |
+| ------------------------ | ------ | ---------------------------------------- |
+| `/api/music/health`      | GET    | Check FAL.AI and KIE.AI music API status |
+| `/api/music/generate`    | POST   | Generate music track                     |
+| `/api/music/library`     | GET    | List saved tracks                        |
+| `/api/music/save`        | POST   | Save track to library                    |
+| `/api/music/library/:id` | DELETE | Delete saved track                       |
 
 ### POST /api/music/generate
 
 **Request:**
+
 ```json
 {
   "provider": "fal",
@@ -237,6 +243,7 @@ server/src/tools/music/
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -261,6 +268,7 @@ server/src/tools/music/
 ### POST /api/music/save
 
 **Request:**
+
 ```json
 {
   "name": "My Awesome Track",
@@ -274,6 +282,7 @@ server/src/tools/music/
 ```
 
 **Response:**
+
 ```json
 {
   "id": "music-001",
@@ -296,6 +305,7 @@ assets/
 ```
 
 **index.json format:**
+
 ```json
 {
   "tracks": [
@@ -372,9 +382,11 @@ export interface SavedTrack extends GeneratedTrack {
 ### Files to Create/Modify
 
 **Create:**
+
 - `client/src/components/tools/Day7MusicGen.tsx` - Main component (mock already exists)
 
 **Modify:**
+
 - `client/src/App.tsx` - Add Day 7 routing
 - `server/src/index.ts` - Register music endpoints
 
@@ -405,11 +417,13 @@ The mock UI component (`Day7MusicGen.tsx`) already implements:
 ## Acceptance Criteria
 
 ### Provider Selection
+
 - [ ] Provider toggle switches between FAL.AI and KIE.AI
 - [ ] Provider-specific options show/hide appropriately
 - [ ] Selected provider persists during session
 
 ### Music Settings
+
 - [ ] Prompt text area accepts music description
 - [ ] Style/tags input for genre and mood descriptors
 - [ ] Lyrics toggle shows/hides lyrics input
@@ -420,11 +434,13 @@ The mock UI component (`Day7MusicGen.tsx`) already implements:
 - [ ] Title input for track naming
 
 ### KIE-specific Options
+
 - [ ] Model dropdown (V3.5, V4, V4.5, V5)
 - [ ] Vocal gender dropdown (Male, Female)
 - [ ] Options only visible when KIE provider selected
 
 ### Generation
+
 - [ ] "Generate Music" button triggers API call
 - [ ] Button shows estimated cost (~$0.075 FAL, ~$0.06 KIE)
 - [ ] Loading spinner during generation
@@ -433,12 +449,14 @@ The mock UI component (`Day7MusicGen.tsx`) already implements:
 - [ ] Success adds track to Generated Tracks list
 
 ### Audio Playback
+
 - [ ] Play/pause button for each track
 - [ ] Progress bar with seek functionality
 - [ ] Current time and duration display
 - [ ] Audio auto-plays on completion (optional)
 
 ### Track Management
+
 - [ ] Editable track name with inline edit
 - [ ] "Save to Library" button persists track to server
 - [ ] "Download" button triggers browser save dialog
@@ -446,6 +464,7 @@ The mock UI component (`Day7MusicGen.tsx`) already implements:
 - [ ] Saved tracks show checkmark indicator
 
 ### Library
+
 - [ ] Library section shows saved tracks
 - [ ] Tracks load from server on page mount
 - [ ] Play button for each saved track
@@ -453,6 +472,7 @@ The mock UI component (`Day7MusicGen.tsx`) already implements:
 - [ ] Delete button removes from library
 
 ### API Integration
+
 - [ ] FAL.AI SonAuto v2 integration working
 - [ ] KIE.AI Suno integration working
 - [ ] Proper error handling for both providers
@@ -463,6 +483,7 @@ The mock UI component (`Day7MusicGen.tsx`) already implements:
 ## Environment Variables
 
 Add to `server/.env`:
+
 ```
 # FAL.AI (SonAuto) - Already configured from Day 4
 FAL_API_KEY=your_fal_api_key_here
@@ -477,13 +498,13 @@ No new API keys needed - reuses existing credentials from image/video generation
 
 ## Cost Comparison
 
-| Provider | Model | Cost | Duration | Quality |
-|----------|-------|------|----------|---------|
-| FAL.AI | SonAuto v2 | $0.075/track | ~30s | High |
-| KIE.AI | Suno V3.5 | ~$0.06/track | ~30s | Good |
-| KIE.AI | Suno V4 | ~$0.06/track | ~30s | Better |
-| KIE.AI | Suno V4.5 | ~$0.06/track | ~30s | Better |
-| KIE.AI | Suno V5 | ~$0.06/track | ~30s | Best |
+| Provider | Model      | Cost         | Duration | Quality |
+| -------- | ---------- | ------------ | -------- | ------- |
+| FAL.AI   | SonAuto v2 | $0.075/track | ~30s     | High    |
+| KIE.AI   | Suno V3.5  | ~$0.06/track | ~30s     | Good    |
+| KIE.AI   | Suno V4    | ~$0.06/track | ~30s     | Better  |
+| KIE.AI   | Suno V4.5  | ~$0.06/track | ~30s     | Better  |
+| KIE.AI   | Suno V5    | ~$0.06/track | ~30s     | Best    |
 
 **Recommendation:** Start with FAL.AI SonAuto for simpler integration (uses existing fal-ai/client), add KIE.AI Suno for comparison.
 
@@ -506,11 +527,13 @@ No new API keys needed - reuses existing credentials from image/video generation
 Use these prompts for testing:
 
 **Instrumental:**
+
 ```
 An upbeat electronic track with synth melodies and driving drums, perfect for a montage scene
 ```
 
 **With Lyrics:**
+
 ```
 Prompt: A cheerful acoustic folk song about adventure and discovery
 
@@ -527,6 +550,7 @@ To find what waits for us today
 ```
 
 **Fox Story Theme:**
+
 ```
 A whimsical orchestral piece with playful woodwinds and gentle strings, evoking a children's storybook about a clever fox in a meadow
 ```
@@ -536,14 +560,17 @@ A whimsical orchestral piece with playful woodwinds and gentle strings, evoking 
 ## References
 
 ### API Documentation
+
 - [FAL.AI Models](https://fal.ai/models) - Search for "sonauto"
 - [KIE.AI Documentation](https://docs.kie.ai/)
 
 ### Related Requirements
+
 - [FR-09: 11 Labs Text-to-Speech](fr-09-elevenlabs-tts.md) - Audio generation pattern
 - [FR-10: Shot List and Video Generation](fr-10-shot-list-and-video.md) - KIE.AI integration pattern
 
 ### Planning Documents
+
 - [Fox and Lazy Dog Story](../planning/fox-and-lazy-dog-story.md) - Story context for test music
 
 ---
@@ -551,6 +578,7 @@ A whimsical orchestral piece with playful woodwinds and gentle strings, evoking 
 ## Completion Notes
 
 **What was done:**
+
 - Created music module at `server/src/tools/music/` with types, storage, FAL client, KIE client, and index
 - Implemented FAL.AI SonAuto v2 text-to-music integration with `fal.subscribe()`
 - Implemented KIE.AI Suno integration with async polling pattern
@@ -562,6 +590,7 @@ A whimsical orchestral piece with playful woodwinds and gentle strings, evoking 
 - Added Day 7 routing in App.tsx
 
 **Files created:**
+
 ```
 server/src/tools/music/types.ts     - Type definitions
 server/src/tools/music/storage.ts   - Library file storage
@@ -571,6 +600,7 @@ server/src/tools/music/index.ts     - Module exports
 ```
 
 **Files modified:**
+
 ```
 shared/src/index.ts      - Added music types
 shared/src/config.json   - Updated day statuses
@@ -580,6 +610,7 @@ client/src/components/tools/Day7MusicGen.tsx - Wired to real APIs
 ```
 
 **Testing notes:**
+
 1. Start dev server: `npm run dev`
 2. Navigate to Day 7 in sidebar
 3. Enter a music prompt (default provided)
@@ -590,6 +621,7 @@ client/src/components/tools/Day7MusicGen.tsx - Wired to real APIs
 8. Saved tracks persist in assets/music-library/
 
 **API keys required:**
+
 - `FAL_API_KEY` - For SonAuto music generation
 - `KIE_API_KEY` - For Suno music generation
 

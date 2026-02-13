@@ -51,11 +51,7 @@ export function AssetDetailPanel({
   };
 
   const handleDelete = () => {
-    if (
-      window.confirm(
-        'Delete this asset permanently? This cannot be undone.'
-      )
-    ) {
+    if (window.confirm('Delete this asset permanently? This cannot be undone.')) {
       onDelete?.();
       onClose();
     }
@@ -64,10 +60,7 @@ export function AssetDetailPanel({
   return (
     <>
       {/* Backdrop */}
-      <div
-        className="fixed inset-0 z-40 bg-black/50 md:hidden"
-        onClick={onClose}
-      />
+      <div className="fixed inset-0 z-40 bg-black/50 md:hidden" onClick={onClose} />
 
       {/* Panel */}
       <div className="fixed right-0 top-0 z-50 h-full w-full overflow-y-auto border-l border-slate-800 bg-slate-900 shadow-2xl md:w-96">
@@ -77,27 +70,18 @@ export function AssetDetailPanel({
             <h2 className="font-mono text-lg font-semibold uppercase text-slate-200">
               {asset.type}
             </h2>
-            <button
-              onClick={onClose}
-              className="text-slate-400 hover:text-slate-200"
-            >
+            <button onClick={onClose} className="text-slate-400 hover:text-slate-200">
               ✕
             </button>
           </div>
-          <p className="mt-1 truncate font-mono text-xs text-slate-500">
-            {asset.filename}
-          </p>
+          <p className="mt-1 truncate font-mono text-xs text-slate-500">{asset.filename}</p>
         </div>
 
         {/* Preview */}
         <div className="p-4">
           <div className="overflow-hidden rounded bg-slate-950">
             {asset.type === 'image' || asset.type === 'thumbnail' ? (
-              <img
-                src={asset.url}
-                alt={asset.filename}
-                className="w-full object-contain"
-              />
+              <img src={asset.url} alt={asset.filename} className="w-full object-contain" />
             ) : asset.type === 'video' ? (
               <video src={asset.url} controls className="w-full" />
             ) : (
@@ -111,50 +95,32 @@ export function AssetDetailPanel({
         {/* Metadata */}
         <div className="space-y-4 p-4">
           <div>
-            <label className="block font-mono text-xs uppercase text-slate-500">
-              Prompt
-            </label>
-            <p className="mt-1 font-sans text-sm text-slate-300">
-              {asset.prompt}
-            </p>
+            <label className="block font-mono text-xs uppercase text-slate-500">Prompt</label>
+            <p className="mt-1 font-sans text-sm text-slate-300">{asset.prompt}</p>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block font-mono text-xs uppercase text-slate-500">
-                Provider
-              </label>
-              <p className="mt-1 font-mono text-sm text-slate-300">
-                {asset.provider}
-              </p>
+              <label className="block font-mono text-xs uppercase text-slate-500">Provider</label>
+              <p className="mt-1 font-mono text-sm text-slate-300">{asset.provider}</p>
             </div>
             <div>
-              <label className="block font-mono text-xs uppercase text-slate-500">
-                Model
-              </label>
-              <p className="mt-1 font-mono text-sm text-slate-300">
-                {asset.model}
-              </p>
+              <label className="block font-mono text-xs uppercase text-slate-500">Model</label>
+              <p className="mt-1 font-mono text-sm text-slate-300">{asset.model}</p>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block font-mono text-xs uppercase text-slate-500">
-                Created
-              </label>
+              <label className="block font-mono text-xs uppercase text-slate-500">Created</label>
               <p className="mt-1 font-mono text-sm text-slate-300">
                 {new Date(asset.createdAt).toLocaleString()}
               </p>
             </div>
             <div>
-              <label className="block font-mono text-xs uppercase text-slate-500">
-                Cost
-              </label>
+              <label className="block font-mono text-xs uppercase text-slate-500">Cost</label>
               <p className="mt-1 font-mono text-sm text-slate-300">
-                {asset.estimatedCost != null
-                  ? `$${asset.estimatedCost.toFixed(3)}`
-                  : 'N/A'}
+                {asset.estimatedCost != null ? `$${asset.estimatedCost.toFixed(3)}` : 'N/A'}
               </p>
             </div>
           </div>
@@ -172,9 +138,7 @@ export function AssetDetailPanel({
 
           {/* Tags */}
           <div>
-            <label className="block font-mono text-xs uppercase text-slate-500">
-              Tags
-            </label>
+            <label className="block font-mono text-xs uppercase text-slate-500">Tags</label>
             <div className="mt-2 flex flex-wrap gap-2">
               {tags.map((tag) => (
                 <span
@@ -203,19 +167,13 @@ export function AssetDetailPanel({
           {/* Additional Metadata */}
           {Object.keys(asset.metadata).length > 0 && (
             <div>
-              <label className="block font-mono text-xs uppercase text-slate-500">
-                Details
-              </label>
+              <label className="block font-mono text-xs uppercase text-slate-500">Details</label>
               <div className="mt-2 space-y-1">
                 {Object.entries(asset.metadata).map(([key, value]) => (
                   <div key={key} className="flex justify-between gap-2">
-                    <span className="font-mono text-xs text-slate-500">
-                      {key}:
-                    </span>
+                    <span className="font-mono text-xs text-slate-500">{key}:</span>
                     <span className="flex-1 truncate text-right font-mono text-xs text-slate-300">
-                      {typeof value === 'object'
-                        ? JSON.stringify(value)
-                        : String(value)}
+                      {typeof value === 'object' ? JSON.stringify(value) : String(value)}
                     </span>
                   </div>
                 ))}

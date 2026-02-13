@@ -6,7 +6,7 @@
 
 ### First Appearance
 
-The earliest known appearance of "The 12 Days of Christmas" was not as a song at all, but as a **rhyme**. The best-known English version was first printed around **1780** in a children's book called *Mirth without Mischief*, published in London. These lyrics were published without any musical notation.
+The earliest known appearance of "The 12 Days of Christmas" was not as a song at all, but as a **rhyme**. The best-known English version was first printed around **1780** in a children's book called _Mirth without Mischief_, published in London. These lyrics were published without any musical notation.
 
 ### Probable Origins
 
@@ -41,7 +41,7 @@ The "twelve days of Christmas" refers to the festive Christian season that runs 
 ## Sources
 
 - [The History of 'The Twelve Days of Christmas' - Catholic News Agency](https://www.catholicnewsagency.com/resource/55904/the-history-of-the-twelve-days-of-christmas)
-- [The Twelve Days of Christmas (song) - Wikipedia](https://en.wikipedia.org/wiki/The_Twelve_Days_of_Christmas_(song))
+- [The Twelve Days of Christmas (song) - Wikipedia](<https://en.wikipedia.org/wiki/The_Twelve_Days_of_Christmas_(song)>)
 - [Origin of 'The Twelve Days of Christmas' - EWTN](https://www.ewtn.com/catholicism/library/origin-of-the-twelve-days-of-christmas-10885)
 - [The origins of the 'Twelve Days of Christmas' - Classic FM](https://www.classicfm.com/discover-music/occasions/christmas/12-days-of-christmas-lyrics-explained/)
 - ['The Twelve Days Of Christmas' and its connection to Wisconsin - Wisconsin Life](https://wisconsinlife.org/story/the-twelve-days-of-christmas-in-wisconsin/)

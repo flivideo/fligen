@@ -4,11 +4,7 @@ interface StatusBarProps {
   activeApi?: string;
 }
 
-export function StatusBar({
-  isConnected,
-  operationStatus,
-  activeApi,
-}: StatusBarProps) {
+export function StatusBar({ isConnected, operationStatus, activeApi }: StatusBarProps) {
   return (
     <footer
       className="h-8 shrink-0 bg-slate-800 border-t border-slate-700 flex flex-row items-center px-4 text-xs"
@@ -18,9 +14,7 @@ export function StatusBar({
       {/* Connection Status */}
       <div className="flex flex-row items-center gap-2">
         <span
-          className={`w-2 h-2 rounded-full ${
-            isConnected ? 'bg-green-400' : 'bg-red-400'
-          }`}
+          className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-400' : 'bg-red-400'}`}
           aria-hidden="true"
         />
         <span className={isConnected ? 'text-green-400' : 'text-red-400'}>
@@ -37,15 +31,15 @@ export function StatusBar({
             operationStatus === 'idle'
               ? 'text-slate-400'
               : operationStatus === 'generating'
-              ? 'text-yellow-400'
-              : 'text-red-400'
+                ? 'text-yellow-400'
+                : 'text-red-400'
           }
         >
           {operationStatus === 'idle'
             ? 'Idle'
             : operationStatus === 'generating'
-            ? 'Generating...'
-            : 'Error'}
+              ? 'Generating...'
+              : 'Error'}
         </span>
       </div>
 

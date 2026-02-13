@@ -63,30 +63,34 @@ human_prompts.json ──────────► Load Project
 ## UI Layout
 
 ### Tab Name
+
 "Day 10: Prompt Refinery"
 
 ### 9 Text Areas (3 columns × 3 rows)
 
-| Row | Prompt A (Seed) | Prompt B (Edit) | Prompt C (Animation) |
-|-----|-----------------|-----------------|----------------------|
-| **Human** | Imported from Day 9 | Imported from Day 9 | Imported from Day 9 |
-| **System** | Editable template | Editable template | Editable template |
-| **Machine** | Generated output | Generated output | Generated output |
+| Row         | Prompt A (Seed)     | Prompt B (Edit)     | Prompt C (Animation) |
+| ----------- | ------------------- | ------------------- | -------------------- |
+| **Human**   | Imported from Day 9 | Imported from Day 9 | Imported from Day 9  |
+| **System**  | Editable template   | Editable template   | Editable template    |
+| **Machine** | Generated output    | Generated output    | Generated output     |
 
 ### Buttons
 
 **Refinement Actions:**
+
 - [Refine A] - Claude refines Human A → Machine A
 - [Refine B] - Claude refines Human B → Machine B
 - [Refine C] - Claude refines Human C → Machine C
 - [Refine All] - Refine all three at once
 
 **Orchestration:**
+
 - [Run Workflow] - Send machine prompts to N8N
 
 ## Prompt Refinement Flow
 
 Each "Refine" button:
+
 1. Takes Human Prompt (user's raw input)
 2. Combines with System Prompt (template for that prompt type)
 3. Calls Claude Agent SDK
@@ -95,6 +99,7 @@ Each "Refine" button:
 ### System Prompt Examples
 
 **System Prompt A (Image Generator):**
+
 ```
 You are a prompt engineer for Flux image generation.
 Convert the user's description into an optimized image prompt.
@@ -103,6 +108,7 @@ Output only the refined prompt, no explanation.
 ```
 
 **System Prompt B (Image Editor):**
+
 ```
 You are a prompt engineer for image-to-image editing.
 Convert the user's edit instruction into precise modification language.
@@ -111,6 +117,7 @@ Output only the refined prompt, no explanation.
 ```
 
 **System Prompt C (Animator):**
+
 ```
 You are a prompt engineer for image-to-video generation.
 Convert the user's animation description into camera and motion terms.
@@ -121,11 +128,13 @@ Output only the refined prompt, no explanation.
 ## N8N Integration
 
 ### Webhook Endpoint
+
 ```
 POST https://n8n.dreamingcomputers.com/webhook-test/...
 ```
 
 ### Request Payload
+
 ```json
 {
   "project_code": "VSS-001",
@@ -136,6 +145,7 @@ POST https://n8n.dreamingcomputers.com/webhook-test/...
 ```
 
 ### Optional Extended Payload
+
 ```json
 {
   "project_code": "VSS-001",
@@ -149,6 +159,7 @@ POST https://n8n.dreamingcomputers.com/webhook-test/...
 ```
 
 ### Response (Immediate)
+
 ```json
 {
   "project_code": "VSS-001",
@@ -158,6 +169,7 @@ POST https://n8n.dreamingcomputers.com/webhook-test/...
 ```
 
 ### Response (Completion)
+
 ```json
 {
   "project_code": "VSS-001",
@@ -181,12 +193,14 @@ POST https://n8n.dreamingcomputers.com/webhook-test/...
 ## Results UI
 
 After N8N returns results:
+
 - Show image grid (3 images)
 - Show video grid (2 videos)
 - Download buttons for each
 - Save all to project folder
 
 ### Output Storage
+
 ```
 /assets/projects/<projectCode>/outputs/
 ├── image_1.png
@@ -247,16 +261,19 @@ After N8N returns results:
 ## Technical Notes
 
 ### Claude Agent SDK
+
 - Uses local Max plan (already working from Day 2/3)
 - Each refine call is independent
 - System prompts should be editable and saveable
 
 ### N8N Endpoint
+
 - Steve provides the webhook URL
 - May need polling for long-running jobs
 - We already have polling patterns from Day 6
 
 ### What Steve Needs From Us
+
 Simple JSON with the 3 machine prompts. He tells us what else to add.
 
 ## Dependencies

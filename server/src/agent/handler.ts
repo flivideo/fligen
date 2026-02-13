@@ -4,11 +4,7 @@
 import { query, type Options, type SDKMessage } from '@anthropic-ai/claude-agent-sdk';
 import type { Socket } from 'socket.io';
 import type { ServerToClientEvents, ClientToServerEvents } from '@fligen/shared';
-import {
-  getSession,
-  setSession,
-  getAbortController,
-} from './session.js';
+import { getSession, setSession, getAbortController } from './session.js';
 import { createLocalDocsServer } from '../tools/local-docs/index.js';
 import { createKybernesisServer, isKybernesisConfigured } from '../tools/kybernesis/index.js';
 
@@ -40,10 +36,7 @@ You have access to persistent memory via Kybernesis "second brain" tools:
 Use kybernesis_search when users ask about their preferences, past decisions, or when you need broader context beyond local docs.
 Use kybernesis_store when users share important information worth remembering across sessions.`;
 
-export async function handleAgentQuery(
-  socket: TypedSocket,
-  userMessage: string
-): Promise<void> {
+export async function handleAgentQuery(socket: TypedSocket, userMessage: string): Promise<void> {
   const startTime = Date.now();
   const abortController = getAbortController(socket.id);
 
@@ -52,7 +45,11 @@ export async function handleAgentQuery(
       systemPrompt: SYSTEM_PROMPT,
       model: 'claude-sonnet-4-5-20250929',
       allowedTools: [
-        'Read', 'Write', 'Bash', 'Glob', 'Grep',
+        'Read',
+        'Write',
+        'Bash',
+        'Glob',
+        'Grep',
         'mcp__local_docs__local_docs_index',
         'mcp__local_docs__local_docs_content',
         'mcp__kybernesis__kybernesis_search',
@@ -133,7 +130,9 @@ async function processMessage(
         duration,
       });
 
-      console.log(`[Agent] Complete for ${socket.id}: ${duration}ms, $${message.total_cost_usd.toFixed(4)}`);
+      console.log(
+        `[Agent] Complete for ${socket.id}: ${duration}ms, $${message.total_cost_usd.toFixed(4)}`
+      );
       break;
     }
 
@@ -162,12 +161,9 @@ function handleError(socket: TypedSocket, error: unknown): void {
     message = error.message;
 
     // Check for authentication errors
-    if (
-      message.includes('auth') ||
-      message.includes('credential') ||
-      message.includes('login')
-    ) {
-      message = 'Authentication required. Run: claude login (uses Max subscription via browser OAuth)';
+    if (message.includes('auth') || message.includes('credential') || message.includes('login')) {
+      message =
+        'Authentication required. Run: claude login (uses Max subscription via browser OAuth)';
       code = 'AUTH_REQUIRED';
     } else if (message.includes('rate limit')) {
       message = 'Rate limit exceeded. Please wait and try again.';

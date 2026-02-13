@@ -21,8 +21,8 @@ export function DayPlaceholder({ day }: DayPlaceholderProps) {
               {day.status === 'pending'
                 ? 'Coming soon...'
                 : day.status === 'active'
-                ? 'In development'
-                : 'Complete'}
+                  ? 'In development'
+                  : 'Complete'}
             </p>
           </div>
         }

@@ -27,6 +27,7 @@ Add a persistent shot list feature that allows users to collect generated images
 ### 1.1 Server-Side Storage
 
 **Directory Structure:**
+
 ```
 assets/
 ├── fox-story/
@@ -70,14 +71,15 @@ assets/shot-list/index.json
 
 ### 1.2 Server API Endpoints
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/shots` | GET | List all shots (returns index.json data + URLs) |
-| `/api/shots` | POST | Add image to shot list (accepts image URL or base64) |
-| `/api/shots/:id` | DELETE | Remove shot from list |
-| `/api/shots/clear` | DELETE | Clear all shots |
+| Endpoint           | Method | Description                                          |
+| ------------------ | ------ | ---------------------------------------------------- |
+| `/api/shots`       | GET    | List all shots (returns index.json data + URLs)      |
+| `/api/shots`       | POST   | Add image to shot list (accepts image URL or base64) |
+| `/api/shots/:id`   | DELETE | Remove shot from list                                |
+| `/api/shots/clear` | DELETE | Clear all shots                                      |
 
 **POST /api/shots Request:**
+
 ```json
 {
   "imageUrl": "https://fal.media/files/...",
@@ -90,6 +92,7 @@ assets/shot-list/index.json
 ```
 
 **POST /api/shots Response:**
+
 ```json
 {
   "id": "shot-003",
@@ -102,12 +105,12 @@ assets/shot-list/index.json
 
 Real-time sync across browser tabs/refreshes:
 
-| Event | Direction | Payload |
-|-------|-----------|---------|
-| `shots:list` | Server→Client | Full shot list on connect |
-| `shots:added` | Server→Client | New shot added |
-| `shots:removed` | Server→Client | Shot removed |
-| `shots:cleared` | Server→Client | All shots cleared |
+| Event           | Direction     | Payload                   |
+| --------------- | ------------- | ------------------------- |
+| `shots:list`    | Server→Client | Full shot list on connect |
+| `shots:added`   | Server→Client | New shot added            |
+| `shots:removed` | Server→Client | Shot removed              |
+| `shots:cleared` | Server→Client | All shots cleared         |
 
 ---
 
@@ -118,11 +121,13 @@ Real-time sync across browser tabs/refreshes:
 Each image in the 2×2 comparison grid becomes clickable:
 
 **Interaction:**
+
 - Hover: Show `+ Add to Shots` overlay
 - Click: Image is downloaded to server, added to shot list
 - After add: Show `✓ Added` indicator briefly
 
 **Visual States:**
+
 ```
 ┌────────────────────────┐     ┌────────────────────────┐
 │                        │     │                        │
@@ -161,6 +166,7 @@ Positioned between "Generate All" button and the FAL.AI/KIE.AI headings:
 ```
 
 **Empty State:**
+
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │ Shot List                                                        │
@@ -174,8 +180,8 @@ Reusable `<ShotListStrip />` component that can be used on any page:
 
 ```tsx
 interface ShotListStripProps {
-  onShotClick?: (shot: Shot) => void;  // Optional click handler
-  draggable?: boolean;                  // Enable drag-and-drop
+  onShotClick?: (shot: Shot) => void; // Optional click handler
+  draggable?: boolean; // Enable drag-and-drop
 }
 ```
 
@@ -239,6 +245,7 @@ interface ShotListStripProps {
 5. [Clear] button removes image from slot
 
 **Drop Zone States:**
+
 ```
 Default:          Drag Over:        Filled:
 ┌───────────┐    ┌───────────┐    ┌───────────┐
@@ -256,6 +263,7 @@ Default:          Drag Over:        Filled:
 **Endpoint:** `POST https://api.kie.ai/api/v1/veo/generate`
 
 **Request:**
+
 ```json
 {
   "generationType": "FIRST_AND_LAST_FRAMES_2_VIDEO",
@@ -276,14 +284,15 @@ Default:          Drag Over:        Filled:
 **Endpoint:** `fal-ai/kling-video/o1/image-to-video`
 
 **Request:**
+
 ```typescript
-const result = await fal.subscribe("fal-ai/kling-video/o1/image-to-video", {
+const result = await fal.subscribe('fal-ai/kling-video/o1/image-to-video', {
   input: {
-    prompt: "Smooth transition...",
-    first_frame_image_url: "...",
-    last_frame_image_url: "...",
-    duration: "5"  // or "10"
-  }
+    prompt: 'Smooth transition...',
+    first_frame_image_url: '...',
+    last_frame_image_url: '...',
+    duration: '5', // or "10"
+  },
 });
 ```
 
@@ -295,14 +304,15 @@ First-Last-Frame to Video generation.
 
 ### 3.4 Server API Endpoints
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/video/health` | GET | Check KIE.AI and FAL.AI video API status |
-| `/api/video/generate` | POST | Generate transition video |
-| `/api/video/status/:taskId` | GET | Poll for generation status |
-| `/api/video/list` | GET | List generated videos |
+| Endpoint                    | Method | Description                              |
+| --------------------------- | ------ | ---------------------------------------- |
+| `/api/video/health`         | GET    | Check KIE.AI and FAL.AI video API status |
+| `/api/video/generate`       | POST   | Generate transition video                |
+| `/api/video/status/:taskId` | GET    | Poll for generation status               |
+| `/api/video/list`           | GET    | List generated videos                    |
 
 **POST /api/video/generate Request:**
+
 ```json
 {
   "provider": "kie",
@@ -315,6 +325,7 @@ First-Last-Frame to Video generation.
 ```
 
 **Response:**
+
 ```json
 {
   "taskId": "video_task_123",
@@ -330,6 +341,7 @@ Generated videos saved to `assets/video-scenes/`:
 **Naming Convention:** `{startShotNumber}-{endShotNumber}.mp4`
 
 Examples:
+
 - `1-2.mp4` - Transition from shot 1 to shot 2
 - `2-3.mp4` - Transition from shot 2 to shot 3
 
@@ -359,6 +371,7 @@ Examples:
 ### 4.1 New Files to Create
 
 **Server:**
+
 ```
 server/src/
 ├── tools/
@@ -374,6 +387,7 @@ server/src/
 ```
 
 **Client:**
+
 ```
 client/src/
 ├── components/
@@ -437,10 +451,10 @@ export interface VideoEvents {
 
 ### 4.3 API Keys Required
 
-| Provider | Environment Variable | Purpose |
-|----------|---------------------|---------|
-| FAL.AI | `FAL_KEY` | Already configured (Day 4) |
-| KIE.AI | `KIE_API_KEY` | Already configured (Day 4) |
+| Provider | Environment Variable | Purpose                    |
+| -------- | -------------------- | -------------------------- |
+| FAL.AI   | `FAL_KEY`            | Already configured (Day 4) |
+| KIE.AI   | `KIE_API_KEY`        | Already configured (Day 4) |
 
 No new API keys needed - reuse existing credentials.
 
@@ -448,13 +462,13 @@ No new API keys needed - reuse existing credentials.
 
 ## Part 5: Video Provider Comparison
 
-| Feature | KIE.AI Veo 3.1 | FAL.AI Kling O1 | FAL.AI Wan 2.1 |
-|---------|----------------|-----------------|----------------|
-| First+Last Frame | ✅ | ✅ | ✅ |
-| Duration | Up to 8s | 5s or 10s | ~3s |
-| Resolution | 720p-1080p | 720p | 480p |
-| Cost | ~25% of Google | $0.56 (5s), $1.12 (10s) | ~$0.15 |
-| Speed | ~60s | ~45s | ~30s |
+| Feature          | KIE.AI Veo 3.1 | FAL.AI Kling O1         | FAL.AI Wan 2.1 |
+| ---------------- | -------------- | ----------------------- | -------------- |
+| First+Last Frame | ✅             | ✅                      | ✅             |
+| Duration         | Up to 8s       | 5s or 10s               | ~3s            |
+| Resolution       | 720p-1080p     | 720p                    | 480p           |
+| Cost             | ~25% of Google | $0.56 (5s), $1.12 (10s) | ~$0.15         |
+| Speed            | ~60s           | ~45s                    | ~30s           |
 
 **Recommendation:** Start with KIE.AI Veo 3.1 (already integrated for images) and FAL.AI Kling O1 for comparison.
 
@@ -519,6 +533,7 @@ No new API keys needed - reuse existing credentials.
 ### Implementation Date: 2025-12-30
 
 ### Files Created
+
 ```
 server/src/tools/shots/types.ts
 server/src/tools/shots/storage.ts
@@ -536,6 +551,7 @@ client/src/components/tools/Day6Video.tsx
 ```
 
 ### Files Modified
+
 ```
 server/src/index.ts
 shared/src/index.ts
@@ -545,20 +561,23 @@ client/src/components/tools/Day4ImageGen.tsx
 ```
 
 ### Bug Fixes Applied
-| Issue | Root Cause | Fix |
-|-------|------------|-----|
-| "Image fetch failed" from KIE.AI | External APIs can't access localhost URLs | Convert images to base64 data URLs |
-| "FAL_KEY not configured" | Wrong env var name | Changed FAL_KEY → FAL_API_KEY |
-| "No video URL in response" | FAL wraps response | Added fallback: result.data?.video?.url |
-| Wan FLF2V "Not Found" | Wrong endpoint path | Fixed to fal-ai/wan-flf2v |
-| Wan FLF2V "Unprocessable Entity" | Wrong parameter names | start_image_url, end_image_url |
+
+| Issue                            | Root Cause                                | Fix                                     |
+| -------------------------------- | ----------------------------------------- | --------------------------------------- |
+| "Image fetch failed" from KIE.AI | External APIs can't access localhost URLs | Convert images to base64 data URLs      |
+| "FAL_KEY not configured"         | Wrong env var name                        | Changed FAL_KEY → FAL_API_KEY           |
+| "No video URL in response"       | FAL wraps response                        | Added fallback: result.data?.video?.url |
+| Wan FLF2V "Not Found"            | Wrong endpoint path                       | Fixed to fal-ai/wan-flf2v               |
+| Wan FLF2V "Unprocessable Entity" | Wrong parameter names                     | start_image_url, end_image_url          |
 
 ### Video Model Status (Final)
-| Model | Provider | Status |
-|-------|----------|--------|
-| Veo 3.1 | KIE.AI | Working |
-| Kling O1 | FAL.AI | Working |
-| Wan 2.1 FLF2V | FAL.AI | Working |
+
+| Model         | Provider | Status  |
+| ------------- | -------- | ------- |
+| Veo 3.1       | KIE.AI   | Working |
+| Kling O1      | FAL.AI   | Working |
+| Wan 2.1 FLF2V | FAL.AI   | Working |
 
 ### Key Learning
+
 External video APIs (KIE.AI, FAL.AI) cannot fetch images from localhost. Solution: read local shot files and convert to base64 data URLs before sending to external APIs.

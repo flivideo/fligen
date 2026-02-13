@@ -7,12 +7,7 @@
 import { fal } from '@fal-ai/client';
 import { saveImageToCatalog } from '../image/save-to-catalog.js';
 import { getModelCost } from '../image/types.js';
-import type {
-  BatchJob,
-  PromptRequest,
-  BatchOptions,
-  PromptResult,
-} from './types';
+import type { BatchJob, PromptRequest, BatchOptions, PromptResult } from './types';
 
 // Simple in-memory storage (MVP)
 const jobs = new Map<string, BatchJob>();
@@ -137,8 +132,7 @@ async function generateWithKie(
 
     if (statusData.data?.successFlag === 1) {
       const imageUrl =
-        statusData.data.response?.resultImageUrl ||
-        statusData.data.response?.resultUrls?.[0];
+        statusData.data.response?.resultImageUrl || statusData.data.response?.resultUrls?.[0];
 
       if (!imageUrl) {
         throw new Error('No image URL in KIE.AI response');
@@ -160,9 +154,7 @@ async function generateWithKie(
 /**
  * Generate single image based on provider
  */
-async function generateImage(
-  request: PromptRequest
-): Promise<{ imageUrl: string; cost: number }> {
+async function generateImage(request: PromptRequest): Promise<{ imageUrl: string; cost: number }> {
   if (request.provider === 'fal') {
     return await generateWithFal(request.prompt, request.model);
   } else if (request.provider === 'kie') {
@@ -179,10 +171,7 @@ async function generateImage(
  * @param options - Batch options
  * @returns Batch job ID
  */
-export function createJob(
-  prompts: PromptRequest[],
-  options: BatchOptions
-): string {
+export function createJob(prompts: PromptRequest[], options: BatchOptions): string {
   const id = `batch_${Date.now()}_${randomId()}`;
 
   const job: BatchJob = {

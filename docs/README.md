@@ -27,6 +27,7 @@ docs/
 FliGen is a scaffolding project that serves as the foundation for building 12 daily tools during the "12 Days of Claudemas" series. It provides a consistent tech stack and development environment.
 
 **Tech Stack:**
+
 - React 19.x + Vite 6.0
 - TailwindCSS v4
 - Express 5.x + Socket.io backend

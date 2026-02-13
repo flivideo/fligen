@@ -41,21 +41,24 @@ export function ChatPanel() {
     if (!socket) return;
 
     const handleText = ({ text }: { text: string }) => {
-      setCurrentStreamingText(prev => prev + text);
+      setCurrentStreamingText((prev) => prev + text);
     };
 
     const handleTool = ({ name }: { name: string; input: unknown }) => {
-      setMessages(prev => [...prev, {
-        id: crypto.randomUUID(),
-        role: 'tool',
-        content: `Executing: ${name}`,
-        timestamp: new Date(),
-        toolName: name,
-      }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: crypto.randomUUID(),
+          role: 'tool',
+          content: `Executing: ${name}`,
+          timestamp: new Date(),
+          toolName: name,
+        },
+      ]);
     };
 
     const handleToolResult = ({ name, success }: { name: string; success: boolean }) => {
-      setMessages(prev => {
+      setMessages((prev) => {
         const updated = [...prev];
         // Find and update the last tool message with this name
         for (let i = updated.length - 1; i >= 0; i--) {
@@ -75,12 +78,15 @@ export function ChatPanel() {
     const handleComplete = (data: CompletionInfo) => {
       // Finalize the streaming message
       if (currentStreamingText) {
-        setMessages(prev => [...prev, {
-          id: crypto.randomUUID(),
-          role: 'assistant',
-          content: currentStreamingText,
-          timestamp: new Date(),
-        }]);
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: crypto.randomUUID(),
+            role: 'assistant',
+            content: currentStreamingText,
+            timestamp: new Date(),
+          },
+        ]);
       }
       setCurrentStreamingText('');
       setIsProcessing(false);
@@ -118,7 +124,7 @@ export function ChatPanel() {
       timestamp: new Date(),
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setInput('');
     setIsProcessing(true);
     setError(null);
@@ -184,7 +190,7 @@ export function ChatPanel() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder={connected ? "Type a message..." : "Connecting..."}
+            placeholder={connected ? 'Type a message...' : 'Connecting...'}
             disabled={!connected || isProcessing}
             className="flex-1 px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 disabled:opacity-50"
           />
@@ -215,9 +221,11 @@ function MessageDisplay({ message }: { message: ChatMessage }) {
     const isComplete = message.content.startsWith('Completed:');
     const isFailed = message.content.startsWith('Failed:');
     return (
-      <div className={`flex items-center gap-2 text-sm ${
-        isFailed ? 'text-red-400' : isComplete ? 'text-green-400' : 'text-amber-400'
-      }`}>
+      <div
+        className={`flex items-center gap-2 text-sm ${
+          isFailed ? 'text-red-400' : isComplete ? 'text-green-400' : 'text-amber-400'
+        }`}
+      >
         <span className="font-mono">[{isFailed ? '✗' : isComplete ? '✓' : '⚙'}]</span>
         <span>{message.content}</span>
       </div>

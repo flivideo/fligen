@@ -19,6 +19,7 @@ As a user, I want every asset I generate (images, audio, videos, thumbnails, N8N
 ## Problem
 
 **Current state:**
+
 - Day 4 (Images): Generated images disappear on page refresh, no history list
 - Day 5 (TTS): One hard-coded file, no metadata about voice/text, no history list
 - Day 10 (N8N): Workflow results (2 images + 1 video) lost immediately, no history list
@@ -26,6 +27,7 @@ As a user, I want every asset I generate (images, audio, videos, thumbnails, N8N
 - Day 7 (Music): 8.5MB JSON with base64 audio, "Track 1" naming, library exists but broken
 
 **Impact:**
+
 - No historical data for Day 11 Story Builder
 - Cannot compare results across generations
 - Cannot reuse successful prompts
@@ -39,12 +41,14 @@ As a user, I want every asset I generate (images, audio, videos, thumbnails, N8N
 Implement asset catalog persistence AND tool-specific history UI across all generation tools:
 
 **For each tool:**
+
 1. Auto-save every generated asset to catalog with full metadata
 2. Display history list of past generations within the tool UI
 3. Enable reusing prompts from history
 4. Enable selecting assets for use in other tools (Day 11)
 
 **Tool-specific changes:**
+
 1. **Day 4 (Images)**: Save + show history of all generated images
 2. **Day 5 (TTS)**: Save + show history of all generated audio
 3. **Day 10 (N8N)**: Save + show history of all workflow results
@@ -56,6 +60,7 @@ Implement asset catalog persistence AND tool-specific history UI across all gene
 ## Scope Clarification
 
 ### ✅ INCLUDED in FR-17 (This Ticket)
+
 - **Persistence**: Auto-save all generated assets to catalog
 - **Tool-Specific History UI**: Each tool displays its own past work
   - Day 4: Image generation history
@@ -67,12 +72,14 @@ Implement asset catalog persistence AND tool-specific history UI across all gene
 - **Data Migration**: Move existing data to catalog
 
 ### ❌ NOT in FR-17 (See FR-18)
+
 - **Unified Asset Browser**: Separate page showing ALL assets across all tools
 - **Cross-tool Search**: Search for assets across different types
 - **Advanced Filtering**: Complex filters, tags, date ranges in dedicated UI
 - **Asset Management**: Bulk operations, tagging, organizing
 
 **Key Difference:**
+
 - **FR-17 = In-context history** (when generating images, see past images)
 - **FR-18 = Cross-tool library** (browse everything in one place)
 
@@ -83,6 +90,7 @@ Implement asset catalog persistence AND tool-specific history UI across all gene
 ### Task 1: Day 4 - Image Generation Persistence
 
 **Files to modify:**
+
 - `client/src/components/tools/Day4ImageGen.tsx`
 - `server/src/tools/images/index.ts` (or create if doesn't exist)
 
@@ -231,9 +239,9 @@ useEffect(() => {
   async function loadHistory() {
     const response = await fetch(`${SERVER_URL}/api/catalog/filter?type=image`);
     const data = await response.json();
-    setImageHistory(data.assets.sort((a, b) =>
-      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    ));
+    setImageHistory(
+      data.assets.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    );
   }
   loadHistory();
 }, []);
@@ -245,9 +253,9 @@ const handleGenerate = async () => {
   // After successful generation, reload history
   const response = await fetch(`${SERVER_URL}/api/catalog/filter?type=image`);
   const data = await response.json();
-  setImageHistory(data.assets.sort((a, b) =>
-    new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  ));
+  setImageHistory(
+    data.assets.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+  );
 };
 ```
 
@@ -291,6 +299,7 @@ const handleGenerate = async () => {
 ```
 
 **Required Features:**
+
 - ✅ Display all past images in reverse chronological order
 - ✅ Show thumbnail, prompt, and timestamp for each
 - ✅ "Reuse Prompt" button copies prompt to input field
@@ -302,6 +311,7 @@ const handleGenerate = async () => {
 ### Task 2: Day 5 - TTS Persistence
 
 **Files to modify:**
+
 - `client/src/components/tools/Day5TTS.tsx`
 - `server/src/tools/tts/index.ts` (or modify existing)
 
@@ -348,6 +358,7 @@ await catalog.addAsset(asset);
 ```
 
 **Remove hard-coded path:**
+
 - Delete `assets/fox-story/audio/narration.mp3` usage
 - All audio now goes to `assets/catalog/audio/`
 
@@ -363,9 +374,9 @@ useEffect(() => {
   async function loadHistory() {
     const response = await fetch(`${SERVER_URL}/api/catalog/filter?type=audio`);
     const data = await response.json();
-    setAudioHistory(data.assets.sort((a, b) =>
-      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    ));
+    setAudioHistory(
+      data.assets.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    );
   }
   loadHistory();
 }, []);
@@ -390,7 +401,7 @@ useEffect(() => {
       <p className="text-slate-400">No audio generated yet</p>
     ) : (
       <div className="space-y-3">
-        {audioHistory.map(asset => (
+        {audioHistory.map((asset) => (
           <div key={asset.id} className="border rounded-lg p-4 flex items-center gap-4">
             <audio controls src={asset.url} className="flex-1" />
             <div className="flex-1">
@@ -398,10 +409,7 @@ useEffect(() => {
               <p className="text-xs text-slate-400 truncate">{asset.prompt}</p>
               <p className="text-xs text-slate-500">{new Date(asset.createdAt).toLocaleString()}</p>
             </div>
-            <button
-              onClick={() => setText(asset.prompt)}
-              className="text-xs text-blue-400"
-            >
+            <button onClick={() => setText(asset.prompt)} className="text-xs text-blue-400">
               Reuse Text
             </button>
           </div>
@@ -413,6 +421,7 @@ useEffect(() => {
 ```
 
 **Required Features:**
+
 - ✅ Display all past audio files in reverse chronological order
 - ✅ Show audio player, voice name, narration text, and timestamp
 - ✅ "Reuse Text" button copies text to textarea
@@ -424,6 +433,7 @@ useEffect(() => {
 ### Task 3: Day 10 - N8N Workflow Persistence
 
 **Files to modify:**
+
 - `client/src/components/tools/Day10N8N.tsx`
 - `server/src/index.ts` (N8N endpoint)
 
@@ -474,7 +484,7 @@ app.post('/api/n8n/workflow', async (req, res) => {
   res.json({
     success: true,
     data: { image1, image2, video },
-    savedAssets: savedAssets.map(a => ({ id: a.id, url: a.url })),
+    savedAssets: savedAssets.map((a) => ({ id: a.id, url: a.url })),
   });
 });
 ```
@@ -546,23 +556,19 @@ const [workflowHistory, setWorkflowHistory] = useState<{
 useEffect(() => {
   async function loadHistory() {
     // Get N8N images (seed + edit)
-    const imageResponse = await fetch(
-      `${SERVER_URL}/api/catalog/filter?type=image&provider=n8n`
-    );
+    const imageResponse = await fetch(`${SERVER_URL}/api/catalog/filter?type=image&provider=n8n`);
     const imageData = await imageResponse.json();
 
     // Get N8N videos
-    const videoResponse = await fetch(
-      `${SERVER_URL}/api/catalog/filter?type=video&provider=n8n`
-    );
+    const videoResponse = await fetch(`${SERVER_URL}/api/catalog/filter?type=video&provider=n8n`);
     const videoData = await videoResponse.json();
 
     setWorkflowHistory({
-      images: imageData.assets.sort((a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      images: imageData.assets.sort(
+        (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       ),
-      videos: videoData.assets.sort((a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      videos: videoData.assets.sort(
+        (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       ),
     });
   }
@@ -637,6 +643,7 @@ useEffect(() => {
 ```
 
 **Required Features:**
+
 - ✅ Display past workflow runs grouped together (2 images + 1 video per run)
 - ✅ Show all three assets from each workflow execution
 - ✅ Display prompts and timestamps
@@ -649,6 +656,7 @@ useEffect(() => {
 ### Task 4: Video Filename Collision Fix
 
 **Files to modify:**
+
 - `server/src/tools/video/index.ts`
 - `assets/video-scenes/index.json` (data migration)
 
@@ -657,14 +665,16 @@ useEffect(() => {
 #### Fix Filename Generation
 
 **Old (collisions):**
+
 ```typescript
-filename: `${startShotId.replace('shot-', '')}-${endShotId.replace('shot-', '')}.mp4`
+filename: `${startShotId.replace('shot-', '')}-${endShotId.replace('shot-', '')}.mp4`;
 // Result: "001-002.mp4" (overwrites on regeneration)
 ```
 
 **New (unique):**
+
 ```typescript
-filename: `vid-${Date.now()}-${provider}-${model.toLowerCase()}.mp4`
+filename: `vid-${Date.now()}-${provider}-${model.toLowerCase()}.mp4`;
 // Result: "vid-1767098871389-fal-kling-o1.mp4" (unique every time)
 ```
 
@@ -678,7 +688,7 @@ const videoTask = {
   // ... existing fields ...
   metadata: {
     duration,
-    animationPrompt,  // ← ADD THIS
+    animationPrompt, // ← ADD THIS
     startShotId,
     endShotId,
   },
@@ -701,7 +711,10 @@ export async function migrateVideoScenesToCatalog() {
 
     // Copy video file to catalog
     const oldFilePath = path.join(process.cwd(), 'assets', video.url.replace('/assets/', ''));
-    const exists = await fs.access(oldFilePath).then(() => true).catch(() => false);
+    const exists = await fs
+      .access(oldFilePath)
+      .then(() => true)
+      .catch(() => false);
     if (!exists) continue;
 
     const newFilename = `vid-${Date.parse(video.createdAt)}-${video.provider}-${video.model}.mp4`;
@@ -754,6 +767,7 @@ export async function migrateVideoScenesToCatalog() {
 ### Task 5: Music Library Cleanup
 
 **Files to modify:**
+
 - `server/src/tools/music/storage.ts`
 - `assets/music-library/index.json`
 
@@ -762,10 +776,11 @@ export async function migrateVideoScenesToCatalog() {
 #### Remove Base64 Audio
 
 **Old (8.5MB):**
+
 ```json
 {
   "name": "Track 1",
-  "audioBase64": "SUQzBAAAAAAAI1RTU0...",  // ← DELETE THIS
+  "audioBase64": "SUQzBAAAAAAAI1RTU0...", // ← DELETE THIS
   "audioUrl": "...",
   "provider": "kie",
   "prompt": "..."
@@ -773,15 +788,16 @@ export async function migrateVideoScenesToCatalog() {
 ```
 
 **New (50KB):**
+
 ```json
 {
   "id": "asset_audio_1735...",
-  "name": "User's Custom Name",  // ← Editable
+  "name": "User's Custom Name", // ← Editable
   "filename": "music-001.mp3",
   "url": "/assets/catalog/audio/music-001.mp3",
   "provider": "kie",
   "model": "suno-v5",
-  "prompt": "...",
+  "prompt": "..."
   // ... full Asset structure
 }
 ```
@@ -896,6 +912,7 @@ export async function migrateMusicLibraryToCatalog() {
 - ✅ "Regenerate with same settings" button
 
 **Existing library UI should continue to work** with catalog backend, just need to:
+
 1. Update data source to use catalog API
 2. Add name editing functionality
 3. Remove base64 audio dependency
@@ -905,6 +922,7 @@ export async function migrateMusicLibraryToCatalog() {
 ## Testing Checklist
 
 ### Day 4 - Images
+
 - [ ] Generate image with FAL.AI → saved to catalog automatically
 - [ ] Generate image with KIE.AI → saved to catalog automatically
 - [ ] Catalog contains full metadata (prompt, provider, model, dimensions)
@@ -914,6 +932,7 @@ export async function migrateMusicLibraryToCatalog() {
 - [ ] **History auto-refreshes after generation**
 
 ### Day 5 - TTS
+
 - [ ] Generate audio → saved to catalog automatically
 - [ ] Catalog contains voice selection
 - [ ] Catalog contains narration text
@@ -924,6 +943,7 @@ export async function migrateMusicLibraryToCatalog() {
 - [ ] **"Reuse Text" button works**
 
 ### Day 10 - N8N
+
 - [ ] Run workflow → 3 assets saved (2 images + 1 video)
 - [ ] Both human and machine prompts saved in metadata
 - [ ] All files exist in catalog directories
@@ -933,6 +953,7 @@ export async function migrateMusicLibraryToCatalog() {
 - [ ] **"Reuse Prompts" button loads all three prompts**
 
 ### Day 6 - Videos
+
 - [ ] Regenerate same shot pair → unique filenames (no overwrite)
 - [ ] Animation prompt saved in metadata
 - [ ] Old videos migrated to catalog
@@ -942,6 +963,7 @@ export async function migrateMusicLibraryToCatalog() {
 - [ ] **All metadata visible (provider, model, duration)**
 
 ### Day 7 - Music
+
 - [ ] Base64 removed from index.json (file size < 100KB)
 - [ ] Can rename tracks
 - [ ] All generation parameters saved
@@ -955,6 +977,7 @@ export async function migrateMusicLibraryToCatalog() {
 ## Success Metrics
 
 **Persistence:**
+
 - [ ] 100% of generated assets saved to catalog
 - [ ] Zero data loss on page refresh
 - [ ] All generation metadata captured
@@ -962,12 +985,14 @@ export async function migrateMusicLibraryToCatalog() {
 - [ ] Music library index.json < 100KB
 
 **UI:**
+
 - [ ] Every tool displays its own generation history
 - [ ] Users can reuse prompts/settings from history
 - [ ] History auto-refreshes after each generation
 - [ ] User confidence: "My work is being saved"
 
 **Integration:**
+
 - [ ] Ready for Day 11 Story Builder to query catalog
 - [ ] Migration scripts run successfully
 - [ ] No breaking changes to existing workflows
@@ -988,6 +1013,7 @@ server/src/tools/music/migrate-to-catalog.ts
 ## Files to Modify
 
 **Client (UI + History):**
+
 ```
 client/src/components/tools/Day4ImageGen.tsx       # Add history list, reuse prompts
 client/src/components/tools/Day5TTS.tsx            # Add audio history, reuse text
@@ -997,6 +1023,7 @@ client/src/components/tools/Day7MusicGen.tsx       # Update to use catalog API, 
 ```
 
 **Server (Persistence):**
+
 ```
 server/src/tools/video/index.ts                    # Fix filename collisions, add animation prompt
 server/src/tools/music/storage.ts                  # Remove base64, normalize metadata
@@ -1029,9 +1056,11 @@ server/src/index.ts                                # Update endpoints to use cat
 ## Dependencies
 
 **Requires:**
+
 - FR-16 (Unified Asset Catalog Infrastructure) - MUST be complete first
 
 **Blocks:**
+
 - FR-18 (Asset Browser UI)
 
 ---

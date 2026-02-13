@@ -9,12 +9,14 @@ Story Builder brings together the creative tools from previous days (narration, 
 ## Background
 
 Day 11 represents the culmination of the creative journey:
+
 - **Days 1-3:** Foundation (Harness, Brains)
 - **Days 4-8:** Creative tools (Image, Voice, Video, Music, Thumbnails)
 - **Days 9-10:** Integration (Interop, N8N Workflows)
 - **Day 11:** Story Assembly - putting it all together
 
 From the video transcript, the concept is a 15-second story made up of three 5-second "beats":
+
 1. **Beat 1 (0-5s):** Iceberg - vibe prompts on surface, code underneath
 2. **Beat 2 (5-10s):** Narration, music, images combining into video (Venn diagram)
 3. **Beat 3 (10-15s):** 12 gifts of Claudemas - Foundation, Brain, Creative, Integration, Finale
@@ -28,17 +30,20 @@ From the video transcript, the concept is a 15-second story made up of three 5-s
 ## Requirements
 
 ### Asset Selection
+
 - Select **narration file** (optional) - from Day 5 TTS outputs or catalog
 - Select **music file** (required) - from Day 7 music library or catalog
 - Select **up to 3 video files** - from Day 6 videos, Day 10 N8N outputs, or catalog
 - All selections from existing assets (no generation in this tool)
 
 ### Video Assembly
+
 - Concatenate selected videos sequentially (video 1 + video 2 + video 3)
 - Target duration: ~15 seconds total (3 videos × ~5 seconds each)
 - Maintain original video resolution and framerate
 
 ### Audio Layering
+
 - **Music track:**
   - Apply to entire video duration (or specified portion)
   - Reduce volume (e.g., 35% of original)
@@ -52,6 +57,7 @@ From the video transcript, the concept is a 15-second story made up of three 5-s
   - Can be omitted if music already has lyrics
 
 ### Output
+
 - Combined video file saved to `assets/video-scenes/` or `assets/catalog/videos/`
 - Naming pattern: `story-{timestamp}.mp4` or user-provided name
 - Save metadata to catalog (videos used, music, narration, assembly date)
@@ -101,6 +107,7 @@ From the video transcript, the concept is a 15-second story made up of three 5-s
 ```
 
 ### Asset Browsers
+
 - **Videos:** Load from:
   - Day 6 video generation outputs
   - Day 10 N8N workflow outputs
@@ -113,6 +120,7 @@ From the video transcript, the concept is a 15-second story made up of three 5-s
   - Catalog (type: audio, subtype: narration)
 
 ### Assembly Process
+
 1. User selects 1-3 videos
 2. User selects music track, adjusts volume, and optionally sets start/end times
 3. User optionally selects narration and adjusts volume
@@ -126,9 +134,11 @@ From the video transcript, the concept is a 15-second story made up of three 5-s
 ### Backend API Endpoints
 
 #### `POST /api/story/assemble`
+
 Combines videos and audio tracks into final video.
 
 **Request:**
+
 ```json
 {
   "videos": [
@@ -152,6 +162,7 @@ Combines videos and audio tracks into final video.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -164,6 +175,7 @@ Combines videos and audio tracks into final video.
 #### FFmpeg Command Pattern
 
 **With narration and music trimming:**
+
 ```bash
 ffmpeg -i video1.mp4 -i video2.mp4 -i video3.mp4 \
   -ss 30.0 -to 45.0 -i music.mp3 \
@@ -177,6 +189,7 @@ ffmpeg -i video1.mp4 -i video2.mp4 -i video3.mp4 \
 ```
 
 **Without narration (music trimmed):**
+
 ```bash
 ffmpeg -i video1.mp4 -i video2.mp4 -i video3.mp4 \
   -ss 30.0 -to 45.0 -i music.mp3 \
@@ -188,6 +201,7 @@ ffmpeg -i video1.mp4 -i video2.mp4 -i video3.mp4 \
 ```
 
 **Notes:**
+
 - `-ss 30.0` - Start reading music file at 30 seconds
 - `-to 45.0` - Stop reading music file at 45 seconds
 - If `startTime`/`endTime` not specified, omit these flags (use full music track)
@@ -262,6 +276,7 @@ client/src/components/tools/Day11StoryBuilder.tsx
 ## Completion Notes
 
 **What was done:**
+
 - Created backend story assembly module with FFmpeg integration
 - Implemented video concatenation with support for 1-3 videos
 - Added music track layering with volume control and start/end time trimming
@@ -273,6 +288,7 @@ client/src/components/tools/Day11StoryBuilder.tsx
 - Wired up routing and updated config
 
 **Files created:**
+
 - `server/src/tools/story/types.ts` (new)
 - `server/src/tools/story/assembler.ts` (new)
 - `server/src/tools/story/storage.ts` (new)
@@ -280,12 +296,14 @@ client/src/components/tools/Day11StoryBuilder.tsx
 - `client/src/components/tools/Day11StoryBuilder.tsx` (new)
 
 **Files modified:**
+
 - `server/src/index.ts` - Added story assembly API endpoint
 - `shared/src/index.ts` - Added story assembly types
 - `client/src/App.tsx` - Added Day 11 routing
 - `shared/src/config.json` - Updated Day 10 to complete, Day 11 to next
 
 **Testing notes:**
+
 - Requires FFmpeg installed on server (`ffmpeg` and `ffprobe` commands)
 - Select 1-3 videos from catalog
 - Select music track with optional start/end time trimming
@@ -294,6 +312,7 @@ client/src/components/tools/Day11StoryBuilder.tsx
 - Assembled videos saved to `assets/video-scenes/` and catalog
 
 **Dependencies:**
+
 - FFmpeg must be installed (`brew install ffmpeg` or equivalent)
 - Assets must exist in catalog (videos, music, narration)
 

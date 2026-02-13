@@ -1,4 +1,4 @@
-import ApiExplorer from './ApiExplorer'
+import ApiExplorer from './ApiExplorer';
 
 export function Day15ApiExplorer() {
   return (
@@ -7,11 +7,12 @@ export function Day15ApiExplorer() {
         <div>
           <h1 className="mb-2 text-3xl font-bold text-slate-100">API Explorer</h1>
           <p className="text-slate-400">
-            Interactive API documentation and testing. Explore all FliGen endpoints, try them out, and copy as cURL commands.
+            Interactive API documentation and testing. Explore all FliGen endpoints, try them out,
+            and copy as cURL commands.
           </p>
         </div>
         <ApiExplorer />
       </div>
     </div>
-  )
+  );
 }

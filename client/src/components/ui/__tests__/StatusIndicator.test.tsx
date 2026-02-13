@@ -9,9 +9,7 @@ describe('StatusIndicator', () => {
   });
 
   it('renders dot by default', () => {
-    const { container } = render(
-      <StatusIndicator status="success" label="Connected" />
-    );
+    const { container } = render(<StatusIndicator status="success" label="Connected" />);
     const dot = container.querySelector('.rounded-full');
     expect(dot).toBeInTheDocument();
   });
@@ -25,9 +23,7 @@ describe('StatusIndicator', () => {
   });
 
   it('renders different status types', () => {
-    const { rerender } = render(
-      <StatusIndicator status="success" label="Success" />
-    );
+    const { rerender } = render(<StatusIndicator status="success" label="Success" />);
     expect(screen.getByText('Success')).toBeInTheDocument();
 
     rerender(<StatusIndicator status="error" label="Error" />);

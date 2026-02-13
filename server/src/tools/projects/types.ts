@@ -1,11 +1,6 @@
 // Project storage types for FR-13
 
-import type {
-  ProjectMetadata,
-  HumanPrompts,
-  SourceTranscripts,
-  ProjectData,
-} from '@fligen/shared';
+import type { ProjectMetadata, HumanPrompts, SourceTranscripts, ProjectData } from '@fligen/shared';
 
 export type { ProjectMetadata, HumanPrompts, SourceTranscripts, ProjectData };
 

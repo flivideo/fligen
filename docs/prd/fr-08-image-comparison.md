@@ -25,6 +25,7 @@ This enables informed decisions about which provider/model to use for different 
 ## Solution
 
 Extend the Day 4 UI with a tabbed interface:
+
 - **Tab 1: Image Comparison** - New 2x2 comparison grid
 - **Tab 2: API Status** - Existing FR-07 health check UI
 
@@ -64,14 +65,15 @@ Extend the Day 4 UI with a tabbed interface:
 
 ### Model Selection
 
-| Tier | FAL.AI | KIE.AI | Rationale |
-|------|--------|--------|-----------|
-| Advanced | Flux 2 Pro | Flux 2 Pro | Best photorealism, same model for fair comparison |
-| Mid-range | Flux Schnell | Qwen Z-Image | Cheapest/fastest options on each platform |
+| Tier      | FAL.AI       | KIE.AI       | Rationale                                         |
+| --------- | ------------ | ------------ | ------------------------------------------------- |
+| Advanced  | Flux 2 Pro   | Flux 2 Pro   | Best photorealism, same model for fair comparison |
+| Mid-range | Flux Schnell | Qwen Z-Image | Cheapest/fastest options on each platform         |
 
 ### Stats to Display
 
 For each generated image:
+
 - **Model name** - Which model was used
 - **Time** - Generation duration in seconds
 - **Cost** - Estimated cost in USD
@@ -80,11 +82,13 @@ For each generated image:
 ## Acceptance Criteria
 
 ### Tab Structure
+
 1. [x] Day 4 UI has two tabs: "Image Comparison" and "API Status"
 2. [x] Tab state persists during session (doesn't reset on re-render)
 3. [x] "API Status" tab contains existing FR-07 health check UI
 
 ### Comparison UI
+
 4. [x] Prompt input field at top of comparison tab
 5. [x] Default prompt: "A red sports car on a mountain road at sunset"
 6. [x] Single "Generate All" button triggers all 4 generations
@@ -92,12 +96,14 @@ For each generated image:
 8. [x] Each cell shows: image, model name, time, cost, resolution
 
 ### Generation Behavior
+
 9. [x] All 4 images generate in parallel (don't wait for one to finish)
 10. [x] Loading spinner shown per cell while generating
 11. [x] Images display inline when complete
 12. [x] Error state shown per cell if generation fails
 
 ### Stats Display
+
 13. [x] Time shown in seconds (e.g., "2.3s")
 14. [x] Cost shown in USD (e.g., "$0.035")
 15. [x] Resolution shown as dimensions (e.g., "1024×1024")
@@ -135,12 +141,12 @@ interface CompareResponse {
 const MODELS = {
   fal: {
     advanced: { id: 'fal-ai/flux-pro/v1.1', name: 'Flux Pro v1.1', costPer1MP: 0.04 },
-    midrange: { id: 'fal-ai/flux/schnell', name: 'Flux Schnell', costPer1MP: 0.003 }
+    midrange: { id: 'fal-ai/flux/schnell', name: 'Flux Schnell', costPer1MP: 0.003 },
   },
   kie: {
     advanced: { id: 'flux-kontext-max', name: 'Flux Kontext Max', costPerImage: 0.025 },
-    midrange: { id: 'flux-kontext-pro', name: 'Flux Kontext Pro', costPerImage: 0.004 }
-  }
+    midrange: { id: 'flux-kontext-pro', name: 'Flux Kontext Pro', costPerImage: 0.004 },
+  },
 };
 ```
 
@@ -165,7 +171,7 @@ const results = await Promise.allSettled([
   generateFalAdvanced(prompt),
   generateFalMidrange(prompt),
   generateKieAdvanced(prompt),
-  generateKieMidrange(prompt)
+  generateKieMidrange(prompt),
 ]);
 ```
 
@@ -182,10 +188,12 @@ const results = await Promise.allSettled([
 ### Documentation Sources
 
 **FAL.AI:**
+
 - Use MCP tool: `mcp__fal__SearchFal` for API docs
 - Models: `fal-ai/flux-2-pro`, `fal-ai/flux/schnell`
 
 **KIE.AI:**
+
 - Second Brain: `/Users/davidcruwys/dev/ad/brains/kie-ai/`
   - `kie-ai-fundamentals.md` - API basics, async polling pattern
   - `kie-ai-image-generation.md` - Image generation specifics

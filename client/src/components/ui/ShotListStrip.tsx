@@ -59,9 +59,7 @@ export function ShotListStrip({ onShotClick, draggable = false }: ShotListStripP
   return (
     <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-4">
       <div className="flex items-center justify-between mb-3">
-        <span className="text-sm font-medium text-slate-300">
-          Shot List ({shots.length})
-        </span>
+        <span className="text-sm font-medium text-slate-300">Shot List ({shots.length})</span>
         <button
           onClick={handleClearAll}
           className="text-xs text-red-400 hover:text-red-300 transition-colors"

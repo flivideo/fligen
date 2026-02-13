@@ -88,9 +88,9 @@ async function callMcpTool<T>(
     };
 
     const headers: Record<string, string> = {
-      'Authorization': `Bearer ${config.apiKey}`,
+      Authorization: `Bearer ${config.apiKey}`,
       'Content-Type': 'application/json',
-      'Accept': 'application/json, text/event-stream',
+      Accept: 'application/json, text/event-stream',
     };
 
     // Include session ID if we have one
@@ -177,7 +177,7 @@ async function callMcpTool<T>(
  */
 export interface KybernesisSearchResult {
   query: string;
-  text: string;  // Human-readable response from Kybernesis
+  text: string; // Human-readable response from Kybernesis
   raw?: unknown; // Raw response for debugging
 }
 

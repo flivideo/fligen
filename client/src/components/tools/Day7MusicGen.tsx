@@ -149,12 +149,24 @@ function CompactAudioPlayer({
         className="w-8 h-8 flex items-center justify-center rounded-full bg-blue-600 hover:bg-blue-500 transition-colors flex-shrink-0"
       >
         {isPlaying ? (
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
             <rect x="6" y="4" width="4" height="16" />
             <rect x="14" y="4" width="4" height="16" />
           </svg>
         ) : (
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
             <polygon points="5,3 19,12 5,21" />
           </svg>
         )}
@@ -237,9 +249,11 @@ function TrackCard({
   };
 
   return (
-    <div className={`bg-slate-800 rounded-lg border p-4 ${
-      track.status === 'saved' ? 'border-green-600/50' : 'border-slate-700'
-    }`}>
+    <div
+      className={`bg-slate-800 rounded-lg border p-4 ${
+        track.status === 'saved' ? 'border-green-600/50' : 'border-slate-700'
+      }`}
+    >
       <audio
         ref={audioRef}
         src={track.audioUrl}
@@ -267,7 +281,10 @@ function TrackCard({
               ✓
             </button>
             <button
-              onClick={() => { setIsEditing(false); setEditName(track.name); }}
+              onClick={() => {
+                setIsEditing(false);
+                setEditName(track.name);
+              }}
               className="text-slate-400 hover:text-slate-300 text-sm"
             >
               ✕
@@ -309,7 +326,8 @@ function TrackCard({
       {/* Meta Row */}
       <div className="flex items-center justify-between text-xs text-slate-500 mb-3">
         <span>
-          {new Date(track.generatedAt).toLocaleTimeString()} · {(track.generationTimeMs / 1000).toFixed(1)}s · ${track.estimatedCost.toFixed(3)}
+          {new Date(track.generatedAt).toLocaleTimeString()} ·{' '}
+          {(track.generationTimeMs / 1000).toFixed(1)}s · ${track.estimatedCost.toFixed(3)}
         </span>
         <span className="truncate max-w-[200px]" title={track.prompt}>
           {track.prompt}
@@ -403,12 +421,24 @@ function SavedTrackRow({
         className="w-10 h-10 flex items-center justify-center rounded-full bg-green-600 hover:bg-green-500 transition-colors flex-shrink-0"
       >
         {isPlaying ? (
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
             <rect x="6" y="4" width="4" height="16" />
             <rect x="14" y="4" width="4" height="16" />
           </svg>
         ) : (
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
             <polygon points="5,3 19,12 5,21" />
           </svg>
         )}
@@ -459,7 +489,8 @@ function SavedTrackRow({
           <div className="font-medium text-white truncate">{track.name || 'Untitled Track'}</div>
         )}
         <div className="text-xs text-slate-500">
-          {track.provider === 'fal' ? 'SonAuto' : 'Suno'} · Saved {track.savedAt ? new Date(track.savedAt).toLocaleDateString() : 'Unknown'}
+          {track.provider === 'fal' ? 'SonAuto' : 'Suno'} · Saved{' '}
+          {track.savedAt ? new Date(track.savedAt).toLocaleDateString() : 'Unknown'}
         </div>
       </div>
 
@@ -564,7 +595,12 @@ export function Day7MusicGen() {
           prompt,
           lyrics: showLyrics ? lyrics : undefined,
           style,
-          tags: style ? style.split(',').map(s => s.trim()).filter(Boolean) : undefined,
+          tags: style
+            ? style
+                .split(',')
+                .map((s) => s.trim())
+                .filter(Boolean)
+            : undefined,
           instrumental,
           outputFormat,
           bpm,
@@ -592,16 +628,16 @@ export function Day7MusicGen() {
       await loadSavedTracks();
     } catch (error) {
       console.error('Failed to generate music:', error);
-      alert(`Failed to generate music: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      alert(
+        `Failed to generate music: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     } finally {
       setIsGenerating(false);
     }
   };
 
   const handleNameChange = (id: string, name: string) => {
-    setGeneratedTracks((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, name } : t))
-    );
+    setGeneratedTracks((prev) => prev.map((t) => (t.id === id ? { ...t, name } : t)));
   };
 
   const handleSaveTrack = async (id: string) => {
@@ -663,16 +699,14 @@ export function Day7MusicGen() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: newName }),
       });
-      setSavedTracks((prev) =>
-        prev.map((t) => (t.id === id ? { ...t, name: newName } : t))
-      );
+      setSavedTracks((prev) => prev.map((t) => (t.id === id ? { ...t, name: newName } : t)));
     } catch (error) {
       console.error('Failed to rename track:', error);
     }
   };
 
   const loadSongPreset = (presetId: string) => {
-    const preset = SONG_PRESETS.find(p => p.id === presetId);
+    const preset = SONG_PRESETS.find((p) => p.id === presetId);
     if (!preset) return;
 
     const song = preset.data as SongPresetData;
@@ -747,7 +781,8 @@ export function Day7MusicGen() {
               ))}
             </select>
             <div className="text-xs text-slate-500">
-              Presets will automatically populate all fields below including provider, style, lyrics, and vocals.
+              Presets will automatically populate all fields below including provider, style,
+              lyrics, and vocals.
             </div>
           </div>
         </ToolPanel>
@@ -841,7 +876,9 @@ export function Day7MusicGen() {
                 <input
                   type="text"
                   value={bpm}
-                  onChange={(e) => setBpm(e.target.value === 'auto' ? 'auto' : parseInt(e.target.value) || 'auto')}
+                  onChange={(e) =>
+                    setBpm(e.target.value === 'auto' ? 'auto' : parseInt(e.target.value) || 'auto')
+                  }
                   className="w-full bg-slate-900 border border-slate-700 rounded p-2 text-sm focus:outline-none focus:border-blue-500"
                   placeholder="auto"
                 />
@@ -898,15 +935,27 @@ export function Day7MusicGen() {
                 isGenerating || !prompt.trim()
                   ? 'bg-slate-700 text-slate-500 cursor-not-allowed'
                   : provider === 'fal'
-                  ? 'bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white shadow-lg shadow-blue-500/20'
-                  : 'bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 text-white shadow-lg shadow-purple-500/20'
+                    ? 'bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white shadow-lg shadow-blue-500/20'
+                    : 'bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 text-white shadow-lg shadow-purple-500/20'
               }`}
             >
               {isGenerating ? (
                 <span className="flex items-center justify-center gap-2">
                   <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                      fill="none"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                    />
                   </svg>
                   Generating with {provider === 'fal' ? 'SonAuto' : 'Suno'}...
                 </span>
@@ -965,7 +1014,7 @@ export function Day7MusicGen() {
               <code className="px-1 py-0.5 bg-slate-700 rounded">server/.env</code>:
             </p>
             <pre className="bg-slate-950 p-3 rounded text-xs overflow-x-auto">
-{`# FAL.AI (SonAuto) - https://fal.ai/dashboard/keys
+              {`# FAL.AI (SonAuto) - https://fal.ai/dashboard/keys
 FAL_API_KEY=your_fal_api_key_here
 
 # KIE.AI (Suno) - https://kie.ai/api-key

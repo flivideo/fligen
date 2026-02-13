@@ -6,24 +6,24 @@ export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 export type ParameterType = 'path' | 'query' | 'body';
 export type DataType = 'string' | 'number' | 'boolean' | 'object' | 'array';
 export interface ApiParameter {
-    name: string;
-    type: ParameterType;
-    dataType: DataType;
-    description?: string;
-    required?: boolean;
-    enum?: string[];
-    example?: any;
-    properties?: ApiParameter[];
+  name: string;
+  type: ParameterType;
+  dataType: DataType;
+  description?: string;
+  required?: boolean;
+  enum?: string[];
+  example?: any;
+  properties?: ApiParameter[];
 }
 export interface ApiEndpoint {
-    id: string;
-    method: HttpMethod;
-    path: string;
-    group: string;
-    description: string;
-    parameters: ApiParameter[];
-    exampleResponse?: any;
-    notes?: string;
+  id: string;
+  method: HttpMethod;
+  path: string;
+  group: string;
+  description: string;
+  parameters: ApiParameter[];
+  exampleResponse?: any;
+  notes?: string;
 }
 /**
  * API Endpoint Registry

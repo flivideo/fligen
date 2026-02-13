@@ -3,30 +3,30 @@
  * Metadata for all FliGen REST API endpoints
  */
 
-export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
-export type ParameterType = 'path' | 'query' | 'body'
-export type DataType = 'string' | 'number' | 'boolean' | 'object' | 'array'
+export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+export type ParameterType = 'path' | 'query' | 'body';
+export type DataType = 'string' | 'number' | 'boolean' | 'object' | 'array';
 
 export interface ApiParameter {
-  name: string
-  type: ParameterType
-  dataType: DataType
-  description?: string
-  required?: boolean
-  enum?: string[]
-  example?: any
-  properties?: ApiParameter[] // For object/array types
+  name: string;
+  type: ParameterType;
+  dataType: DataType;
+  description?: string;
+  required?: boolean;
+  enum?: string[];
+  example?: any;
+  properties?: ApiParameter[]; // For object/array types
 }
 
 export interface ApiEndpoint {
-  id: string
-  method: HttpMethod
-  path: string
-  group: string
-  description: string
-  parameters: ApiParameter[]
-  exampleResponse?: any
-  notes?: string
+  id: string;
+  method: HttpMethod;
+  path: string;
+  group: string;
+  description: string;
+  parameters: ApiParameter[];
+  exampleResponse?: any;
+  notes?: string;
 }
 
 /**
@@ -46,8 +46,8 @@ export const API_ENDPOINTS: ApiEndpoint[] = [
     parameters: [],
     exampleResponse: {
       fal: { configured: true, authenticated: true },
-      kie: { configured: true, authenticated: true }
-    }
+      kie: { configured: true, authenticated: true },
+    },
   },
   {
     id: 'image-test',
@@ -58,8 +58,8 @@ export const API_ENDPOINTS: ApiEndpoint[] = [
     parameters: [],
     exampleResponse: {
       fal: { success: true, imageUrl: 'https://...', durationMs: 5000 },
-      kie: { success: true, imageUrl: 'https://...', durationMs: 8000 }
-    }
+      kie: { success: true, imageUrl: 'https://...', durationMs: 8000 },
+    },
   },
   {
     id: 'image-compare',
@@ -74,8 +74,8 @@ export const API_ENDPOINTS: ApiEndpoint[] = [
         dataType: 'string',
         required: true,
         description: 'Image generation prompt',
-        example: 'A red sports car on a mountain road at sunset'
-      }
+        example: 'A red sports car on a mountain road at sunset',
+      },
     ],
     exampleResponse: {
       results: [
@@ -86,10 +86,10 @@ export const API_ENDPOINTS: ApiEndpoint[] = [
           imageUrl: 'https://...',
           durationMs: 12000,
           estimatedCost: 0.04,
-          resolution: { width: 1024, height: 1024 }
-        }
-      ]
-    }
+          resolution: { width: 1024, height: 1024 },
+        },
+      ],
+    },
   },
 
   // ========================================
@@ -115,9 +115,9 @@ export const API_ENDPOINTS: ApiEndpoint[] = [
             provider: 'kie',
             model: 'flux-kontext-pro',
             category: 'design-variations',
-            filename: 'stream-deck-hybrid'
-          }
-        ]
+            filename: 'stream-deck-hybrid',
+          },
+        ],
       },
       {
         name: 'options',
@@ -127,17 +127,17 @@ export const API_ENDPOINTS: ApiEndpoint[] = [
         example: {
           save_to_catalog: true,
           parallel: false,
-          delay_seconds: 5
-        }
-      }
+          delay_seconds: 5,
+        },
+      },
     ],
     exampleResponse: {
       batch_id: 'batch_1767515187647_abc123',
       total_prompts: 30,
       estimated_cost: 0.12,
       estimated_time_seconds: 300,
-      status: 'queued'
-    }
+      status: 'queued',
+    },
   },
   {
     id: 'batch-status',
@@ -152,8 +152,8 @@ export const API_ENDPOINTS: ApiEndpoint[] = [
         dataType: 'string',
         required: true,
         description: 'Batch job ID',
-        example: 'batch_1767515187647_abc123'
-      }
+        example: 'batch_1767515187647_abc123',
+      },
     ],
     exampleResponse: {
       batch_id: 'batch_123',
@@ -161,8 +161,8 @@ export const API_ENDPOINTS: ApiEndpoint[] = [
       progress: { total: 30, completed: 15, failed: 0, pending: 15 },
       results: [],
       total_cost: 0.06,
-      total_time_ms: 127500
-    }
+      total_time_ms: 127500,
+    },
   },
   {
     id: 'batch-upload-csv',
@@ -170,7 +170,8 @@ export const API_ENDPOINTS: ApiEndpoint[] = [
     path: '/api/image/batch/upload-csv',
     group: 'Batch Generation',
     description: 'Upload CSV file and create batch job',
-    notes: 'Use multipart/form-data with file field named "file". CSV format: a,category,filename,prompt,provider,model',
+    notes:
+      'Use multipart/form-data with file field named "file". CSV format: a,category,filename,prompt,provider,model',
     parameters: [
       {
         name: 'file',
@@ -178,16 +179,16 @@ export const API_ENDPOINTS: ApiEndpoint[] = [
         dataType: 'string',
         required: true,
         description: 'CSV file with prompts (columns: a,category,filename,prompt,provider,model)',
-        example: 'Upload via form data'
-      }
+        example: 'Upload via form data',
+      },
     ],
     exampleResponse: {
       batch_id: 'batch_123',
       total_prompts: 60,
       active_prompts: 30,
       skipped_prompts: 30,
-      estimated_cost: 0.12
-    }
+      estimated_cost: 0.12,
+    },
   },
   {
     id: 'batch-update-csv',
@@ -201,14 +202,14 @@ export const API_ENDPOINTS: ApiEndpoint[] = [
         type: 'path',
         dataType: 'string',
         required: true,
-        example: 'batch_123'
-      }
+        example: 'batch_123',
+      },
     ],
     exampleResponse: {
       csv_file_path: '/uploads/prompts_updated.csv',
       updated_rows: 30,
-      download_url: '/api/image/batch/batch_123/download-csv'
-    }
+      download_url: '/api/image/batch/batch_123/download-csv',
+    },
   },
   {
     id: 'batch-estimate',
@@ -223,17 +224,17 @@ export const API_ENDPOINTS: ApiEndpoint[] = [
         dataType: 'array',
         required: true,
         description: 'Same as /api/image/batch prompts',
-        example: []
-      }
+        example: [],
+      },
     ],
     exampleResponse: {
       total_prompts: 30,
       cost_breakdown: {
-        fal: { count: 10, cost_per_image: 0.003, total: 0.030 },
-        kie: { count: 20, cost_per_image: 0.004, total: 0.080 }
+        fal: { count: 10, cost_per_image: 0.003, total: 0.03 },
+        kie: { count: 20, cost_per_image: 0.004, total: 0.08 },
       },
-      total_cost: 0.110
-    }
+      total_cost: 0.11,
+    },
   },
   {
     id: 'batch-download-csv',
@@ -247,10 +248,10 @@ export const API_ENDPOINTS: ApiEndpoint[] = [
         type: 'path',
         dataType: 'string',
         required: true,
-        example: 'batch_123'
-      }
+        example: 'batch_123',
+      },
     ],
-    notes: 'Returns CSV file download'
+    notes: 'Returns CSV file download',
   },
 
   // ========================================
@@ -267,11 +268,11 @@ export const API_ENDPOINTS: ApiEndpoint[] = [
       success: true,
       endpoints: {
         imageGeneration: ['/api/image/health', '/api/image/test', '/api/image/compare'],
-        batch: ['/api/image/batch', '/api/image/batch/:batchId']
+        batch: ['/api/image/batch', '/api/image/batch/:batchId'],
       },
       providers: ['fal', 'kie'],
-      models: ['flux-pro/v1.1', 'flux-schnell', 'flux-kontext-pro']
-    }
+      models: ['flux-pro/v1.1', 'flux-schnell', 'flux-kontext-pro'],
+    },
   },
   {
     id: 'query-health',
@@ -284,9 +285,9 @@ export const API_ENDPOINTS: ApiEndpoint[] = [
       success: true,
       providers: {
         fal: { configured: true, authenticated: true },
-        kie: { configured: true, authenticated: true }
-      }
-    }
+        kie: { configured: true, authenticated: true },
+      },
+    },
   },
   {
     id: 'query-catalog',
@@ -300,15 +301,15 @@ export const API_ENDPOINTS: ApiEndpoint[] = [
         type: 'query',
         dataType: 'number',
         description: 'Maximum number of results',
-        example: 50
+        example: 50,
       },
       {
         name: 'provider',
         type: 'query',
         dataType: 'string',
         enum: ['fal', 'kie'],
-        description: 'Filter by provider'
-      }
+        description: 'Filter by provider',
+      },
     ],
     exampleResponse: {
       success: true,
@@ -319,31 +320,31 @@ export const API_ENDPOINTS: ApiEndpoint[] = [
           provider: 'fal',
           model: 'flux-pro/v1.1',
           prompt: 'A red sports car...',
-          createdAt: '2026-01-16T12:00:00Z'
-        }
-      ]
-    }
-  }
-]
+          createdAt: '2026-01-16T12:00:00Z',
+        },
+      ],
+    },
+  },
+];
 
 /**
  * Group endpoints by category
  */
 export function getEndpointGroups(): Map<string, ApiEndpoint[]> {
-  const groups = new Map<string, ApiEndpoint[]>()
+  const groups = new Map<string, ApiEndpoint[]>();
 
   for (const endpoint of API_ENDPOINTS) {
-    const existing = groups.get(endpoint.group) || []
-    existing.push(endpoint)
-    groups.set(endpoint.group, existing)
+    const existing = groups.get(endpoint.group) || [];
+    existing.push(endpoint);
+    groups.set(endpoint.group, existing);
   }
 
-  return groups
+  return groups;
 }
 
 /**
  * Get endpoint by ID
  */
 export function getEndpointById(id: string): ApiEndpoint | undefined {
-  return API_ENDPOINTS.find(e => e.id === id)
+  return API_ENDPOINTS.find((e) => e.id === id);
 }

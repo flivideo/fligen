@@ -19,6 +19,7 @@ As a content creator, I want every thumbnail I generate to be automatically save
 ## Problem
 
 **Current state:**
+
 - Day 8 (Thumbnail Generator) creates thumbnails via client-side canvas rendering
 - Thumbnails are exported as PNG files downloaded to user's computer
 - No server persistence - thumbnails lost when user closes browser
@@ -27,6 +28,7 @@ As a content creator, I want every thumbnail I generate to be automatically save
 - Cannot select thumbnails for Day 11 Story Builder
 
 **Impact:**
+
 - Users must manually organize downloaded PNG files
 - Cannot track which configuration produced which thumbnail
 - Cannot A/B test different text/color combinations
@@ -35,6 +37,7 @@ As a content creator, I want every thumbnail I generate to be automatically save
 - User frustration: "I made a great thumbnail yesterday but can't recreate it"
 
 **Technical challenge:**
+
 - Client-side canvas rendering means server doesn't have access to image data
 - PNG files can be large (1-3MB for 1920×1080)
 - Configuration JSON must be saved alongside image for "Reuse Configuration" feature
@@ -47,21 +50,25 @@ As a content creator, I want every thumbnail I generate to be automatically save
 Implement dual-mode saving and catalog persistence for thumbnails:
 
 **Save Options:**
+
 1. **"Export PNG"** (existing) - Download to user's computer only
 2. **"Save to Library"** (new) - Save to server catalog + download
 
 **What gets saved:**
+
 - PNG image file (base64 encoded for transfer, decoded to file on server)
 - Complete configuration JSON (template, text, colors, positions, layers)
 - Metadata (dimensions, file size, creation time)
 
 **History UI:**
+
 - Grid of thumbnail previews (2-3 columns)
 - Show template name, primary text, creation date
 - "Reuse Configuration" button to restore all settings
 - "Export Again" button to re-download PNG
 
 **Technical flow:**
+
 ```
 User designs thumbnail in canvas
   ↓
@@ -89,6 +96,7 @@ Client:
 ## Acceptance Criteria
 
 ### Persistence
+
 - [ ] User can click "Save to Library" button in Day 8 UI
 - [ ] Thumbnail PNG saved to `assets/catalog/thumbnails/` with unique filename
 - [ ] Configuration JSON saved in asset metadata
@@ -97,6 +105,7 @@ Client:
 - [ ] No filename collisions (use timestamp)
 
 ### Configuration Storage
+
 - [ ] Metadata captures:
   - Template ID (e.g., "bold-statement", "gradient-minimal")
   - Text overlay (headline, subtitle, call-to-action)
@@ -108,6 +117,7 @@ Client:
 - [ ] Configuration JSON is complete enough to recreate exact thumbnail
 
 ### History UI (MANDATORY)
+
 - [ ] Day 8 displays "Thumbnail History" section below generation form
 - [ ] Grid layout (2-3 columns on desktop, 1 column on mobile)
 - [ ] Each history item shows:
@@ -122,6 +132,7 @@ Client:
 - [ ] Empty state: "No thumbnails saved yet"
 
 ### Reuse Functionality
+
 - [ ] "Reuse Configuration" button loads all settings from saved thumbnail:
   - Restores template selection
   - Restores text fields (headline, subtitle, etc.)
@@ -132,11 +143,13 @@ Client:
 - [ ] Loading configuration does NOT overwrite current unsaved work without confirmation
 
 ### Download Behavior
+
 - [ ] "Save to Library" triggers both server save AND browser download
 - [ ] "Export PNG" (existing) still works as before (download only, no server save)
 - [ ] Downloaded filename matches server filename for consistency
 
 ### API
+
 - [ ] `POST /api/thumbnails/save` - Save thumbnail with configuration
   - Request: `{ imageData: string (base64), configuration: object }`
   - Response: `{ asset: Asset }`
@@ -150,6 +163,7 @@ Client:
 ### File Structure
 
 **New files to create:**
+
 ```
 server/src/tools/thumbnails/
 ├── types.ts           # ThumbnailConfiguration interface
@@ -158,6 +172,7 @@ server/src/tools/thumbnails/
 ```
 
 **Files to modify:**
+
 ```
 client/src/components/tools/Day8Thumbnail.tsx  # Add "Save to Library", history UI
 server/src/index.ts                            # Add /api/thumbnails/save endpoint
@@ -170,13 +185,13 @@ shared/src/index.ts                            # Add ThumbnailConfiguration type
 // shared/src/index.ts
 
 export interface ThumbnailConfiguration {
-  template: string;           // "bold-statement", "gradient-minimal", etc.
-  headline?: string;          // Primary text
-  subtitle?: string;          // Secondary text
-  callToAction?: string;      // CTA text
-  backgroundColor: string;    // Hex color
-  textColor: string;          // Hex color
-  accentColor?: string;       // Hex color
+  template: string; // "bold-statement", "gradient-minimal", etc.
+  headline?: string; // Primary text
+  subtitle?: string; // Secondary text
+  callToAction?: string; // CTA text
+  backgroundColor: string; // Hex color
+  textColor: string; // Hex color
+  accentColor?: string; // Hex color
   fontSize: {
     headline: number;
     subtitle: number;
@@ -193,13 +208,13 @@ export interface ThumbnailConfiguration {
     style?: Record<string, any>;
   }[];
   dimensions: {
-    width: number;           // 1920
-    height: number;          // 1080
+    width: number; // 1920
+    height: number; // 1080
   };
 }
 
 export interface SaveThumbnailRequest {
-  imageData: string;                    // base64 PNG
+  imageData: string; // base64 PNG
   configuration: ThumbnailConfiguration;
 }
 
@@ -235,13 +250,7 @@ export async function saveThumbnailToCatalog(
   const buffer = Buffer.from(base64Data, 'base64');
 
   // Save to catalog/thumbnails/
-  const filePath = path.join(
-    process.cwd(),
-    'assets',
-    'catalog',
-    'thumbnails',
-    filename
-  );
+  const filePath = path.join(process.cwd(), 'assets', 'catalog', 'thumbnails', filename);
   await fs.writeFile(filePath, buffer);
 
   // Create asset record
@@ -250,16 +259,16 @@ export async function saveThumbnailToCatalog(
     type: 'thumbnail',
     filename,
     url: `/assets/catalog/thumbnails/${filename}`,
-    provider: 'client',        // Client-side canvas rendering
-    model: 'canvas',           // HTML5 Canvas
+    provider: 'client', // Client-side canvas rendering
+    model: 'canvas', // HTML5 Canvas
     prompt: configuration.headline || configuration.subtitle || '(no text)',
     status: 'ready',
     createdAt: new Date().toISOString(),
     completedAt: new Date().toISOString(),
-    estimatedCost: 0,          // Free - client-side rendering
+    estimatedCost: 0, // Free - client-side rendering
     generationTimeMs: Date.now() - startTime,
     metadata: {
-      configuration,           // Full config for recreation
+      configuration, // Full config for recreation
       template: configuration.template,
       headline: configuration.headline,
       subtitle: configuration.subtitle,
@@ -545,6 +554,7 @@ export function Day8Thumbnail() {
 **Concern:** Base64-encoded 1920×1080 PNG can be 1-3MB
 
 **Solution:** Express already configured for large payloads in FR-11:
+
 ```typescript
 // server/src/index.ts (already exists from FR-11)
 app.use(express.json({ limit: '50mb' }));
@@ -614,6 +624,7 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 ## Testing Checklist
 
 ### Persistence
+
 - [ ] Create thumbnail → Click "Save to Library" → File saved to `assets/catalog/thumbnails/`
 - [ ] Asset record added to catalog with type `'thumbnail'`
 - [ ] Configuration JSON saved in `metadata.configuration`
@@ -621,12 +632,14 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 - [ ] File naming follows pattern: `thumb-{timestamp}-{template}.png`
 
 ### Configuration Storage
+
 - [ ] All template settings captured (template ID, text, colors)
 - [ ] All layout settings captured (positions, dimensions, layers)
 - [ ] All font settings captured (family, size, weight)
 - [ ] Configuration complete enough to recreate exact thumbnail
 
 ### History UI
+
 - [ ] History section displays below generation form
 - [ ] Grid layout responsive (3 cols desktop, 2 cols tablet, 1 col mobile)
 - [ ] Each thumbnail shows: preview, headline/subtitle, template, date
@@ -636,6 +649,7 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 - [ ] History auto-refreshes after saving new thumbnail
 
 ### Reuse Functionality
+
 - [ ] Click "Reuse Configuration" → All settings restored
 - [ ] Template selector updates
 - [ ] Text fields populate with saved values
@@ -645,12 +659,14 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 - [ ] Confirmation dialog shown if user has unsaved changes
 
 ### Download Behavior
+
 - [ ] "Save to Library" saves to server AND downloads to browser
 - [ ] "Export PNG" downloads only (no server save)
 - [ ] Downloaded filename matches server filename
 - [ ] PNG file valid and opens in image viewers
 
 ### API
+
 - [ ] POST /api/thumbnails/save accepts base64 + config
 - [ ] POST returns asset object on success
 - [ ] POST returns 400 if missing imageData or configuration
@@ -675,13 +691,16 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 ## Dependencies
 
 **Requires:**
+
 - FR-16 (Unified Asset Catalog Infrastructure) - MUST be complete first
 - FR-12 (Thumbnail Generator) - Day 8 UI must exist
 
 **Blocks:**
+
 - None (Day 11 Story Builder will query catalog but doesn't block)
 
 **Related:**
+
 - FR-17 (Asset Persistence Implementation) - Same pattern applied to thumbnails
 - FR-18 (Asset Browser UI) - Thumbnails will appear in unified browser
 

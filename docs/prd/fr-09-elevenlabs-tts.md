@@ -24,6 +24,7 @@ This is Day 5 of the 12 Days of Claudemas, focusing on audio generation capabili
 ## Solution
 
 Create a Text-to-Speech tool using the ElevenLabs API with:
+
 - Voice selection from available voices
 - Text input for narration script
 - Audio generation and playback
@@ -69,6 +70,7 @@ Create a Text-to-Speech tool using the ElevenLabs API with:
 ### Voice Selection
 
 Display a dropdown of available voices. Initial implementation should include at least:
+
 - 2-3 popular built-in voices
 - Voice preview capability (optional for MVP)
 
@@ -93,18 +95,21 @@ Suggested default voices:
 ## Acceptance Criteria
 
 ### Voice Selection
+
 1. [ ] Voice dropdown displays available voices with name and description
 2. [ ] At least 4 voice options available
 3. [ ] Selected voice persists during session
 4. [ ] Voice selection updates before next generation
 
 ### Text Input
+
 5. [ ] Multi-line text area for narration input
 6. [ ] Character count displayed (ElevenLabs has limits)
 7. [ ] Default text pre-populated with Fox story narration
 8. [ ] Minimum 5000 character limit support
 
 ### Generation
+
 9. [ ] "Generate Audio" button triggers API call
 10. [ ] Loading spinner shown during generation
 11. [ ] Button disabled while generating (prevent double-submit)
@@ -112,17 +117,20 @@ Suggested default voices:
 13. [ ] Success shows audio player
 
 ### Audio Playback
+
 14. [ ] HTML5 audio player with play/pause
 15. [ ] Progress bar showing playback position
 16. [ ] Duration displayed (total and current)
 17. [ ] Audio auto-plays when generation completes (optional)
 
 ### Download
+
 18. [ ] "Download MP3" button available after generation
 19. [ ] Downloaded file named sensibly (e.g., `narration-[timestamp].mp3`)
 20. [ ] Download triggers browser save dialog
 
 ### Stats Display
+
 21. [ ] Voice name shown below audio
 22. [ ] Duration in seconds
 23. [ ] Model name (eleven_multilingual_v2)
@@ -157,18 +165,15 @@ Follow the existing image client pattern:
 import { ElevenLabsClient } from '@elevenlabs/elevenlabs-js';
 
 const client = new ElevenLabsClient({
-  apiKey: process.env.ELEVENLABS_API_KEY
+  apiKey: process.env.ELEVENLABS_API_KEY,
 });
 
-export async function generateSpeech(
-  text: string,
-  voiceId: string
-): Promise<GenerateSpeechResult> {
+export async function generateSpeech(text: string, voiceId: string): Promise<GenerateSpeechResult> {
   const startTime = Date.now();
 
   const audio = await client.textToSpeech.convert(voiceId, {
     text,
-    modelId: 'eleven_multilingual_v2'
+    modelId: 'eleven_multilingual_v2',
   });
 
   // Convert to base64 for client transport
@@ -180,7 +185,7 @@ export async function generateSpeech(
     mimeType: 'audio/mpeg',
     durationMs: Date.now() - startTime,
     voiceId,
-    model: 'eleven_multilingual_v2'
+    model: 'eleven_multilingual_v2',
   };
 }
 ```
@@ -220,11 +225,13 @@ interface GenerateResponse {
 Two approaches for delivering audio to the client:
 
 **Option A: Base64 in JSON (simpler, chosen for MVP)**
+
 - Return audio as base64-encoded string in JSON response
 - Client decodes and creates Blob URL
 - Simpler implementation, works well for short audio
 
 **Option B: Streaming (future enhancement)**
+
 - Return audio as stream via dedicated endpoint
 - Better for long audio, but more complex
 - Consider for future if performance issues arise
@@ -278,11 +285,11 @@ ELEVENLABS_API_KEY=
 
 ### Models
 
-| Model ID | Name | Best For |
-|----------|------|----------|
+| Model ID                 | Name            | Best For                                   |
+| ------------------------ | --------------- | ------------------------------------------ |
 | `eleven_multilingual_v2` | Multilingual v2 | Recommended default, supports 32 languages |
-| `eleven_monolingual_v1` | English v1 | Legacy English-only |
-| `eleven_turbo_v2_5` | Turbo v2.5 | Faster generation, slightly lower quality |
+| `eleven_monolingual_v1`  | English v1      | Legacy English-only                        |
+| `eleven_turbo_v2_5`      | Turbo v2.5      | Faster generation, slightly lower quality  |
 
 Start with `eleven_multilingual_v2` as default.
 
@@ -309,15 +316,18 @@ Expected output: ~8-10 seconds of narrated audio.
 ## References
 
 ### ElevenLabs Documentation
+
 - [Official JavaScript SDK](https://github.com/elevenlabs/elevenlabs-js)
 - [Text-to-Speech API](https://elevenlabs.io/docs/api-reference/text-to-speech)
 - [NPM Package](https://www.npmjs.com/package/elevenlabs-js)
 
 ### Related Requirements
+
 - [FR-07: Image API Connectivity](fr-07-api-connectivity.md) - Similar API integration pattern
 - [FR-08: Image Generation Comparison](fr-08-image-comparison.md) - UI pattern reference
 
 ### Planning Documents
+
 - [Fox and Lazy Dog Story](../planning/fox-and-lazy-dog-story.md) - Story context and narration script
 
 ---
@@ -325,6 +335,7 @@ Expected output: ~8-10 seconds of narrated audio.
 ## Completion Notes
 
 **What was done:**
+
 - Created ElevenLabs TTS module at `server/src/tools/elevenlabs/` with types, client, and exports
 - Implemented `generateSpeech()` function using `@elevenlabs/elevenlabs-js` SDK
 - Added voice selection (4 default voices: Rachel, Bella, Antoni, Elli)
@@ -341,18 +352,21 @@ Expected output: ~8-10 seconds of narrated audio.
 - Updated shared/config.json with Day 3-4 as complete, Day 5 as next
 
 **Files created:**
+
 - `server/src/tools/elevenlabs/types.ts` (new)
 - `server/src/tools/elevenlabs/client.ts` (new)
 - `server/src/tools/elevenlabs/index.ts` (new)
 - `client/src/components/tools/Day5TTS.tsx` (new)
 
 **Files modified:**
+
 - `server/src/index.ts` - Added TTS endpoints and startup status
 - `server/.env.example` - Added ELEVENLABS_API_KEY
 - `client/src/App.tsx` - Added Day5TTS routing
 - `shared/src/config.json` - Updated day statuses
 
 **Testing notes:**
+
 1. Add `ELEVENLABS_API_KEY` to `server/.env`
 2. Run `npm run dev`
 3. Navigate to Day 5 in sidebar

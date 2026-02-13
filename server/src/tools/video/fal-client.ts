@@ -102,7 +102,8 @@ async function generateWithWan(
   console.log('[FAL.AI Video] Wan FLF2V raw response:', JSON.stringify(result, null, 2));
 
   // Try multiple possible response structures
-  const videoUrl = (result as any).data?.video?.url || (result as any).video?.url || (result as any).url;
+  const videoUrl =
+    (result as any).data?.video?.url || (result as any).video?.url || (result as any).url;
   if (!videoUrl) {
     console.error('[FAL.AI Video] Response structure:', Object.keys(result || {}));
     throw new Error('No video URL in response');
@@ -137,7 +138,9 @@ export async function generateVideo(
     await updateVideoTask(task.id, { status: 'processing' });
     if (onProgress) onProgress(10);
 
-    const prompt = task.prompt || `Smooth cinematic transition with natural motion, duration ${task.duration} seconds`;
+    const prompt =
+      task.prompt ||
+      `Smooth cinematic transition with natural motion, duration ${task.duration} seconds`;
     let videoUrl: string;
 
     if (task.model === 'kling-o1') {
@@ -182,7 +185,11 @@ export async function generateVideo(
 /**
  * Check FAL.AI video health
  */
-export async function checkHealth(): Promise<{ configured: boolean; authenticated: boolean; error?: string }> {
+export async function checkHealth(): Promise<{
+  configured: boolean;
+  authenticated: boolean;
+  error?: string;
+}> {
   const apiKey = getApiKey();
 
   if (!apiKey) {

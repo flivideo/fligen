@@ -12,12 +12,14 @@ As a video creator, I want to record my prompts verbally in FliHub and import th
 ## Problem
 
 Currently, users must manually type prompts for image generation, editing, and animation. This is inefficient for several reasons:
+
 - Typing long, detailed prompts is time-consuming
 - No connection between FliHub (recording tool) and FliGen (generation tool)
 - No canonical project structure for multi-stage prompt workflows
 - Day 10 (Prompt Refinery) needs a consistent input format
 
 We need a workflow where users can:
+
 1. Talk their prompts in FliHub recordings
 2. Import transcripts via API into FliGen
 3. Save as a structured project folder
@@ -28,6 +30,7 @@ This proves true interoperability beyond simple copy buttons - it creates a reus
 ## Solution
 
 Create Day 9 "Prompt Intake" tab in FliGen that:
+
 - Connects to FliHub REST API (port 5101)
 - Allows users to specify project code + FliHub chapter/segment IDs
 - Provides three import buttons to fetch transcripts for:
@@ -44,6 +47,7 @@ This creates a canonical project structure that Day 10 can consume directly.
 ## Acceptance Criteria
 
 ### UI Components
+
 - [ ] Day 9 tab labeled "Prompt Intake" appears in navigation
 - [ ] Project Setup section with text inputs for:
   - Project Code (e.g., "VSS-001")
@@ -61,12 +65,14 @@ This creates a canonical project structure that Day 10 can consume directly.
   - [Save Project] - Writes JSON files and creates folder
 
 ### FliHub Integration
+
 - [ ] Server module at `server/src/tools/flihub/` with REST client
 - [ ] API endpoint to fetch transcript by chapter + segment ID
 - [ ] Error handling for FliHub connection failures
 - [ ] Graceful fallback if FliHub is not running
 
 ### Import Functionality
+
 - [ ] Import A button fetches segment A transcript from FliHub
 - [ ] Import B button fetches segment B transcript from FliHub
 - [ ] Import C button fetches segment C transcript from FliHub
@@ -75,6 +81,7 @@ This creates a canonical project structure that Day 10 can consume directly.
 - [ ] Error messages shown if import fails
 
 ### Project Storage
+
 - [ ] Save Project creates folder at `/assets/projects/<projectCode>/`
 - [ ] `project.json` written with metadata and FliHub references
 - [ ] `human_prompts.json` written with the three prompts
@@ -84,12 +91,14 @@ This creates a canonical project structure that Day 10 can consume directly.
 - [ ] Error message if folder already exists (with overwrite option)
 
 ### Load Functionality
+
 - [ ] Load Project button opens file picker or dropdown of existing projects
 - [ ] Selecting a project populates all fields from saved JSON
 - [ ] Text areas display saved prompts
 - [ ] FliHub references restored to segment inputs
 
 ### Data Validation
+
 - [ ] Project code is required before save
 - [ ] At least one prompt must be entered before save
 - [ ] Segment IDs must be valid numbers
@@ -98,12 +107,14 @@ This creates a canonical project structure that Day 10 can consume directly.
 ## Technical Notes
 
 ### FliHub REST API
+
 - **Base URL**: `http://localhost:5101`
 - **Endpoint** (to be confirmed with David): `GET /api/recordings/:id/transcript` or similar
 - **Alternative pattern**: `GET /api/chapters/:chapterId/segments/:segmentId/transcript`
 - API must return transcript text for a given chapter/segment combination
 
 ### Project Folder Structure
+
 ```
 /assets/projects/<projectCode>/
 ├── project.json              # Metadata
@@ -112,6 +123,7 @@ This creates a canonical project structure that Day 10 can consume directly.
 ```
 
 ### project.json Schema
+
 ```json
 {
   "projectCode": "VSS-001",
@@ -129,6 +141,7 @@ This creates a canonical project structure that Day 10 can consume directly.
 ```
 
 ### human_prompts.json Schema
+
 ```json
 {
   "projectCode": "VSS-001",
@@ -139,6 +152,7 @@ This creates a canonical project structure that Day 10 can consume directly.
 ```
 
 ### source_transcripts.json Schema (Optional)
+
 ```json
 {
   "projectCode": "VSS-001",
@@ -164,11 +178,11 @@ This creates a canonical project structure that Day 10 can consume directly.
 
 ### Why 3 Prompts?
 
-| Prompt | Purpose | Maps To | Day 10 Usage |
-|--------|---------|---------|--------------|
-| Prompt A | Scene/Location | Seed image | Text-to-image generation |
-| Prompt B | Edit instruction | Image variation | Image-to-image editing |
-| Prompt C | Animation | Video motion | Image-to-video animation |
+| Prompt   | Purpose          | Maps To         | Day 10 Usage             |
+| -------- | ---------------- | --------------- | ------------------------ |
+| Prompt A | Scene/Location   | Seed image      | Text-to-image generation |
+| Prompt B | Edit instruction | Image variation | Image-to-image editing   |
+| Prompt C | Animation        | Video motion    | Image-to-video animation |
 
 This structure supports the full generative workflow from initial concept through final video.
 
@@ -275,6 +289,7 @@ This structure supports the full generative workflow from initial concept throug
 ## Completion Notes
 
 **What was done:**
+
 - Implemented full Day 9 Prompt Intake feature with FliHub REST API integration
 - Created server-side modules for FliHub client and project storage
 - Built frontend UI with three prompt text areas and import buttons
@@ -282,6 +297,7 @@ This structure supports the full generative workflow from initial concept throug
 - Integrated FliHub health check and connection status display
 
 **Files created:**
+
 ```
 server/src/tools/flihub/types.ts         - FliHub API type definitions
 server/src/tools/flihub/client.ts        - REST client with health check and transcript fetch
@@ -295,6 +311,7 @@ client/src/components/tools/Day9PromptIntake.tsx - Main UI component
 ```
 
 **Files modified:**
+
 ```
 shared/src/index.ts                      - Added Project types, FliHub types, ProjectListItem
 server/src/index.ts                      - Added FliHub and Projects API endpoints
@@ -303,6 +320,7 @@ shared/src/config.json                   - Updated Day 7/8 to complete, Day 9 to
 ```
 
 **API Endpoints Added:**
+
 - `GET /api/flihub/health` - Check FliHub connection status
 - `GET /api/flihub/transcript?chapterId=X&segmentId=Y` - Fetch transcript from FliHub
 - `GET /api/projects` - List all saved projects
@@ -310,6 +328,7 @@ shared/src/config.json                   - Updated Day 7/8 to complete, Day 9 to
 - `POST /api/projects/save` - Save project with JSON files
 
 **Testing notes:**
+
 - Build successful with no TypeScript errors
 - UI displays FliHub online/offline status
 - Import buttons gracefully handle FliHub being unavailable
@@ -322,6 +341,7 @@ shared/src/config.json                   - Updated Day 7/8 to complete, Day 9 to
 - Manual entry works even when FliHub is offline
 
 **Known issues/limitations:**
+
 - FliHub API endpoint structure is placeholder and needs confirmation from David
   - Current implementation uses: `GET /api/transcript?chapter=X&segment=Y`
   - May need adjustment based on actual FliHub API
@@ -334,6 +354,7 @@ shared/src/config.json                   - Updated Day 7/8 to complete, Day 9 to
 ---
 
 **Related Documents:**
+
 - [Backlog](../backlog.md)
 - [Day 9 Planning Brief](../planning/day-09-interop-brief.md)
 - [FR-10: Shot List and Video](fr-10-shot-list-and-video.md) - Project folder pattern reference

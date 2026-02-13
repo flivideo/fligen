@@ -28,12 +28,14 @@ Any important context or decisions made during implementation.
 ### Changes
 
 #### Template System
+
 - Created widget template infrastructure with dynamic parameter forms
 - Implemented "Social Media Post" template (Twitter/X-style)
 - Template definition includes metadata, parameters, and render function
 - Support for text, number, checkbox, radio, url, and textarea input types
 
 #### Widget Components
+
 - Created `Day14Widget.tsx` - Main widget generator UI with live preview
 - Created `WidgetTemplateSelector.tsx` - Template selection radio buttons
 - Created `WidgetConfigForm.tsx` - Dynamic form generation based on template params
@@ -41,12 +43,14 @@ Any important context or decisions made during implementation.
 - Created `WidgetHistory.tsx` - History sidebar with saved widgets
 
 #### Widget Storage
+
 - Implemented widget persistence at `assets/widgets/`
 - Each widget saved as `.html` (standalone file) and `.json` (configuration)
 - Widget catalog (`index.json`) tracks all saved widgets
 - Sequential widget IDs (widget-001, widget-002, etc.)
 
 #### Server Implementation
+
 - Created `server/src/tools/widgets/storage.ts` - Widget CRUD operations
 - Created `server/src/tools/widgets/templates/` - Template definitions
 - Implemented template registry with social media post template
@@ -59,6 +63,7 @@ Any important context or decisions made during implementation.
   - `GET /api/widget-templates/:id` - Get template definition
 
 #### Social Media Post Template
+
 - Configurable parameters: author name, handle, timestamp, verified badge
 - Post text with multiline support
 - Engagement metrics: comments, retweets, likes, views
@@ -67,12 +72,14 @@ Any important context or decisions made during implementation.
 - Number formatting (1000 → 1k, 135000 → 135k)
 
 #### Brand Design System Integration
+
 - AppyDave brand colors: dark brown (#342d2d), light brown (#ccba9d), yellow (#ffde59)
 - Google Fonts integration: Bebas Neue, Oswald, Roboto
 - Verification badge: blue (#3b82f6)
 - Responsive design (max-width: 600px)
 
 #### Export & Reuse
+
 - Export HTML button downloads standalone HTML5 files
 - Self-contained widgets (embedded CSS, CDN fonts)
 - History sidebar with widget preview cards
@@ -80,6 +87,7 @@ Any important context or decisions made during implementation.
 - Delete widget functionality
 
 ### Files Created
+
 ```
 client/src/components/tools/Day14Widget.tsx
 client/src/components/tools/widget/WidgetTemplateSelector.tsx
@@ -95,6 +103,7 @@ assets/widgets/ (directory with 29 sample widgets)
 ```
 
 ### Files Modified
+
 ```
 client/src/App.tsx - Added Day 14 routing
 server/src/index.ts - Added widget API endpoints
@@ -106,24 +115,28 @@ docs/backlog.md - Updated FR-23 status to Complete
 ### Technical Highlights
 
 **Template-Based Architecture:**
+
 - Templates are configuration objects, not visual templates
 - Each template defines its own parameters and render function
 - Dynamic form generation based on parameter definitions
 - Type-safe parameter validation
 
 **HTML Generation:**
+
 - Server-side rendering via template render functions
 - Returns complete HTML5 documents with embedded styles
 - Google Fonts loaded via CDN
 - Responsive design patterns
 
 **Persistence Pattern:**
+
 - Follows Day 13 (Brand Text Generator) pattern
 - Dual storage: HTML output + JSON configuration
 - Catalog index for fast lookups
 - Reusable configurations
 
 ### Default Widget Configuration
+
 ```json
 {
   "template": "social-media-post",
@@ -144,7 +157,9 @@ docs/backlog.md - Updated FR-23 status to Complete
 ```
 
 ### Notes
+
 Day 14 of "12 Days of Claudemas" - Widget generator complete. Users can:
+
 1. Select template (currently only Social Media Post)
 2. Configure parameters via dynamic form
 3. See live preview with real-time updates
@@ -168,6 +183,7 @@ Key design decision: HTML-based widgets (not canvas/PNG like Day 13) for better 
 ### Changes
 
 #### Backend Persistence
+
 - Created `server/src/tools/elevenlabs/save-to-catalog.ts` - TTS audio persistence
 - Refactored `/api/tts/generate` endpoint to use `saveAudioToCatalog()`
 - Updated `/api/music/generate` to auto-save to catalog (FR-17 requirement)
@@ -176,6 +192,7 @@ Key design decision: HTML-based widgets (not canvas/PNG like Day 13) for better 
 - Image persistence already existed via `saveImageToCatalog()`
 
 #### Frontend History UIs
+
 - **Day 4 (Images):** Added grid history UI with thumbnail display, "Reuse Prompt" functionality
 - **Day 5 (TTS):** Added list history UI with audio players, "Reuse Text" functionality, queries both `type=audio` and `type=narration`
 - **Day 6 (Videos):** Enhanced to load from catalog + old storage, filters out N8N workflow videos
@@ -183,6 +200,7 @@ Key design decision: HTML-based widgets (not canvas/PNG like Day 13) for better 
 - **Day 10 (N8N):** Added workflow history with grouping (2 images + 1 video), "Reuse Prompts" functionality
 
 #### UX Improvements
+
 - All history UIs auto-refresh after generation
 - All history UIs sorted by date (newest first)
 - Day 4 comparison grid now hidden until first generation
@@ -190,12 +208,14 @@ Key design decision: HTML-based widgets (not canvas/PNG like Day 13) for better 
 - Day 10 workflow videos now have playback controls
 
 ### Files Created
+
 ```
 server/src/tools/elevenlabs/save-to-catalog.ts
 docs/uat/fr-17-handover.md
 ```
 
 ### Files Modified
+
 ```
 server/src/tools/elevenlabs/index.ts
 server/src/index.ts (TTS + music endpoints)
@@ -207,6 +227,7 @@ client/src/components/tools/Day10N8N.tsx
 ```
 
 ### Status
+
 - ✅ Day 4 (Images) - Complete
 - ✅ Day 5 (TTS/Audio) - Complete
 - ✅ Day 6 (Videos) - Complete
@@ -215,6 +236,7 @@ client/src/components/tools/Day10N8N.tsx
 - ⚠️ Day 8 (Thumbnails) - Not implemented (requires separate PRD)
 
 ### Notes
+
 - Implemented backward compatibility by loading from both old storage and new catalog
 - Asset type inconsistency: some legacy assets saved as `type: 'audio'` instead of `type: 'narration'`
 - Day 8 (Thumbnails) needs server-side persistence (currently client-side only)
@@ -230,6 +252,7 @@ client/src/components/tools/Day10N8N.tsx
 ### Changes
 
 #### Backend Infrastructure
+
 - Created `server/src/tools/prompts/` module for prompt refinement
 - `system-prompts.ts` - Hard-coded templates for Seed, Edit, Animation prompts
 - `refine.ts` - Claude Agent SDK integration using `query()` API
@@ -237,18 +260,21 @@ client/src/components/tools/Day10N8N.tsx
 - Added `POST /api/prompts/refine` - Refines human prompts into machine prompts
 
 #### Frontend Implementation
+
 - Created `PromptRefinementPanel.tsx` - 6-panel layout (3 system + 3 machine prompts)
 - Integrated into Day10N8N.tsx between INPUT and PROCESS sections
 - Modified workflow execution to support dual modes: Human Prompts (blue) and Machine Prompts (amber)
 - Machine prompts button disabled until prompts are generated
 
 #### Type Definitions
+
 - Added to `shared/src/index.ts`:
   - `MachinePrompts` - Refined prompts for Seed, Edit, Animation
   - `RefinePromptsRequest` - API request payload
   - `RefinePromptsResponse` - API response payload
 
 ### Files Created
+
 ```
 server/src/tools/prompts/system-prompts.ts     - 48 lines
 server/src/tools/prompts/refine.ts             - 92 lines
@@ -257,6 +283,7 @@ client/src/components/tools/PromptRefinementPanel.tsx - 195 lines
 ```
 
 ### Files Modified
+
 ```
 server/src/index.ts                            - Added prompts endpoints
 client/src/components/tools/Day10N8N.tsx       - Integrated refinement panel
@@ -266,17 +293,20 @@ shared/src/index.ts                            - Added prompt types
 ### Technical Implementation
 
 **Claude Agent SDK Integration:**
+
 - Uses `query()` function with `Options` interface
 - Runs three refinements in parallel using `Promise.all()`
 - Each refinement uses `maxTurns: 1` for simple transformation
 - Accumulates streaming text from `assistant` messages and `stream_event` deltas
 
 **System Prompts:**
+
 - **Seed System**: Optimizes for Flux image generation (style, lighting, composition)
 - **Edit System**: Optimizes for image-to-image editing (precise modifications)
 - **Animation System**: Optimizes for image-to-video (camera movement, subject motion)
 
 **API Flow:**
+
 1. Client loads project → Human prompts populate
 2. User clicks "Generate Machine Prompts"
 3. Client POSTs to `/api/prompts/refine` with human prompts
@@ -286,7 +316,9 @@ shared/src/index.ts                            - Added prompt types
 7. User executes workflow with either human or machine prompts
 
 ### Notes
+
 Day 10 enhancement - Implements Human → System → Machine prompt refinement pipeline. Users can now:
+
 1. Load human prompts from saved projects
 2. Generate machine-optimized prompts using Claude Agent SDK
 3. Compare human vs machine prompts side-by-side
@@ -304,12 +336,14 @@ This builds on FR-14 (Day 10 N8N Workflow) and demonstrates practical Claude Age
 ### Changes
 
 #### Server Module
+
 - Created music module at `server/src/tools/music/` (types, storage, fal-client, kie-client, index)
 - Implemented FAL.AI SonAuto v2 integration - text-to-music with lyrics support
 - Implemented KIE.AI Suno integration - async polling with model selection (V4, V4.5, V5)
 - Music library storage at `assets/music-library/` with persistent index.json
 
 #### API Endpoints
+
 - `GET /api/music/health` - Check provider status
 - `POST /api/music/generate` - Generate music with provider selection
 - `GET /api/music/library` - List saved tracks
@@ -317,12 +351,14 @@ This builds on FR-14 (Day 10 N8N Workflow) and demonstrates practical Claude Age
 - `DELETE /api/music/library/:id` - Delete saved track
 
 #### Client Integration
+
 - Wired Day7MusicGen.tsx mock UI to real APIs
 - Provider toggle between FAL.AI SonAuto and KIE.AI Suno
 - Audio playback with editable track names
 - Save to library with server persistence
 
 ### Files Created
+
 ```
 server/src/tools/music/types.ts      - Type definitions
 server/src/tools/music/storage.ts    - Library storage operations
@@ -332,6 +368,7 @@ server/src/tools/music/index.ts      - Module exports
 ```
 
 ### Files Modified
+
 ```
 shared/src/index.ts                          - Added music types
 shared/src/config.json                       - Day 6 → complete, Day 7 → next
@@ -342,23 +379,25 @@ client/src/components/tools/Day7MusicGen.tsx - Wired to real APIs
 
 ### Bug Fixes Applied
 
-| Issue | Root Cause | Fix |
-|-------|------------|-----|
-| FAL "Unprocessable Entity" | Sent prompt + tags + lyrics together | Don't send all three simultaneously |
-| FAL "No audio URL" | Response wrapped in data property | Handle nested data.audio structure |
-| Express "Payload too large" | Default 100KB limit | Increased JSON limit to 50MB |
-| KIE 404 Not Found | Wrong endpoint path | Fixed to /api/v1/generate |
-| KIE polling endpoint | Wrong status path | Fixed to /api/v1/generate/record-info |
+| Issue                       | Root Cause                           | Fix                                   |
+| --------------------------- | ------------------------------------ | ------------------------------------- |
+| FAL "Unprocessable Entity"  | Sent prompt + tags + lyrics together | Don't send all three simultaneously   |
+| FAL "No audio URL"          | Response wrapped in data property    | Handle nested data.audio structure    |
+| Express "Payload too large" | Default 100KB limit                  | Increased JSON limit to 50MB          |
+| KIE 404 Not Found           | Wrong endpoint path                  | Fixed to /api/v1/generate             |
+| KIE polling endpoint        | Wrong status path                    | Fixed to /api/v1/generate/record-info |
 
 ### Music Providers
 
-| Provider | Model | Cost | Generation Time |
-|----------|-------|------|-----------------|
-| FAL.AI | SonAuto v2 | $0.075/track | ~40s |
-| KIE.AI | Suno V4/V4.5/V5 | ~$0.06/track | ~60s (async) |
+| Provider | Model           | Cost         | Generation Time |
+| -------- | --------------- | ------------ | --------------- |
+| FAL.AI   | SonAuto v2      | $0.075/track | ~40s            |
+| KIE.AI   | Suno V4/V4.5/V5 | ~$0.06/track | ~60s (async)    |
 
 ### Notes
+
 Day 7 of "12 Days of Claudemas" - Music generation complete. Users can:
+
 1. Select provider (FAL.AI SonAuto or KIE.AI Suno)
 2. Enter prompt, optional lyrics, style tags
 3. Generate full songs with vocals or instrumentals
@@ -376,6 +415,7 @@ Reuses existing FAL_API_KEY and KIE_API_KEY from Day 4/6 image and video generat
 ### Changes
 
 #### Part 1: Shot List Infrastructure
+
 - Created shots module at `server/src/tools/shots/` (types, storage, index)
 - Implemented `GET /api/shots` - List all shots with metadata
 - Implemented `POST /api/shots` - Add image to shot list (downloads from URL)
@@ -387,12 +427,14 @@ Reuses existing FAL_API_KEY and KIE_API_KEY from Day 4/6 image and video generat
 - Created `ShotListStrip` component with thumbnails, remove buttons, clear all
 
 #### Part 2: Day 4 UI Modifications
+
 - Updated Day4ImageGen with clickable images
 - Added "Add to Shots" hover overlay on comparison grid images
 - Integrated ShotListStrip between Generate button and comparison grid
 - Shot list persists across page refreshes via server storage
 
 #### Part 3: Day 6 Video Generation
+
 - Created video module at `server/src/tools/video/` (types, storage, kie-client, fal-client)
 - Implemented KIE.AI Veo 3.1 video generation with async polling
 - Implemented FAL.AI Kling O1 and Wan 2.1 FLF2V video generation
@@ -405,6 +447,7 @@ Reuses existing FAL_API_KEY and KIE_API_KEY from Day 4/6 image and video generat
 - Added provider/model selection, duration options, optional prompt
 
 ### Files Created
+
 ```
 server/src/tools/shots/types.ts     - Shot type definitions
 server/src/tools/shots/storage.ts   - File system operations
@@ -422,6 +465,7 @@ client/src/components/tools/Day6Video.tsx  - Day 6 video component
 ```
 
 ### Files Modified
+
 ```
 server/src/index.ts                 - Added shots and video API endpoints
 shared/src/index.ts                 - Added Shot and VideoTask types
@@ -431,23 +475,25 @@ client/src/components/tools/Day4ImageGen.tsx - Added clickable images, shot stri
 ```
 
 ### Video Providers
-| Provider | Model | First+Last Frame | Duration | Cost |
-|----------|-------|------------------|----------|------|
-| KIE.AI | Veo 3.1 | Planned | 5-8s | ~$0.25 |
-| FAL.AI | Kling O1 | Single frame | 5-10s | ~$0.56 |
-| FAL.AI | Wan 2.1 FLF2V | Yes | ~3s | ~$0.15 |
+
+| Provider | Model         | First+Last Frame | Duration | Cost   |
+| -------- | ------------- | ---------------- | -------- | ------ |
+| KIE.AI   | Veo 3.1       | Planned          | 5-8s     | ~$0.25 |
+| FAL.AI   | Kling O1      | Single frame     | 5-10s    | ~$0.56 |
+| FAL.AI   | Wan 2.1 FLF2V | Yes              | ~3s      | ~$0.15 |
 
 ### Bug Fixes Applied
 
-| Issue | Root Cause | Fix |
-|-------|------------|-----|
-| "Image fetch failed" from KIE.AI | External APIs can't access localhost URLs | Convert images to base64 data URLs before sending |
-| "FAL_KEY not configured" | Video client used wrong env var name | Changed FAL_KEY → FAL_API_KEY (consistent with image client) |
-| "No video URL in response" | FAL wraps response in data property | Added fallback: result.data?.video?.url |
-| Wan FLF2V "Not Found" | Wrong endpoint path | Fixed: fal-ai/wan/v2.1/flf2v → fal-ai/wan-flf2v |
-| Wan FLF2V "Unprocessable Entity" | Wrong parameter names | Fixed: first_frame_url → start_image_url, last_frame_url → end_image_url |
+| Issue                            | Root Cause                                | Fix                                                                      |
+| -------------------------------- | ----------------------------------------- | ------------------------------------------------------------------------ |
+| "Image fetch failed" from KIE.AI | External APIs can't access localhost URLs | Convert images to base64 data URLs before sending                        |
+| "FAL_KEY not configured"         | Video client used wrong env var name      | Changed FAL_KEY → FAL_API_KEY (consistent with image client)             |
+| "No video URL in response"       | FAL wraps response in data property       | Added fallback: result.data?.video?.url                                  |
+| Wan FLF2V "Not Found"            | Wrong endpoint path                       | Fixed: fal-ai/wan/v2.1/flf2v → fal-ai/wan-flf2v                          |
+| Wan FLF2V "Unprocessable Entity" | Wrong parameter names                     | Fixed: first_frame_url → start_image_url, last_frame_url → end_image_url |
 
 ### Files Modified for Bug Fixes
+
 ```
 server/src/tools/shots/storage.ts   - Added getShotAsBase64() function
 server/src/tools/video/index.ts     - Now reads local files and converts to base64
@@ -457,14 +503,16 @@ server/src/tools/video/kie-client.ts - Added base64 logging
 
 ### Video Model Status (Final)
 
-| Model | Provider | Endpoint | Status |
-|-------|----------|----------|--------|
-| Veo 3.1 | KIE.AI | /api/v1/veo/generate | Working |
-| Kling O1 | FAL.AI | fal-ai/kling-video/o1/image-to-video | Working |
-| Wan 2.1 FLF2V | FAL.AI | fal-ai/wan-flf2v | Working |
+| Model         | Provider | Endpoint                             | Status  |
+| ------------- | -------- | ------------------------------------ | ------- |
+| Veo 3.1       | KIE.AI   | /api/v1/veo/generate                 | Working |
+| Kling O1      | FAL.AI   | fal-ai/kling-video/o1/image-to-video | Working |
+| Wan 2.1 FLF2V | FAL.AI   | fal-ai/wan-flf2v                     | Working |
 
 ### Notes
+
 Day 6 of "12 Days of Claudemas" - Shot list and video generation complete. Users can:
+
 1. Generate images in Day 4 and click to add to shot list
 2. Shot list persists across sessions via server storage
 3. Navigate to Day 6 and drag shots to start/end frame drop zones
@@ -481,6 +529,7 @@ Key learning: External video APIs (KIE.AI, FAL.AI) cannot fetch images from loca
 **Reference:** [FR-09: 11 Labs Text-to-Speech](prd/fr-09-elevenlabs-tts.md)
 
 ### Changes
+
 - Created ElevenLabs module at `server/src/tools/elevenlabs/`
 - Implemented `GET /api/tts/voices` - Returns 4 curated voices (Rachel, Bella, Antoni, Elli)
 - Implemented `POST /api/tts/generate` - Converts text to MP3 audio (base64 encoded)
@@ -490,6 +539,7 @@ Key learning: External video APIs (KIE.AI, FAL.AI) cannot fetch images from loca
 - Added ELEVENLABS_API_KEY to .env.example
 
 ### Files Created
+
 ```
 server/src/tools/elevenlabs/types.ts    - Type definitions
 server/src/tools/elevenlabs/client.ts   - ElevenLabs API client
@@ -501,6 +551,7 @@ assets/fox-story/video/                 - Directory for future video
 ```
 
 ### Files Modified
+
 ```
 server/src/index.ts      - Added TTS API endpoints
 server/.env.example      - Added ELEVENLABS_API_KEY
@@ -509,6 +560,7 @@ shared/src/config.json   - Updated day status
 ```
 
 ### Notes
+
 Day 5 of "12 Days of Claudemas" - Text-to-Speech integration complete. Users can select from 4 voices, enter narration text, generate audio with ElevenLabs API, play it back in browser, and download as MP3. First Fox story narration asset generated and stored.
 
 ---
@@ -518,6 +570,7 @@ Day 5 of "12 Days of Claudemas" - Text-to-Speech integration complete. Users can
 **Reference:** [FR-8: Image Generation Comparison](prd/fr-08-image-comparison.md)
 
 ### Changes
+
 - Extended image API types with `CompareResult`, `CompareRequest`, `CompareResponse` types
 - Added `MODELS` configuration mapping providers to model tiers (advanced/midrange)
 - Implemented `generateForComparison()` in FAL client (Flux Pro v1.1 + Flux Schnell)
@@ -529,6 +582,7 @@ Day 5 of "12 Days of Claudemas" - Text-to-Speech integration complete. Users can
 - Added summary stats showing success rate, total cost, and duration
 
 ### Files Modified
+
 ```
 server/src/tools/image/types.ts        - Added comparison types and MODELS config
 server/src/tools/image/fal-client.ts   - Added generateForComparison()
@@ -539,14 +593,16 @@ client/src/components/tools/Day4ImageGen.tsx - Complete rewrite with tabs
 ```
 
 ### Models
-| Provider | Tier | Model ID | Resolution | Cost |
-|----------|------|----------|------------|------|
-| FAL.AI | Advanced | fal-ai/flux-pro/v1.1 | 1024×1024 | $0.04/MP |
-| FAL.AI | Mid-range | fal-ai/flux/schnell | 512×512 | $0.003/MP |
-| KIE.AI | Advanced | flux-kontext-max | 1024×1024 | $0.025/image |
-| KIE.AI | Mid-range | flux-kontext-pro | 512×512 | $0.004/image |
+
+| Provider | Tier      | Model ID             | Resolution | Cost         |
+| -------- | --------- | -------------------- | ---------- | ------------ |
+| FAL.AI   | Advanced  | fal-ai/flux-pro/v1.1 | 1024×1024  | $0.04/MP     |
+| FAL.AI   | Mid-range | fal-ai/flux/schnell  | 512×512    | $0.003/MP    |
+| KIE.AI   | Advanced  | flux-kontext-max     | 1024×1024  | $0.025/image |
+| KIE.AI   | Mid-range | flux-kontext-pro     | 512×512    | $0.004/image |
 
 ### Notes
+
 Day 4 of "12 Days of Claudemas" - Image comparison feature complete. Users can enter a prompt and generate 4 images in parallel across 2 providers and 2 quality tiers. Results display with timing, cost, and resolution info. FR-07 API status UI moved to second tab.
 
 ---
@@ -556,6 +612,7 @@ Day 4 of "12 Days of Claudemas" - Image comparison feature complete. Users can e
 **Reference:** [FR-7: Image API Connectivity](prd/fr-07-api-connectivity.md)
 
 ### Changes
+
 - Created image API client modules in `server/src/tools/image/`
 - Implemented FAL.AI client using `@fal-ai/client` npm package (Flux Schnell model)
 - Implemented KIE.AI client using REST API with async polling pattern (Flux Kontext Pro model)
@@ -566,6 +623,7 @@ Day 4 of "12 Days of Claudemas" - Image comparison feature complete. Users can e
 - Integrated Day 4 UI into App.tsx routing
 
 ### Files Created/Modified
+
 ```
 server/src/tools/image/types.ts        - Type definitions (new)
 server/src/tools/image/fal-client.ts   - FAL.AI client (new)
@@ -578,6 +636,7 @@ server/package.json                    - Added @fal-ai/client dependency
 ```
 
 ### Notes
+
 Day 4 of "12 Days of Claudemas" - Image API connectivity verification complete. Both FAL.AI and KIE.AI integrations working with health checks and test image generation. FAL.AI generates in ~2s, KIE.AI in ~24s (async polling). Foundation ready for FR-08 full image generation feature.
 
 ---
@@ -587,6 +646,7 @@ Day 4 of "12 Days of Claudemas" - Image API connectivity verification complete. 
 **Reference:** [FR-6: Kybernesis Memory Integration](prd/fr-06-kybernesis-memory.md)
 
 ### Changes
+
 - Created Kybernesis MCP server module following FR-05 LocalDocs pattern
 - Implemented `kybernesis_search` tool (hybrid search across memories)
 - Implemented `kybernesis_store` tool (store new memories)
@@ -596,6 +656,7 @@ Day 4 of "12 Days of Claudemas" - Image API connectivity verification complete. 
 - Added startup status indicator for API key configuration
 
 ### Files Created/Modified
+
 ```
 server/src/tools/kybernesis/types.ts   - API response type definitions (new)
 server/src/tools/kybernesis/client.ts  - HTTP client for Kybernesis API (new)
@@ -607,6 +668,7 @@ server/scratch/test-kybernesis.ts      - Test script (new)
 ```
 
 ### Notes
+
 Day 3 of "12 Days of Claudemas" - Second Brain integration complete. Enables the Claude agent to search and store memories via Kybernesis API. Gracefully handles missing API key with config error message. Combined with LocalDocs (FR-05), the agent now has access to both local project docs and cloud-based memory.
 
 ---
@@ -616,6 +678,7 @@ Day 3 of "12 Days of Claudemas" - Second Brain integration complete. Enables the
 **Reference:** [FR-5: Local Documentation Reader](prd/fr-05-local-docs.md)
 
 ### Changes
+
 - Created LocalDocs MCP server module in `server/src/tools/local-docs/`
 - Implemented `local_docs_index` tool that scans docs/ folder recursively
 - Implemented `local_docs_content` tool with 500-line chunking support
@@ -628,6 +691,7 @@ Day 3 of "12 Days of Claudemas" - Second Brain integration complete. Enables the
 - Updated agent system prompt to describe LocalDocs tools
 
 ### Files Created/Modified
+
 ```
 server/src/tools/local-docs/security.ts  - Path validation utilities (new)
 server/src/tools/local-docs/scanner.ts   - Directory scanning logic (new)
@@ -638,6 +702,7 @@ server/scratch/test-local-docs.ts        - Test script (new)
 ```
 
 ### Notes
+
 Day 3 of "12 Days of Claudemas" - Local documentation reader complete. The agent can now list and read all .md files in the docs/ folder. Security-hardened against path traversal and symlink escape attacks. Returns 18 documentation files with metadata.
 
 ---
@@ -647,12 +712,14 @@ Day 3 of "12 Days of Claudemas" - Local documentation reader complete. The agent
 **Reference:** [NFR-1: Git Leak Detection](prd/nfr-01-git-leak-detection.md)
 
 ### Changes
+
 - Created `.gitleaksignore` file for false positive suppression
 - Created pre-commit hook at `.git/hooks/pre-commit`
 - Hook runs `gitleaks protect --staged --verbose` on every commit
 - Added gitleaks documentation section to CLAUDE.md
 
 ### Files Created/Modified
+
 ```
 .gitleaksignore              - false positive patterns (new)
 .git/hooks/pre-commit        - gitleaks pre-commit hook (new)
@@ -660,6 +727,7 @@ CLAUDE.md                    - added gitleaks section
 ```
 
 ### Notes
+
 Adopted from FliDeck reference implementation. This prevents accidental commits of API keys, tokens, and other secrets. Requires gitleaks installed via `brew install gitleaks` (already installed system-wide as v8.28.0).
 
 ---
@@ -669,6 +737,7 @@ Adopted from FliDeck reference implementation. This prevents accidental commits 
 **Reference:** [FR-4: Frontend Chat UI](prd/fr-04-frontend-chat-ui.md)
 
 ### Changes
+
 - Created `useSocket` hook for singleton socket connection management
 - Created `ChatPanel` component implementing Option A (Minimal) design
 - Real-time streaming text accumulation via `agent:text` events
@@ -680,6 +749,7 @@ Adopted from FliDeck reference implementation. This prevents accidental commits 
 - Updated App.tsx to render chat UI on Day 2 (app starts on Day 2 by default)
 
 ### Files Created/Modified
+
 ```
 client/src/hooks/useSocket.ts              - singleton socket hook (new)
 client/src/components/tools/ChatPanel.tsx  - main chat component (new)
@@ -688,6 +758,7 @@ client/src/App.tsx                         - wired Day 2 to show chat
 ```
 
 ### Notes
+
 Day 2 of "12 Days of Claudemas" - frontend chat UI connects to backend Claude Agent SDK. The chat panel provides real-time streaming, tool visibility, and completion metrics. Ready for UAT testing.
 
 ---
@@ -697,6 +768,7 @@ Day 2 of "12 Days of Claudemas" - frontend chat UI connects to backend Claude Ag
 **Reference:** [FR-3: Claude Agent SDK Integration](prd/fr-03-claude-agent-sdk-integration.md)
 
 ### Changes
+
 - Installed `@anthropic-ai/claude-agent-sdk` v0.1.76 in server workspace
 - Updated shared types with full agent Socket.io event interfaces
 - Created agent module (`server/src/agent/`) with handler and session management
@@ -707,6 +779,7 @@ Day 2 of "12 Days of Claudemas" - frontend chat UI connects to backend Claude Ag
 - Error handling with categorized error codes (AUTH_REQUIRED, RATE_LIMIT, CANCELLED)
 
 ### Files Created/Modified
+
 ```
 server/package.json           - added @anthropic-ai/claude-agent-sdk dependency
 shared/src/index.ts           - added agent event types
@@ -718,6 +791,7 @@ server/scratch/test-sdk.ts    - verification script (new)
 ```
 
 ### Notes
+
 Day 2 of "12 Days of Claudemas" - backend ready for frontend chat UI. Requires `claude login` before sending queries. Test script verified working with Max subscription.
 
 ---
@@ -727,6 +801,7 @@ Day 2 of "12 Days of Claudemas" - backend ready for frontend chat UI. Requires `
 **Reference:** [FR-2: Layout and Navigation](prd/fr-02-layout-and-navigation.md)
 
 ### Changes
+
 - Added CSS custom properties for theming (colors, layout variables)
 - Created layout components: AppShell, Header, Sidebar, StatusBar, MainContent
 - Created UI components: ConfigModal, ToolPanel, StatusIndicator
@@ -739,6 +814,7 @@ Day 2 of "12 Days of Claudemas" - backend ready for frontend chat UI. Requires `
 - Status bar with connection and operation status
 
 ### Files Created
+
 ```
 client/src/
 ├── data/days.ts
@@ -764,6 +840,7 @@ client/src/
 ```
 
 ### Notes
+
 Full implementation of FR-2 spec. All 12 days accessible via sidebar navigation. Ready for Day 2+ tool implementations.
 
 ---
@@ -773,6 +850,7 @@ Full implementation of FR-2 spec. All 12 days accessible via sidebar navigation.
 **Reference:** [FR-2: Layout and Navigation](prd/fr-02-layout-and-navigation.md)
 
 ### Changes
+
 - Created FR-2 specification for collapsible sidebar layout
 - Defined color palette CSS custom properties
 - Specified component structure (AppShell, Header, Sidebar, StatusBar)
@@ -780,6 +858,7 @@ Full implementation of FR-2 spec. All 12 days accessible via sidebar navigation.
 - Defined 12-day tool data structure with icons and status
 
 ### Notes
+
 This establishes the layout pattern all 12 tools will use. Follows patterns from FliHub (hash routing) and FliDeck (sidebar navigation).
 
 ---
@@ -789,6 +868,7 @@ This establishes the layout pattern all 12 tools will use. Follows patterns from
 **Reference:** [FR-1: Initial Harness](prd/fr-01-initial-harness.md)
 
 ### Changes
+
 - Created npm workspaces monorepo (client/, server/, shared/)
 - React 19 + Vite 6 + TailwindCSS v4 client on port 5400
 - Express 5 + Socket.io server on port 5401
@@ -797,6 +877,7 @@ This establishes the layout pattern all 12 tools will use. Follows patterns from
 - Landing page with health status and socket connection display
 
 ### Notes
+
 Day 1 of "12 Days of Claudemas" complete. Key learning: Tailwind v4 requires `@source` directives in CSS to specify where to scan for utility classes.
 
 ---
@@ -806,11 +887,13 @@ Day 1 of "12 Days of Claudemas" complete. Key learning: Tailwind v4 requires `@s
 **Reference:** Project initialization
 
 ### Changes
+
 - Created documentation structure (docs/README.md, backlog.md, changelog.md, brainstorming-notes.md)
 - Created FR-1: Initial FliGen Harness Setup
 - Set up prd/, uat/, and planning/ directories
 
 ### Notes
+
 This is Day 1 of the "12 Days of Claudemas" series. The FliGen harness will serve as the foundation for 12 daily tool builds.
 
 ---

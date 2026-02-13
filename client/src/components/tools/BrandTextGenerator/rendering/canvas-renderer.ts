@@ -92,7 +92,8 @@ function renderBackground(
     // Glow effect behind text
     if (config.glowEnabled && template.effects.glow) {
       // Support both template color keys and custom hex colors
-      const glowColor = template.colors[config.glowColor] || config.glowColor || template.effects.glow.color;
+      const glowColor =
+        template.colors[config.glowColor] || config.glowColor || template.effects.glow.color;
       const glowIntensity = config.glowIntensity;
       const spread = template.effects.glow.spread * glowIntensity;
 
@@ -100,13 +101,20 @@ function renderBackground(
       const centerX = canvas.width / 2;
       const centerY = canvas.height / 2;
 
-      const gradient = ctx.createRadialGradient(
-        centerX, centerY, 0,
-        centerX, centerY, spread
-      );
+      const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, spread);
 
-      gradient.addColorStop(0, `${glowColor}${Math.round(glowIntensity * 0.3 * 255).toString(16).padStart(2, '0')}`);
-      gradient.addColorStop(0.5, `${glowColor}${Math.round(glowIntensity * 0.15 * 255).toString(16).padStart(2, '0')}`);
+      gradient.addColorStop(
+        0,
+        `${glowColor}${Math.round(glowIntensity * 0.3 * 255)
+          .toString(16)
+          .padStart(2, '0')}`
+      );
+      gradient.addColorStop(
+        0.5,
+        `${glowColor}${Math.round(glowIntensity * 0.15 * 255)
+          .toString(16)
+          .padStart(2, '0')}`
+      );
       gradient.addColorStop(1, `${glowColor}00`);
 
       ctx.fillStyle = gradient;
@@ -153,7 +161,7 @@ function renderTextSegments(
   // Render each line
   for (const lineSegments of lines) {
     // Calculate line width
-    const lineText = lineSegments.map(s => s.text).join('');
+    const lineText = lineSegments.map((s) => s.text).join('');
     const transformedLineText = applyCaseTransform(lineText, config.caseTransform);
     const lineWidth = transformedLineText.length * (GLYPH_WIDTH * blockSize + letterSpacing);
 
@@ -177,19 +185,11 @@ function renderTextSegments(
     for (const segment of lineSegments) {
       const segmentText = applyCaseTransform(segment.text, config.caseTransform);
       // Support both template color keys and custom hex colors
-      const color = template.colors[segment.color] || segment.color || template.colors[template.defaultColor];
+      const color =
+        template.colors[segment.color] || segment.color || template.colors[template.defaultColor];
 
       for (const char of segmentText) {
-        renderBrickLetter(
-          ctx,
-          char,
-          xOffset,
-          startY,
-          color,
-          blockSize,
-          config,
-          template
-        );
+        renderBrickLetter(ctx, char, xOffset, startY, color, blockSize, config, template);
 
         xOffset += GLYPH_WIDTH * blockSize + letterSpacing;
       }
@@ -229,8 +229,10 @@ function renderBrickLetter(
 
           // Highlight (top-left)
           const highlightGradient = ctx.createLinearGradient(
-            blockX, blockY,
-            blockX + bevelSize, blockY + bevelSize
+            blockX,
+            blockY,
+            blockX + bevelSize,
+            blockY + bevelSize
           );
           highlightGradient.addColorStop(0, template.effects.bevel.highlightColor);
           highlightGradient.addColorStop(1, 'transparent');
@@ -239,8 +241,10 @@ function renderBrickLetter(
 
           // Shadow (bottom-right)
           const shadowGradient = ctx.createLinearGradient(
-            blockX + blockSize - bevelSize, blockY + blockSize - bevelSize,
-            blockX + blockSize, blockY + blockSize
+            blockX + blockSize - bevelSize,
+            blockY + blockSize - bevelSize,
+            blockX + blockSize,
+            blockY + blockSize
           );
           shadowGradient.addColorStop(0, 'transparent');
           shadowGradient.addColorStop(1, template.effects.bevel.shadowColor);
@@ -273,7 +277,9 @@ function renderPostEffects(
   if (config.scanlinesEnabled) {
     const lineHeight = 2;
     const lineSpacing = 4;
-    const opacity = Math.round(config.scanlinesStrength * 0.05 * 255).toString(16).padStart(2, '0');
+    const opacity = Math.round(config.scanlinesStrength * 0.05 * 255)
+      .toString(16)
+      .padStart(2, '0');
 
     ctx.fillStyle = `#ffffff${opacity}`;
 
@@ -297,7 +303,7 @@ function renderPostEffects(
 
     for (let i = 0; i < pixels.length; i += 4) {
       const noise = (Math.random() - 0.5) * grainIntensity * 255;
-      pixels[i] += noise;     // R
+      pixels[i] += noise; // R
       pixels[i + 1] += noise; // G
       pixels[i + 2] += noise; // B
     }
@@ -306,7 +312,10 @@ function renderPostEffects(
   }
 }
 
-function applyCaseTransform(text: string, transform: 'original' | 'uppercase' | 'lowercase'): string {
+function applyCaseTransform(
+  text: string,
+  transform: 'original' | 'uppercase' | 'lowercase'
+): string {
   switch (transform) {
     case 'uppercase':
       return text.toUpperCase();

@@ -185,7 +185,8 @@ function ComparisonCell({
       )}
       <div className="text-slate-300 text-sm font-medium">{result.model}</div>
       <div className="text-slate-500 text-xs">
-        {(result.durationMs / 1000).toFixed(1)}s | ${result.estimatedCost.toFixed(3)} | {result.resolution.width}×{result.resolution.height}
+        {(result.durationMs / 1000).toFixed(1)}s | ${result.estimatedCost.toFixed(3)} |{' '}
+        {result.resolution.width}×{result.resolution.height}
       </div>
     </div>
   );
@@ -212,9 +213,11 @@ function ComparisonTab() {
     try {
       const response = await fetch(`${SERVER_URL}/api/catalog/filter?type=image`);
       const data = await response.json();
-      setImageHistory(data.assets.sort((a: any, b: any) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      ));
+      setImageHistory(
+        data.assets.sort(
+          (a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        )
+      );
     } catch (error) {
       console.error('[Day4] Failed to load history:', error);
     }
@@ -237,7 +240,7 @@ function ComparisonTab() {
 
       // Auto-save all successful images to catalog
       const savePromises = data.results
-        .filter(result => result.imageUrl && !result.error)
+        .filter((result) => result.imageUrl && !result.error)
         .map(async (result) => {
           try {
             const saveResponse = await fetch(`${SERVER_URL}/api/images/save-to-catalog`, {
@@ -294,13 +297,16 @@ function ComparisonTab() {
 
     if (success) {
       const resultKey = `${result.provider}-${result.tier}`;
-      setAddedIds(prev => new Set([...prev, resultKey]));
+      setAddedIds((prev) => new Set([...prev, resultKey]));
     }
   };
 
   // Helper to find result by provider and tier
-  const getResult = (provider: 'fal' | 'kie', tier: 'advanced' | 'midrange'): CompareResult | null => {
-    return results.find(r => r.provider === provider && r.tier === tier) ?? null;
+  const getResult = (
+    provider: 'fal' | 'kie',
+    tier: 'advanced' | 'midrange'
+  ): CompareResult | null => {
+    return results.find((r) => r.provider === provider && r.tier === tier) ?? null;
   };
 
   return (
@@ -385,11 +391,11 @@ function ComparisonTab() {
           <div className="text-sm text-slate-400 space-y-1">
             <p>
               <strong className="text-slate-300">Successful:</strong>{' '}
-              {results.filter(r => !r.error).length}/{results.length}
+              {results.filter((r) => !r.error).length}/{results.length}
             </p>
             <p>
-              <strong className="text-slate-300">Total Cost:</strong>{' '}
-              ${results.reduce((sum, r) => sum + r.estimatedCost, 0).toFixed(3)}
+              <strong className="text-slate-300">Total Cost:</strong> $
+              {results.reduce((sum, r) => sum + r.estimatedCost, 0).toFixed(3)}
             </p>
             <p>
               <strong className="text-slate-300">Total Time:</strong>{' '}
@@ -408,7 +414,10 @@ function ComparisonTab() {
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {imageHistory.map((asset: any) => (
-              <div key={asset.id} className="bg-slate-800 rounded-lg border border-slate-700 p-3 hover:border-slate-600 transition-colors">
+              <div
+                key={asset.id}
+                className="bg-slate-800 rounded-lg border border-slate-700 p-3 hover:border-slate-600 transition-colors"
+              >
                 <div className="aspect-square w-full rounded mb-2 border border-slate-600 overflow-hidden">
                   <img
                     src={`http://localhost:5401${asset.url}`}
@@ -666,9 +675,11 @@ function ApiStatusTab() {
       {/* Configuration */}
       <ToolPanel title="Configuration">
         <div className="text-sm text-slate-400 space-y-3">
-          <p>Add API keys to <code className="px-1 py-0.5 bg-slate-700 rounded">server/.env</code>:</p>
+          <p>
+            Add API keys to <code className="px-1 py-0.5 bg-slate-700 rounded">server/.env</code>:
+          </p>
           <pre className="bg-slate-950 p-3 rounded text-xs overflow-x-auto">
-{`# FAL.AI - https://fal.ai/dashboard/keys
+            {`# FAL.AI - https://fal.ai/dashboard/keys
 FAL_API_KEY=your_fal_api_key_here
 
 # KIE.AI - https://kie.ai/api-key

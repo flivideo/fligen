@@ -13,12 +13,15 @@ const videoIndex = JSON.parse(readFileSync(VIDEO_INDEX, 'utf-8'));
 const catalog = JSON.parse(readFileSync(CATALOG_INDEX, 'utf-8'));
 
 // Filter for completed videos only
-const completedVideos = videoIndex.videos.filter(v => v.status === 'completed' && v.url);
+const completedVideos = videoIndex.videos.filter((v) => v.status === 'completed' && v.url);
 
 // Group by filename and take the latest for each unique file
 const latestByFilename = {};
-completedVideos.forEach(v => {
-  if (!latestByFilename[v.filename] || new Date(v.createdAt) > new Date(latestByFilename[v.filename].createdAt)) {
+completedVideos.forEach((v) => {
+  if (
+    !latestByFilename[v.filename] ||
+    new Date(v.createdAt) > new Date(latestByFilename[v.filename].createdAt)
+  ) {
     latestByFilename[v.filename] = v;
   }
 });
@@ -28,7 +31,7 @@ const videosToMigrate = Object.values(latestByFilename);
 console.log(`\nMigrating ${videosToMigrate.length} videos to catalog:\n`);
 
 // Convert to catalog Asset format
-videosToMigrate.forEach(video => {
+videosToMigrate.forEach((video) => {
   const asset = {
     id: `asset_video_${Date.parse(video.createdAt)}_${video.id.split('_').pop()}`,
     type: 'video',
@@ -41,13 +44,15 @@ videosToMigrate.forEach(video => {
     createdAt: video.createdAt,
     completedAt: video.completedAt,
     estimatedCost: video.provider === 'kie' ? 0.25 : video.model === 'kling-o1' ? 0.56 : 0.15,
-    generationTimeMs: video.completedAt ? Date.parse(video.completedAt) - Date.parse(video.createdAt) : 0,
+    generationTimeMs: video.completedAt
+      ? Date.parse(video.completedAt) - Date.parse(video.createdAt)
+      : 0,
     metadata: {
       startShot: video.startShot,
       endShot: video.endShot,
       duration: video.duration,
       migratedFrom: 'video-scenes',
-    }
+    },
   };
 
   console.log(`  ✓ ${asset.filename} (${asset.provider}/${asset.model})`);

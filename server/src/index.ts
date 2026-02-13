@@ -9,25 +9,68 @@ import path from 'path';
 import type { HealthResponse, ServerToClientEvents, ClientToServerEvents } from '@fligen/shared';
 import { handleAgentQuery, clearSession, cancelQuery } from './agent/index.js';
 import { isKybernesisConfigured } from './tools/kybernesis/index.js';
-import { checkHealth as checkImageHealth, generateTestImages, compareImages, isFalConfigured, isKieConfigured, saveImageToCatalog } from './tools/image/index.js';
+import {
+  checkHealth as checkImageHealth,
+  generateTestImages,
+  compareImages,
+  isFalConfigured,
+  isKieConfigured,
+  saveImageToCatalog,
+} from './tools/image/index.js';
 import type { CompareRequest } from './tools/image/index.js';
-import { isConfigured as isElevenLabsConfigured, getVoices, generateSpeech, saveAudioToCatalog } from './tools/elevenlabs/index.js';
+import {
+  isConfigured as isElevenLabsConfigured,
+  getVoices,
+  generateSpeech,
+  saveAudioToCatalog,
+} from './tools/elevenlabs/index.js';
 import type { GenerateSpeechRequest } from './tools/elevenlabs/index.js';
 import { listShots, addShot, removeShot, clearAllShots } from './tools/shots/index.js';
 import type { AddShotRequest } from './tools/shots/index.js';
-import { checkVideoHealth, generateTransitionVideo, getVideoStatus, listVideoTasks, isKieConfigured as isKieVideoConfigured, isFalConfigured as isFalVideoConfigured, saveVideoToCatalog } from './tools/video/index.js';
+import {
+  checkVideoHealth,
+  generateTransitionVideo,
+  getVideoStatus,
+  listVideoTasks,
+  isKieConfigured as isKieVideoConfigured,
+  isFalConfigured as isFalVideoConfigured,
+  saveVideoToCatalog,
+} from './tools/video/index.js';
 import type { VideoModel } from './tools/video/index.js';
-import { checkMusicHealth, generateMusic, listLibraryTracks, saveTrackToLibrary, deleteLibraryTrack, saveMusicToCatalog, isFalConfigured as isFalMusicConfigured, isKieConfigured as isKieMusicConfigured } from './tools/music/index.js';
+import {
+  checkMusicHealth,
+  generateMusic,
+  listLibraryTracks,
+  saveTrackToLibrary,
+  deleteLibraryTrack,
+  saveMusicToCatalog,
+  isFalConfigured as isFalMusicConfigured,
+  isKieConfigured as isKieMusicConfigured,
+} from './tools/music/index.js';
 import type { MusicGenerationRequest, GeneratedTrack } from './tools/music/index.js';
 import { checkFliHubHealth, fetchTranscripts, isFliHubConfigured } from './tools/flihub/index.js';
 import { saveProject, loadProject, listProjects, projectExists } from './tools/projects/index.js';
-import type { SaveProjectRequest, ProjectData, SourceTranscript, RefinePromptsRequest, RefinePromptsResponse } from '@fligen/shared';
+import type {
+  SaveProjectRequest,
+  ProjectData,
+  SourceTranscript,
+  RefinePromptsRequest,
+  RefinePromptsResponse,
+} from '@fligen/shared';
 import { SYSTEM_PROMPTS, refinePrompts } from './tools/prompts/index.js';
 import { assembleVideo, saveStoryToCatalog } from './tools/story/index.js';
 import type { AssemblyRequest, AssemblyResponse } from '@fligen/shared';
 import * as catalog from './tools/catalog/index.js';
 import type { Asset } from '@fligen/shared';
-import { WIDGET_TEMPLATES, getTemplate, renderWidget, saveWidget, listWidgets, getWidget, deleteWidget } from './tools/widgets/index.js';
+import {
+  WIDGET_TEMPLATES,
+  getTemplate,
+  renderWidget,
+  saveWidget,
+  listWidgets,
+  getWidget,
+  deleteWidget,
+} from './tools/widgets/index.js';
 import type { SaveWidgetRequest, SaveWidgetResponse } from '@fligen/shared';
 import batchRouter from './routes/batch.js';
 import queryRouter from './routes/query/index.js';
@@ -168,7 +211,9 @@ app.post('/api/tts/generate', async (req, res) => {
       return;
     }
 
-    console.log(`[API] /api/tts/generate - voiceId: "${voiceId}", text length: ${text.length}, name: "${name || 'none'}"`);
+    console.log(
+      `[API] /api/tts/generate - voiceId: "${voiceId}", text length: ${text.length}, name: "${name || 'none'}"`
+    );
     const result = await generateSpeech(text, voiceId);
 
     if (!result.success || !result.audioBase64) {
@@ -324,7 +369,9 @@ app.post('/api/video/generate', async (req, res) => {
       return;
     }
 
-    console.log(`[API] /api/video/generate - ${startShotId} -> ${endShotId}, model: ${model}, duration: ${duration}s${prompt ? `, prompt: "${prompt}"` : ''}`);
+    console.log(
+      `[API] /api/video/generate - ${startShotId} -> ${endShotId}, model: ${model}, duration: ${duration}s${prompt ? `, prompt: "${prompt}"` : ''}`
+    );
 
     const task = await generateTransitionVideo(
       startShotId,
@@ -412,7 +459,9 @@ app.post('/api/music/generate', async (req, res) => {
       return;
     }
 
-    console.log(`[API] /api/music/generate - provider: ${request.provider}, prompt: "${request.prompt.substring(0, 50)}..."`);
+    console.log(
+      `[API] /api/music/generate - provider: ${request.provider}, prompt: "${request.prompt.substring(0, 50)}..."`
+    );
     const track = await generateMusic(request);
 
     // Auto-save to catalog (FR-17 requirement)
@@ -437,7 +486,7 @@ app.get('/api/music/library', async (_req, res) => {
     const catalogAssets = await catalog.filterAssets({ type: 'music' });
 
     // Convert catalog assets to SavedTrack format
-    const catalogTracks = catalogAssets.map(asset => ({
+    const catalogTracks = catalogAssets.map((asset) => ({
       id: asset.id,
       name: asset.metadata?.name || 'Untitled Track',
       audioUrl: asset.url,
@@ -597,14 +646,19 @@ app.get('/api/flihub/transcripts', async (req, res) => {
     }
 
     // Parse segments (comma-separated string like "1,2,3")
-    const segmentArray = segments.split(',').map(s => parseInt(s.trim(), 10)).filter(n => !isNaN(n));
+    const segmentArray = segments
+      .split(',')
+      .map((s) => parseInt(s.trim(), 10))
+      .filter((n) => !isNaN(n));
 
     if (segmentArray.length === 0) {
       res.status(400).json({ success: false, error: 'No valid segments provided' });
       return;
     }
 
-    console.log(`[API] /api/flihub/transcripts - project: "${projectCode}", chapter: "${chapter}", segments: [${segmentArray.join(', ')}]`);
+    console.log(
+      `[API] /api/flihub/transcripts - project: "${projectCode}", chapter: "${chapter}", segments: [${segmentArray.join(', ')}]`
+    );
     const result = await fetchTranscripts(projectCode, chapter, segmentArray);
     res.json(result);
   } catch (error) {
@@ -663,7 +717,10 @@ app.post('/api/story/assemble', async (req, res) => {
     console.log('[API] /api/story/assemble - assembling video story');
     console.log('  Videos:', assemblyRequest.videos.length);
     console.log('  Music:', assemblyRequest.music.file);
-    console.log('  Narration:', assemblyRequest.narration?.enabled ? assemblyRequest.narration.file : 'none');
+    console.log(
+      '  Narration:',
+      assemblyRequest.narration?.enabled ? assemblyRequest.narration.file : 'none'
+    );
 
     // Assemble the video
     const result = await assembleVideo(assemblyRequest);
@@ -684,7 +741,6 @@ app.post('/api/story/assemble', async (req, res) => {
     };
 
     res.json(response);
-
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     console.error('[API] /api/story/assemble - error:', message);
@@ -703,17 +759,19 @@ function isN8nConfigured(): boolean {
 
 // Clean prompts - remove "Prompt" prefix, punctuation, newlines
 function cleanPrompt(text: string): string {
-  return text
-    // Remove "Prompt" or "Prompt," or similar from the beginning
-    .replace(/^(Prompt|prompt)[,:\s]*/i, '')
-    // Remove newlines and carriage returns
-    .replace(/[\r\n]+/g, ' ')
-    // Remove all punctuation
-    .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()'"?]/g, '')
-    // Collapse multiple spaces into single space
-    .replace(/\s+/g, ' ')
-    // Trim whitespace
-    .trim();
+  return (
+    text
+      // Remove "Prompt" or "Prompt," or similar from the beginning
+      .replace(/^(Prompt|prompt)[,:\s]*/i, '')
+      // Remove newlines and carriage returns
+      .replace(/[\r\n]+/g, ' ')
+      // Remove all punctuation
+      .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()'"?]/g, '')
+      // Collapse multiple spaces into single space
+      .replace(/\s+/g, ' ')
+      // Trim whitespace
+      .trim()
+  );
 }
 
 // Trigger N8N workflow
@@ -786,7 +844,10 @@ app.post('/api/n8n/workflow', async (req, res) => {
 
     if (!n8nResponse.ok) {
       // Anonymize webhook ID in error messages
-      const anonymizedError = responseText.replace(/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/g, '***');
+      const anonymizedError = responseText.replace(
+        /[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/g,
+        '***'
+      );
       console.error('[API] N8N webhook error:', anonymizedError);
       res.status(500).json({ error: 'N8N workflow failed to start', details: anonymizedError });
       return;
@@ -832,7 +893,7 @@ app.post('/api/n8n/workflow', async (req, res) => {
 
         // Save Image 1 (start frame) to workflow folder
         if (data.image1) {
-          const imageBuffer = await fetch(data.image1).then(r => r.arrayBuffer());
+          const imageBuffer = await fetch(data.image1).then((r) => r.arrayBuffer());
           const filename = 'image-start.png';
           const filePath = path.join(workflowFolder, filename);
           await fs.writeFile(filePath, Buffer.from(imageBuffer));
@@ -863,7 +924,7 @@ app.post('/api/n8n/workflow', async (req, res) => {
 
         // Save Image 2 (end frame) to workflow folder
         if (data.image2) {
-          const imageBuffer = await fetch(data.image2).then(r => r.arrayBuffer());
+          const imageBuffer = await fetch(data.image2).then((r) => r.arrayBuffer());
           const filename = 'image-end.png';
           const filePath = path.join(workflowFolder, filename);
           await fs.writeFile(filePath, Buffer.from(imageBuffer));
@@ -895,7 +956,7 @@ app.post('/api/n8n/workflow', async (req, res) => {
 
         // Save Video to workflow folder
         if (data.video) {
-          const videoBuffer = await fetch(data.video).then(r => r.arrayBuffer());
+          const videoBuffer = await fetch(data.video).then((r) => r.arrayBuffer());
           const filename = 'video.mp4';
           const filePath = path.join(workflowFolder, filename);
           await fs.writeFile(filePath, Buffer.from(videoBuffer));
@@ -927,7 +988,12 @@ app.post('/api/n8n/workflow', async (req, res) => {
         }
 
         savedAssets = await Promise.all(savePromises);
-        console.log('[N8N] Saved', savedAssets.length, 'assets to catalog:', savedAssets.map(a => a.id));
+        console.log(
+          '[N8N] Saved',
+          savedAssets.length,
+          'assets to catalog:',
+          savedAssets.map((a) => a.id)
+        );
       } catch (saveError) {
         console.error('[N8N] Failed to save assets to catalog:', saveError);
         // Don't fail the request - just log the error
@@ -937,7 +1003,7 @@ app.post('/api/n8n/workflow', async (req, res) => {
     res.json({
       success: true,
       data,
-      savedAssets: savedAssets.map(a => ({ id: a.id, url: a.url, type: a.type })),
+      savedAssets: savedAssets.map((a) => ({ id: a.id, url: a.url, type: a.type })),
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
@@ -1336,13 +1402,9 @@ httpServer.listen(PORT, () => {
     ? '✓ Kybernesis configured'
     : '⚠ Kybernesis not configured';
 
-  const falStatus = isFalConfigured()
-    ? '✓ FAL.AI configured'
-    : '⚠ FAL.AI not configured';
+  const falStatus = isFalConfigured() ? '✓ FAL.AI configured' : '⚠ FAL.AI not configured';
 
-  const kieStatus = isKieConfigured()
-    ? '✓ KIE.AI configured'
-    : '⚠ KIE.AI not configured';
+  const kieStatus = isKieConfigured() ? '✓ KIE.AI configured' : '⚠ KIE.AI not configured';
 
   const elevenLabsStatus = isElevenLabsConfigured()
     ? '✓ ElevenLabs configured'
@@ -1360,9 +1422,7 @@ httpServer.listen(PORT, () => {
     ? '✓ FliHub available (port 5101)'
     : '⚠ FliHub not configured';
 
-  const n8nStatus = isN8nConfigured()
-    ? '✓ N8N webhook configured'
-    : '⚠ N8N webhook not configured';
+  const n8nStatus = isN8nConfigured() ? '✓ N8N webhook configured' : '⚠ N8N webhook not configured';
 
   log.info(`
 ┌─────────────────────────────────────┐

@@ -17,7 +17,15 @@ interface DropZoneProps {
   onDragLeave: () => void;
 }
 
-function DropZone({ label, shot, onDrop, onClear, isDragOver, onDragOver, onDragLeave }: DropZoneProps) {
+function DropZone({
+  label,
+  shot,
+  onDrop,
+  onClear,
+  isDragOver,
+  onDragOver,
+  onDragLeave,
+}: DropZoneProps) {
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     console.log(`[Day6Video] Drop event on ${label}`);
@@ -50,8 +58,8 @@ function DropZone({ label, shot, onDrop, onClear, isDragOver, onDragOver, onDrag
           isDragOver
             ? 'border-blue-500 bg-blue-500/20'
             : shot
-            ? 'border-slate-600 bg-slate-800'
-            : 'border-slate-600 bg-slate-900'
+              ? 'border-slate-600 bg-slate-800'
+              : 'border-slate-600 bg-slate-900'
         }`}
       >
         {shot ? (
@@ -133,10 +141,16 @@ export function Day6Video() {
       // Combine both sources (catalog first, then old)
       const allVideos = [...catalogVideos, ...oldVideos];
 
-      console.log('[Day6Video] Loaded', catalogVideos.length, 'from catalog,', oldVideos.length, 'from old storage');
-      setGeneratedVideos(allVideos.sort((a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      ));
+      console.log(
+        '[Day6Video] Loaded',
+        catalogVideos.length,
+        'from catalog,',
+        oldVideos.length,
+        'from old storage'
+      );
+      setGeneratedVideos(
+        allVideos.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+      );
     } catch (err) {
       console.error('[Day6Video] Failed to load videos:', err);
     }
@@ -161,7 +175,7 @@ export function Day6Video() {
       setIsGenerating(false);
       setProgress(100);
       setCompletedVideo(video);
-      setGeneratedVideos(prev => [...prev, video]);
+      setGeneratedVideos((prev) => [...prev, video]);
       // Reload history to show newly saved video from catalog
       loadVideoHistory();
     };
@@ -374,27 +388,31 @@ export function Day6Video() {
           <div className="space-y-4">
             <h3 className="text-sm font-medium text-slate-400">Previous Videos</h3>
             <div className="grid grid-cols-2 gap-4">
-              {generatedVideos.map((video) => (
-                video.url && (
-                  <div key={video.id} className="bg-slate-800/50 border border-slate-700 rounded-lg p-3">
-                    <video
-                      src={`${SERVER_URL}${video.url}`}
-                      controls
-                      className="w-full rounded-lg mb-2"
-                    />
-                    <div className="flex items-center justify-between text-xs text-slate-500">
-                      <span>{video.filename}</span>
-                      <a
-                        href={`${SERVER_URL}${video.url}`}
-                        download={video.filename}
-                        className="text-blue-400 hover:text-blue-300"
-                      >
-                        Download
-                      </a>
+              {generatedVideos.map(
+                (video) =>
+                  video.url && (
+                    <div
+                      key={video.id}
+                      className="bg-slate-800/50 border border-slate-700 rounded-lg p-3"
+                    >
+                      <video
+                        src={`${SERVER_URL}${video.url}`}
+                        controls
+                        className="w-full rounded-lg mb-2"
+                      />
+                      <div className="flex items-center justify-between text-xs text-slate-500">
+                        <span>{video.filename}</span>
+                        <a
+                          href={`${SERVER_URL}${video.url}`}
+                          download={video.filename}
+                          className="text-blue-400 hover:text-blue-300"
+                        >
+                          Download
+                        </a>
+                      </div>
                     </div>
-                  </div>
-                )
-              ))}
+                  )
+              )}
             </div>
           </div>
         )}

@@ -90,7 +90,9 @@ export async function compareImages(prompt: string): Promise<CompareResponse> {
     }
   });
 
-  console.log(`[Image Compare] Completed - ${processedResults.filter(r => !r.error).length}/4 successful`);
+  console.log(
+    `[Image Compare] Completed - ${processedResults.filter((r) => !r.error).length}/4 successful`
+  );
 
   return { results: processedResults };
 }

@@ -41,10 +41,7 @@ export function estimateCost(prompts: PromptRequest[]): CostEstimate {
     breakdown[key].total += costPerImage;
   }
 
-  const total_cost = Object.values(breakdown).reduce(
-    (sum, b) => sum + b.total,
-    0
-  );
+  const total_cost = Object.values(breakdown).reduce((sum, b) => sum + b.total, 0);
 
   // Rough estimate: 10s per image (average across FAL/KIE)
   const estimated_time_seconds = prompts.length * 10;

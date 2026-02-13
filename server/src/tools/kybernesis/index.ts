@@ -23,10 +23,14 @@ const kybernesisSearchTool = tool(
         content: [
           {
             type: 'text' as const,
-            text: JSON.stringify({
-              error: 'Kybernesis not configured. Set KYBERNESIS_API_KEY in .env.',
-              code: 'CONFIG_ERROR',
-            }, null, 2),
+            text: JSON.stringify(
+              {
+                error: 'Kybernesis not configured. Set KYBERNESIS_API_KEY in .env.',
+                code: 'CONFIG_ERROR',
+              },
+              null,
+              2
+            ),
           },
         ],
         isError: true,
@@ -51,10 +55,14 @@ const kybernesisSearchTool = tool(
         content: [
           {
             type: 'text' as const,
-            text: JSON.stringify({
-              error: message,
-              code,
-            }, null, 2),
+            text: JSON.stringify(
+              {
+                error: message,
+                code,
+              },
+              null,
+              2
+            ),
           },
         ],
         isError: true,
@@ -82,10 +90,14 @@ const kybernesisStoreTool = tool(
         content: [
           {
             type: 'text' as const,
-            text: JSON.stringify({
-              error: 'Kybernesis not configured. Set KYBERNESIS_API_KEY in .env.',
-              code: 'CONFIG_ERROR',
-            }, null, 2),
+            text: JSON.stringify(
+              {
+                error: 'Kybernesis not configured. Set KYBERNESIS_API_KEY in .env.',
+                code: 'CONFIG_ERROR',
+              },
+              null,
+              2
+            ),
           },
         ],
         isError: true,
@@ -110,10 +122,14 @@ const kybernesisStoreTool = tool(
         content: [
           {
             type: 'text' as const,
-            text: JSON.stringify({
-              error: message,
-              code,
-            }, null, 2),
+            text: JSON.stringify(
+              {
+                error: message,
+                code,
+              },
+              null,
+              2
+            ),
           },
         ],
         isError: true,

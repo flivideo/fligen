@@ -86,6 +86,8 @@ async function refineSinglePrompt(
     return refined;
   } catch (error) {
     console.error(`[Prompts] Failed to refine ${type}:`, error);
-    throw new Error(`Failed to refine ${type} prompt: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    throw new Error(
+      `Failed to refine ${type} prompt: ${error instanceof Error ? error.message : 'Unknown error'}`
+    );
   }
 }

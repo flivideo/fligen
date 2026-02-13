@@ -2,12 +2,7 @@
 
 import { promises as fs } from 'fs';
 import path from 'path';
-import type {
-  ProjectMetadata,
-  HumanPrompts,
-  SourceTranscripts,
-  ProjectData,
-} from './types.js';
+import type { ProjectMetadata, HumanPrompts, SourceTranscripts, ProjectData } from './types.js';
 import type { ProjectListItem } from './types.js';
 
 const ASSETS_DIR = path.resolve(process.cwd(), '..', 'assets');
@@ -72,7 +67,9 @@ export async function projectExists(projectCode: string): Promise<boolean> {
 /**
  * Save a complete project with all JSON files
  */
-export async function saveProject(data: ProjectData): Promise<{ success: boolean; error?: string }> {
+export async function saveProject(
+  data: ProjectData
+): Promise<{ success: boolean; error?: string }> {
   try {
     const { projectCode } = data.metadata;
 

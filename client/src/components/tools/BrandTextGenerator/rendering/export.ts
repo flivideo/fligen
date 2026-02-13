@@ -18,9 +18,7 @@ export async function exportToPng(
 export async function copyToClipboard(canvas: HTMLCanvasElement): Promise<void> {
   try {
     const blob = await exportToPng(canvas, false);
-    await navigator.clipboard.write([
-      new ClipboardItem({ 'image/png': blob })
-    ]);
+    await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
   } catch (error) {
     console.error('Clipboard write failed:', error);
     throw new Error('Clipboard access denied. Use Download instead.');

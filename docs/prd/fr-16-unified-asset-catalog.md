@@ -19,6 +19,7 @@ As a developer, I need a unified asset management system that tracks all generat
 ## Problem
 
 **Current state:** FliGen has inconsistent data persistence patterns:
+
 - Day 4 (Images): Nothing saved
 - Day 5 (TTS): Hard-coded path, no metadata
 - Day 6 (Videos): Filename collisions, missing animation prompts
@@ -34,6 +35,7 @@ As a developer, I need a unified asset management system that tracks all generat
 ## Solution
 
 Create a **centralized asset catalog** with:
+
 1. Unified data model for all asset types
 2. Storage functions (save, load, update, delete)
 3. Server API endpoints
@@ -75,32 +77,32 @@ assets/
 // Unified Asset Type
 interface Asset {
   // Core identity
-  id: string;                    // Unique: "asset_{type}_{timestamp}_{random}"
+  id: string; // Unique: "asset_{type}_{timestamp}_{random}"
   type: 'image' | 'video' | 'audio' | 'thumbnail';
-  filename: string;              // Unique filename with extension
-  url: string;                   // Server URL path
+  filename: string; // Unique filename with extension
+  url: string; // Server URL path
 
   // Generation metadata
-  provider: string;              // 'fal' | 'kie' | 'elevenlabs' | 'n8n'
-  model: string;                 // Model/version used
-  prompt: string;                // Generation prompt
+  provider: string; // 'fal' | 'kie' | 'elevenlabs' | 'n8n'
+  model: string; // Model/version used
+  prompt: string; // Generation prompt
 
   // Status tracking
   status: 'generating' | 'ready' | 'failed' | 'archived';
-  error?: string;                // Error message if failed
+  error?: string; // Error message if failed
 
   // Timestamps
-  createdAt: string;             // ISO 8601
-  completedAt?: string;          // ISO 8601
+  createdAt: string; // ISO 8601
+  completedAt?: string; // ISO 8601
 
   // Relationships
-  parentId?: string;             // Asset this was regenerated from
-  sourceAssetIds?: string[];     // Assets used to create this (e.g., video uses images)
-  tags?: string[];               // User-defined tags
+  parentId?: string; // Asset this was regenerated from
+  sourceAssetIds?: string[]; // Assets used to create this (e.g., video uses images)
+  tags?: string[]; // User-defined tags
 
   // Business metrics
-  estimatedCost: number;         // USD
-  generationTimeMs: number;      // Milliseconds
+  estimatedCost: number; // USD
+  generationTimeMs: number; // Milliseconds
 
   // Tool-specific metadata (flexible)
   metadata: {
@@ -156,9 +158,9 @@ interface Asset {
 
 // Catalog Index
 interface AssetCatalog {
-  version: string;               // Catalog schema version
-  lastUpdated: string;           // ISO 8601
-  assets: Asset[];               // All assets
+  version: string; // Catalog schema version
+  lastUpdated: string; // ISO 8601
+  assets: Asset[]; // All assets
 }
 ```
 
@@ -186,7 +188,10 @@ export async function initCatalog(): Promise<void> {
   await fs.mkdir(path.join(CATALOG_DIR, 'audio'), { recursive: true });
   await fs.mkdir(path.join(CATALOG_DIR, 'thumbnails'), { recursive: true });
 
-  const exists = await fs.access(INDEX_FILE).then(() => true).catch(() => false);
+  const exists = await fs
+    .access(INDEX_FILE)
+    .then(() => true)
+    .catch(() => false);
   if (!exists) {
     const initialCatalog: AssetCatalog = {
       version: '1.0.0',
@@ -220,7 +225,7 @@ export async function addAsset(asset: Asset): Promise<Asset> {
 // Update asset
 export async function updateAsset(id: string, updates: Partial<Asset>): Promise<Asset | null> {
   const catalog = await loadCatalog();
-  const index = catalog.assets.findIndex(a => a.id === id);
+  const index = catalog.assets.findIndex((a) => a.id === id);
   if (index === -1) return null;
 
   catalog.assets[index] = { ...catalog.assets[index], ...updates };
@@ -231,7 +236,7 @@ export async function updateAsset(id: string, updates: Partial<Asset>): Promise<
 // Get asset by ID
 export async function getAsset(id: string): Promise<Asset | null> {
   const catalog = await loadCatalog();
-  return catalog.assets.find(a => a.id === id) || null;
+  return catalog.assets.find((a) => a.id === id) || null;
 }
 
 // Get all assets
@@ -250,11 +255,11 @@ export async function filterAssets(filter: {
   endDate?: string;
 }): Promise<Asset[]> {
   const catalog = await loadCatalog();
-  return catalog.assets.filter(asset => {
+  return catalog.assets.filter((asset) => {
     if (filter.type && asset.type !== filter.type) return false;
     if (filter.provider && asset.provider !== filter.provider) return false;
     if (filter.status && asset.status !== filter.status) return false;
-    if (filter.tags && !filter.tags.every(t => asset.tags?.includes(t))) return false;
+    if (filter.tags && !filter.tags.every((t) => asset.tags?.includes(t))) return false;
     if (filter.startDate && asset.createdAt < filter.startDate) return false;
     if (filter.endDate && asset.createdAt > filter.endDate) return false;
     return true;
@@ -264,7 +269,7 @@ export async function filterAssets(filter: {
 // Delete asset
 export async function deleteAsset(id: string): Promise<boolean> {
   const catalog = await loadCatalog();
-  const index = catalog.assets.findIndex(a => a.id === id);
+  const index = catalog.assets.findIndex((a) => a.id === id);
   if (index === -1) return false;
 
   const asset = catalog.assets[index];
@@ -287,7 +292,12 @@ export function generateAssetId(type: Asset['type']): string {
 }
 
 // Generate filename
-export function generateFilename(type: Asset['type'], provider: string, model: string, extension: string): string {
+export function generateFilename(
+  type: Asset['type'],
+  provider: string,
+  model: string,
+  extension: string
+): string {
   const id = Date.now();
   const modelSlug = model.toLowerCase().replace(/\s+/g, '-');
   return `${type}-${id}-${provider}-${modelSlug}.${extension}`;
@@ -482,6 +492,7 @@ shared/src/index.ts           # Add Asset + AssetCatalog types
 ## Migration Notes
 
 **NOT included in this FR:**
+
 - Migrating existing data (shot-list, video-scenes, music-library)
 - Implementing asset saving in Day 4, 5, 10
 - Building asset browser UI
@@ -495,10 +506,12 @@ This FR focuses ONLY on building the infrastructure that everything else will us
 ## Dependencies
 
 **Required:**
+
 - Node.js fs/promises API
 - Existing server structure (Express, TypeScript)
 
 **Blocks:**
+
 - FR-17: Asset Persistence Implementation
 - FR-18: Asset Browser UI
 
@@ -509,6 +522,7 @@ This FR focuses ONLY on building the infrastructure that everything else will us
 **Status:** Complete
 
 **What was done:**
+
 - Created catalog storage module with all CRUD operations (add, get, filter, update, delete)
 - Implemented catalog initialization that creates folder structure and index.json
 - Added Asset and AssetCatalog TypeScript types to shared workspace
@@ -518,14 +532,17 @@ This FR focuses ONLY on building the infrastructure that everything else will us
 - Fixed route ordering to prevent /api/catalog/filter from being caught by /:id route
 
 **Files created:**
+
 - `server/src/tools/catalog/storage.ts` (119 lines) - Core storage operations
 - `server/src/tools/catalog/index.ts` (1 line) - Module exports
 
 **Files modified:**
+
 - `shared/src/index.ts` - Added Asset and AssetCatalog interfaces (30 lines)
 - `server/src/index.ts` - Added catalog import, initialization, and 4 API endpoints (65 lines)
 
 **Testing completed:**
+
 - ✅ Server initializes catalog on startup
 - ✅ Folder structure created: `assets/catalog/{images,videos,audio,thumbnails}/`
 - ✅ Initial index.json created with version 1.0.0 and empty assets array
@@ -536,6 +553,7 @@ This FR focuses ONLY on building the infrastructure that everything else will us
 - ✅ TypeScript compilation successful (npm run build)
 
 **Key implementation details:**
+
 - Assets directory resolved as `path.resolve(process.cwd(), '..', 'assets')` to match existing pattern
 - Route ordering: /api/catalog/filter must come before /api/catalog/:id to prevent mismatches
 - Asset ID format: `asset_{type}_{timestamp}_{random}`
@@ -543,6 +561,7 @@ This FR focuses ONLY on building the infrastructure that everything else will us
 - Catalog version: 1.0.0
 
 **Ready for FR-17:**
+
 - Other developers can now import `catalog.addAsset()`, `catalog.updateAsset()`, etc.
 - Foundation in place for Day 4, 5, 10 to save assets
 - API endpoints available for future Asset Browser UI (FR-18)

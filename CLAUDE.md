@@ -19,6 +19,7 @@ FliGen is the foundational harness for the "12 Days of Claudemas" tool building 
 **Hook**: "Imagine if you could build 12 applications or tools in 12 days using a large language model. Well, on the first day of Claude-mas, my code bot said to me... it's probably possible. I'm AppyDave. Let's see if Claude is correct."
 
 **Tech Stack:**
+
 - React 19 + Vite 6
 - TailwindCSS v4
 - Express 5 + Socket.io
@@ -27,20 +28,20 @@ FliGen is the foundational harness for the "12 Days of Claudemas" tool building 
 
 ## The 12 Days
 
-| Day | Tool/Focus | Status | APIs/Tech |
-|-----|-----------|--------|-----------|
-| 1 | **FliGen Harness** | ✅ | React/Vite, Express, Socket.io |
-| 2 | **Primary Brain** (Claude Agent SDK) | ✅ | Claude Agent SDK, Chat UI |
-| 3 | **Second Brain** (Kybernesis) | ✅ | LocalDocs + Kybernesis MCP |
-| 4 | **Image Generator** | ✅ | FAL.AI, KIE.AI |
-| 5 | **Text-to-Speech** | ✅ | 11 Labs (ElevenLabs API) |
-| 6 | **Video Animation** | ✅ | KIE.AI (Veo 3.1), FAL.AI (Kling O1) |
-| 7 | **Music Generator** | | Suno |
-| 8 | **Thumbnail Generator** | | Compound tool |
-| 9 | **Interop** | | FliHub, DAM, FliDeck |
-| 10 | **N8N/ComfyUI** | | Orchestration |
-| 11 | **Story Builder** | | Narrative tool |
-| 12 | **Final Song** | | All tools unite |
+| Day | Tool/Focus                           | Status | APIs/Tech                           |
+| --- | ------------------------------------ | ------ | ----------------------------------- |
+| 1   | **FliGen Harness**                   | ✅     | React/Vite, Express, Socket.io      |
+| 2   | **Primary Brain** (Claude Agent SDK) | ✅     | Claude Agent SDK, Chat UI           |
+| 3   | **Second Brain** (Kybernesis)        | ✅     | LocalDocs + Kybernesis MCP          |
+| 4   | **Image Generator**                  | ✅     | FAL.AI, KIE.AI                      |
+| 5   | **Text-to-Speech**                   | ✅     | 11 Labs (ElevenLabs API)            |
+| 6   | **Video Animation**                  | ✅     | KIE.AI (Veo 3.1), FAL.AI (Kling O1) |
+| 7   | **Music Generator**                  |        | Suno                                |
+| 8   | **Thumbnail Generator**              |        | Compound tool                       |
+| 9   | **Interop**                          |        | FliHub, DAM, FliDeck                |
+| 10  | **N8N/ComfyUI**                      |        | Orchestration                       |
+| 11  | **Story Builder**                    |        | Narrative tool                      |
+| 12  | **Final Song**                       |        | All tools unite                     |
 
 **Full details**: See `docs/index.md` and `docs/planning/`
 
@@ -55,6 +56,7 @@ npm run build            # Build all workspaces
 ## Architecture
 
 **Monorepo Structure** (npm workspaces):
+
 - `client/` - React 19 + Vite + TailwindCSS v4 (port 5400)
 - `server/` - Express 5 + Socket.io (port 5401)
 - `shared/` - TypeScript types shared between client/server
@@ -84,6 +86,7 @@ docs/
 ## Current Status
 
 **Completed:** Days 1-6 (FR-01 through FR-10, NFR-01)
+
 - Day 1: Harness, layout, navigation
 - Day 2: Claude Agent SDK integration, chat UI
 - Day 3: LocalDocs reader, Kybernesis memory integration, git leak detection
@@ -92,18 +95,19 @@ docs/
 - Day 6: Shot list, video generation with KIE.AI Veo 3.1 and FAL.AI Kling O1
 
 **Next:** Day 7 - Music Generator
+
 - Suno or other music generation APIs
 - See `docs/planning/fox-and-lazy-dog-story.md` for story context
 
 ## Slash Commands
 
-| Command | Purpose |
-|---------|---------|
-| `/po` | Product Owner - requirements, specs |
-| `/dev` | Developer - implementation |
-| `/uat` | User acceptance testing |
-| `/progress` | Quick project status |
-| `/brainstorm` | Creative exploration |
+| Command       | Purpose                             |
+| ------------- | ----------------------------------- |
+| `/po`         | Product Owner - requirements, specs |
+| `/dev`        | Developer - implementation          |
+| `/uat`        | User acceptance testing             |
+| `/progress`   | Quick project status                |
+| `/brainstorm` | Creative exploration                |
 
 ## Critical Notes
 
@@ -113,7 +117,7 @@ Use the new import syntax:
 
 ```css
 /* CORRECT */
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* INCORRECT (old v3 syntax) */
 @tailwind base;
@@ -127,7 +131,7 @@ Use the new import syntax:
 
 ```css
 /* CORRECT - recursive glob with ./ prefix */
-@import "tailwindcss";
+@import 'tailwindcss';
 @source "./**/*.{js,ts,jsx,tsx}";
 
 /* INCORRECT - these patterns don't work properly */
@@ -148,6 +152,7 @@ Use the new import syntax:
 **Root cause:** TailwindCSS v4's preflight removes `margin: auto` from `<dialog>` elements. The browser centers dialogs using `margin: auto` combined with `position: fixed` and `inset: 0`. When preflight resets margin to 0, centering breaks.
 
 **The fix is simple - restore `margin: auto`:**
+
 ```tsx
 <dialog className="m-auto w-96 rounded-lg bg-slate-800 p-0 backdrop:bg-black/50">
   {/* Content directly inside - no wrapper needed */}
@@ -155,12 +160,14 @@ Use the new import syntax:
 ```
 
 **Key points:**
+
 - `m-auto` - restores the margin that preflight removed, enabling native centering
 - Do NOT add `fixed`, `inset-0`, `h-screen`, `w-screen` - these break native dialog sizing
 - `backdrop:bg-black/50` - styles the native backdrop
 - Content goes directly inside, no wrapper div needed
 
 **Alternative - add to base CSS layer:**
+
 ```css
 @layer base {
   dialog {
@@ -170,6 +177,7 @@ Use the new import syntax:
 ```
 
 **Backdrop click handling:**
+
 ```tsx
 const handleBackdropClick = (e: React.MouseEvent) => {
   if (e.target === dialogRef.current) {
@@ -201,17 +209,13 @@ When multiple components need to share state (e.g., settings), use React Context
 export function SettingsProvider({ children }) {
   const [values, setValues] = useState(loadFromStorage());
   // ... update functions
-  return (
-    <SettingsContext.Provider value={contextValue}>
-      {children}
-    </SettingsContext.Provider>
-  );
+  return <SettingsContext.Provider value={contextValue}>{children}</SettingsContext.Provider>;
 }
 
 // App.tsx - Wrap at top level
 <SettingsProvider>
   <AppContent />
-</SettingsProvider>
+</SettingsProvider>;
 ```
 
 This ensures state changes propagate to all consumers immediately.
@@ -223,11 +227,13 @@ Pre-commit hook prevents accidental commits of secrets (API keys, tokens, passwo
 **Prerequisites:** `brew install gitleaks`
 
 **How it works:**
+
 - Hook runs `gitleaks protect --staged --verbose` on every commit
 - Blocks commits containing detected secrets
 - Shows clear error message with remediation options
 
 **False positives:** Add patterns to `.gitleaksignore`:
+
 ```
 # Format: <rule-id>:<file-path>:<line-number>
 generic-api-key:config/example.json:10
@@ -238,6 +244,7 @@ generic-api-key:config/example.json:10
 ### Port Allocation
 
 FliGen uses the 54xx range:
+
 - Client: 5400
 - Server: 5401
 

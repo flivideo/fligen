@@ -32,11 +32,13 @@ Create a connectivity verification system that:
 ### API Details
 
 **FAL.AI:**
+
 - Docs: https://fal.ai/docs
 - Auth: API key in header
 - Test model: Use cheapest/fastest available (e.g., Flux Schnell)
 
 **KIE.AI:**
+
 - Docs: https://piapi.ai/docs
 - Auth: API key in header
 - Test model: Use cheapest option (e.g., Qwen Z-Image at $0.004)
@@ -114,6 +116,7 @@ interface ImageTestResult {
 ### Cost Estimate
 
 Test images should be minimal cost:
+
 - FAL.AI Flux Schnell: ~$0.003 per image
 - KIE.AI Qwen Z-Image: ~$0.004 per image
 - Total per test: ~$0.007
@@ -131,10 +134,12 @@ Test images should be minimal cost:
 ### Documentation Sources
 
 **FAL.AI:**
+
 - Use MCP tool: `mcp__fal__SearchFal` for API docs, examples, and pricing
 - Official docs: https://fal.ai/docs
 
 **KIE.AI:**
+
 - Second Brain: `/Users/davidcruwys/dev/ad/brains/kie-ai/`
   - `kie-ai-fundamentals.md` - API basics, authentication
   - `kie-ai-image-generation.md` - Image generation specifics
@@ -149,6 +154,7 @@ Test images should be minimal cost:
 ## Completion Notes
 
 **What was done:**
+
 - Created image API client modules with types, FAL.AI client, and KIE.AI client
 - FAL.AI uses `@fal-ai/client` npm package with Flux Schnell model
 - KIE.AI uses REST API with async polling pattern (Flux Kontext Pro model)
@@ -159,6 +165,7 @@ Test images should be minimal cost:
 - Integrated Day 4 UI into App.tsx routing
 
 **Files created:**
+
 - `server/src/tools/image/types.ts` - Type definitions
 - `server/src/tools/image/fal-client.ts` - FAL.AI client
 - `server/src/tools/image/kie-client.ts` - KIE.AI client
@@ -166,10 +173,12 @@ Test images should be minimal cost:
 - `client/src/components/tools/Day4ImageGen.tsx` - Day 4 UI
 
 **Files modified:**
+
 - `server/src/index.ts` - Added image API endpoints and startup status
 - `client/src/App.tsx` - Added Day 4 routing
 
 **Testing notes:**
+
 - Run `npm run dev` and navigate to Day 4
 - Health check shows green/red status for each provider
 - "Test All Providers" generates test images from both APIs

@@ -69,10 +69,7 @@ export function Day1Harness({ isConnected }: Day1HarnessProps) {
         <div className="flex flex-wrap gap-2">
           {['React 19', 'Vite 6', 'TailwindCSS v4', 'Express 5', 'Socket.io', 'TypeScript'].map(
             (tech) => (
-              <span
-                key={tech}
-                className="px-2 py-1 bg-slate-700 rounded text-xs text-slate-300"
-              >
+              <span key={tech} className="px-2 py-1 bg-slate-700 rounded text-xs text-slate-300">
                 {tech}
               </span>
             )

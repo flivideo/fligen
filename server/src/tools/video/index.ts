@@ -2,8 +2,16 @@
 
 export * from './types.js';
 export * from './storage.js';
-export { generateVideo as generateVideoKie, checkHealth as checkHealthKie, isConfigured as isKieConfigured } from './kie-client.js';
-export { generateVideo as generateVideoFal, checkHealth as checkHealthFal, isConfigured as isFalConfigured } from './fal-client.js';
+export {
+  generateVideo as generateVideoKie,
+  checkHealth as checkHealthKie,
+  isConfigured as isKieConfigured,
+} from './kie-client.js';
+export {
+  generateVideo as generateVideoFal,
+  checkHealth as checkHealthFal,
+  isConfigured as isFalConfigured,
+} from './fal-client.js';
 export { saveVideoToCatalog } from './save-to-catalog.js';
 
 import type { VideoHealthResponse, VideoTask, VideoModel } from './types.js';
@@ -18,10 +26,7 @@ import type { Server } from 'socket.io';
  * Check health of all video providers
  */
 export async function checkVideoHealth(): Promise<VideoHealthResponse> {
-  const [kie, fal] = await Promise.all([
-    checkHealthKie(),
-    checkHealthFal(),
-  ]);
+  const [kie, fal] = await Promise.all([checkHealthKie(), checkHealthFal()]);
 
   return { kie, fal };
 }
@@ -71,8 +76,12 @@ export async function generateTransitionVideo(
   const startImageBase64 = await getShotAsBase64(startShot);
   const endImageBase64 = await getShotAsBase64(endShot);
 
-  console.log(`[Video] Start image: ${startShot.filename} (${Math.round(startImageBase64.length / 1024)}KB base64)`);
-  console.log(`[Video] End image: ${endShot.filename} (${Math.round(endImageBase64.length / 1024)}KB base64)`);
+  console.log(
+    `[Video] Start image: ${startShot.filename} (${Math.round(startImageBase64.length / 1024)}KB base64)`
+  );
+  console.log(
+    `[Video] End image: ${endShot.filename} (${Math.round(endImageBase64.length / 1024)}KB base64)`
+  );
   console.log(`[Video] Model: ${model}, Duration: ${duration}s`);
 
   // Generate video based on provider

@@ -37,23 +37,25 @@ export default function Day11StoryBuilder() {
     try {
       const response = await fetch('http://localhost:5401/api/catalog');
       const data = await response.json();
-      const assets = data.assets as Asset[] || [];
+      const assets = (data.assets as Asset[]) || [];
 
       // Filter by type
-      const videoAssets = assets.filter(a => a.type === 'video');
-      const musicAssets = assets.filter(a => a.type === 'music');
-      const narrationAssets = assets.filter(a => a.type === 'narration');
+      const videoAssets = assets.filter((a) => a.type === 'video');
+      const musicAssets = assets.filter((a) => a.type === 'music');
+      const narrationAssets = assets.filter((a) => a.type === 'narration');
 
-      console.log('[Day11] Loaded music assets:', musicAssets.map(m => ({
-        name: m.metadata?.name,
-        duration: m.metadata?.duration,
-        durationSeconds: m.metadata?.durationSeconds
-      })));
+      console.log(
+        '[Day11] Loaded music assets:',
+        musicAssets.map((m) => ({
+          name: m.metadata?.name,
+          duration: m.metadata?.duration,
+          durationSeconds: m.metadata?.durationSeconds,
+        }))
+      );
 
       setVideos(videoAssets);
       setMusicTracks(musicAssets);
       setNarrations(narrationAssets);
-
     } catch (err) {
       console.error('Failed to load assets:', err);
       setError('Failed to load assets');
@@ -67,32 +69,32 @@ export default function Day11StoryBuilder() {
   };
 
   const getVideoLength = (videoUrl: string): number => {
-    const asset = videos.find(v => v.url === videoUrl);
+    const asset = videos.find((v) => v.url === videoUrl);
     return asset?.metadata?.duration || 0;
   };
 
   const getTotalVideoLength = () => {
     return selectedVideos
-      .filter(v => v !== '')
+      .filter((v) => v !== '')
       .reduce((sum, url) => sum + getVideoLength(url), 0);
   };
 
   const getMusicFullLength = () => {
     if (!selectedMusic) return 0;
-    const asset = musicTracks.find(m => m.url === selectedMusic);
+    const asset = musicTracks.find((m) => m.url === selectedMusic);
     const duration = asset?.metadata?.duration || asset?.metadata?.durationSeconds || 0;
     console.log('[Day11] getMusicFullLength:', {
       selectedMusic,
       assetFound: !!asset,
       metadata: asset?.metadata,
-      duration
+      duration,
     });
     return duration;
   };
 
   const getNarrationLength = () => {
     if (!narrationEnabled || !selectedNarration) return 0;
-    const asset = narrations.find(n => n.url === selectedNarration);
+    const asset = narrations.find((n) => n.url === selectedNarration);
     return asset?.metadata?.duration || asset?.metadata?.durationSeconds || 0;
   };
 
@@ -108,7 +110,7 @@ export default function Day11StoryBuilder() {
     setAssembledVideo(null);
 
     // Validate inputs
-    const videosToUse = selectedVideos.filter(v => v !== '');
+    const videosToUse = selectedVideos.filter((v) => v !== '');
     if (videosToUse.length === 0) {
       setError('Please select at least one video');
       return;
@@ -129,11 +131,14 @@ export default function Day11StoryBuilder() {
           startTime: musicStartTime ? parseFloat(musicStartTime) : undefined,
           endTime: musicEndTime ? parseFloat(musicEndTime) : undefined,
         },
-        narration: narrationEnabled && selectedNarration ? {
-          file: selectedNarration,
-          volume: narrationVolume / 100,
-          enabled: true,
-        } : undefined,
+        narration:
+          narrationEnabled && selectedNarration
+            ? {
+                file: selectedNarration,
+                volume: narrationVolume / 100,
+                enabled: true,
+              }
+            : undefined,
         outputName: outputName || undefined,
         targetDuration: targetDuration ? parseFloat(targetDuration) : undefined,
         enableZoom,
@@ -153,7 +158,6 @@ export default function Day11StoryBuilder() {
       } else {
         setError(result.error || 'Assembly failed');
       }
-
     } catch (err) {
       console.error('Assembly error:', err);
       setError(err instanceof Error ? err.message : 'Assembly failed');
@@ -193,14 +197,16 @@ export default function Day11StoryBuilder() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-white mb-2">Story Builder</h1>
-          <p className="text-slate-400">Combine videos, music, and narration into your final story</p>
+          <p className="text-slate-400">
+            Combine videos, music, and narration into your final story
+          </p>
         </div>
 
         {/* Videos Section */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-slate-200">Video Clips</h2>
-            {selectedVideos.some(v => v !== '') && (
+            {selectedVideos.some((v) => v !== '') && (
               <span className="text-sm text-emerald-400">
                 Total: {getTotalVideoLength().toFixed(1)}s
               </span>
@@ -208,7 +214,7 @@ export default function Day11StoryBuilder() {
           </div>
 
           <div className="space-y-3">
-            {[0, 1, 2].map(index => {
+            {[0, 1, 2].map((index) => {
               const videoUrl = selectedVideos[index];
               const duration = videoUrl ? getVideoLength(videoUrl) : 0;
 
@@ -222,7 +228,7 @@ export default function Day11StoryBuilder() {
                              appearance-none cursor-pointer"
                   >
                     <option value="">Clip {index + 1} (optional)</option>
-                    {videos.map(video => {
+                    {videos.map((video) => {
                       let label = '';
 
                       if (video.metadata?.workflowId) {
@@ -233,7 +239,8 @@ export default function Day11StoryBuilder() {
 
                       label += video.filename;
 
-                      const videoDuration = video.metadata?.duration || video.metadata?.durationSeconds;
+                      const videoDuration =
+                        video.metadata?.duration || video.metadata?.durationSeconds;
                       if (videoDuration) {
                         label += ` (${videoDuration.toFixed(1)}s)`;
                       }
@@ -267,9 +274,7 @@ export default function Day11StoryBuilder() {
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-slate-200">Music Track</h2>
             {selectedMusic && getMusicFullLength() > 0 && (
-              <span className="text-sm text-emerald-400">
-                {formatTime(getMusicFullLength())}
-              </span>
+              <span className="text-sm text-emerald-400">{formatTime(getMusicFullLength())}</span>
             )}
           </div>
 
@@ -281,16 +286,15 @@ export default function Day11StoryBuilder() {
                        focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all"
             >
               <option value="">Select music track...</option>
-              {musicTracks.map(track => {
+              {musicTracks.map((track) => {
                 const displayName = track.metadata?.name || track.filename;
                 const trackDuration = track.metadata?.duration || track.metadata?.durationSeconds;
-                const duration = trackDuration
-                  ? ` (${formatTime(trackDuration)})`
-                  : '';
+                const duration = trackDuration ? ` (${formatTime(trackDuration)})` : '';
 
                 return (
                   <option key={track.id} value={track.url}>
-                    {displayName}{duration}
+                    {displayName}
+                    {duration}
                   </option>
                 );
               })}
@@ -342,7 +346,6 @@ export default function Day11StoryBuilder() {
                     />
                   </div>
                 </div>
-
               </div>
             )}
           </div>
@@ -361,9 +364,7 @@ export default function Day11StoryBuilder() {
               <h2 className="text-lg font-semibold text-slate-200">Add Narration (optional)</h2>
             </div>
             {narrationEnabled && selectedNarration && getNarrationLength() > 0 && (
-              <span className="text-sm text-emerald-400">
-                {formatTime(getNarrationLength())}
-              </span>
+              <span className="text-sm text-emerald-400">{formatTime(getNarrationLength())}</span>
             )}
           </div>
 
@@ -376,20 +377,19 @@ export default function Day11StoryBuilder() {
                          focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all"
               >
                 <option value="">Select narration...</option>
-                {narrations.map(narr => {
+                {narrations.map((narr) => {
                   // Show custom name if available, otherwise filename + voice name
                   const displayName = narr.metadata?.name
                     ? narr.metadata.name
                     : `${narr.filename} - ${narr.metadata?.voice || 'Unknown Voice'}`;
 
                   const narrDuration = narr.metadata?.duration || narr.metadata?.durationSeconds;
-                  const duration = narrDuration
-                    ? ` (${formatTime(narrDuration)})`
-                    : '';
+                  const duration = narrDuration ? ` (${formatTime(narrDuration)})` : '';
 
                   return (
                     <option key={narr.id} value={narr.url}>
-                      {displayName}{duration}
+                      {displayName}
+                      {duration}
                     </option>
                   );
                 })}

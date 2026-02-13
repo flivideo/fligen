@@ -148,10 +148,7 @@ import { Socket } from 'socket.io';
 
 const sessions = new Map<string, string>();
 
-export async function handleAgentQuery(
-  socket: Socket,
-  userMessage: string
-) {
+export async function handleAgentQuery(socket: Socket, userMessage: string) {
   const options: Options = {
     systemPrompt: 'You are a helpful assistant for FliGen...',
     model: 'claude-sonnet-4-5-20250929',
@@ -222,9 +219,9 @@ Default allowlist for FliGen:
 ```typescript
 const options: Options = {
   allowedTools: [
-    'Read',     // Read files
-    'Write',    // Write files
-    'Bash',     // Execute commands
+    'Read', // Read files
+    'Write', // Write files
+    'Bash', // Execute commands
   ],
   // Future: Add MCP tools for image/audio generation
   // 'mcp__fligen-tools__generate_image',
@@ -335,6 +332,7 @@ Client                    Server
 ## Completion Notes
 
 **What was done:**
+
 - Installed `@anthropic-ai/claude-agent-sdk` v0.1.76 in server workspace
 - Updated shared types with full agent Socket.io event interfaces
 - Created agent module with handler and session management
@@ -345,6 +343,7 @@ Client                    Server
 - Error handling with categorized error codes (AUTH_REQUIRED, RATE_LIMIT, CANCELLED)
 
 **Files changed:**
+
 - `server/package.json` - added @anthropic-ai/claude-agent-sdk dependency
 - `shared/src/index.ts` - added agent event types (modified)
 - `server/src/agent/session.ts` - session management utilities (new)
@@ -353,6 +352,7 @@ Client                    Server
 - `server/src/index.ts` - wired up socket events (modified)
 
 **Testing notes:**
+
 - Server builds and starts successfully on port 5401
 - Socket.io connections established from client
 - Ready for client-side chat UI implementation

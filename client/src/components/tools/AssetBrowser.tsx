@@ -11,11 +11,7 @@ interface AssetBrowserProps {
   onSelect?: (assets: Asset[]) => void;
 }
 
-export function AssetBrowser({
-  filterType,
-  selectionMode,
-  onSelect,
-}: AssetBrowserProps) {
+export function AssetBrowser({ filterType, selectionMode, onSelect }: AssetBrowserProps) {
   const [assets, setAssets] = useState<Asset[]>([]);
   const [filters, setFilters] = useState({
     type: filterType || ('all' as 'all' | Asset['type']),
@@ -74,8 +70,7 @@ export function AssetBrowser({
 
     // Sort by date (newest first)
     return filtered.sort(
-      (a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
   }, [assets, filters]);
 
@@ -163,9 +158,7 @@ export function AssetBrowser({
     <div className="relative h-full overflow-y-auto p-6">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="font-mono text-2xl font-bold uppercase text-slate-200">
-          Asset Library
-        </h1>
+        <h1 className="font-mono text-2xl font-bold uppercase text-slate-200">Asset Library</h1>
         <p className="mt-1 font-mono text-sm text-slate-500">
           {filteredAssets.length} asset{filteredAssets.length !== 1 ? 's' : ''}
           {filters.search || filters.type !== 'all' || filters.provider !== 'all'
@@ -181,9 +174,7 @@ export function AssetBrowser({
           type="text"
           placeholder="Search prompts, filenames, tags..."
           value={filters.search}
-          onChange={(e) =>
-            setFilters((prev) => ({ ...prev, search: e.target.value }))
-          }
+          onChange={(e) => setFilters((prev) => ({ ...prev, search: e.target.value }))}
           className="flex-1 rounded border border-slate-700 bg-slate-800 px-3 py-2 font-mono text-sm text-slate-300 placeholder:text-slate-600 focus:border-amber-500 focus:outline-none"
         />
 
@@ -209,9 +200,7 @@ export function AssetBrowser({
         {/* Provider Filter */}
         <select
           value={filters.provider}
-          onChange={(e) =>
-            setFilters((prev) => ({ ...prev, provider: e.target.value }))
-          }
+          onChange={(e) => setFilters((prev) => ({ ...prev, provider: e.target.value }))}
           className="rounded border border-slate-700 bg-slate-800 px-3 py-2 font-mono text-sm text-slate-300 focus:border-amber-500 focus:outline-none"
         >
           <option value="all">All Providers</option>
@@ -229,9 +218,7 @@ export function AssetBrowser({
               onClick={handleSelectAll}
               className="rounded border border-slate-700 bg-slate-800 px-3 py-2 font-mono text-sm font-medium text-slate-300 hover:bg-slate-700"
             >
-              {selectedAssets.length === displayedAssets.length
-                ? 'Deselect All'
-                : 'Select All'}
+              {selectedAssets.length === displayedAssets.length ? 'Deselect All' : 'Select All'}
             </button>
             {selectedAssets.length > 0 && (
               <button
@@ -263,21 +250,17 @@ export function AssetBrowser({
       )}
 
       {/* No Matches */}
-      {!loading &&
-        assets.length > 0 &&
-        filteredAssets.length === 0 && (
-          <div className="py-12 text-center">
-            <p className="text-lg text-slate-400">No assets match your filters</p>
-            <button
-              onClick={() =>
-                setFilters({ type: 'all', provider: 'all', search: '' })
-              }
-              className="mt-4 text-amber-500 hover:text-amber-400"
-            >
-              Clear filters
-            </button>
-          </div>
-        )}
+      {!loading && assets.length > 0 && filteredAssets.length === 0 && (
+        <div className="py-12 text-center">
+          <p className="text-lg text-slate-400">No assets match your filters</p>
+          <button
+            onClick={() => setFilters({ type: 'all', provider: 'all', search: '' })}
+            className="mt-4 text-amber-500 hover:text-amber-400"
+          >
+            Clear filters
+          </button>
+        </div>
+      )}
 
       {/* Grid */}
       {!loading && displayedAssets.length > 0 && (
@@ -290,9 +273,7 @@ export function AssetBrowser({
                 selected={selectedAssets.includes(asset.id)}
                 onClick={() => handleAssetClick(asset)}
                 onSelect={
-                  selectionMode
-                    ? (selected) => handleSelect(asset.id, selected)
-                    : undefined
+                  selectionMode ? (selected) => handleSelect(asset.id, selected) : undefined
                 }
               />
             ))}

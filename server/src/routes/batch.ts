@@ -254,9 +254,7 @@ router.post('/batch/:batchId/update-csv', async (req, res) => {
       });
     }
 
-    const completedIds = job.results
-      .filter((r) => r.status === 'completed')
-      .map((r) => r.id);
+    const completedIds = job.results.filter((r) => r.status === 'completed').map((r) => r.id);
 
     const updatedPath = await batch.updateCsv(job.csvFilePath, completedIds);
 

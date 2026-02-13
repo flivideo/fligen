@@ -63,7 +63,9 @@ export async function fetchTranscripts(
 ): Promise<FliHubTranscriptsResponse> {
   try {
     const segmentsStr = segments.join(',');
-    console.log(`[FliHub] Fetching transcripts for project: ${projectCode}, chapter: ${chapter}, segments: ${segmentsStr}`);
+    console.log(
+      `[FliHub] Fetching transcripts for project: ${projectCode}, chapter: ${chapter}, segments: ${segmentsStr}`
+    );
 
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);

@@ -14,12 +14,12 @@ export function Header({
   onOpenSettings,
 }: HeaderProps) {
   return (
-    <header
-      className="h-12 shrink-0 bg-slate-800 border-b border-slate-700 flex flex-row items-center justify-between px-4"
-    >
+    <header className="h-12 shrink-0 bg-slate-800 border-b border-slate-700 flex flex-row items-center justify-between px-4">
       {/* Left: Breadcrumb */}
       <div className="flex flex-row items-center gap-2">
-        <span className="font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">FliGen</span>
+        <span className="font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+          FliGen
+        </span>
         <span className="text-slate-500">&rsaquo;</span>
         <span className="text-slate-400">
           Day {currentDay.day} - {currentDay.name}

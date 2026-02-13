@@ -1,11 +1,7 @@
 // FAL.AI SonAuto music generation client for FR-11
 
 import { fal } from '@fal-ai/client';
-import type {
-  MusicGenerationRequest,
-  GeneratedTrack,
-  FalSonautoResponse,
-} from './types.js';
+import type { MusicGenerationRequest, GeneratedTrack, FalSonautoResponse } from './types.js';
 import { downloadAudio, bufferToBase64 } from './storage.js';
 
 const COST_PER_TRACK = 0.075; // $0.075 per generation
@@ -41,9 +37,7 @@ function initClient(): void {
 /**
  * Generate music with FAL.AI SonAuto v2
  */
-export async function generateMusic(
-  request: MusicGenerationRequest
-): Promise<GeneratedTrack> {
+export async function generateMusic(request: MusicGenerationRequest): Promise<GeneratedTrack> {
   const startTime = Date.now();
   const apiKey = getApiKey();
 
@@ -76,7 +70,10 @@ export async function generateMusic(
       input.tags = request.tags;
     } else if (request.style) {
       // Convert style string to tags array
-      input.tags = request.style.split(',').map(s => s.trim()).filter(Boolean);
+      input.tags = request.style
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean);
     }
   }
 

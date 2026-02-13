@@ -37,9 +37,7 @@ export function Day15BatchGen() {
       const response = await fetch(`http://localhost:5401/api/image/batch/${batchId}`);
       const data = await response.json();
 
-      setBatches((prev) =>
-        prev.map((b) => (b.batch_id === batchId ? data : b))
-      );
+      setBatches((prev) => prev.map((b) => (b.batch_id === batchId ? data : b)));
     } catch (error) {
       console.error('Failed to fetch batch status:', error);
     }
@@ -101,7 +99,9 @@ export function Day15BatchGen() {
         fileInput.value = '';
       }
 
-      alert(`Batch started! ID: ${data.batch_id}\n${data.active_prompts} images will be generated.`);
+      alert(
+        `Batch started! ID: ${data.batch_id}\n${data.active_prompts} images will be generated.`
+      );
     } catch (error) {
       console.error('Upload error:', error);
       alert('Failed to upload CSV. Check console for details.');
@@ -288,7 +288,9 @@ export function Day15BatchGen() {
         <div className="rounded-lg bg-slate-900 p-4 text-sm text-slate-400">
           <p className="mb-2 font-semibold text-slate-300">💡 Tips:</p>
           <ul className="list-inside list-disc space-y-1">
-            <li>Images are saved to: <code className="text-slate-300">/assets/catalog/images/</code></li>
+            <li>
+              Images are saved to: <code className="text-slate-300">/assets/catalog/images/</code>
+            </li>
             <li>Use KIE flux-kontext-pro for $0.004/image (best value)</li>
             <li>Batch processing is sequential with 5s delay to avoid rate limits</li>
             <li>Download the updated CSV to see which images completed (a=9)</li>

@@ -87,11 +87,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     showDayIcons: values.showDayIcons as boolean,
   };
 
-  return (
-    <SettingsContext.Provider value={contextValue}>
-      {children}
-    </SettingsContext.Provider>
-  );
+  return <SettingsContext.Provider value={contextValue}>{children}</SettingsContext.Provider>;
 }
 
 export function useSettings() {

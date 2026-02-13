@@ -52,7 +52,7 @@ async function kieRequest<T>(
     const options: RequestInit = {
       method,
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       signal: controller.signal,
@@ -81,7 +81,7 @@ async function kieRequest<T>(
       throw new Error(`API_ERROR: KIE.AI returned ${response.status}`);
     }
 
-    const data = await response.json() as T;
+    const data = (await response.json()) as T;
     console.log(`[KIE.AI Music] Response: ${JSON.stringify(data)}`);
     return data;
   } catch (error) {
@@ -107,9 +107,9 @@ async function submitSunoTask(request: MusicGenerationRequest): Promise<string> 
   // Map model versions to API format
   const modelMap: Record<string, string> = {
     'V3.5': 'V4', // V3.5 not supported, fallback to V4
-    'V4': 'V4',
+    V4: 'V4',
     'V4.5': 'V4_5',
-    'V5': 'V5',
+    V5: 'V5',
   };
 
   const model = modelMap[request.model || 'V4.5'] || 'V4_5';
@@ -137,11 +137,7 @@ async function submitSunoTask(request: MusicGenerationRequest): Promise<string> 
     body.vocalGender = request.vocalGender === 'male' ? 'm' : 'f';
   }
 
-  const response = await kieRequest<KieSunoTaskResponse>(
-    'POST',
-    '/api/v1/generate',
-    body
-  );
+  const response = await kieRequest<KieSunoTaskResponse>('POST', '/api/v1/generate', body);
 
   if (response.code !== 200 || !response.data?.taskId) {
     throw new Error(`Failed to submit task: ${response.msg}`);
@@ -208,7 +204,7 @@ async function pollForResult(taskId: string): Promise<{ audioUrl: string; durati
     console.log(`[KIE.AI Music] Status: ${status}, waiting...`);
 
     // Wait and poll again
-    await new Promise(resolve => setTimeout(resolve, POLL_INTERVAL));
+    await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL));
   }
 
   throw new Error('Timeout waiting for music generation');
@@ -217,9 +213,7 @@ async function pollForResult(taskId: string): Promise<{ audioUrl: string; durati
 /**
  * Generate music with KIE.AI Suno
  */
-export async function generateMusic(
-  request: MusicGenerationRequest
-): Promise<GeneratedTrack> {
+export async function generateMusic(request: MusicGenerationRequest): Promise<GeneratedTrack> {
   const startTime = Date.now();
   const apiKey = getApiKey();
 

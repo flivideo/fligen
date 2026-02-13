@@ -5,6 +5,7 @@
 **Purpose**: Set the stage before Day 1 begins
 
 **Content to cover**:
+
 - The song: "12 Days of Christmas" history and meaning
 - The metaphors (Gift-Giver primary, Builder's Chorus secondary)
 - What we're building: 12 storytelling tools
@@ -20,11 +21,13 @@
 ### What We're Building
 
 **NOT**:
+
 - Rebuilding Storyline App
 - Part of FliVideo
 - A chatbot UI
 
 **YES**:
+
 - Standalone set of tools
 - Client/server architecture (like Storyline/FliHub pattern)
 - Socket.io for real-time communication
@@ -43,17 +46,18 @@ External Services (FAL, KIE, 11 Labs, Suno)
 
 ### API Accounts Needed
 
-| Service | Purpose | Status |
-|---------|---------|--------|
-| 11 Labs | Voice generation | Have account |
-| FAL.AI | Image/video generation | Need to set up |
-| KIE.AI | Multimodal (image/video/audio) | Need to set up |
-| Suno | Music generation | Need to check |
-| Anthropic | Claude SDK | Have account |
+| Service   | Purpose                        | Status         |
+| --------- | ------------------------------ | -------------- |
+| 11 Labs   | Voice generation               | Have account   |
+| FAL.AI    | Image/video generation         | Need to set up |
+| KIE.AI    | Multimodal (image/video/audio) | Need to set up |
+| Suno      | Music generation               | Need to check  |
+| Anthropic | Claude SDK                     | Have account   |
 
 ### Claude SDK Usage
 
 **Using**: Area 2 from 007-bmad-claude-sdk (simple SDK calls)
+
 - 38 lines minimal pattern
 - `query()` for one-shot prompts
 - No chatbot UI complexity
@@ -65,6 +69,7 @@ External Services (FAL, KIE, 11 Labs, Suno)
 ## Steve's Capabilities (From Conversations)
 
 ### What Steve Does
+
 - ComfyUI workflows for video generation
 - N8N workflows for automation
 - First Frame → Last Frame animation technique
@@ -73,16 +78,16 @@ External Services (FAL, KIE, 11 Labs, Suno)
 
 ### Steve's Tech Stack
 
-| Tool | Purpose |
-|------|---------|
-| ComfyUI | Video/image generation workflows |
-| N8N | Automation orchestration |
-| Telegram | Bot triggers (has easy API) |
-| Google Drive | File storage |
-| Google Sheets | Logging/tracking |
-| FAL.AI | Image generation (Nano Banana) |
-| KIE.AI | Video generation (VO3) |
-| OpenAI | Prompt generation, image description |
+| Tool          | Purpose                              |
+| ------------- | ------------------------------------ |
+| ComfyUI       | Video/image generation workflows     |
+| N8N           | Automation orchestration             |
+| Telegram      | Bot triggers (has easy API)          |
+| Google Drive  | File storage                         |
+| Google Sheets | Logging/tracking                     |
+| FAL.AI        | Image generation (Nano Banana)       |
+| KIE.AI        | Video generation (VO3)               |
+| OpenAI        | Prompt generation, image description |
 
 ### Steve's Workflow Pattern (N8N)
 
@@ -113,6 +118,7 @@ Output video + social media captions
 ### Why Telegram (Not WhatsApp)
 
 Steve chose Telegram because:
+
 - **Native N8N support**: Built-in trigger nodes, easy webhook setup
 - **Bot creation**: Create a bot and get API token in <10 seconds
 - **Open API**: WhatsApp is "walled off" and complicated to connect
@@ -121,6 +127,7 @@ Steve chose Telegram because:
 ### N8N AI Agent Capabilities
 
 The N8N AI Agent node provides:
+
 - **Model flexibility**: Connect any LLM (OpenAI, Claude, etc.)
 - **Memory**: Optional conversation memory for multi-turn
 - **Structured output**: Define exact JSON schema for downstream nodes
@@ -129,6 +136,7 @@ The N8N AI Agent node provides:
 ### System Prompt Pattern (Steve's Formula)
 
 For reliable LLM outputs, Steve's prompts include:
+
 1. **Task definition**: "Your task is to..."
 2. **Input references**: Image description, user caption
 3. **Guidelines**: How to approach the task
@@ -140,6 +148,7 @@ For reliable LLM outputs, Steve's prompts include:
 ### Async Task Handling Pattern
 
 For image/video generation (FAL, KIE):
+
 ```
 POST request (prompt, image URL)
     ↓
@@ -161,13 +170,14 @@ Switch node:
 
 Each model has unique prompting requirements:
 
-| Model | Prompt Style | Duration |
-|-------|--------------|----------|
-| VO3 | Natural language or JSON | 5-10 sec |
-| Kling | Specific format | 5-8 sec |
-| WAN2.1 | Animation prompts | ~5 sec (81 frames) |
+| Model  | Prompt Style             | Duration           |
+| ------ | ------------------------ | ------------------ |
+| VO3    | Natural language or JSON | 5-10 sec           |
+| Kling  | Specific format          | 5-8 sec            |
+| WAN2.1 | Animation prompts        | ~5 sec (81 frames) |
 
 **JSON prompt structure** (some models):
+
 ```json
 {
   "environment": "hotel room",
@@ -228,20 +238,22 @@ TEXT → MEANING (embeddings) → NOISE → STRUCTURED LATENT → PIXEL IMAGE
 
 ### Key Parameters
 
-| Parameter | What it does |
-|-----------|--------------|
-| Steps | How refined the image becomes (more steps = more refinement) |
-| CFG (Classifier-Free Guidance) | Low = loose/creative, High = strict/obedient to prompt |
-| Seed | Locks randomness for repeatability |
+| Parameter                      | What it does                                                 |
+| ------------------------------ | ------------------------------------------------------------ |
+| Steps                          | How refined the image becomes (more steps = more refinement) |
+| CFG (Classifier-Free Guidance) | Low = loose/creative, High = strict/obedient to prompt       |
+| Seed                           | Locks randomness for repeatability                           |
 
 ### LoRAs (Low-Rank Adaptation)
 
 **What they are:**
+
 - Small, lightweight add-on files (20-200MB, typically .safetensors)
 - Trained on small dataset (10-200 images)
 - Add new style, character, or concept to base model
 
 **How they work:**
+
 - Activated by typing a token in your prompt (e.g., `<sadi_ai_v3>`)
 - LoRA modifies UNet noise predictions during denoising
 - Blends seamlessly with base model output
@@ -325,6 +337,7 @@ Each section is a copy of the workflow with different start/end frames and promp
 ### Alternative Workflows
 
 Not limited to first-frame-last-frame:
+
 - **One Animate model**: Have character dance, move, walk toward something
 - **Text-to-video**: No reference images, pure prompt
 - **Image-to-video**: Single reference image with motion prompt
@@ -347,18 +360,21 @@ Node-based system = do whatever you want.
 Based on Steve's knowledge, here's what we can build:
 
 ### Image Generation (Days 1-3)
+
 - **Text-to-image**: Flux, Nano Banana via FAL.AI
 - **Image-to-image**: Camera zoom, style variations
 - **Character consistency**: LoRAs for recurring characters
 - **Style locking**: Same LoRA across all assets
 
 ### Video Generation (Days 4-7)
+
 - **First Frame → Last Frame**: Controlled motion between two images
 - **5-second clips**: Native model output (81 frames @ 16fps)
 - **Chained sequences**: Multiple 5-sec clips combined
 - **Motion types**: Dolly, zoom, character movement, object manipulation
 
 ### Automation (Days 8-10)
+
 - **N8N orchestration**: Chain multiple AI services
 - **Telegram triggers**: Easy input mechanism
 - **Async handling**: Task polling for long renders
@@ -366,6 +382,7 @@ Based on Steve's knowledge, here's what we can build:
 - **Structured prompts**: JSON output for downstream nodes
 
 ### Integration (Days 11-12)
+
 - **UGC workflow**: Image + product + caption → video
 - **Multi-model pipeline**: FAL (image) → KIE (video) → output
 - **Social media**: Auto-generate platform-specific captions
@@ -373,15 +390,15 @@ Based on Steve's knowledge, here's what we can build:
 
 ### What's Possible
 
-| Capability | Tool | Output |
-|------------|------|--------|
-| Generate character images | FAL/Nano Banana | PNG/JPG |
-| Animate between keyframes | ComfyUI/WAN2.1 | 5-sec video |
-| Add voice/narration | 11 Labs | Audio |
-| Add music | Suno | Audio |
-| Orchestrate pipeline | N8N | Automated workflow |
-| Generate scripts | Claude/GPT | Text/JSON |
-| Product placement | Image-to-image | Contextual images |
+| Capability                | Tool            | Output             |
+| ------------------------- | --------------- | ------------------ |
+| Generate character images | FAL/Nano Banana | PNG/JPG            |
+| Animate between keyframes | ComfyUI/WAN2.1  | 5-sec video        |
+| Add voice/narration       | 11 Labs         | Audio              |
+| Add music                 | Suno            | Audio              |
+| Orchestrate pipeline      | N8N             | Automated workflow |
+| Generate scripts          | Claude/GPT      | Text/JSON          |
+| Product placement         | Image-to-image  | Contextual images  |
 
 ---
 

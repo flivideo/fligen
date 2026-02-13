@@ -81,10 +81,7 @@ export function ConfigModal({ isOpen, onClose }: ConfigModalProps) {
             <h3 className="text-sm font-medium text-slate-400 mb-3">Display</h3>
             <div className="space-y-2">
               {toggleSettings.map((setting) => (
-                <label
-                  key={setting.name}
-                  className="flex items-center gap-3 cursor-pointer"
-                >
+                <label key={setting.name} className="flex items-center gap-3 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={Boolean(values[setting.name])}
@@ -105,9 +102,7 @@ export function ConfigModal({ isOpen, onClose }: ConfigModalProps) {
             <div className="space-y-3">
               {passwordSettings.map((setting) => (
                 <div key={setting.name}>
-                  <label className="block text-xs text-slate-500 mb-1">
-                    {setting.label}
-                  </label>
+                  <label className="block text-xs text-slate-500 mb-1">{setting.label}</label>
                   <input
                     type="password"
                     value={(values[setting.name] as string) || ''}

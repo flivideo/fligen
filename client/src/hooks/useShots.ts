@@ -22,11 +22,11 @@ export function useShots() {
   useEffect(() => {
     console.log('[useShots] Fetching initial shots via HTTP...');
     fetch(`${SERVER_URL}/api/shots`)
-      .then(res => {
+      .then((res) => {
         console.log('[useShots] HTTP response status:', res.status);
         return res.json();
       })
-      .then(data => {
+      .then((data) => {
         console.log('[useShots] HTTP response data:', data);
         if (data.shots) {
           setShots(data.shots);
@@ -34,7 +34,7 @@ export function useShots() {
         }
         setIsLoading(false);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error('[useShots] HTTP fetch failed:', err);
         setIsLoading(false); // Still clear loading state on error
       });
@@ -59,13 +59,13 @@ export function useShots() {
     // Shot added
     const handleAdded = (shot: Shot) => {
       console.log('[useShots] Received shots:added:', shot.id, shot.filename);
-      setShots(prev => [...prev, shot]);
+      setShots((prev) => [...prev, shot]);
     };
 
     // Shot removed
     const handleRemoved = (id: string) => {
       console.log('[useShots] Received shots:removed:', id);
-      setShots(prev => prev.filter(s => s.id !== id));
+      setShots((prev) => prev.filter((s) => s.id !== id));
     };
 
     // All shots cleared

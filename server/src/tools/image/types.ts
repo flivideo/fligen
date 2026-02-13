@@ -115,8 +115,8 @@ export type ModelTier = 'advanced' | 'midrange';
 export interface ModelConfig {
   id: string;
   name: string;
-  costPer1MP?: number;      // FAL.AI pricing (per megapixel)
-  costPerImage?: number;    // KIE.AI pricing (fixed per image)
+  costPer1MP?: number; // FAL.AI pricing (per megapixel)
+  costPerImage?: number; // KIE.AI pricing (fixed per image)
   width: number;
   height: number;
 }
@@ -195,7 +195,9 @@ export function getModelCost(provider: Provider, model: string): number {
 /**
  * Get all supported models for a provider
  */
-export function getProviderModels(provider: Provider): Array<{ id: string; name: string; cost: number }> {
+export function getProviderModels(
+  provider: Provider
+): Array<{ id: string; name: string; cost: number }> {
   return Object.entries(MODEL_REGISTRY)
     .filter(([_, info]) => info.provider === provider)
     .map(([id, info]) => ({ id, name: info.name, cost: info.cost }));

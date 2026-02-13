@@ -36,14 +36,17 @@ Day 9 (Job Brief) + Day 10 (Images/Videos)
 ## Minimum Viable Scope
 
 ### Inputs
+
 - `jobId` (from Day 9/10)
 - `beats.json`
 - Existing images/videos from Day 10
 
 ### Outputs
+
 Create folder: `/assets/jobs/<jobId>/story_pack/`
 
 Files:
+
 - `narration.txt` - Script text
 - `narration.mp3` - ElevenLabs generated audio
 - `music_prompt.txt` - Suno prompt
@@ -54,6 +57,7 @@ Files:
 ## Assembly Plan Schema
 
 ### assembly.json
+
 ```json
 {
   "jobId": "fox-meadow-001",
@@ -69,6 +73,7 @@ Files:
 ## UI Spec
 
 ### Story Builder Tab
+
 - "Load Job" dropdown
 - Buttons:
   - Generate Narration Script
@@ -79,6 +84,7 @@ Files:
   - **Assemble Video** (failsafe option)
 
 ### Preview Panels
+
 - Narration text preview + audio player
 - Music player
 - Shot list preview
@@ -87,11 +93,13 @@ Files:
 ## Two Paths for Assembly
 
 ### Path 1: Steve's N8N (Primary)
+
 - N8N handles FFmpeg stitching
 - FliGen just sends `assembly.json`
 - Returns final assembled video
 
 ### Path 2: FFmpeg Failsafe
+
 - If Steve's N8N assembly isn't ready
 - FliGen server calls FFmpeg directly
 - Produces basic assembled clip locally
@@ -131,6 +139,7 @@ ffmpeg -i vid12.mp4 -i vid23.mp4 -i narration.mp3 -i music.mp3 \
 ## End State
 
 By end of Day 11, we can produce a "mini movie pack":
+
 - 3 images
 - 2 transition videos
 - Narration audio

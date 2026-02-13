@@ -1,8 +1,5 @@
 import type { WidgetTemplate } from '@fligen/shared';
-import {
-  socialMediaPostTemplate,
-  renderSocialMediaPost,
-} from './social-media-post.js';
+import { socialMediaPostTemplate, renderSocialMediaPost } from './social-media-post.js';
 
 /**
  * Template registry

@@ -58,18 +58,12 @@ export function AssetCard({ asset, selected, onClick, onSelect }: AssetCardProps
       )}
 
       <div className="aspect-square overflow-hidden rounded bg-slate-900">
-        <img
-          src={getThumbnail()}
-          alt={asset.filename}
-          className="h-full w-full object-cover"
-        />
+        <img src={getThumbnail()} alt={asset.filename} className="h-full w-full object-cover" />
       </div>
 
       <div className="mt-2 flex items-center gap-2">
         <span className="text-lg">{getIcon()}</span>
-        <span className="flex-1 truncate font-mono text-xs text-slate-400">
-          {getDisplayName()}
-        </span>
+        <span className="flex-1 truncate font-mono text-xs text-slate-400">{getDisplayName()}</span>
       </div>
 
       <div className="mt-1 flex items-center justify-between">

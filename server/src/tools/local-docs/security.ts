@@ -134,7 +134,10 @@ export async function validateDirectory(requestedPath: string): Promise<Validate
     const fullPath = path.resolve(DOCS_BASE, normalizedPath);
 
     // Check if within DOCS_BASE
-    if (!fullPath.startsWith(DOCS_BASE) || (fullPath !== DOCS_BASE && !fullPath.startsWith(DOCS_BASE + path.sep))) {
+    if (
+      !fullPath.startsWith(DOCS_BASE) ||
+      (fullPath !== DOCS_BASE && !fullPath.startsWith(DOCS_BASE + path.sep))
+    ) {
       return {
         valid: false,
         error: {

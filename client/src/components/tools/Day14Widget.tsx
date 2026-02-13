@@ -191,9 +191,7 @@ export function Day14Widget() {
   };
 
   return (
-    <ToolPanel
-      title="Widget Generator"
-    >
+    <ToolPanel title="Widget Generator">
       <div className="flex h-full">
         {/* Left: Preview */}
         <div className="flex-1">

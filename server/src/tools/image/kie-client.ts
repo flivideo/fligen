@@ -1,6 +1,15 @@
 // KIE.AI client for image generation
 
-import type { ProviderHealth, ProviderTestResult, KieTaskResponse, KieTaskResult, KieCreditResponse, CompareResult, ModelTier, ModelConfig } from './types.js';
+import type {
+  ProviderHealth,
+  ProviderTestResult,
+  KieTaskResponse,
+  KieTaskResult,
+  KieCreditResponse,
+  CompareResult,
+  ModelTier,
+  ModelConfig,
+} from './types.js';
 import { MODELS } from './types.js';
 
 const BASE_URL = 'https://api.kie.ai';
@@ -49,7 +58,7 @@ async function kieRequest<T>(
     const options: RequestInit = {
       method,
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       signal: controller.signal,
@@ -81,7 +90,7 @@ async function kieRequest<T>(
       throw new Error(`API_ERROR: KIE.AI returned ${response.status}`);
     }
 
-    const data = await response.json() as T;
+    const data = (await response.json()) as T;
     console.log(`[KIE.AI] Response: ${JSON.stringify(data)}`);
     return data;
   } catch (error) {
@@ -189,7 +198,9 @@ async function pollForResult(taskId: string): Promise<string> {
     }
 
     const { successFlag, status, response, errorMessage, progress } = result.data;
-    console.log(`[KIE.AI] Task status: successFlag=${successFlag}, status=${status}, progress=${progress}`);
+    console.log(
+      `[KIE.AI] Task status: successFlag=${successFlag}, status=${status}, progress=${progress}`
+    );
 
     // Check for success (successFlag: 1 or status: 'SUCCESS')
     if (successFlag === 1 || status === 'SUCCESS') {
@@ -202,14 +213,18 @@ async function pollForResult(taskId: string): Promise<string> {
     }
 
     // Check for failure (successFlag: 2 or 3)
-    if (successFlag === 2 || successFlag === 3 ||
-        status === 'CREATE_TASK_FAILED' || status === 'GENERATE_FAILED') {
+    if (
+      successFlag === 2 ||
+      successFlag === 3 ||
+      status === 'CREATE_TASK_FAILED' ||
+      status === 'GENERATE_FAILED'
+    ) {
       console.log(`[KIE.AI] Task failed: ${errorMessage}`);
       throw new Error(errorMessage || 'Image generation failed');
     }
 
     // Still generating, wait and poll again
-    await new Promise(resolve => setTimeout(resolve, POLL_INTERVAL));
+    await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL));
   }
 
   throw new Error('Timeout waiting for image generation');
@@ -318,17 +333,16 @@ async function pollForResultGeneric(taskId: string, endpoint: string): Promise<s
     pollCount++;
     console.log(`[KIE.AI] Poll #${pollCount} for task ${taskId}...`);
 
-    const result = await kieRequest<KieTaskResult>(
-      'GET',
-      `${endpoint}?taskId=${taskId}`
-    );
+    const result = await kieRequest<KieTaskResult>('GET', `${endpoint}?taskId=${taskId}`);
 
     if (result.code !== 200) {
       throw new Error(`API error: ${result.msg}`);
     }
 
     const { successFlag, status, response, errorMessage, progress } = result.data;
-    console.log(`[KIE.AI] Task status: successFlag=${successFlag}, status=${status}, progress=${progress}`);
+    console.log(
+      `[KIE.AI] Task status: successFlag=${successFlag}, status=${status}, progress=${progress}`
+    );
 
     // Check for success (successFlag: 1 or status: 'SUCCESS')
     if (successFlag === 1 || status === 'SUCCESS') {
@@ -341,14 +355,18 @@ async function pollForResultGeneric(taskId: string, endpoint: string): Promise<s
     }
 
     // Check for failure (successFlag: 2 or 3)
-    if (successFlag === 2 || successFlag === 3 ||
-        status === 'CREATE_TASK_FAILED' || status === 'GENERATE_FAILED') {
+    if (
+      successFlag === 2 ||
+      successFlag === 3 ||
+      status === 'CREATE_TASK_FAILED' ||
+      status === 'GENERATE_FAILED'
+    ) {
       console.log(`[KIE.AI] Task failed: ${errorMessage}`);
       throw new Error(errorMessage || 'Image generation failed');
     }
 
     // Still generating, wait and poll again
-    await new Promise(resolve => setTimeout(resolve, POLL_INTERVAL));
+    await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL));
   }
 
   throw new Error('Timeout waiting for image generation');
@@ -384,7 +402,9 @@ export async function generateForComparison(
 
   try {
     console.log(`[KIE.AI] Compare: Generating ${tier} image with ${config.name}...`);
-    console.log(`[KIE.AI] Compare: Model ID = ${config.id}, Size = ${config.width}x${config.height}`);
+    console.log(
+      `[KIE.AI] Compare: Model ID = ${config.id}, Size = ${config.width}x${config.height}`
+    );
 
     // Use Flux Kontext API for both models
     const aspectRatio = config.width === config.height ? '1:1' : '16:9';

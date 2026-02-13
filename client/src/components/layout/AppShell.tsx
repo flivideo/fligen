@@ -18,11 +18,7 @@ interface AppShellProps {
   activeApi?: string;
 }
 
-export function AppShell({
-  isConnected,
-  operationStatus = 'idle',
-  activeApi,
-}: AppShellProps) {
+export function AppShell({ isConnected, operationStatus = 'idle', activeApi }: AppShellProps) {
   const { currentDay, navigateTo, navigateNext, navigatePrev } = useNavigation();
   const { isCollapsed, toggle } = useSidebarState();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -47,11 +43,7 @@ export function AppShell({
   return (
     <div className="h-screen w-screen flex flex-row bg-slate-900 text-white overflow-hidden">
       {/* Sidebar */}
-      <Sidebar
-        currentDay={currentDay}
-        isCollapsed={isCollapsed}
-        onNavigate={navigateTo}
-      />
+      <Sidebar currentDay={currentDay} isCollapsed={isCollapsed} onNavigate={navigateTo} />
 
       {/* Main area */}
       <div className="flex-1 flex flex-col min-w-0">
@@ -75,10 +67,7 @@ export function AppShell({
       </div>
 
       {/* Config Modal */}
-      <ConfigModal
-        isOpen={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
-      />
+      <ConfigModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
     </div>
   );
 }

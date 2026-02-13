@@ -9,6 +9,7 @@
 ## Overview
 
 The Claude Agent SDK provides ~80% of Claude Code's capabilities for free. This document covers:
+
 - Authentication and authorization mechanisms
 - Server-side integration patterns
 - Frontend options (simple vs full React)
@@ -125,15 +126,16 @@ try {
 ```typescript
 const options: Options = {
   allowedTools: [
-    'Read',                           // Built-in tool
-    'Write',                          // Built-in tool
-    'mcp__agent-tools__read_json',    // Specific MCP tool
-    'mcp__agent-tools',               // All tools in MCP server
+    'Read', // Built-in tool
+    'Write', // Built-in tool
+    'mcp__agent-tools__read_json', // Specific MCP tool
+    'mcp__agent-tools', // All tools in MCP server
   ],
 };
 ```
 
 **Tool naming patterns:**
+
 - `ToolName` - Built-in SDK tool
 - `mcp__<server-name>` - All tools in an MCP server
 - `mcp__<server-name>__<tool-name>` - Specific MCP tool
@@ -163,10 +165,7 @@ import { Server } from 'socket.io';
 // Store session IDs per user/socket
 const sessions = new Map<string, string>();
 
-export async function handleAgentQuery(
-  socket: Socket,
-  userMessage: string
-) {
+export async function handleAgentQuery(socket: Socket, userMessage: string) {
   const options: Options = {
     systemPrompt: 'You are a helpful assistant for FliGen...',
     model: 'claude-sonnet-4-5-20250929',
@@ -276,21 +275,24 @@ function SimpleChat() {
 
   useEffect(() => {
     socket.on('agent:text', ({ text }) => {
-      setMessages(prev => [...prev, { role: 'assistant', content: text }]);
+      setMessages((prev) => [...prev, { role: 'assistant', content: text }]);
     });
 
     socket.on('agent:tool', ({ name }) => {
-      setMessages(prev => [...prev, {
-        role: 'system',
-        content: `[Executing: ${name}...]`
-      }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'system',
+          content: `[Executing: ${name}...]`,
+        },
+      ]);
     });
 
     return () => socket.off('agent:text').off('agent:tool');
   }, [socket]);
 
   const send = () => {
-    setMessages(prev => [...prev, { role: 'user', content: input }]);
+    setMessages((prev) => [...prev, { role: 'user', content: input }]);
     socket.emit('agent:query', { message: input });
     setInput('');
   };
@@ -300,17 +302,15 @@ function SimpleChat() {
       <div className="flex-1 overflow-y-auto p-4 space-y-2">
         {messages.map((msg, i) => (
           <div key={i} className={msg.role === 'user' ? 'text-right' : ''}>
-            <span className="inline-block p-2 rounded bg-slate-700">
-              {msg.content}
-            </span>
+            <span className="inline-block p-2 rounded bg-slate-700">{msg.content}</span>
           </div>
         ))}
       </div>
       <div className="p-4 border-t border-slate-700 flex gap-2">
         <input
           value={input}
-          onChange={e => setInput(e.target.value)}
-          onKeyDown={e => e.key === 'Enter' && send()}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && send()}
           className="flex-1 p-2 rounded bg-slate-800"
           placeholder="Type a message..."
         />
@@ -324,12 +324,14 @@ function SimpleChat() {
 ```
 
 **Pros:**
+
 - Minimal complexity
 - Fast to implement (Day 2)
 - Easy to debug
 - Works with TailwindCSS v4
 
 **Cons:**
+
 - No typing indicators
 - Basic message rendering
 - Manual streaming accumulation
@@ -373,6 +375,7 @@ Production-quality chat using shadcn/ui + Vercel AI SDK.
 ```
 
 **Tech Stack:**
+
 - `shadcn/ui` - Base components
 - `ai` - Vercel AI SDK (`useChat()` hook)
 - `socket.io-client` - Real-time streaming
@@ -400,7 +403,7 @@ function FullChat() {
   return (
     <div className="flex flex-col h-full">
       <ScrollArea className="flex-1">
-        {messages.map(message => (
+        {messages.map((message) => (
           <ChatMessage key={message.id} message={message} />
         ))}
         {isLoading && <TypingIndicator />}
@@ -408,11 +411,7 @@ function FullChat() {
 
       <form onSubmit={handleSubmit} className="p-4 border-t">
         <div className="flex gap-2">
-          <Input
-            value={input}
-            onChange={handleInputChange}
-            placeholder="Type a message..."
-          />
+          <Input value={input} onChange={handleInputChange} placeholder="Type a message..." />
           <Button type="submit" disabled={isLoading}>
             Send
           </Button>
@@ -424,12 +423,14 @@ function FullChat() {
 ```
 
 **Pros:**
+
 - Production-quality UX
 - Typing indicators, message grouping
 - Built-in streaming state management
 - Accessible components
 
 **Cons:**
+
 - shadcn/ui has TailwindCSS v4 issues (see 007 post-mortem)
 - More complex setup
 - Heavier dependencies
@@ -440,10 +441,10 @@ function FullChat() {
 
 ### Recommendation
 
-| Phase | Approach | Why |
-|-------|----------|-----|
+| Phase   | Approach | Why                             |
+| ------- | -------- | ------------------------------- |
 | Day 2-3 | Option A | Fast iteration, prove SDK works |
-| Day 8+ | Option B | Polish for demo/production |
+| Day 8+  | Option B | Polish for demo/production      |
 
 ---
 
@@ -455,7 +456,9 @@ The FliGen server is currently a **blank slate**:
 // server/src/index.ts - Current state
 io.on('connection', (socket) => {
   socket.emit('connection:established', { message: '...' });
-  socket.on('ping', () => { /* ... */ });
+  socket.on('ping', () => {
+    /* ... */
+  });
 });
 ```
 
@@ -466,6 +469,7 @@ io.on('connection', (socket) => {
 The current Socket.io setup supports **both patterns**:
 
 **Chat Pattern** (conversational, multi-turn):
+
 ```typescript
 socket.on('agent:query', async ({ message }) => {
   // Resume session for multi-turn conversation
@@ -474,6 +478,7 @@ socket.on('agent:query', async ({ message }) => {
 ```
 
 **Tool Chain Pattern** (single-shot, task-focused):
+
 ```typescript
 socket.on('tool:generate-image', async ({ prompt, style }) => {
   // One-off tool execution, no session resume
@@ -482,6 +487,7 @@ socket.on('tool:generate-image', async ({ prompt, style }) => {
 ```
 
 **FliGen will use both:**
+
 - Day 2-3: Chat pattern for general agent interaction
 - Day 4-8: Tool chain pattern for specific generators (image, TTS, video, music)
 - Day 9+: Hybrid - chat orchestrates tool chains
@@ -492,25 +498,25 @@ socket.on('tool:generate-image', async ({ prompt, style }) => {
 
 ### SDK Provides (Built-in)
 
-| Capability | Notes |
-|------------|-------|
-| Agent reasoning loop | Automatic |
-| Tool execution | Automatic, no manual calls |
-| Streaming responses | Block-level (complete thoughts) |
-| Session ID generation | Capture from result message |
-| Token/cost tracking | In result message |
-| MCP server integration | Define in options |
+| Capability             | Notes                           |
+| ---------------------- | ------------------------------- |
+| Agent reasoning loop   | Automatic                       |
+| Tool execution         | Automatic, no manual calls      |
+| Streaming responses    | Block-level (complete thoughts) |
+| Session ID generation  | Capture from result message     |
+| Token/cost tracking    | In result message               |
+| MCP server integration | Define in options               |
 
 ### We Implement
 
-| Capability | Notes |
-|------------|-------|
-| Transport (Socket.io) | Already in place |
-| Session storage | Map or Redis |
-| Multi-user isolation | Per-socket sessions |
-| Path sandboxing | For file operations |
-| Custom tools (MCP) | Day 4+ generators |
-| Error handling | Auth, network, tool errors |
+| Capability            | Notes                      |
+| --------------------- | -------------------------- |
+| Transport (Socket.io) | Already in place           |
+| Session storage       | Map or Redis               |
+| Multi-user isolation  | Per-socket sessions        |
+| Path sandboxing       | For file operations        |
+| Custom tools (MCP)    | Day 4+ generators          |
+| Error handling        | Auth, network, tool errors |
 
 ---
 
@@ -551,16 +557,19 @@ const sessionId = await redis.get(`session:${userId}`);
 From 007 project analysis:
 
 **Safe for:**
+
 - Local development
 - Internal tools with trusted users
 - Rapid prototyping
 
 **Not safe for (without hardening):**
+
 - Public-facing applications
 - Untrusted users
 - Sensitive data handling
 
 **Mitigations:**
+
 - Path sandboxing (restrict file operations)
 - Tool allowlisting
 - Rate limiting

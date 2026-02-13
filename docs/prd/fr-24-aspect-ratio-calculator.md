@@ -13,6 +13,7 @@ As a video creator working across multiple platforms, I want a fast, visual aspe
 ## Problem
 
 Creating video content for multiple platforms requires calculating dimensions for different aspect ratios:
+
 1. Manual calculation is slow and error-prone
 2. Difficult to visualize aspect ratio differences without rendering actual video
 3. Platform-specific dimension requirements are scattered across documentation
@@ -36,11 +37,13 @@ Create an aspect ratio calculator with bidirectional calculation, visual preview
 **1. Bidirectional Calculator**
 
 **Mode A: Aspect Ratio → Dimensions**
+
 - User inputs: width OR height + aspect ratio
 - Calculator outputs: missing dimension
 - Example: 1920px width + 16:9 ratio = 1080px height
 
 **Mode B: Dimensions → Aspect Ratio**
+
 - User inputs: width AND height
 - Calculator outputs: aspect ratio (simplified and decimal)
 - Example: 1920px × 1080px = 16:9 (1.778)
@@ -48,6 +51,7 @@ Create an aspect ratio calculator with bidirectional calculation, visual preview
 **2. Common Presets**
 
 **Aspect Ratio Presets:**
+
 - 16:9 (widescreen)
 - 9:16 (vertical/portrait)
 - 1:1 (square)
@@ -57,6 +61,7 @@ Create an aspect ratio calculator with bidirectional calculation, visual preview
 - 4:5 (Instagram portrait)
 
 **Resolution Presets:**
+
 - 1080p (1920×1080, 16:9)
 - 4K (3840×2160, 16:9)
 - 720p (1280×720, 16:9)
@@ -67,21 +72,22 @@ Create an aspect ratio calculator with bidirectional calculation, visual preview
 
 Display recommended dimensions for popular platforms:
 
-| Platform | Recommended Dimensions | Aspect Ratio | Use Case |
-|----------|----------------------|--------------|----------|
-| **YouTube** | 1920×1080 | 16:9 | Standard video |
-| **YouTube Shorts** | 1080×1920 | 9:16 | Vertical video |
-| **Instagram Feed** | 1080×1080 | 1:1 | Square posts |
-| **Instagram Story** | 1080×1920 | 9:16 | Stories/Reels |
-| **Instagram Portrait** | 1080×1350 | 4:5 | Portrait posts |
-| **TikTok** | 1080×1920 | 9:16 | Vertical video |
-| **Facebook** | 1920×1080 | 16:9 | Standard video |
-| **Twitter/X** | 1920×1080 | 16:9 | Standard video |
-| **LinkedIn** | 1920×1080 | 16:9 | Standard video |
+| Platform               | Recommended Dimensions | Aspect Ratio | Use Case       |
+| ---------------------- | ---------------------- | ------------ | -------------- |
+| **YouTube**            | 1920×1080              | 16:9         | Standard video |
+| **YouTube Shorts**     | 1080×1920              | 9:16         | Vertical video |
+| **Instagram Feed**     | 1080×1080              | 1:1          | Square posts   |
+| **Instagram Story**    | 1080×1920              | 9:16         | Stories/Reels  |
+| **Instagram Portrait** | 1080×1350              | 4:5          | Portrait posts |
+| **TikTok**             | 1080×1920              | 9:16         | Vertical video |
+| **Facebook**           | 1920×1080              | 16:9         | Standard video |
+| **Twitter/X**          | 1920×1080              | 16:9         | Standard video |
+| **LinkedIn**           | 1920×1080              | 16:9         | Standard video |
 
 **4. Visual Preview**
 
 Side-by-side comparison showing:
+
 - Two colored rectangles scaled proportionally
 - Current aspect ratio displayed prominently
 - Comparison aspect ratio for reference
@@ -158,6 +164,7 @@ Side-by-side comparison showing:
 ### Architecture
 
 Follows FliGen's standard client/server pattern:
+
 ```
 Client (React/Vite - port 5200)
     ↕ Socket.io (optional for history sync)
@@ -167,6 +174,7 @@ Server (Express/Node - port 5201)
 ### Components
 
 **Client:**
+
 - `client/src/components/tools/Day15AspectRatio.tsx` - Main calculator UI
 - `client/src/components/tools/aspect-ratio/Calculator.tsx` - Calculator form
 - `client/src/components/tools/aspect-ratio/PresetButtons.tsx` - Preset buttons
@@ -176,6 +184,7 @@ Server (Express/Node - port 5201)
 - `client/src/components/tools/aspect-ratio/useCalculator.ts` - Calculation logic hook
 
 **Server (Optional):**
+
 - `/api/aspect-ratio/presets` - GET endpoint for preset configurations (optional, can be client-side)
 - `/api/aspect-ratio/platforms` - GET endpoint for platform recommendations (optional)
 
@@ -206,12 +215,8 @@ function calculateDimension(
 }
 
 // Calculate aspect ratio from dimensions using GCD
-function calculateAspectRatio(
-  width: number,
-  height: number
-): { ratio: string; decimal: number } {
-  const gcd = (a: number, b: number): number =>
-    b === 0 ? a : gcd(b, a % b);
+function calculateAspectRatio(width: number, height: number): { ratio: string; decimal: number } {
+  const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
 
   const divisor = gcd(width, height);
   const w = width / divisor;
@@ -219,7 +224,7 @@ function calculateAspectRatio(
 
   return {
     ratio: `${w}:${h}`,
-    decimal: parseFloat((width / height).toFixed(3))
+    decimal: parseFloat((width / height).toFixed(3)),
   };
 }
 ```
@@ -227,11 +232,13 @@ function calculateAspectRatio(
 ### Data Storage
 
 **Calculation History:**
+
 - Store last 20 calculations in browser localStorage
 - Optional: persist to server for cross-device sync via Socket.io
 - Display in reverse chronological order
 
 **Format:**
+
 ```typescript
 interface HistoryEntry {
   id: string;
@@ -246,6 +253,7 @@ interface HistoryEntry {
 ### Styling
 
 **AppyDave Brand Colors (Dark Theme):**
+
 - Background: `#342d2d` (dark brown)
 - Text: `#ffffff` (white)
 - Accent: `#ffde59` (yellow)
@@ -253,11 +261,13 @@ interface HistoryEntry {
 - Preview rectangles: `#ffde59` (primary), `#59b7ff` (comparison)
 
 **AppyDave Fonts:**
+
 - Headings: Bebas Neue (display)
 - Body: Roboto (regular)
 - Numbers/Dimensions: Oswald (monospace-like)
 
 **Responsive Design:**
+
 - Desktop: side-by-side layout (calculator left, preview/recommendations right)
 - Tablet: stacked layout with full-width sections
 - Mobile: single column, compact presets
@@ -265,6 +275,7 @@ interface HistoryEntry {
 ### Visual Preview Implementation
 
 The visual preview should:
+
 1. Use CSS `aspect-ratio` property for accurate scaling
 2. Contain rectangles within a fixed viewport (e.g., 400px × 400px)
 3. Scale down larger rectangles proportionally to fit
@@ -317,6 +328,7 @@ The visual preview should:
 ## Acceptance Criteria
 
 ### Core Calculator
+
 - [ ] User can input width and aspect ratio to calculate height
 - [ ] User can input height and aspect ratio to calculate width
 - [ ] User can input width and height to calculate aspect ratio
@@ -328,6 +340,7 @@ The visual preview should:
 - [ ] Calculate button triggers calculation and updates all fields
 
 ### Presets
+
 - [ ] Aspect ratio preset buttons: 16:9, 9:16, 1:1, 4:3, 21:9, 2.39:1, 4:5
 - [ ] Resolution preset buttons: 1080p, 4K, 720p, 1440p, 480p
 - [ ] Clicking aspect ratio preset populates aspect ratio field
@@ -336,6 +349,7 @@ The visual preview should:
 - [ ] Preset buttons work without requiring separate "Calculate" click
 
 ### Platform Recommendations
+
 - [ ] Platform table displays 9+ platforms with dimensions and ratios
 - [ ] Platforms include: YouTube, YouTube Shorts, Instagram (Feed/Story/Portrait), TikTok, Facebook, Twitter, LinkedIn
 - [ ] Clicking platform row populates calculator fields
@@ -343,6 +357,7 @@ The visual preview should:
 - [ ] Platform recommendations update when aspect ratio changes
 
 ### Visual Preview
+
 - [ ] Side-by-side display of two aspect ratio rectangles
 - [ ] Rectangles scaled proportionally to actual aspect ratio
 - [ ] Primary rectangle shows current calculation
@@ -353,6 +368,7 @@ The visual preview should:
 - [ ] Preview responsive to viewport size
 
 ### Calculation History
+
 - [ ] Last 20 calculations displayed in reverse chronological order
 - [ ] Each entry shows: width×height → ratio (decimal)
 - [ ] Clicking history entry repopulates calculator
@@ -361,6 +377,7 @@ The visual preview should:
 - [ ] History survives page refresh
 
 ### UI/UX
+
 - [ ] Dark theme with AppyDave brand colors
 - [ ] Responsive layout works on desktop, tablet, mobile
 - [ ] Input fields accept keyboard input with proper validation
@@ -370,6 +387,7 @@ The visual preview should:
 - [ ] Error messages for invalid inputs
 
 ### Architecture
+
 - [ ] Follows FliGen Day 1 pattern (client/server structure)
 - [ ] Client runs on port 5200 (React/Vite)
 - [ ] Server runs on port 5201 (Express/Node)
@@ -382,6 +400,7 @@ The visual preview should:
 ## Out of Scope (Future Enhancements)
 
 ### Phase 2 - Advanced Features
+
 - **Crop Calculator** - Calculate crop dimensions from source to target ratio
 - **Scale Calculator** - Calculate scaled dimensions maintaining aspect ratio
 - **DPI Calculator** - Convert between pixels and physical dimensions
@@ -389,11 +408,13 @@ The visual preview should:
 - **Custom Presets** - Save user-defined aspect ratios and resolutions
 
 ### Phase 3 - Collaboration
+
 - **Share Calculations** - Generate shareable links to calculation results
 - **Team Presets** - Organization-wide preset libraries
 - **Project Templates** - Save entire dimension sets for projects
 
 ### Phase 4 - Integration
+
 - **Import from Image** - Upload image to auto-detect dimensions
 - **API Access** - REST API for programmatic calculations
 - **Video Editor Plugins** - Export directly to Premiere/Resolve/DaVinci
@@ -404,6 +425,7 @@ The visual preview should:
 ## Edge Cases
 
 Handle edge cases gracefully:
+
 - **Division by zero**: Prevent aspect ratio like "16:0"
 - **Very large numbers**: Warn if dimensions exceed 8K (7680×4320)
 - **Very small numbers**: Warn if dimensions below 320px
@@ -415,6 +437,7 @@ Handle edge cases gracefully:
 ## Copy to Clipboard
 
 "Copy Dimensions" should copy in multiple formats:
+
 ```
 1920×1080 (16:9)
 Width: 1920px

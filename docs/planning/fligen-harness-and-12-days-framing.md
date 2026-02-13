@@ -38,12 +38,14 @@ Purpose: capture the evolving plan for a reusable creative harness (FliGen), the
 Goal: a single UI that can orchestrate creative assets quickly.
 
 Core features for MVP:
+
 - Select module (thumbnail, lower thirds, call-outs, credits)
 - Inputs: day number, tool name, hook line, style keyword
 - Generate N variants per module
 - Save prompt + output metadata for reuse
 
 Implementation note:
+
 - If Kybernesis works, use it as the "second brain / orchestrator."
 - If Kybernesis does not work, use Claude Agent SDK (project 0012) or Claude Code directly.
 - On Christmas Eve, review existing codebases for patterns:
@@ -65,6 +67,7 @@ Implementation note:
 ### 2) FliHub Transcription Connector (Early)
 
 Purpose:
+
 - Connect to FliHub
 - Pull transcripts for a selected video/project
 - Use transcripts to drive content generation across tools
@@ -72,18 +75,21 @@ Purpose:
 ### 3) Thumbnail Layout Tool (Compound, Later)
 
 Thumbnail structure (recurring pattern):
+
 - Background template with simple geometric color blocks
 - Full 16:9 generated image as an overlay
 - Portrait cut-out overlay (David variants)
 - Text headline overlay
 
 Notes:
+
 - Compound tool (layout + imagery + typography)
 - Likely not an early entry
 
 ### 4) Lower Thirds + Call-Out Cards (Compound)
 
 Use cases:
+
 - Speaker name + role
 - Short call-outs in videos
 - Clean bullet points for on-screen notes
@@ -91,6 +97,7 @@ Use cases:
 ### 5) Credits / End Slate
 
 Use cases:
+
 - AI tools used (Suno, 11 Labs, FAL/KIE, etc.)
 - Contributor thanks
 - CTA to the series
@@ -98,6 +105,7 @@ Use cases:
 ### 6) Animation → Video Capture (Day Candidate)
 
 Goal:
+
 - Convert animations in `/Users/davidcruwys/dev/video-projects/v-voz/the-point/data` into video
 - Use as a standalone day or demo tool
 
@@ -108,11 +116,13 @@ Goal:
 Idea: generate decks that are **mostly graphics** rather than text.
 
 Possible early focus:
+
 - Visual explainer on the vOz NAS system and its integration into the DAM system
 - Use graphics, icons, and motion/animation to convey structure
 - Optional voiceover using 11 Labs
 
 Future expansion:
+
 - Use same approach for each "data system" to turn it into animated visual stories
 
 ---
@@ -120,6 +130,7 @@ Future expansion:
 ## Music and Voice Timing
 
 Early tooling priorities:
+
 - Suno: generate a musical theme for the series (validate via FAL/KIE on Day 1)
 - 11 Labs: voice system ready early for narration
 
@@ -128,6 +139,7 @@ Early tooling priorities:
 ## Steve Workflow Integration (Reference)
 
 See `day-0-intro-and-day-1-planning.md` for:
+
 - N8N orchestration pattern
 - ComfyUI first-frame → last-frame animation workflow
 - Async polling/error handling pattern
@@ -142,6 +154,7 @@ Absolute path for collections (reference):
 `/Users/davidcruwys/dev/ad/brains/brand-dave/data-systems/collections/`
 
 Existing dataset noted:
+
 - `.../claude-plugin-marketplace/current.json`
 - `.../collections/index.yaml` (index updated)
 

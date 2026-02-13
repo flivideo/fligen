@@ -40,7 +40,7 @@ async function saveIndex(index: ShotIndex): Promise<void> {
  * Generate the next shot ID (shot-001, shot-002, etc.)
  */
 function generateShotId(index: ShotIndex): string {
-  const existingIds = index.shots.map(s => parseInt(s.id.replace('shot-', ''), 10));
+  const existingIds = index.shots.map((s) => parseInt(s.id.replace('shot-', ''), 10));
   const maxId = existingIds.length > 0 ? Math.max(...existingIds) : 0;
   return `shot-${String(maxId + 1).padStart(3, '0')}`;
 }
@@ -145,7 +145,7 @@ export async function addShot(request: AddShotRequest): Promise<Shot> {
  */
 export async function removeShot(id: string): Promise<boolean> {
   const index = await loadIndex();
-  const shotIndex = index.shots.findIndex(s => s.id === id);
+  const shotIndex = index.shots.findIndex((s) => s.id === id);
 
   if (shotIndex === -1) {
     console.log(`[Shots] Shot ${id} not found`);
@@ -197,7 +197,7 @@ export async function clearAllShots(): Promise<void> {
  */
 export async function getShot(id: string): Promise<Shot | null> {
   const index = await loadIndex();
-  return index.shots.find(s => s.id === id) ?? null;
+  return index.shots.find((s) => s.id === id) ?? null;
 }
 
 /**
@@ -217,11 +217,11 @@ export async function getShotAsBase64(shot: Shot): Promise<string> {
   // Determine MIME type from extension
   const ext = path.extname(shot.filename).toLowerCase().slice(1);
   const mimeTypes: Record<string, string> = {
-    'jpg': 'image/jpeg',
-    'jpeg': 'image/jpeg',
-    'png': 'image/png',
-    'webp': 'image/webp',
-    'gif': 'image/gif',
+    jpg: 'image/jpeg',
+    jpeg: 'image/jpeg',
+    png: 'image/png',
+    webp: 'image/webp',
+    gif: 'image/gif',
   };
   const mimeType = mimeTypes[ext] || 'image/jpeg';
 

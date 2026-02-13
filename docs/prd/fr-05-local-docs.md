@@ -37,14 +37,14 @@ This follows the MCP tool integration pattern established in the Claude Agent SD
 
 ## Scope
 
-| Parameter | Value | Notes |
-|-----------|-------|-------|
-| Base path | `~/dev/ad/flivideo/fligen/docs` | Fixed for security |
-| File types | `.md` only | Markdown documentation |
-| Subfolders | Recursive | planning/, prd/, uat/ |
-| Caching | On-demand | No persistent cache |
-| File size limit | 10KB max per response | Prevents token explosion |
-| Line limit | 500 lines max per response | Enables chunking |
+| Parameter       | Value                           | Notes                    |
+| --------------- | ------------------------------- | ------------------------ |
+| Base path       | `~/dev/ad/flivideo/fligen/docs` | Fixed for security       |
+| File types      | `.md` only                      | Markdown documentation   |
+| Subfolders      | Recursive                       | planning/, prd/, uat/    |
+| Caching         | On-demand                       | No persistent cache      |
+| File size limit | 10KB max per response           | Prevents token explosion |
+| Line limit      | 500 lines max per response      | Enables chunking         |
 
 ---
 
@@ -68,12 +68,23 @@ This follows the MCP tool integration pattern established in the Claude Agent SD
 - [x] Handles missing directory gracefully
 
 **Example output:**
+
 ```json
 {
   "basePath": "docs",
   "files": [
-    { "path": "docs/backlog.md", "name": "backlog.md", "sizeBytes": 1024, "modifiedAt": "2025-12-27T10:00:00Z" },
-    { "path": "docs/prd/fr-01-initial-harness.md", "name": "fr-01-initial-harness.md", "sizeBytes": 3500, "modifiedAt": "2025-12-25T12:00:00Z" }
+    {
+      "path": "docs/backlog.md",
+      "name": "backlog.md",
+      "sizeBytes": 1024,
+      "modifiedAt": "2025-12-27T10:00:00Z"
+    },
+    {
+      "path": "docs/prd/fr-01-initial-harness.md",
+      "name": "fr-01-initial-harness.md",
+      "sizeBytes": 3500,
+      "modifiedAt": "2025-12-25T12:00:00Z"
+    }
   ],
   "totalFiles": 2,
   "totalSize": 4524
@@ -91,11 +102,13 @@ This follows the MCP tool integration pattern established in the Claude Agent SD
 - [x] Returns error for paths outside docs/
 
 **Example input:**
+
 ```json
 { "path": "docs/backlog.md" }
 ```
 
 **Example output:**
+
 ```json
 {
   "path": "docs/backlog.md",
@@ -115,6 +128,7 @@ This follows the MCP tool integration pattern established in the Claude Agent SD
 - [x] Chunk metadata: `{ chunk: number, totalChunks: number, totalLines: number }`
 
 **Example chunked response:**
+
 ```json
 {
   "path": "docs/planning/large-doc.md",
@@ -135,12 +149,21 @@ This follows the MCP tool integration pattern established in the Claude Agent SD
 - [x] Base path is hardcoded, not configurable via tool input
 
 **Security test cases:**
+
 ```typescript
 // These should all fail with security error:
-{ path: "../../../etc/passwd" }
-{ path: "docs/../../../home/user/.ssh/id_rsa" }
-{ path: "/etc/passwd" }
-{ path: "docs/file.txt" }  // wrong extension
+{
+  path: '../../../etc/passwd';
+}
+{
+  path: 'docs/../../../home/user/.ssh/id_rsa';
+}
+{
+  path: '/etc/passwd';
+}
+{
+  path: 'docs/file.txt';
+} // wrong extension
 ```
 
 ---
@@ -169,7 +192,7 @@ const localDocsContentTool = tool(
   'Read contents of a specific markdown documentation file',
   {
     path: z.string().describe('Relative path to file within docs/'),
-    chunk: z.number().optional().describe('Chunk number for large files (1-based)')
+    chunk: z.number().optional().describe('Chunk number for large files (1-based)'),
   },
   async ({ path, chunk }) => {
     // Implementation
@@ -198,9 +221,11 @@ const localDocsServer = createLocalDocsServer();
 const options: Options = {
   // ... existing options
   allowedTools: [
-    'Read', 'Write', 'Bash',
+    'Read',
+    'Write',
+    'Bash',
     'mcp__local_docs__local_docs_index',
-    'mcp__local_docs__local_docs_content'
+    'mcp__local_docs__local_docs_content',
   ],
   mcpServers: {
     local_docs: localDocsServer,
@@ -229,36 +254,36 @@ server/src/
 
 ### Index Mode Tests
 
-| Test | Input | Expected |
-|------|-------|----------|
-| Index happy path | `local_docs_index()` | JSON with all .md files in docs/ |
-| Empty folder | Empty docs/ | `{ files: [], totalFiles: 0 }` |
-| Nested folders | docs/prd/, docs/planning/ | All nested .md files included |
+| Test             | Input                     | Expected                         |
+| ---------------- | ------------------------- | -------------------------------- |
+| Index happy path | `local_docs_index()`      | JSON with all .md files in docs/ |
+| Empty folder     | Empty docs/               | `{ files: [], totalFiles: 0 }`   |
+| Nested folders   | docs/prd/, docs/planning/ | All nested .md files included    |
 
 ### Content Mode Tests
 
-| Test | Input | Expected |
-|------|-------|----------|
-| Content happy path | `{ path: "docs/backlog.md" }` | File contents as string |
-| File not found | `{ path: "docs/missing.md" }` | Error: "File not found" |
-| Large file chunking | `{ path: "docs/large.md" }` (1200 lines) | chunk 1/3 with metadata |
-| Request specific chunk | `{ path: "docs/large.md", chunk: 2 }` | Lines 501-1000 |
+| Test                   | Input                                    | Expected                |
+| ---------------------- | ---------------------------------------- | ----------------------- |
+| Content happy path     | `{ path: "docs/backlog.md" }`            | File contents as string |
+| File not found         | `{ path: "docs/missing.md" }`            | Error: "File not found" |
+| Large file chunking    | `{ path: "docs/large.md" }` (1200 lines) | chunk 1/3 with metadata |
+| Request specific chunk | `{ path: "docs/large.md", chunk: 2 }`    | Lines 501-1000          |
 
 ### Security Tests
 
-| Test | Input | Expected |
-|------|-------|----------|
-| Path traversal blocked | `{ path: "../../../etc/passwd" }` | Error: "Path traversal blocked" |
-| Absolute path blocked | `{ path: "/etc/passwd" }` | Error: "Path traversal blocked" |
-| Wrong extension | `{ path: "docs/file.txt" }` | Error: "Only .md files accessible" |
-| Symlink escape | Symlink pointing outside docs/ | Error: "Symlink escape blocked" |
+| Test                   | Input                             | Expected                           |
+| ---------------------- | --------------------------------- | ---------------------------------- |
+| Path traversal blocked | `{ path: "../../../etc/passwd" }` | Error: "Path traversal blocked"    |
+| Absolute path blocked  | `{ path: "/etc/passwd" }`         | Error: "Path traversal blocked"    |
+| Wrong extension        | `{ path: "docs/file.txt" }`       | Error: "Only .md files accessible" |
+| Symlink escape         | Symlink pointing outside docs/    | Error: "Symlink escape blocked"    |
 
 ### Integration Tests
 
-| Test | Description | Expected |
-|------|-------------|----------|
-| Agent uses index | Ask "what docs exist?" | Agent calls `local_docs_index` |
-| Agent reads file | Ask "what's in backlog?" | Agent calls `local_docs_content` |
+| Test              | Description                   | Expected                          |
+| ----------------- | ----------------------------- | --------------------------------- |
+| Agent uses index  | Ask "what docs exist?"        | Agent calls `local_docs_index`    |
+| Agent reads file  | Ask "what's in backlog?"      | Agent calls `local_docs_content`  |
 | Multi-turn memory | Read file, then ask follow-up | Agent references previous content |
 
 ---
@@ -273,6 +298,7 @@ server/src/
 ## Completion Notes
 
 **What was done:**
+
 - Created LocalDocs MCP server module in `server/src/tools/local-docs/`
 - Implemented `local_docs_index` tool that scans docs/ folder recursively
 - Implemented `local_docs_content` tool with 500-line chunking support
@@ -285,6 +311,7 @@ server/src/
 - Updated agent system prompt to describe LocalDocs tools
 
 **Files changed:**
+
 - `server/src/tools/local-docs/security.ts` (new) - Path validation utilities
 - `server/src/tools/local-docs/scanner.ts` (new) - Directory scanning logic
 - `server/src/tools/local-docs/reader.ts` (new) - File reading with chunking
@@ -293,6 +320,7 @@ server/src/
 - `server/scratch/test-local-docs.ts` (new) - Test script
 
 **Testing notes:**
+
 - Run `npx tsx server/scratch/test-local-docs.ts` to verify tools work
 - Index returns 18 documentation files with metadata
 - Content reading works with/without "docs/" prefix

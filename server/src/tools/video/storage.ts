@@ -99,7 +99,7 @@ export async function updateVideoTask(
   updates: Partial<VideoTask>
 ): Promise<VideoTask | null> {
   const index = await loadIndex();
-  const taskIndex = index.videos.findIndex(v => v.id === id);
+  const taskIndex = index.videos.findIndex((v) => v.id === id);
 
   if (taskIndex === -1) {
     console.log(`[Video] Task ${id} not found`);
@@ -149,7 +149,7 @@ export async function listVideoTasks(): Promise<VideoTask[]> {
  */
 export async function getVideoTask(id: string): Promise<VideoTask | null> {
   const index = await loadIndex();
-  return index.videos.find(v => v.id === id) ?? null;
+  return index.videos.find((v) => v.id === id) ?? null;
 }
 
 /**
@@ -157,7 +157,7 @@ export async function getVideoTask(id: string): Promise<VideoTask | null> {
  */
 export async function deleteVideoTask(id: string): Promise<boolean> {
   const index = await loadIndex();
-  const taskIndex = index.videos.findIndex(v => v.id === id);
+  const taskIndex = index.videos.findIndex((v) => v.id === id);
 
   if (taskIndex === -1) {
     return false;

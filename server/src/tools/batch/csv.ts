@@ -50,10 +50,7 @@ export function filterActiveRows(rows: CsvRow[]): CsvRow[] {
  * @param completedIds - Array of completed filename IDs
  * @returns Path to updated CSV file
  */
-export async function updateCsv(
-  filePath: string,
-  completedIds: string[]
-): Promise<string> {
+export async function updateCsv(filePath: string, completedIds: string[]): Promise<string> {
   const rows = await parseCsv(filePath);
 
   // Mark completed rows as a=9

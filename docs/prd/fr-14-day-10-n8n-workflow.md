@@ -17,6 +17,7 @@ The "12 Days of Claudemas" series needs Day 10 to demonstrate orchestration - ta
 ## Solution
 
 Create a Day 10 page that:
+
 1. Loads the first three prompts from Day 9 intake data (seed image, edit instruction, animation)
 2. Displays these prompts in an editable form
 3. Provides a "Generate" button that triggers Steve's N8N workflow
@@ -29,6 +30,7 @@ Create a Day 10 page that:
 ## Acceptance Criteria
 
 ### Loading Intake Data
+
 - [ ] Day 10 page has a project selector (dropdown or input)
 - [ ] Can load project from `/assets/projects/<projectCode>/`
 - [ ] Reads `human_prompts.json` and populates 3 text areas:
@@ -38,6 +40,7 @@ Create a Day 10 page that:
 - [ ] Text areas are editable (in case user wants to tweak before generation)
 
 ### N8N Workflow Trigger
+
 - [ ] "Generate" button sends prompts to N8N webhook
 - [ ] Request payload includes:
   ```json
@@ -52,6 +55,7 @@ Create a Day 10 page that:
 - [ ] Handles long request timeouts (2-3 minutes minimum)
 
 ### Results Display
+
 - [ ] Simple visualization showing:
   - 2 generated images (side by side or in grid)
   - 1 generated video (with playback controls)
@@ -59,12 +63,14 @@ Create a Day 10 page that:
 - [ ] Display shows generation metadata (runtime, models used, cost if available)
 
 ### Error Handling
+
 - [ ] Shows error message if workflow fails
 - [ ] Shows error if project not found
 - [ ] Shows error if N8N endpoint unreachable
 - [ ] Timeout handling with clear message
 
 ### Server Configuration
+
 - [ ] Express server configured with long request timeout (3+ minutes)
 - [ ] Body parser limit increased if needed for large responses
 - [ ] N8N webhook URL configurable via environment variable
@@ -72,11 +78,13 @@ Create a Day 10 page that:
 ## Technical Notes
 
 ### Reference Documentation
+
 - **Day 10 Planning Brief:** `/docs/planning/day-10-orchestration-brief.md`
 - **Day 9 Planning Brief:** `/docs/planning/day-09-interop-brief.md`
 - **N8N Workflow Details:** To be provided by Steve
 
 ### Project Structure
+
 ```
 /assets/projects/<projectCode>/
 ├── project.json              # Created in Day 9 (FR-13)
@@ -91,12 +99,15 @@ Create a Day 10 page that:
 ### N8N Integration
 
 **Webhook Endpoint:**
+
 ```
 POST https://n8n.dreamingcomputers.com/webhook-test/...
 ```
+
 (Exact URL to be provided by Steve)
 
 **Request Payload:**
+
 ```json
 {
   "project_code": "VSS-001",
@@ -107,6 +118,7 @@ POST https://n8n.dreamingcomputers.com/webhook-test/...
 ```
 
 **Expected Response:**
+
 ```json
 {
   "project_code": "VSS-001",
@@ -130,6 +142,7 @@ POST https://n8n.dreamingcomputers.com/webhook-test/...
 ### Files to Create/Modify
 
 **New Files:**
+
 ```
 client/src/components/tools/Day10N8N.tsx     - Day 10 UI component
 server/src/tools/n8n/types.ts                - N8N request/response types
@@ -138,6 +151,7 @@ server/src/tools/n8n/index.ts                - Module exports
 ```
 
 **Modified Files:**
+
 ```
 client/src/App.tsx                           - Add Day 10 routing
 server/src/index.ts                          - Add N8N API endpoints, timeout config
@@ -156,6 +170,7 @@ server.timeout = 240000; // 4 minutes
 ```
 
 Also extend Socket.io timeout if using real-time updates:
+
 ```typescript
 io.engine.pingTimeout = 240000;
 io.engine.pingInterval = 25000;
@@ -171,6 +186,7 @@ POST /api/n8n/save-results    - Save results to project folder
 ```
 
 ### Dependencies
+
 - Day 9 (FR-13) must be complete - project structure must exist
 - Steve's N8N workflow must be deployed and accessible
 - Polling patterns from Day 6 (FR-10) can be reused if needed
@@ -221,6 +237,7 @@ POST /api/n8n/save-results    - Save results to project folder
 ```
 
 ### Future Enhancements (Phase 2 - out of scope for this FR)
+
 - Claude-powered prompt refinement (Human → System → Machine)
 - Editable system prompt templates
 - "Refine A/B/C" buttons for individual prompt enhancement

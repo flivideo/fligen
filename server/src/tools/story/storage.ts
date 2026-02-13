@@ -81,10 +81,7 @@ export async function getStoriesFromCatalog(): Promise<Asset[]> {
   try {
     const allAssets = await catalog.getAllAssets();
 
-    return allAssets.filter(
-      asset => asset.type === 'video' && asset.metadata?.type === 'story'
-    );
-
+    return allAssets.filter((asset) => asset.type === 'video' && asset.metadata?.type === 'story');
   } catch (error) {
     console.error('[Story Storage] Error reading catalog:', error);
     return [];

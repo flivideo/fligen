@@ -75,7 +75,7 @@ async function migrate() {
 
     // Check if already migrated (by looking for same prompt)
     const alreadyExists = catalog.assets.some(
-      asset => asset.type === 'music' && asset.prompt === track.prompt
+      (asset) => asset.type === 'music' && asset.prompt === track.prompt
     );
 
     if (alreadyExists) {
@@ -141,7 +141,6 @@ async function migrate() {
 
       const fileSizeKB = Math.round(audioBuffer.length / 1024);
       console.log(`   ✅ Saved (${fileSizeKB}KB) → ${filename}`);
-
     } catch (error) {
       console.error(`   ❌ Failed:`, error.message);
       skippedCount++;
@@ -198,7 +197,7 @@ function generateAssetId(type) {
 }
 
 // Run migration
-migrate().catch(error => {
+migrate().catch((error) => {
   console.error('💥 Migration failed:', error);
   process.exit(1);
 });

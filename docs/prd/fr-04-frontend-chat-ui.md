@@ -23,6 +23,7 @@ A reusable chat component is needed that will serve as the foundation for Days 4
 ## Solution
 
 Create a React chat component that:
+
 - Connects to the existing Socket.io events (`agent:query`, `agent:text`, `agent:tool`, `agent:complete`, `agent:error`)
 - Displays messages in a scrollable container
 - Shows tool execution notifications inline
@@ -56,6 +57,7 @@ Simple, functional chat with tool notifications inline.
 ```
 
 **Pros:**
+
 - Fast to implement (~2 hours)
 - Minimal complexity
 - Easy to debug
@@ -63,6 +65,7 @@ Simple, functional chat with tool notifications inline.
 - Matches existing TailwindCSS v4 patterns
 
 **Cons:**
+
 - No typing indicators
 - Basic message styling
 - Manual streaming accumulation
@@ -89,12 +92,14 @@ Chat with a side panel showing tool activity and cost tracking.
 ```
 
 **Pros:**
+
 - Clear separation of chat and activity
 - Real-time cost visibility
 - Tool history at a glance
 - Better for complex multi-tool workflows
 
 **Cons:**
+
 - More screen real estate required
 - Additional component complexity
 - May not work well on narrow layouts
@@ -126,12 +131,14 @@ Polished chat experience with message bubbles and progress indicators.
 ```
 
 **Pros:**
+
 - Production-quality UX
 - Clear visual distinction user/assistant
 - Progress indicators for streaming
 - Settings/theme toggle accessibility
 
 **Cons:**
+
 - Most complex to implement
 - Bubble styling with TailwindCSS v4 requires care
 - May need additional state management
@@ -144,11 +151,11 @@ Polished chat experience with message bubbles and progress indicators.
 
 **Start with Option A**, then enhance for later days.
 
-| Day | UI Version | Focus |
-|-----|------------|-------|
-| 2-3 | Option A | Prove SDK works, basic chat |
-| 4-7 | Option A + tool panel | Add tool-specific displays |
-| 8+ | Option B or C | Polish for demos |
+| Day | UI Version            | Focus                       |
+| --- | --------------------- | --------------------------- |
+| 2-3 | Option A              | Prove SDK works, basic chat |
+| 4-7 | Option A + tool panel | Add tool-specific displays  |
+| 8+  | Option B or C         | Polish for demos            |
 
 The backend event loop is approximately 150 lines. The frontend should match this simplicity initially.
 
@@ -264,17 +271,20 @@ const [currentMessage, setCurrentMessage] = useState<string>('');
 const [messages, setMessages] = useState<ChatMessage[]>([]);
 
 socket.on('agent:text', ({ text }) => {
-  setCurrentMessage(prev => prev + text);
+  setCurrentMessage((prev) => prev + text);
 });
 
 socket.on('agent:complete', (data) => {
   // Finalize current message
-  setMessages(prev => [...prev, {
-    id: crypto.randomUUID(),
-    role: 'assistant',
-    content: currentMessage,
-    timestamp: new Date(),
-  }]);
+  setMessages((prev) => [
+    ...prev,
+    {
+      id: crypto.randomUUID(),
+      role: 'assistant',
+      content: currentMessage,
+      timestamp: new Date(),
+    },
+  ]);
   setCurrentMessage('');
   setIsProcessing(false);
 });
@@ -283,6 +293,7 @@ socket.on('agent:complete', (data) => {
 ### Tool Visibility
 
 Tool visibility is important for transparency. Users should see:
+
 1. When Claude decides to use a tool
 2. Which tool is being executed
 3. Whether the tool succeeded or failed
@@ -335,6 +346,7 @@ client/src/components/
 ## Completion Notes
 
 **What was done:**
+
 - Created `useSocket` hook for singleton socket connection management
 - Created `ChatPanel` component implementing Option A (Minimal) design
 - Handles streaming text via `agent:text` events with real-time accumulation
@@ -345,12 +357,14 @@ client/src/components/
 - Updated App.tsx to render chat UI on Day 2, starts on Day 2 by default
 
 **Files changed:**
+
 - `client/src/hooks/useSocket.ts` (new) - singleton socket hook
 - `client/src/components/tools/ChatPanel.tsx` (new) - main chat component
 - `client/src/components/tools/Day2AgentSDK.tsx` (new) - Day 2 wrapper
 - `client/src/App.tsx` (modified) - uses useSocket, renders Day2 component
 
 **Testing notes:**
+
 - Run `npm run dev` to start both server and client
 - Ensure `claude login` has been run for authentication
 - Navigate to Day 2 in sidebar

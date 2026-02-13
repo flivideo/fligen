@@ -16,7 +16,10 @@ export async function initCatalog(): Promise<void> {
   await fs.mkdir(path.join(CATALOG_DIR, 'thumbnails'), { recursive: true });
   await fs.mkdir(path.join(CATALOG_DIR, 'n8n'), { recursive: true });
 
-  const exists = await fs.access(INDEX_FILE).then(() => true).catch(() => false);
+  const exists = await fs
+    .access(INDEX_FILE)
+    .then(() => true)
+    .catch(() => false);
   if (!exists) {
     const initialCatalog: AssetCatalog = {
       version: '1.0.0',
@@ -50,7 +53,7 @@ export async function addAsset(asset: Asset): Promise<Asset> {
 // Update asset
 export async function updateAsset(id: string, updates: Partial<Asset>): Promise<Asset | null> {
   const catalog = await loadCatalog();
-  const index = catalog.assets.findIndex(a => a.id === id);
+  const index = catalog.assets.findIndex((a) => a.id === id);
   if (index === -1) return null;
 
   catalog.assets[index] = { ...catalog.assets[index], ...updates };
@@ -61,7 +64,7 @@ export async function updateAsset(id: string, updates: Partial<Asset>): Promise<
 // Get asset by ID
 export async function getAsset(id: string): Promise<Asset | null> {
   const catalog = await loadCatalog();
-  return catalog.assets.find(a => a.id === id) || null;
+  return catalog.assets.find((a) => a.id === id) || null;
 }
 
 // Get all assets
@@ -80,11 +83,11 @@ export async function filterAssets(filter: {
   endDate?: string;
 }): Promise<Asset[]> {
   const catalog = await loadCatalog();
-  return catalog.assets.filter(asset => {
+  return catalog.assets.filter((asset) => {
     if (filter.type && asset.type !== filter.type) return false;
     if (filter.provider && asset.provider !== filter.provider) return false;
     if (filter.status && asset.status !== filter.status) return false;
-    if (filter.tags && !filter.tags.every(t => asset.tags?.includes(t))) return false;
+    if (filter.tags && !filter.tags.every((t) => asset.tags?.includes(t))) return false;
     if (filter.startDate && asset.createdAt < filter.startDate) return false;
     if (filter.endDate && asset.createdAt > filter.endDate) return false;
     return true;
@@ -94,7 +97,7 @@ export async function filterAssets(filter: {
 // Delete asset
 export async function deleteAsset(id: string): Promise<boolean> {
   const catalog = await loadCatalog();
-  const index = catalog.assets.findIndex(a => a.id === id);
+  const index = catalog.assets.findIndex((a) => a.id === id);
   if (index === -1) return false;
 
   const asset = catalog.assets[index];
@@ -117,7 +120,12 @@ export function generateAssetId(type: Asset['type']): string {
 }
 
 // Generate filename
-export function generateFilename(type: Asset['type'], provider: string, model: string, extension: string): string {
+export function generateFilename(
+  type: Asset['type'],
+  provider: string,
+  model: string,
+  extension: string
+): string {
   const id = Date.now();
   const modelSlug = model.toLowerCase().replace(/\s+/g, '-');
   return `${type}-${id}-${provider}-${modelSlug}.${extension}`;
@@ -129,9 +137,9 @@ export async function getNextWorkflowNumber(): Promise<string> {
 
   // Find all N8N workflow IDs in metadata
   const workflowNumbers = catalog.assets
-    .filter(asset => asset.metadata?.workflowId)
-    .map(asset => parseInt(asset.metadata.workflowId, 10))
-    .filter(num => !isNaN(num));
+    .filter((asset) => asset.metadata?.workflowId)
+    .map((asset) => parseInt(asset.metadata.workflowId, 10))
+    .filter((num) => !isNaN(num));
 
   const maxNumber = workflowNumbers.length > 0 ? Math.max(...workflowNumbers) : 0;
   const nextNumber = maxNumber + 1;

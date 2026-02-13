@@ -7,30 +7,36 @@ This directory contains the song data for the "12 Days of Claudemas" musical nar
 The 12 days are split into three songs, each covering 4 days and representing a phase of the journey:
 
 ### 1. The Foundation (Days 1-4)
+
 **File:** `song-1-foundation.json`
 **Style:** Electronic Pop, upbeat and inspiring, 120 BPM
 **Theme:** Building the technical infrastructure
 **Days Covered:**
+
 - Day 1: FliGen Harness
 - Day 2: Primary Brain (Claude SDK)
 - Day 3: Second Brain (Kybernesis)
 - Day 4: Image Generator
 
 ### 2. The Creation (Days 5-8)
+
 **File:** `song-2-creation.json`
 **Style:** Indie Rock with Electronic elements, 125 BPM
 **Theme:** Creative tools come alive
 **Days Covered:**
+
 - Day 5: Text-to-Speech (ElevenLabs)
 - Day 6: Video Animation
 - Day 7: Music Generator
 - Day 8: Thumbnail Generator
 
 ### 3. The Integration (Days 9-12)
+
 **File:** `song-3-integration.json`
 **Style:** Epic Cinematic Rock, triumphant, 130 BPM
 **Theme:** Bringing it all together
 **Days Covered:**
+
 - Day 9: Interop (FliHub)
 - Day 10: N8N/ComfyUI Workflows
 - Day 11: Story Builder
@@ -39,20 +45,21 @@ The 12 days are split into three songs, each covering 4 days and representing a 
 ## File Format
 
 Each JSON file contains:
+
 ```json
 {
-  "provider": "kie",           // KIE.AI (Suno) or FAL.AI
-  "model": "V4.5",              // Suno model version
-  "title": "Song Title",        // Track title
-  "style": "Genre, BPM, mood",  // Style description
-  "instrumental": false,        // Whether to include vocals
-  "vocalGender": "male",        // Vocal gender
-  "outputFormat": "mp3",        // Audio format
-  "lyrics": "[Verse]...",       // Full lyrics with metatags
-  "prompt": "Description",      // Summary of what days are covered
-  "days": [1, 2, 3, 4],        // Array of day numbers
-  "theme": "Theme Name",        // Thematic section
-  "description": "Overview"     // Detailed description
+  "provider": "kie", // KIE.AI (Suno) or FAL.AI
+  "model": "V4.5", // Suno model version
+  "title": "Song Title", // Track title
+  "style": "Genre, BPM, mood", // Style description
+  "instrumental": false, // Whether to include vocals
+  "vocalGender": "male", // Vocal gender
+  "outputFormat": "mp3", // Audio format
+  "lyrics": "[Verse]...", // Full lyrics with metatags
+  "prompt": "Description", // Summary of what days are covered
+  "days": [1, 2, 3, 4], // Array of day numbers
+  "theme": "Theme Name", // Thematic section
+  "description": "Overview" // Detailed description
 }
 ```
 
@@ -85,7 +92,7 @@ const result = await generateMusic({
   lyrics: song1.lyrics,
   instrumental: song1.instrumental,
   vocalGender: song1.vocalGender,
-  outputFormat: song1.outputFormat
+  outputFormat: song1.outputFormat,
 });
 ```
 
@@ -110,6 +117,7 @@ This creates a natural narrative arc perfect for a YouTube video.
 ## Metatags Used
 
 The lyrics use standard Suno metatags:
+
 - `[Intro]` - Introduction section
 - `[Verse 1]`, `[Verse 2]` - Verse sections
 - `[Chorus]` - Chorus/hook
@@ -134,6 +142,7 @@ Total cost for all 3 songs: **~$0.18**
 ## Alternative Approaches
 
 See `alternatives/` folder for:
+
 - 12 individual songs (one per day, different genres)
 - Single unified song (all 12 days in one track)
 - FAL.AI versions (using tags instead of style descriptions)

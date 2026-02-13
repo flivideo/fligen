@@ -50,14 +50,14 @@ Create a web-based Brand Text Generator with template architecture supporting mu
 
 Each brand template defines:
 
-| Property | Description | Example (Claude Code) |
-|----------|-------------|----------------------|
-| Template Name | Identifier | `claude_code_brick` |
-| Typography Style | Font rendering approach | Pixel/brick block letters |
-| Default Colors | Primary, secondary, accent | Orange (#D97757), dark brown, yellow |
-| Effects | Shadow, bevel, glow presets | Inner shadow, brick seams, glow |
-| Background | Glow, terminal, scanlines | Charcoal terminal with glow |
-| Layout Defaults | Padding, alignment, sizing | Center-aligned, 80px default |
+| Property         | Description                 | Example (Claude Code)                |
+| ---------------- | --------------------------- | ------------------------------------ |
+| Template Name    | Identifier                  | `claude_code_brick`                  |
+| Typography Style | Font rendering approach     | Pixel/brick block letters            |
+| Default Colors   | Primary, secondary, accent  | Orange (#D97757), dark brown, yellow |
+| Effects          | Shadow, bevel, glow presets | Inner shadow, brick seams, glow      |
+| Background       | Glow, terminal, scanlines   | Charcoal terminal with glow          |
+| Layout Defaults  | Padding, alignment, sizing  | Center-aligned, 80px default         |
 
 **Key Requirement:** Adding a new template should require only creating a config object and optional CSS, without modifying core rendering logic.
 
@@ -156,15 +156,16 @@ Style: normal
 
 User defines multiple segments, each with independent styling:
 
-| Segment # | Text | Color | Style | Brick Override |
-|-----------|------|-------|-------|----------------|
-| 1 | "12 Days of " | white | normal | default |
-| 2 | "Claude" | orange | bold | heavy seams |
-| 3 | "mas" | blue | normal | default |
+| Segment # | Text          | Color  | Style  | Brick Override |
+| --------- | ------------- | ------ | ------ | -------------- |
+| 1         | "12 Days of " | white  | normal | default        |
+| 2         | "Claude"      | orange | bold   | heavy seams    |
+| 3         | "mas"         | blue   | normal | default        |
 
 **Rendering:** Segments concatenate inline with independent styling preserved.
 
 **UI Controls per Segment:**
+
 - Text input (string)
 - Color dropdown (from template palette)
 - Style dropdown (normal, bold, italic - if supported)
@@ -194,46 +195,50 @@ User defines multiple segments, each with independent styling:
 
 ### Visual Effects
 
-| Effect | Description | Implementation |
-|--------|-------------|----------------|
-| Brick Seams | Visible lines between tiles | Draw darker lines at intervals |
-| Inner Shadow | Bevel depth | Canvas shadow or gradient fill |
-| Bevel Depth | 3D appearance | Highlight top-left, shadow bottom-right |
-| Grain/Noise | Subtle texture | Canvas noise pattern overlay |
-| Gradient | Orange-brown variation | Linear gradient fill per letter |
+| Effect       | Description                 | Implementation                          |
+| ------------ | --------------------------- | --------------------------------------- |
+| Brick Seams  | Visible lines between tiles | Draw darker lines at intervals          |
+| Inner Shadow | Bevel depth                 | Canvas shadow or gradient fill          |
+| Bevel Depth  | 3D appearance               | Highlight top-left, shadow bottom-right |
+| Grain/Noise  | Subtle texture              | Canvas noise pattern overlay            |
+| Gradient     | Orange-brown variation      | Linear gradient fill per letter         |
 
 ### Default Colors
 
-| Color Name | Hex Code | Usage |
-|------------|----------|-------|
-| Primary Orange | `#D97757` | Main text |
-| Secondary White | `#FFFFFF` | Alternate text |
-| Accent Blue | `#4A9FFF` | Highlight segments |
-| Dark Brown | `#342D2D` | Shadow, seams |
-| Charcoal | `#141413` | Terminal background |
-| Accent Yellow | `#FFDE59` | Optional highlights |
+| Color Name      | Hex Code  | Usage               |
+| --------------- | --------- | ------------------- |
+| Primary Orange  | `#D97757` | Main text           |
+| Secondary White | `#FFFFFF` | Alternate text      |
+| Accent Blue     | `#4A9FFF` | Highlight segments  |
+| Dark Brown      | `#342D2D` | Shadow, seams       |
+| Charcoal        | `#141413` | Terminal background |
+| Accent Yellow   | `#FFDE59` | Optional highlights |
 
 ### Background Effects
 
 **Glow Behind Text:**
+
 - Soft radial gradient centered on text
 - Default color: orange (#D97757) at 20% opacity
 - Spread: 200-400px radius
 - Implementation: Canvas radialGradient or CSS box-shadow
 
 **Terminal Window:**
+
 - Rounded rectangle frame (border-radius: 12px)
 - Top bar with 3 window controls (dots: red, yellow, green)
 - Background: charcoal (#141413)
 - Optional code texture (blurred text lines)
 
 **Scanlines:**
+
 - Horizontal lines across entire canvas
 - 2-4px spacing, 1px line height
 - Color: white at 5% opacity
 - Implementation: Repeating linear gradient or SVG pattern
 
 **Footer Text:**
+
 - Text: "Press Enter to continue" (customizable)
 - Font: Monospace (Courier New or similar)
 - Position: Bottom-left, 20px padding
@@ -245,38 +250,43 @@ User defines multiple segments, each with independent styling:
 
 ### Preset Sizes
 
-| Preset | Dimensions | Aspect Ratio | Use Case |
-|--------|------------|--------------|----------|
-| YouTube Thumbnail | 1280×720 | 16:9 | Thumbnail overlays |
-| Square | 1024×1024 | 1:1 | Social media posts |
-| Portrait | 1080×1920 | 9:16 | Instagram stories |
-| Twitter Header | 1500×500 | 3:1 | Profile headers |
-| Custom | User-defined | Any | Flexible |
+| Preset            | Dimensions   | Aspect Ratio | Use Case           |
+| ----------------- | ------------ | ------------ | ------------------ |
+| YouTube Thumbnail | 1280×720     | 16:9         | Thumbnail overlays |
+| Square            | 1024×1024    | 1:1          | Social media posts |
+| Portrait          | 1080×1920    | 9:16         | Instagram stories  |
+| Twitter Header    | 1500×500     | 3:1          | Profile headers    |
+| Custom            | User-defined | Any          | Flexible           |
 
 ### Export Options
 
 **PNG with Background:**
+
 - Includes terminal window, glow, scanlines
 - Canvas renders to blob
 - Filename: `brand-text-{timestamp}.png`
 
 **PNG Transparent:**
+
 - Text and effects only, no background
 - Useful for overlaying on thumbnails
 - Alpha channel preserved
 - Filename: `brand-text-transparent-{timestamp}.png`
 
 **SVG (Optional/Nice-to-Have):**
+
 - Vector format for perfect scaling
 - Effects may be simplified (filters for glow/shadow)
 - Filename: `brand-text-{timestamp}.svg`
 
 **Copy to Clipboard:**
+
 - Uses Clipboard API (`navigator.clipboard.write()`)
 - Copies PNG blob to system clipboard
 - User can paste directly into design tools
 
 **Download:**
+
 - Triggers browser download via `<a download>`
 - Uses `URL.createObjectURL()` for blob URLs
 
@@ -289,6 +299,7 @@ User defines multiple segments, each with independent styling:
 **Primary: HTML Canvas API**
 
 Canvas provides pixel-perfect control for:
+
 - Drawing pixel/brick letters
 - Overlaying brick seams
 - Applying gradients and shadows
@@ -346,8 +357,8 @@ const drawBrickLetter = (
   glyph.forEach((row, rowIndex) => {
     row.forEach((filled, colIndex) => {
       if (filled) {
-        const blockX = x + (colIndex * blockSize);
-        const blockY = y + (rowIndex * blockSize);
+        const blockX = x + colIndex * blockSize;
+        const blockY = y + rowIndex * blockSize;
 
         // Draw filled block
         ctx.fillStyle = color;
@@ -369,10 +380,7 @@ const drawBrickLetter = (
 ### Export to PNG
 
 ```typescript
-const exportToPng = async (
-  canvas: HTMLCanvasElement,
-  transparent: boolean
-): Promise<Blob> => {
+const exportToPng = async (canvas: HTMLCanvasElement, transparent: boolean): Promise<Blob> => {
   if (transparent) {
     // Clear background before export
     const tempCanvas = document.createElement('canvas');
@@ -400,9 +408,7 @@ const exportToPng = async (
 const copyToClipboard = async (canvas: HTMLCanvasElement) => {
   try {
     const blob = await exportToPng(canvas, false);
-    await navigator.clipboard.write([
-      new ClipboardItem({ 'image/png': blob })
-    ]);
+    await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
     alert('Copied to clipboard!');
   } catch (error) {
     console.error('Clipboard write failed:', error);
@@ -624,12 +630,12 @@ This tool can operate **fully client-side** without server dependencies. However
 
 ### Optional Server Endpoints
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/brand-text/templates` | GET | List available templates |
-| `/api/brand-text/render` | POST | Server-side rendering (fallback) |
-| `/api/brand-text/save` | POST | Save generated images to catalog |
-| `/api/brand-text/presets` | GET | Load saved presets (JSON configs) |
+| Endpoint                    | Method | Description                       |
+| --------------------------- | ------ | --------------------------------- |
+| `/api/brand-text/templates` | GET    | List available templates          |
+| `/api/brand-text/render`    | POST   | Server-side rendering (fallback)  |
+| `/api/brand-text/save`      | POST   | Save generated images to catalog  |
+| `/api/brand-text/presets`   | GET    | Load saved presets (JSON configs) |
 
 **Recommendation:** Keep MVP fully client-side. Add server persistence in future FR if needed.
 
@@ -661,6 +667,7 @@ client/src/components/tools/
 ```
 
 **Modify:**
+
 ```
 client/src/App.tsx                  # Add Day 13 routing
 shared/src/config.json              # Add Day 13 entry (bonus day)
@@ -731,17 +738,20 @@ export interface BrandTemplate {
 ## Acceptance Criteria
 
 ### Template System
+
 - [ ] Template selector dropdown shows available templates
 - [ ] Selecting template updates all controls to template defaults
 - [ ] Adding new template config works without UI code changes
 
 ### Text Input - Single Color Mode
+
 - [ ] User can enter text in single input
 - [ ] Text updates live preview immediately
 - [ ] Case transform (original/upper/lower) works
 - [ ] Alignment (left/center/right) affects positioning
 
 ### Text Input - Multi-Color Segments
+
 - [ ] Toggle switches between single and multi-color modes
 - [ ] User can add/remove segments dynamically
 - [ ] Each segment has independent text, color, style
@@ -749,17 +759,20 @@ export interface BrandTemplate {
 - [ ] Segment colors use template palette
 
 ### Typography Controls
+
 - [ ] Font size slider (80-200px) updates preview
 - [ ] Letter spacing slider adjusts spacing between letters
 - [ ] Changes apply to all segments or per-segment (depending on mode)
 
 ### Brick Style Controls (Claude Code Template)
+
 - [ ] Brick seams slider controls seam visibility
 - [ ] Inner shadow slider controls shadow depth
 - [ ] Bevel depth slider controls 3D effect
 - [ ] Controls only visible when Claude Code template selected
 
 ### Background Effects
+
 - [ ] Glow toggle shows/hides glow effect
 - [ ] Glow color picker uses template colors
 - [ ] Glow intensity slider controls spread and opacity
@@ -769,6 +782,7 @@ export interface BrandTemplate {
 - [ ] Footer text toggle and input work correctly
 
 ### Canvas & Preview
+
 - [ ] Live preview updates in real-time (<100ms)
 - [ ] Preset sizes dropdown (YouTube, Square, Portrait, Custom)
 - [ ] Custom size inputs work (width/height)
@@ -776,34 +790,40 @@ export interface BrandTemplate {
 - [ ] Canvas renders pixel-sharp (no blur)
 
 ### Export - PNG with Background
+
 - [ ] "Export PNG (with bg)" button triggers download
 - [ ] Output includes terminal, glow, scanlines
 - [ ] Output resolution matches canvas size exactly
 - [ ] Filename includes timestamp
 
 ### Export - PNG Transparent
+
 - [ ] "Export PNG (transparent)" button triggers download
 - [ ] Output has transparent background (alpha channel)
 - [ ] Text and effects preserved
 - [ ] Suitable for overlay on thumbnails
 
 ### Export - SVG (Optional)
+
 - [ ] "Export SVG" button works (if template supports SVG)
 - [ ] Vector text renders correctly
 - [ ] Effects converted to SVG filters or simplified
 - [ ] Button disabled if template doesn't support SVG
 
 ### Copy to Clipboard
+
 - [ ] "Copy to Clipboard" button copies PNG to system clipboard
 - [ ] User can paste image into design tools (Figma, Photoshop, etc.)
 - [ ] Error message if clipboard access denied (show fallback: use Download)
 
 ### File Download
+
 - [ ] "Download" button saves PNG to file system
 - [ ] Browser download dialog appears
 - [ ] Filename auto-generated with template + text slug + timestamp
 
 ### Visual Quality - Claude Code Brick
+
 - [ ] Pixel letters render crisply (not blurred)
 - [ ] Brick seams visible and aligned correctly
 - [ ] Inner shadow/bevel creates depth perception
@@ -852,6 +872,7 @@ const initialConfig: BrandTextConfig = {
 ## Test Scenarios
 
 ### Scenario 1: Basic Claude Code Text
+
 1. Navigate to Day 13
 2. Enter text: "CLAUDE CODE"
 3. Select single color mode, color: orange
@@ -860,6 +881,7 @@ const initialConfig: BrandTextConfig = {
 6. Verify output: chunky brick letters, glow behind, terminal frame
 
 ### Scenario 2: Multi-Color Segments
+
 1. Switch to multi-color mode
 2. Segment 1: "12 Days of " - white
 3. Segment 2: "Claude" - orange
@@ -869,6 +891,7 @@ const initialConfig: BrandTextConfig = {
 7. Open in Photoshop - verify transparency and multi-color text
 
 ### Scenario 3: Clipboard Copy
+
 1. Generate text: "WATCH NOW"
 2. Click "Copy to Clipboard"
 3. Open Figma or Photoshop
@@ -876,6 +899,7 @@ const initialConfig: BrandTextConfig = {
 5. Verify image appears correctly
 
 ### Scenario 4: Custom Canvas Size
+
 1. Select "Custom" from canvas size dropdown
 2. Enter width: 1920, height: 1080
 3. Verify preview updates to 16:9 aspect ratio
@@ -883,6 +907,7 @@ const initialConfig: BrandTextConfig = {
 5. Verify file dimensions match exactly
 
 ### Scenario 5: Template Extensibility (Future)
+
 1. Add dummy template config for "OpenAI Minimal"
 2. Register in template registry
 3. Select "OpenAI Minimal" from dropdown
@@ -891,6 +916,7 @@ const initialConfig: BrandTextConfig = {
 6. Export SVG (if supported)
 
 ### Scenario 6: Effects Toggles
+
 1. Generate default "Claudemas" text
 2. Toggle glow OFF - verify glow disappears
 3. Toggle terminal OFF - verify frame disappears
@@ -903,6 +929,7 @@ const initialConfig: BrandTextConfig = {
 ## Out of Scope
 
 ### MVP Out of Scope
+
 - Custom font uploads (use template fonts only)
 - Font weight selection (fixed to template defaults)
 - Text rotation or curved layouts
@@ -918,6 +945,7 @@ const initialConfig: BrandTextConfig = {
 - Asset catalog integration (Day 16/17 features)
 
 ### Future Enhancements (Post-MVP)
+
 - Additional brand templates (OpenAI, Cursor, Replit, Anthropic)
 - Preset packs ("Beginner Guide", "Tutorial Series")
 - Save/load presets as JSON
@@ -934,15 +962,18 @@ const initialConfig: BrandTextConfig = {
 ## Dependencies
 
 ### External
+
 - **Canvas API** (browser native) - Core rendering
 - **Clipboard API** (browser native) - Copy to clipboard functionality
 - **Blob API** (browser native) - PNG export
 - **Google Fonts** (optional) - If using web fonts instead of pixel rendering
 
 ### Internal
+
 - None (fully client-side tool)
 
 ### Optional Future
+
 - Asset catalog system (FR-16/FR-17) - For saving generated images
 - Thumbnail generator (FR-12) - For integration as text layer source
 
@@ -950,21 +981,23 @@ const initialConfig: BrandTextConfig = {
 
 ## Performance Requirements
 
-| Operation | Target | Notes |
-|-----------|--------|-------|
-| Live preview update | <100ms | After any settings change |
-| PNG export (1280×720) | <2s | Includes rendering + blob creation |
-| PNG export (1920×1080) | <3s | Larger canvas |
-| Clipboard copy | <1s | After PNG generation |
-| Template switch | <50ms | Load new config and redraw |
+| Operation              | Target | Notes                              |
+| ---------------------- | ------ | ---------------------------------- |
+| Live preview update    | <100ms | After any settings change          |
+| PNG export (1280×720)  | <2s    | Includes rendering + blob creation |
+| PNG export (1920×1080) | <3s    | Larger canvas                      |
+| Clipboard copy         | <1s    | After PNG generation               |
+| Template switch        | <50ms  | Load new config and redraw         |
 
 **Browser Compatibility:**
+
 - Chrome 90+
 - Edge 90+
 - Safari 14+
 - Firefox 88+
 
 **Key APIs:**
+
 - Canvas API (100% support)
 - Clipboard API (may require HTTPS or localhost)
 - Blob API (100% support)
@@ -1032,17 +1065,20 @@ The sidebar automatically populates from `config.json`, so Day 13 will appear on
 ## References
 
 ### Design Inspiration
+
 - Claude Code thumbnails - Brick/pixel aesthetic
 - Retro terminal UIs - CRT scanlines, window frames
 - Pixel art fonts - 8-bit and 16-bit letter glyphs
 
 ### Technical References
+
 - [Canvas API - MDN](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API)
 - [Clipboard API - MDN](https://developer.mozilla.org/en-US/docs/Web/API/Clipboard_API)
 - [Canvas Text Rendering](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_text)
 - [HTML Canvas to Blob](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob)
 
 ### Related Requirements
+
 - [FR-12: Thumbnail Generator](fr-12-thumbnail-generator.md) - Composite thumbnails (potential integration point)
 - [FR-21: Thumbnail Typography Enhancements](fr-21-thumbnail-typography-enhancements.md) - Brand fonts (BebasNeue, Oswald)
 - [FR-16: Unified Asset Catalog](fr-16-unified-asset-catalog.md) - Asset storage pattern
@@ -1052,6 +1088,7 @@ The sidebar automatically populates from `config.json`, so Day 13 will appear on
 ## Completion Notes
 
 **What was done:**
+
 - Created complete Brand Text Generator (Day 13) with Canvas-based rendering
 - Implemented template system architecture with Claude Code Brick template
 - Built pixel font glyphs (A-Z, 0-9, symbols) - 5×7 grid bitmap font
@@ -1063,6 +1100,7 @@ The sidebar automatically populates from `config.json`, so Day 13 will appear on
 - Fully client-side implementation (no server dependencies)
 
 **Files changed:**
+
 - `shared/src/config.json` - Added Day 13 entry
 - `client/src/App.tsx` - Added Day 13 routing
 - `client/src/components/tools/Day13BrandText.tsx` - Main component (380+ lines)
@@ -1074,6 +1112,7 @@ The sidebar automatically populates from `config.json`, so Day 13 will appear on
 - `client/src/components/tools/BrandTextGenerator/rendering/export.ts` - Export utilities (new)
 
 **Testing notes:**
+
 - Dev server compiled successfully without errors
 - Navigate to Day 13 in sidebar to access tool
 - Test multi-color segments: "12 Days of " (white) + "Claude" (orange) + "mas" (blue)
@@ -1085,6 +1124,7 @@ The sidebar automatically populates from `config.json`, so Day 13 will appear on
 - Live preview updates in real-time (<100ms)
 
 **Architecture highlights:**
+
 - **Template system**: New templates can be added by creating config objects (zero UI code changes)
 - **Pixel font rendering**: 5×7 bitmap glyphs rendered at configurable block size
 - **Canvas API**: Pixel-perfect control for brick seams, bevel, glow effects

@@ -46,7 +46,7 @@ async function kieRequest<T>(
     const options: RequestInit = {
       method,
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       signal: controller.signal,
@@ -75,7 +75,7 @@ async function kieRequest<T>(
       throw new Error(`API_ERROR: KIE.AI returned ${response.status}`);
     }
 
-    const data = await response.json() as T;
+    const data = (await response.json()) as T;
     console.log(`[KIE.AI Video] Response: ${JSON.stringify(data)}`);
     return data;
   } catch (error) {
@@ -106,17 +106,13 @@ async function submitVeoTask(
     console.log('[KIE.AI Video] Using base64 data URLs (external APIs cannot access localhost)');
   }
 
-  const response = await kieRequest<KieVeoTaskResponse>(
-    'POST',
-    '/api/v1/veo/generate',
-    {
-      generationType: 'FIRST_AND_LAST_FRAMES_2_VIDEO',
-      imageUrls: [startImageData, endImageData],
-      prompt: prompt || 'Smooth cinematic transition with natural motion',
-      model: 'veo3',
-      aspectRatio: '16:9',
-    }
-  );
+  const response = await kieRequest<KieVeoTaskResponse>('POST', '/api/v1/veo/generate', {
+    generationType: 'FIRST_AND_LAST_FRAMES_2_VIDEO',
+    imageUrls: [startImageData, endImageData],
+    prompt: prompt || 'Smooth cinematic transition with natural motion',
+    model: 'veo3',
+    aspectRatio: '16:9',
+  });
 
   if (response.code !== 200 || !response.data?.taskId) {
     throw new Error(`Failed to submit task: ${response.msg}`);
@@ -151,7 +147,9 @@ async function pollForResult(
     }
 
     const { successFlag, status, response, errorMessage, progress } = result.data;
-    console.log(`[KIE.AI Video] Status: successFlag=${successFlag}, status=${status}, progress=${progress}`);
+    console.log(
+      `[KIE.AI Video] Status: successFlag=${successFlag}, status=${status}, progress=${progress}`
+    );
 
     // Update progress
     if (progress !== undefined && onProgress) {
@@ -169,8 +167,12 @@ async function pollForResult(
     }
 
     // Check for failure
-    if (successFlag === 2 || successFlag === 3 ||
-        status === 'CREATE_TASK_FAILED' || status === 'GENERATE_FAILED') {
+    if (
+      successFlag === 2 ||
+      successFlag === 3 ||
+      status === 'CREATE_TASK_FAILED' ||
+      status === 'GENERATE_FAILED'
+    ) {
       console.log(`[KIE.AI Video] Task failed: ${errorMessage}`);
       throw new Error(errorMessage || 'Video generation failed');
     }
@@ -182,7 +184,7 @@ async function pollForResult(
     });
 
     // Wait and poll again
-    await new Promise(resolve => setTimeout(resolve, POLL_INTERVAL));
+    await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL));
   }
 
   throw new Error('Timeout waiting for video generation');
@@ -211,12 +213,10 @@ export async function generateVideo(
     await updateVideoTask(task.id, { status: 'processing' });
 
     // Submit the task
-    const prompt = task.prompt || `Smooth cinematic transition with natural motion, duration ${task.duration} seconds`;
-    const kieTaskId = await submitVeoTask(
-      startImageUrl,
-      endImageUrl,
-      prompt
-    );
+    const prompt =
+      task.prompt ||
+      `Smooth cinematic transition with natural motion, duration ${task.duration} seconds`;
+    const kieTaskId = await submitVeoTask(startImageUrl, endImageUrl, prompt);
 
     // Poll for result
     const videoUrl = await pollForResult(kieTaskId, task.id, onProgress);
@@ -252,7 +252,11 @@ export async function generateVideo(
 /**
  * Check KIE.AI video health
  */
-export async function checkHealth(): Promise<{ configured: boolean; authenticated: boolean; error?: string }> {
+export async function checkHealth(): Promise<{
+  configured: boolean;
+  authenticated: boolean;
+  error?: string;
+}> {
   const apiKey = getApiKey();
 
   if (!apiKey) {

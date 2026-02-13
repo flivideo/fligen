@@ -1,7 +1,13 @@
 // FAL.AI client for image generation
 
 import { fal } from '@fal-ai/client';
-import type { ProviderHealth, ProviderTestResult, CompareResult, ModelTier, ModelConfig } from './types.js';
+import type {
+  ProviderHealth,
+  ProviderTestResult,
+  CompareResult,
+  ModelTier,
+  ModelConfig,
+} from './types.js';
 import { MODELS } from './types.js';
 
 // FAL.AI response type
@@ -89,7 +95,11 @@ export async function checkHealth(): Promise<ProviderHealth> {
     console.log(`[FAL.AI] Health check error: ${message}`);
 
     // Check for auth-specific errors
-    if (message.includes('401') || message.includes('Unauthorized') || message.includes('authentication')) {
+    if (
+      message.includes('401') ||
+      message.includes('Unauthorized') ||
+      message.includes('authentication')
+    ) {
       console.log('[FAL.AI] Health check: Authentication failed');
       return {
         configured: true,
@@ -110,8 +120,12 @@ export async function checkHealth(): Promise<ProviderHealth> {
 
     // Validation errors (422 Unprocessable Entity) mean auth worked
     // The API rejected our invalid request, but authenticated us first
-    if (message.includes('Unprocessable') || message.includes('422') ||
-        message.includes('validation') || message.includes('invalid')) {
+    if (
+      message.includes('Unprocessable') ||
+      message.includes('422') ||
+      message.includes('validation') ||
+      message.includes('invalid')
+    ) {
       console.log('[FAL.AI] Health check: Authenticated (validation error = auth worked)');
       return {
         configured: true,
@@ -257,7 +271,9 @@ export async function generateForComparison(
 
   try {
     console.log(`[FAL.AI] Compare: Generating ${tier} image with ${config.name}...`);
-    console.log(`[FAL.AI] Compare: Model ID = ${config.id}, Size = ${config.width}x${config.height}`);
+    console.log(
+      `[FAL.AI] Compare: Model ID = ${config.id}, Size = ${config.width}x${config.height}`
+    );
 
     const result = await fal.subscribe(config.id, {
       input: {

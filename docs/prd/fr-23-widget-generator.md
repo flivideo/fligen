@@ -13,12 +13,14 @@ As a content creator, I want to generate social media post widgets using brand t
 ## Problem
 
 Creating social media post graphics currently requires:
+
 1. External design tools (Photoshop, Canva, Figma)
 2. Manual recreation of platform UI elements (avatars, verification badges, engagement metrics)
 3. Remembering brand colors and fonts
 4. Exporting at appropriate sizes for embedding
 
 This is Day 14 of the 12 Days of Claudemas. The goal is to create a widget generator that:
+
 - Uses AppyDave brand design system (colors, fonts)
 - Generates HTML-based widgets (not canvas/PNG like Day 13)
 - Provides template-based configuration (similar to Day 13's thumbnail system)
@@ -37,27 +39,29 @@ Create an HTML-based widget generator with template system:
 
 ### Brand Design System
 
-| Element | Value | Usage |
-|---------|-------|-------|
-| Dark Brown | `#342d2d` | Background, text |
-| Light Brown | `#ccba9d` | Accents, borders |
-| Yellow | `#ffde59` | Highlights, verification badges |
-| White | `#ffffff` | Primary text, backgrounds |
-| Font (Headings) | Bebas Neue | Widget headers |
-| Font (Body) | Roboto | Body text, metrics |
-| Font (Subheadings) | Oswald | Usernames, timestamps |
+| Element            | Value      | Usage                           |
+| ------------------ | ---------- | ------------------------------- |
+| Dark Brown         | `#342d2d`  | Background, text                |
+| Light Brown        | `#ccba9d`  | Accents, borders                |
+| Yellow             | `#ffde59`  | Highlights, verification badges |
+| White              | `#ffffff`  | Primary text, backgrounds       |
+| Font (Headings)    | Bebas Neue | Widget headers                  |
+| Font (Body)        | Roboto     | Body text, metrics              |
+| Font (Subheadings) | Oswald     | Usernames, timestamps           |
 
 ### Initial Template: Social Media Post
 
 The first template recreates a Twitter/X-style post with:
 
 **Required Parameters:**
+
 - `author_name` - Display name (e.g., "Claude")
 - `handle` - Username (e.g., "@claudeai")
 - `post_text` - Main content text
 - `avatar_url` - Profile picture URL
 
 **Optional Parameters:**
+
 - `timestamp` - Post time (e.g., "Today", "2h ago")
 - `verified` - Show verification badge (boolean)
 - `comments` - Comment count
@@ -67,6 +71,7 @@ The first template recreates a Twitter/X-style post with:
 - `theme` - "dark" (default) or "light"
 
 **Example Configuration:**
+
 ```json
 {
   "template": "social-media-post",
@@ -89,6 +94,7 @@ The first template recreates a Twitter/X-style post with:
 ### Widget Output Format
 
 Widgets are standalone HTML5 files with:
+
 - Embedded CSS (no external stylesheets except fonts)
 - Google Fonts CDN for brand fonts
 - Responsive design (max-width: 600px default)
@@ -361,14 +367,18 @@ function renderSocialMediaPost(params: Record<string, any>): string {
       </div>
     </div>
     <div class="post-text">${post_text}</div>
-    ${comments || retweets || likes || views ? `
+    ${
+      comments || retweets || likes || views
+        ? `
     <div class="engagement">
       ${comments ? `<div class="engagement-item">💬 ${formatNumber(comments)}</div>` : ''}
       ${retweets ? `<div class="engagement-item">🔁 ${formatNumber(retweets)}</div>` : ''}
       ${likes ? `<div class="engagement-item">❤️ ${formatNumber(likes)}</div>` : ''}
       ${views ? `<div class="engagement-item">📊 ${formatNumber(views)}</div>` : ''}
     </div>
-    ` : ''}
+    `
+        : ''
+    }
   </div>
 </body>
 </html>`;
@@ -396,6 +406,7 @@ assets/widgets/
 ```
 
 **Widget Metadata (index.json):**
+
 ```json
 {
   "widgets": [
@@ -418,16 +429,17 @@ assets/widgets/
 
 ### Server API
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/widgets` | GET | List all saved widgets |
-| `/api/widgets` | POST | Save new widget |
-| `/api/widgets/:id` | GET | Get widget HTML and config |
-| `/api/widgets/:id` | DELETE | Delete widget |
-| `/api/widget-templates` | GET | List available templates |
-| `/api/widget-templates/:id` | GET | Get template definition |
+| Endpoint                    | Method | Description                |
+| --------------------------- | ------ | -------------------------- |
+| `/api/widgets`              | GET    | List all saved widgets     |
+| `/api/widgets`              | POST   | Save new widget            |
+| `/api/widgets/:id`          | GET    | Get widget HTML and config |
+| `/api/widgets/:id`          | DELETE | Delete widget              |
+| `/api/widget-templates`     | GET    | List available templates   |
+| `/api/widget-templates/:id` | GET    | Get template definition    |
 
 **POST /api/widgets:**
+
 ```json
 {
   "template": "social-media-post",
@@ -436,6 +448,7 @@ assets/widgets/
 ```
 
 **Response:**
+
 ```json
 {
   "id": "widget-001",
@@ -450,6 +463,7 @@ assets/widgets/
 ## File Structure
 
 **To Create:**
+
 ```
 client/src/components/tools/Day14Widget.tsx    - Main widget generator UI
 client/src/components/tools/widget/
@@ -470,6 +484,7 @@ assets/widgets/                                - Widget output folder
 ```
 
 **To Modify:**
+
 ```
 client/src/App.tsx                             - Add Day 14 routing
 shared/src/config.json                         - Update day status
@@ -481,12 +496,14 @@ docs/changelog.md                              - Document completion
 ## Acceptance Criteria
 
 ### Template System
+
 - [ ] Template selector shows available templates
 - [ ] Selecting template updates configuration form
 - [ ] Only "Social Media Post" template exists for Day 14
 - [ ] Template definitions match TypeScript interface
 
 ### Configuration Form
+
 - [ ] Form dynamically renders based on template params
 - [ ] Required fields show validation
 - [ ] Number inputs accept numeric values only
@@ -496,6 +513,7 @@ docs/changelog.md                              - Document completion
 - [ ] Avatar URL input accepts valid URLs
 
 ### Live Preview
+
 - [ ] Preview updates in real-time as params change
 - [ ] Preview renders HTML exactly as export
 - [ ] Theme toggle switches between dark/light
@@ -505,6 +523,7 @@ docs/changelog.md                              - Document completion
 - [ ] Fonts load correctly (Bebas Neue, Oswald, Roboto)
 
 ### Export Functionality
+
 - [ ] "Export HTML" button downloads standalone HTML file
 - [ ] Exported file opens correctly in browser
 - [ ] Exported file is self-contained (fonts via CDN)
@@ -512,6 +531,7 @@ docs/changelog.md                              - Document completion
 - [ ] HTML validates as HTML5
 
 ### Widget History
+
 - [ ] "History" button opens sidebar with saved widgets
 - [ ] History shows widget preview cards
 - [ ] Clicking history item loads its configuration
@@ -519,6 +539,7 @@ docs/changelog.md                              - Document completion
 - [ ] Delete button removes widget from history
 
 ### Persistence
+
 - [ ] Saving widget creates HTML file in assets/widgets/
 - [ ] Saving widget creates JSON config file
 - [ ] Widget catalog (index.json) updates on save
@@ -526,6 +547,7 @@ docs/changelog.md                              - Document completion
 - [ ] Widget IDs are unique and sequential
 
 ### Branding
+
 - [ ] Dark theme uses AppyDave dark brown (#342d2d)
 - [ ] Yellow accent matches brand (#ffde59)
 - [ ] Light brown accents match brand (#ccba9d)
@@ -533,6 +555,7 @@ docs/changelog.md                              - Document completion
 - [ ] Verification badge uses blue (#3b82f6)
 
 ### API Endpoints
+
 - [ ] GET /api/widgets returns widget list
 - [ ] POST /api/widgets saves widget and returns ID
 - [ ] GET /api/widgets/:id returns HTML and config
@@ -570,6 +593,7 @@ const initialConfig = {
 ## Test Scenarios
 
 ### Scenario 1: Create Social Media Post
+
 1. Navigate to Day 14
 2. Verify "Social Media Post" template is selected
 3. Enter author name: "Claude"
@@ -582,6 +606,7 @@ const initialConfig = {
 10. Open exported HTML in browser - verify all elements render correctly
 
 ### Scenario 2: Theme Switching
+
 1. Start with dark theme
 2. Verify background is dark (#1e293b), text is light
 3. Switch to light theme
@@ -590,6 +615,7 @@ const initialConfig = {
 6. Export both themes and compare
 
 ### Scenario 3: History and Reuse
+
 1. Create widget with custom parameters
 2. Click "Export HTML" to save
 3. Verify widget appears in history sidebar
@@ -599,6 +625,7 @@ const initialConfig = {
 7. Verify configuration form populates correctly
 
 ### Scenario 4: Validation
+
 1. Clear required field (author_name)
 2. Verify validation error shows
 3. Verify "Export HTML" is disabled
@@ -637,14 +664,17 @@ For Day 14 (future enhancements):
 ## References
 
 ### Design Assets
+
 - AppyDave brand guide (internal)
 - Twitter/X UI inspiration
 
 ### Related Requirements
+
 - [FR-12: Thumbnail Generator](fr-12-thumbnail-generator.md) - Template pattern inspiration
 - [FR-19: Thumbnail Persistence & History](fr-19-thumbnail-persistence.md) - History/reuse pattern
 
 ### Technical References
+
 - [Google Fonts](https://fonts.google.com/)
 - [HTML5 Specification](https://html.spec.whatwg.org/)
 - [AppyDave Brand Colors](https://appydave.com/brand)
@@ -660,6 +690,7 @@ FR-23 has been successfully implemented as Day 14 of the "12 Days of Claudemas" 
 ### What Was Built
 
 **Core Features:**
+
 - Template selection UI (currently "Social Media Post" template)
 - Dynamic configuration form based on template parameters
 - Real-time HTML preview via iframe
@@ -668,6 +699,7 @@ FR-23 has been successfully implemented as Day 14 of the "12 Days of Claudemas" 
 - Export HTML functionality
 
 **Technical Implementation:**
+
 - Template-based architecture with parameter schemas
 - Server-side HTML generation via render functions
 - Widget storage at `assets/widgets/` (29 sample widgets created during development)
@@ -675,6 +707,7 @@ FR-23 has been successfully implemented as Day 14 of the "12 Days of Claudemas" 
 - Type-safe TypeScript implementation across client/server/shared
 
 **Social Media Post Template:**
+
 - All specified parameters implemented (author, handle, text, metrics, theme)
 - Number formatting (1k, 135k notation)
 - Verification badge toggle
@@ -685,6 +718,7 @@ FR-23 has been successfully implemented as Day 14 of the "12 Days of Claudemas" 
 ### Acceptance Criteria Status
 
 All 41 acceptance criteria met:
+
 - ✅ Template system (4/4)
 - ✅ Configuration form (7/7)
 - ✅ Live preview (7/7)
@@ -704,6 +738,7 @@ All 41 acceptance criteria met:
 ### Testing Performed
 
 Developer tested all four test scenarios:
+
 1. Create social media post widget with custom parameters
 2. Theme switching (dark/light) with visual verification
 3. History and configuration reuse workflow
@@ -712,6 +747,7 @@ Developer tested all four test scenarios:
 ### Files Created (10 new files)
 
 **Client:**
+
 - `client/src/components/tools/Day14Widget.tsx`
 - `client/src/components/tools/widget/WidgetTemplateSelector.tsx`
 - `client/src/components/tools/widget/WidgetConfigForm.tsx`
@@ -719,12 +755,14 @@ Developer tested all four test scenarios:
 - `client/src/components/tools/widget/WidgetHistory.tsx`
 
 **Server:**
+
 - `server/src/tools/widgets/storage.ts`
 - `server/src/tools/widgets/index.ts`
 - `server/src/tools/widgets/templates/social-media-post.ts`
 - `server/src/tools/widgets/templates/index.ts`
 
 **Shared:**
+
 - Widget types added to `shared/src/index.ts`
 
 ### Files Modified (4 files)
@@ -745,6 +783,7 @@ Developer tested all four test scenarios:
 ### Future Enhancement Opportunities
 
 Out of scope for Day 14, but documented for future work:
+
 - Additional templates (quote card, stat display, CTA banner, code snippet)
 - Custom CSS editor for template overrides
 - Interactive widgets (clickable links, animations)
@@ -763,6 +802,7 @@ Out of scope for Day 14, but documented for future work:
 ### Production Readiness
 
 The widget generator is production-ready with:
+
 - Full error handling
 - Type safety across the stack
 - Persistent storage with catalog index
@@ -783,6 +823,7 @@ The widget generator is production-ready with:
 ### Developer Notes
 
 The template-based architecture makes adding new widget types straightforward:
+
 1. Define template with parameter schema
 2. Implement render function (returns HTML string)
 3. Register template in `templates/index.ts`

@@ -19,13 +19,7 @@ const router = Router();
  */
 router.get('/', async (req, res) => {
   try {
-    const {
-      type,
-      provider,
-      status,
-      limit = '50',
-      offset = '0',
-    } = req.query;
+    const { type, provider, status, limit = '50', offset = '0' } = req.query;
 
     // Load all assets
     const allAssets = await catalog.getAllAssets();

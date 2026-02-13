@@ -19,12 +19,14 @@ As a **VibeDeck developer** and **external tool integrator**, I want a **batch i
 ### Current State
 
 **FliGen Day 4 (Image Generation)** supports:
+
 - ✅ Single/comparison generation (1-4 images)
 - ✅ FAL.AI and KIE.AI providers
 - ✅ Asset catalog storage
 - ✅ Health checks
 
 **What's Missing:**
+
 - ❌ **Batch processing** - Cannot process 30-100 images from CSV
 - ❌ **Queue management** - No async job tracking
 - ❌ **Query API tier** - No unified external access layer (like FliHub NFR-68)
@@ -36,11 +38,13 @@ As a **VibeDeck developer** and **external tool integrator**, I want a **batch i
 ### Use Case: VibeDeck Mockup Generation
 
 **Scenario**: Generate 60 design variations for VibeDeck
+
 - 30 design variations (different form factors)
 - 25 material skins (wood, metal, glass, etc.)
 - 7 reference images
 
 **Current Workflow** (broken):
+
 1. Create CSV with 60 prompts
 2. ❌ No way to upload CSV to FliGen
 3. ❌ Must generate images 1-4 at a time manually
@@ -48,6 +52,7 @@ As a **VibeDeck developer** and **external tool integrator**, I want a **batch i
 5. ❌ No automatic CSV update after completion
 
 **Desired Workflow**:
+
 1. Create CSV with 60 prompts
 2. ✅ Upload CSV to FliGen → Start batch job
 3. ✅ Poll progress via API
@@ -63,6 +68,7 @@ Implement **two major capabilities**:
 ### Part 1: Batch Generation API (VibeDeck Priority)
 
 **Batch processing with CSV queue management**:
+
 - Upload CSV with prompts (compatible with `appydave-app-a-day/005-image-gen` format)
 - Async job queue (in-memory for MVP, BullMQ for production)
 - Progress tracking via polling endpoints
@@ -75,6 +81,7 @@ Implement **two major capabilities**:
 ### Part 2: Query API Tier (FliHub Pattern)
 
 **Unified external access layer** following FliHub NFR-68:
+
 - Discovery endpoint: `GET /api/query/config` (providers, models, pricing)
 - Health checks: `GET /api/query/health` (provider status)
 - Catalog access: `GET /api/query/catalog` (browse generated assets)
@@ -258,7 +265,7 @@ class BatchQueue {
       options,
       status: 'queued',
       progress: { total: prompts.length, completed: 0, failed: 0, pending: prompts.length },
-      results: prompts.map(p => ({ id: p.id, status: 'pending' })),
+      results: prompts.map((p) => ({ id: p.id, status: 'pending' })),
       totalCost: 0,
       totalTimeMs: 0,
       createdAt: new Date(),
@@ -309,7 +316,7 @@ class BatchQueue {
         result.error = {
           code: error.code || 'UNKNOWN',
           message: error.message,
-          retries: 0
+          retries: 0,
         };
         job.progress.failed++;
         job.progress.pending--;
@@ -358,13 +365,13 @@ export async function parseCsv(filePath: string): Promise<CsvRow[]> {
 }
 
 export function filterActiveRows(rows: CsvRow[]): CsvRow[] {
-  return rows.filter(row => row.a === '1');
+  return rows.filter((row) => row.a === '1');
 }
 
 export async function updateCsv(filePath: string, completedIds: string[]): Promise<string> {
   const rows = await parseCsv(filePath);
 
-  rows.forEach(row => {
+  rows.forEach((row) => {
     if (completedIds.includes(row.filename)) {
       row.a = '9';
     }
@@ -448,7 +455,7 @@ router.post('/batch', async (req, res) => {
   const batchId = batchQueue.createJob(prompts, options);
 
   // Start processing (async)
-  batchQueue.processJob(batchId).catch(err => {
+  batchQueue.processJob(batchId).catch((err) => {
     console.error(`Batch ${batchId} failed:`, err);
   });
 
@@ -460,7 +467,7 @@ router.post('/batch', async (req, res) => {
     total_prompts: prompts.length,
     estimated_cost: estimate.total_cost,
     estimated_time_seconds: estimate.estimated_time_seconds,
-    status: 'queued'
+    status: 'queued',
   });
 });
 
@@ -493,7 +500,7 @@ router.get('/batch/:batchId', (req, res) => {
     total_cost: job.totalCost,
     total_time_ms: job.totalTimeMs,
     started_at: job.startedAt,
-    completed_at: job.completedAt
+    completed_at: job.completedAt,
   });
 });
 
@@ -520,14 +527,14 @@ router.post('/batch/upload-csv', upload.single('file'), async (req, res) => {
   const activeRows = filterActiveRows(rows);
 
   // Convert to prompts
-  const prompts = activeRows.map(row => ({
+  const prompts = activeRows.map((row) => ({
     id: row.filename,
     prompt: row.prompt,
     provider: row.provider,
     model: row.model,
     category: row.category,
     filename: row.filename,
-    metadata: row.metadata ? JSON.parse(row.metadata) : {}
+    metadata: row.metadata ? JSON.parse(row.metadata) : {},
   }));
 
   // Create batch job
@@ -539,7 +546,7 @@ router.post('/batch/upload-csv', upload.single('file'), async (req, res) => {
   job.csvFilePath = filePath;
 
   // Start processing
-  batchQueue.processJob(batchId).catch(err => {
+  batchQueue.processJob(batchId).catch((err) => {
     console.error(`Batch ${batchId} failed:`, err);
   });
 
@@ -550,7 +557,7 @@ router.post('/batch/upload-csv', upload.single('file'), async (req, res) => {
     total_prompts: rows.length,
     active_prompts: activeRows.length,
     skipped_prompts: rows.length - activeRows.length,
-    estimated_cost: estimate.total_cost
+    estimated_cost: estimate.total_cost,
   });
 });
 
@@ -574,16 +581,14 @@ router.post('/batch/:batchId/update-csv', async (req, res) => {
     return res.status(404).json({ error: 'Batch or CSV not found' });
   }
 
-  const completedIds = job.results
-    .filter(r => r.status === 'completed')
-    .map(r => r.id);
+  const completedIds = job.results.filter((r) => r.status === 'completed').map((r) => r.id);
 
   const updatedPath = await updateCsv(job.csvFilePath, completedIds);
 
   res.json({
     csv_file_path: updatedPath,
     updated_rows: completedIds.length,
-    download_url: `/api/image/batch/${job.id}/download-csv`
+    download_url: `/api/image/batch/${job.id}/download-csv`,
   });
 });
 
@@ -612,7 +617,7 @@ router.post('/batch/estimate', (req, res) => {
 
   res.json({
     total_prompts: prompts.length,
-    ...estimate
+    ...estimate,
   });
 });
 ```
@@ -673,27 +678,27 @@ router.get('/', (req, res) => {
         models: [
           { id: 'flux-pro/v1.1', name: 'FLUX Pro v1.1', tier: 'advanced', cost: 0.04 },
           { id: 'flux/schnell', name: 'FLUX Schnell', tier: 'midrange', cost: 0.003 },
-          { id: 'flux-2-turbo', name: 'FLUX.2 Turbo', tier: 'midrange', cost: 0.008 }
+          { id: 'flux-2-turbo', name: 'FLUX.2 Turbo', tier: 'midrange', cost: 0.008 },
         ],
-        auth_configured: !!process.env.FAL_API_KEY
+        auth_configured: !!process.env.FAL_API_KEY,
       },
       {
         id: 'kie',
         name: 'KIE.AI',
         models: [
           { id: 'flux-kontext-max', name: 'FLUX Kontext Max', tier: 'advanced', cost: 0.025 },
-          { id: 'flux-kontext-pro', name: 'FLUX Kontext Pro', tier: 'midrange', cost: 0.004 }
+          { id: 'flux-kontext-pro', name: 'FLUX Kontext Pro', tier: 'midrange', cost: 0.004 },
         ],
-        auth_configured: !!process.env.KIE_API_KEY
-      }
+        auth_configured: !!process.env.KIE_API_KEY,
+      },
     ],
     endpoints: [
       { path: '/api/query/config', method: 'GET', description: 'API discovery' },
       { path: '/api/query/health', method: 'GET', description: 'Provider health checks' },
       { path: '/api/query/catalog', method: 'GET', description: 'Browse asset catalog' },
       { path: '/api/image/batch', method: 'POST', description: 'Start batch generation' },
-      { path: '/api/image/batch/:id', method: 'GET', description: 'Check batch progress' }
-    ]
+      { path: '/api/image/batch/:id', method: 'GET', description: 'Check batch progress' },
+    ],
   });
 });
 ```
@@ -715,9 +720,9 @@ router.get('/', async (req, res) => {
     status: falHealth.ok && kieHealth.ok ? 'healthy' : 'degraded',
     providers: {
       fal: falHealth,
-      kie: kieHealth
+      kie: kieHealth,
     },
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   });
 });
 ```
@@ -739,8 +744,8 @@ router.get('/', async (req, res) => {
   const catalog = await loadCatalog();
   let filtered = catalog.assets;
 
-  if (type) filtered = filtered.filter(a => a.type === type);
-  if (provider) filtered = filtered.filter(a => a.metadata?.provider === provider);
+  if (type) filtered = filtered.filter((a) => a.type === type);
+  if (provider) filtered = filtered.filter((a) => a.metadata?.provider === provider);
 
   const paginated = filtered.slice(Number(offset), Number(offset) + Number(limit));
 
@@ -748,7 +753,7 @@ router.get('/', async (req, res) => {
     total: filtered.length,
     offset: Number(offset),
     limit: Number(limit),
-    assets: paginated
+    assets: paginated,
   });
 });
 ```
@@ -761,14 +766,34 @@ router.get('/', async (req, res) => {
 // FR25.6: Extend MODELS to support custom models
 export const MODELS = {
   fal: {
-    'flux-pro/v1.1': { name: 'FLUX Pro v1.1', cost: 0.04, tier: 'advanced', resolution: '1024x1024' },
+    'flux-pro/v1.1': {
+      name: 'FLUX Pro v1.1',
+      cost: 0.04,
+      tier: 'advanced',
+      resolution: '1024x1024',
+    },
     'flux/schnell': { name: 'FLUX Schnell', cost: 0.003, tier: 'midrange', resolution: '512x512' },
-    'flux-2-turbo': { name: 'FLUX.2 Turbo', cost: 0.008, tier: 'midrange', resolution: '1024x1024' } // NEW
+    'flux-2-turbo': {
+      name: 'FLUX.2 Turbo',
+      cost: 0.008,
+      tier: 'midrange',
+      resolution: '1024x1024',
+    }, // NEW
   },
   kie: {
-    'flux-kontext-max': { name: 'FLUX Kontext Max', cost: 0.025, tier: 'advanced', resolution: '1024x1024' },
-    'flux-kontext-pro': { name: 'FLUX Kontext Pro', cost: 0.004, tier: 'midrange', resolution: '512x512' }
-  }
+    'flux-kontext-max': {
+      name: 'FLUX Kontext Max',
+      cost: 0.025,
+      tier: 'advanced',
+      resolution: '1024x1024',
+    },
+    'flux-kontext-pro': {
+      name: 'FLUX Kontext Pro',
+      cost: 0.004,
+      tier: 'midrange',
+      resolution: '512x512',
+    },
+  },
 };
 
 // Fallback for unknown models
@@ -852,6 +877,7 @@ npm install --workspace=server multer csv-parser csv-stringify
 ## Success Metrics
 
 **MVP Complete When**:
+
 - ✅ Can upload CSV with 10 prompts
 - ✅ Batch generates all 10 images (KIE or FAL)
 - ✅ Can track progress via API
@@ -860,6 +886,7 @@ npm install --workspace=server multer csv-parser csv-stringify
 - ✅ Query API returns provider config and health
 
 **Production Ready When**:
+
 - ✅ Retry logic handles failures (3 attempts)
 - ✅ Cost estimation accurate (±10%)
 - ✅ Inline documentation on all endpoints
@@ -877,6 +904,7 @@ npm install --workspace=server multer csv-parser csv-stringify
    - Format: `a,category,filename,prompt,provider,model`
 
 2. **FliGen API**: Upload CSV and start batch
+
    ```bash
    curl -X POST http://localhost:5401/api/image/batch/upload-csv \
      -F "file=@vibedeck-prompts.csv"
@@ -889,12 +917,14 @@ npm install --workspace=server multer csv-parser csv-stringify
    - Update CSV in-place
 
 4. **Claude Code**: Poll progress
+
    ```bash
    curl http://localhost:5401/api/image/batch/batch_123
    # Response: { "status": "processing", "progress": { "completed": 15, "total": 60 } }
    ```
 
 5. **VibeDeck**: Download updated CSV
+
    ```bash
    curl -O http://localhost:5401/api/image/batch/batch_123/download-csv
    ```
@@ -904,6 +934,7 @@ npm install --workspace=server multer csv-parser csv-stringify
 ### Cost Analysis
 
 **60 VibeDeck Images**:
+
 - 30 design variations × $0.004 (KIE flux-kontext-pro) = **$0.12**
 - 25 skins × $0.004 = **$0.10**
 - 7 reference × $0.025 (KIE flux-kontext-max) = **$0.18**

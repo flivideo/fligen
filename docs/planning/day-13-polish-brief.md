@@ -13,18 +13,20 @@ Day 13 is a post-series cleanup day. It addresses the rough edges, persistence i
 ## Known Issues to Address
 
 ### Asset Persistence
+
 Currently, several types of content don't survive a page refresh:
 
-| Component | Current State | Desired State |
-|-----------|---------------|---------------|
-| Shot list | Persists ✅ | - |
-| Music library | Persists ✅ | - |
-| Generated images (before shot list) | Lost on refresh ❌ | Persist to temp folder |
-| TTS prompts/text | Lost on refresh ❌ | Persist to localStorage or server |
-| Music prompts | Lost on refresh ❌ | Persist to localStorage or server |
-| Image prompts | Lost on refresh ❌ | Persist to localStorage or server |
+| Component                           | Current State      | Desired State                     |
+| ----------------------------------- | ------------------ | --------------------------------- |
+| Shot list                           | Persists ✅        | -                                 |
+| Music library                       | Persists ✅        | -                                 |
+| Generated images (before shot list) | Lost on refresh ❌ | Persist to temp folder            |
+| TTS prompts/text                    | Lost on refresh ❌ | Persist to localStorage or server |
+| Music prompts                       | Lost on refresh ❌ | Persist to localStorage or server |
+| Image prompts                       | Lost on refresh ❌ | Persist to localStorage or server |
 
 ### UI Improvements
+
 - Better visual feedback during generation
 - Loading states consistency
 - Error handling improvements
@@ -32,6 +34,7 @@ Currently, several types of content don't survive a page refresh:
 - Keyboard shortcuts
 
 ### Code Quality
+
 - Remove any hardcoded values
 - Clean up console.log statements
 - TypeScript type improvements
@@ -40,23 +43,27 @@ Currently, several types of content don't survive a page refresh:
 ## Potential Tasks
 
 ### Persistence Layer
+
 1. **Session Storage** - Store form inputs in localStorage
 2. **Server-side Temp Storage** - Save generated assets to temp folder
 3. **Auto-save** - Periodically save state
 
 ### UI Polish
+
 1. Review each day's component for consistency
 2. Add missing loading spinners
 3. Improve error messages
 4. Add tooltips/help text where needed
 
 ### Infrastructure
+
 1. Clean up unused dependencies
 2. Update documentation
 3. Add any missing env var documentation
 4. Verify all APIs are properly configured
 
 ### Testing
+
 1. Manual walkthrough of all 12 days
 2. Verify persistence across refresh
 3. Test error scenarios
@@ -65,6 +72,7 @@ Currently, several types of content don't survive a page refresh:
 ## Approach
 
 Day 13 should be **reactive**, not proactive:
+
 1. Run through all days
 2. Note what's broken or annoying
 3. Fix the most impactful issues first
@@ -82,6 +90,7 @@ Day 13 should be **reactive**, not proactive:
 ## Out of Scope
 
 Things that are **not** Day 13 priorities:
+
 - New features
 - Major architectural changes
 - Performance optimization (unless critical)
@@ -90,6 +99,7 @@ Things that are **not** Day 13 priorities:
 ## Notes
 
 Day 13 is about **stability and polish**, not new capabilities. The goal is to have a version of FliGen that:
+
 1. Works reliably
 2. Doesn't lose user work
 3. Looks presentable

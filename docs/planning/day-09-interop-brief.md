@@ -44,25 +44,29 @@ FliGen Day 9 UI
 ## UI Layout
 
 ### Tab Name
+
 "Day 9: Prompt Intake" (powered by Interop)
 
 ### Input Section
-| Field | Type | Description |
-|-------|------|-------------|
-| Project Code | Text input | e.g., `VSS-001` |
-| Chapter ID | Text input | FliHub chapter name/ID (shared across segments) |
-| Segment A | Number | Segment ID for seed image prompt |
-| Segment B | Number | Segment ID for edit instruction prompt |
-| Segment C | Number | Segment ID for animation prompt |
+
+| Field        | Type       | Description                                     |
+| ------------ | ---------- | ----------------------------------------------- |
+| Project Code | Text input | e.g., `VSS-001`                                 |
+| Chapter ID   | Text input | FliHub chapter name/ID (shared across segments) |
+| Segment A    | Number     | Segment ID for seed image prompt                |
+| Segment B    | Number     | Segment ID for edit instruction prompt          |
+| Segment C    | Number     | Segment ID for animation prompt                 |
 
 ### Prompt Section (3 text areas)
-| Prompt | Purpose | Import Button |
-|--------|---------|---------------|
-| Human Prompt A | Scene / Location (seed image) | [Import A] |
-| Human Prompt B | Edit instruction (image-to-image) | [Import B] |
-| Human Prompt C | Animation instruction (i2v) | [Import C] |
+
+| Prompt         | Purpose                           | Import Button |
+| -------------- | --------------------------------- | ------------- |
+| Human Prompt A | Scene / Location (seed image)     | [Import A]    |
+| Human Prompt B | Edit instruction (image-to-image) | [Import B]    |
+| Human Prompt C | Animation instruction (i2v)       | [Import C]    |
 
 ### Actions
+
 - **Import A/B/C** - Pulls transcript from FliHub into respective text area
 - **Save Project** - Writes JSON + creates folder
 - **Load Project** - Opens existing project (optional)
@@ -70,6 +74,7 @@ FliGen Day 9 UI
 ## Output Schema
 
 ### Folder Structure
+
 ```
 /assets/projects/<projectCode>/
 ├── project.json         # Metadata
@@ -78,6 +83,7 @@ FliGen Day 9 UI
 ```
 
 ### project.json
+
 ```json
 {
   "projectCode": "VSS-001",
@@ -94,6 +100,7 @@ FliGen Day 9 UI
 ```
 
 ### human_prompts.json
+
 ```json
 {
   "projectCode": "VSS-001",
@@ -106,17 +113,19 @@ FliGen Day 9 UI
 ## Technical Notes
 
 ### FliHub Integration
+
 - FliHub runs on port 5101
 - REST API endpoint: `GET /api/recordings/:id/transcript` (or similar)
 - May need to fetch by chapter + segment
 - David will ensure API is available
 
 ### Why 3 Prompts?
-| Prompt | Maps To | Day 10 Usage |
-|--------|---------|--------------|
-| A | Seed image generation | Text-to-image |
-| B | Image editing/variation | Image-to-image |
-| C | Animation/video | Image-to-video |
+
+| Prompt | Maps To                 | Day 10 Usage   |
+| ------ | ----------------------- | -------------- |
+| A      | Seed image generation   | Text-to-image  |
+| B      | Image editing/variation | Image-to-image |
+| C      | Animation/video         | Image-to-video |
 
 ## UI Mock
 

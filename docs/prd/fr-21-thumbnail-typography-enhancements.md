@@ -56,9 +56,12 @@ Load all three brand fonts via Google Fonts:
 
 ```html
 <!-- In client/index.html -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;700&family=Roboto:wght@400;700&display=swap"
+  rel="stylesheet"
+/>
 ```
 
 Ensure fonts are loaded before export:
@@ -94,16 +97,19 @@ Each of the 3 text panels gets these additional controls:
 ```
 
 **Font Dropdown Options:**
+
 - BebasNeue (bold display font)
 - Oswald (uppercase subheading)
 - Roboto (body text)
 
 **Size Slider:**
+
 - Range: 72px - 200px
 - Step: 4px
 - Default: 72px (BebasNeue), 64px (Oswald), 56px (Roboto)
 
 **Overflow Handling Dropdown:**
+
 - **Wrap** (default) - Multi-line text, auto-wraps at panel width
 - **Scale to Fit** - Reduce font size to fit text on one line
 - **Scroll** - Single-line marquee scroll animation (optional/bonus)
@@ -212,11 +218,11 @@ interface TextPanel {
   customX: number;
   customY: number;
   // Enhanced typography
-  fontFamily: FontFamily;      // NEW: BebasNeue | Oswald | Roboto
-  fontSize: number;             // ENHANCED: 72-200px range
+  fontFamily: FontFamily; // NEW: BebasNeue | Oswald | Roboto
+  fontSize: number; // ENHANCED: 72-200px range
   paddingX: number;
   paddingY: number;
-  overflow: 'wrap' | 'scale' | 'scroll';  // NEW
+  overflow: 'wrap' | 'scale' | 'scroll'; // NEW
 }
 ```
 
@@ -239,9 +245,7 @@ const renderTextPanel = (
   ctx.textBaseline = 'top';
 
   // Apply text transform
-  const displayText = font.transform === 'uppercase'
-    ? panel.text.toUpperCase()
-    : panel.text;
+  const displayText = font.transform === 'uppercase' ? panel.text.toUpperCase() : panel.text;
 
   // Calculate position
   const { x, y } = calculatePosition(panel, canvasWidth, canvasHeight);
@@ -252,8 +256,8 @@ const renderTextPanel = (
 
   // Background panel
   const bgPadding = { x: panel.paddingX, y: panel.paddingY };
-  const bgWidth = textWidth + (bgPadding.x * 2);
-  const bgHeight = panel.fontSize + (bgPadding.y * 2);
+  const bgWidth = textWidth + bgPadding.x * 2;
+  const bgHeight = panel.fontSize + bgPadding.y * 2;
 
   ctx.fillStyle = BRAND[panel.bgColor];
   ctx.fillRect(x, y, bgWidth, bgHeight);
@@ -319,8 +323,8 @@ const renderWrappedText = (
 const exportToPng = async (config: ThumbnailConfig): Promise<Blob> => {
   // Preload all fonts used in text panels
   const fontsToLoad = config.textPanels
-    .filter(p => p.enabled)
-    .map(p => {
+    .filter((p) => p.enabled)
+    .map((p) => {
       const font = FONTS[p.fontFamily];
       return document.fonts.load(`${font.weight} ${p.fontSize}px ${font.family}`);
     });
@@ -346,6 +350,7 @@ const exportToPng = async (config: ThumbnailConfig): Promise<Blob> => {
 ## Acceptance Criteria
 
 ### Font Selection
+
 - [ ] Font dropdown shows BebasNeue, Oswald, Roboto options
 - [ ] Font family changes reflected in live preview
 - [ ] Font family renders correctly in PNG export
@@ -354,6 +359,7 @@ const exportToPng = async (config: ThumbnailConfig): Promise<Blob> => {
 - [ ] Roboto preserves text case as entered
 
 ### Font Size
+
 - [ ] Font size slider range is 72px - 200px
 - [ ] Size changes reflected in live preview in real-time
 - [ ] Default size varies by font (72px BebasNeue, 64px Oswald, 56px Roboto)
@@ -361,6 +367,7 @@ const exportToPng = async (config: ThumbnailConfig): Promise<Blob> => {
 - [ ] Export PNG preserves exact font size
 
 ### Overflow Handling
+
 - [ ] "Wrap" mode breaks text into multiple lines
 - [ ] "Scale to Fit" reduces font size to fit text on one line
 - [ ] "Scroll" mode (bonus) shows marquee animation in preview
@@ -368,12 +375,14 @@ const exportToPng = async (config: ThumbnailConfig): Promise<Blob> => {
 - [ ] Export always uses "Wrap" or "Scale" (scroll not animated in PNG)
 
 ### Font Loading
+
 - [ ] All 3 fonts load on page load
 - [ ] Export waits for fonts to load before rendering
 - [ ] No fallback fonts appear in export (verify with font stack)
 - [ ] Font loading error shows graceful fallback message
 
 ### Integration
+
 - [ ] Font dropdown added to all 3 text panel editors
 - [ ] Size slider range updated to 72-200px
 - [ ] Overflow dropdown added to all 3 text panel editors
@@ -381,6 +390,7 @@ const exportToPng = async (config: ThumbnailConfig): Promise<Blob> => {
 - [ ] Changes persist when switching between layers
 
 ### Visual Quality
+
 - [ ] Large text (100px+) is crisp in preview
 - [ ] Large text renders cleanly in PNG export (no pixelation)
 - [ ] BebasNeue displays with bold weight
@@ -401,8 +411,8 @@ const initialConfig: ThumbnailConfig = {
       id: 'panel-1',
       enabled: true,
       text: 'CLAUDE CODE',
-      fontFamily: 'BebasNeue',   // <-- NEW
-      fontSize: 72,               // <-- INCREASED from 36
+      fontFamily: 'BebasNeue', // <-- NEW
+      fontSize: 72, // <-- INCREASED from 36
       bgColor: 'black',
       textColor: 'yellow',
       position: 'top-left',
@@ -410,14 +420,14 @@ const initialConfig: ThumbnailConfig = {
       customY: 4.2,
       paddingX: 16,
       paddingY: 8,
-      overflow: 'wrap',           // <-- NEW
+      overflow: 'wrap', // <-- NEW
     },
     {
       id: 'panel-2',
       enabled: true,
       text: '12 DAYS',
-      fontFamily: 'BebasNeue',   // <-- NEW
-      fontSize: 72,               // <-- INCREASED from 36
+      fontFamily: 'BebasNeue', // <-- NEW
+      fontSize: 72, // <-- INCREASED from 36
       bgColor: 'black',
       textColor: 'white',
       position: 'top-left',
@@ -425,14 +435,14 @@ const initialConfig: ThumbnailConfig = {
       customY: 11,
       paddingX: 16,
       paddingY: 8,
-      overflow: 'wrap',           // <-- NEW
+      overflow: 'wrap', // <-- NEW
     },
     {
       id: 'panel-3',
       enabled: false,
       text: 'PANEL 3',
-      fontFamily: 'Oswald',      // <-- NEW (different font)
-      fontSize: 64,               // <-- NEW
+      fontFamily: 'Oswald', // <-- NEW (different font)
+      fontSize: 64, // <-- NEW
       bgColor: 'black',
       textColor: 'yellow',
       position: 'bottom-left',
@@ -440,7 +450,7 @@ const initialConfig: ThumbnailConfig = {
       customY: 83,
       paddingX: 16,
       paddingY: 8,
-      overflow: 'wrap',           // <-- NEW
+      overflow: 'wrap', // <-- NEW
     },
   ],
   overlay: {
@@ -457,6 +467,7 @@ const initialConfig: ThumbnailConfig = {
 ## Test Scenarios
 
 ### Scenario 1: Brand Font Selection
+
 1. Navigate to Day 8
 2. Select Panel 1
 3. Change font from BebasNeue → Oswald
@@ -465,6 +476,7 @@ const initialConfig: ThumbnailConfig = {
 6. Open exported PNG and verify Oswald font rendered (not fallback)
 
 ### Scenario 2: Large Text Impact
+
 1. Enable Panel 1 with text "WATCH NOW"
 2. Select BebasNeue font
 3. Set font size to 144px (3x original)
@@ -473,6 +485,7 @@ const initialConfig: ThumbnailConfig = {
 6. Export and verify crisp rendering at large size
 
 ### Scenario 3: Text Wrapping
+
 1. Enable Panel 1 with long text: "BUILDING 12 TOOLS IN 12 DAYS"
 2. Set font size to 96px
 3. Set overflow to "Wrap"
@@ -481,6 +494,7 @@ const initialConfig: ThumbnailConfig = {
 6. Export and verify wrapped text in PNG
 
 ### Scenario 4: Multi-Font Composition
+
 1. Panel 1: "CLAUDE CODE" - BebasNeue 72px - yellow text
 2. Panel 2: "Day 8 Tutorial" - Oswald 64px - white text
 3. Panel 3: "Step-by-step guide" - Roboto 48px - lightBrown text
@@ -488,6 +502,7 @@ const initialConfig: ThumbnailConfig = {
 5. Export and verify all fonts in PNG
 
 ### Scenario 5: Scale to Fit
+
 1. Panel 1: "EXTREMELY LONG TITLE TEXT THAT GOES ON"
 2. Font: BebasNeue, Size: 100px
 3. Overflow: "Scale to Fit"
@@ -511,10 +526,12 @@ const initialConfig: ThumbnailConfig = {
 ## Dependencies
 
 ### External
+
 - Google Fonts API (BebasNeue, Oswald, Roboto)
 - Canvas API font rendering
 
 ### Internal
+
 - FR-12 (Day 8 Thumbnail Generator) - base feature
 - AppyDave brand guide - font specifications
 
@@ -548,17 +565,20 @@ shared/src/index.ts (optional)
 From AppyDave Brand Guide:
 
 **Typography Hierarchy:**
+
 - **h1**: BebasNeue, large display text for hero sections
 - **h2-h6**: Oswald, uppercase, progressive size scaling
 - **Body text**: Roboto, regular weight
 - **Buttons**: BebasNeue, bold styling
 
 **Thumbnail Usage:**
+
 - Primary impact text (titles, CTAs): **BebasNeue** 72px-144px
 - Secondary text (subtitles, labels): **Oswald** 56px-96px
 - Descriptive text (rare): **Roboto** 48px-72px
 
 **Text Transform:**
+
 - BebasNeue and Oswald should always display in UPPERCASE
 - Roboto preserves original case (title case or sentence case)
 
@@ -567,15 +587,18 @@ From AppyDave Brand Guide:
 ## References
 
 ### Design Assets
+
 - [AppyDave Brand Guide](/Users/davidcruwys/dev/ad/appydave-brand/design-system/brand-guide.md)
 - [Google Fonts - Bebas Neue](https://fonts.google.com/specimen/Bebas+Neue)
 - [Google Fonts - Oswald](https://fonts.google.com/specimen/Oswald)
 - [Google Fonts - Roboto](https://fonts.google.com/specimen/Roboto)
 
 ### Related Requirements
+
 - [FR-12: Thumbnail Generator](fr-12-thumbnail-generator.md) - Base Day 8 feature
 
 ### Technical References
+
 - [Canvas API - fillText()](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/fillText)
 - [FontFace API - document.fonts.load()](https://developer.mozilla.org/en-US/docs/Web/API/FontFace/load)
 - [Canvas Text Wrapping Techniques](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_text)
@@ -585,6 +608,7 @@ From AppyDave Brand Guide:
 ## Completion Notes
 
 **What was done:**
+
 - Added AppyDave brand fonts (BebasNeue, Oswald, Roboto) to project via Google Fonts
 - Implemented FONTS constant with font family, weight, size defaults, and text transform rules
 - Updated TextPanel interface to include fontFamily and overflow properties
@@ -600,10 +624,12 @@ From AppyDave Brand Guide:
 - Adjusted padding ranges: H: 8-80px, V: 4-60px (increased from 4-48px, 2-32px)
 
 **Files changed:**
+
 - `client/index.html` (modified) - Added Google Fonts link for BebasNeue, Oswald, Roboto
 - `client/src/components/tools/Day8Thumbnail.tsx` (modified) - Full typography system implementation
 
 **Technical details:**
+
 - Font transform applied automatically: BebasNeue and Oswald convert to uppercase, Roboto preserves case
 - Text overflow modes: "wrap" uses word-wrapping algorithm, "scale" reduces font size proportionally, "scroll" treated as scale in PNG export
 - Font preloading ensures correct rendering in exported PNGs (no fallback fonts)
@@ -611,6 +637,7 @@ From AppyDave Brand Guide:
 - Default padding increased to 24px horizontal, 12px vertical for better proportion with larger text
 
 **Testing notes:**
+
 - Test all 3 font families by selecting from dropdown
 - Test font sizes from 72px to 200px to verify large text renders correctly
 - Test text wrapping with long text (e.g., "Building 12 Tools in 12 Days")

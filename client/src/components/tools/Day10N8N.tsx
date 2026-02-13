@@ -137,8 +137,8 @@ export default function Day10N8N() {
           prompts: {
             seed: assets[0].metadata.seedPrompt || '',
             edit: assets[0].metadata.editPrompt || '',
-            animation: assets[0].metadata.animationPrompt || ''
-          }
+            animation: assets[0].metadata.animationPrompt || '',
+          },
         }))
         .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
@@ -153,15 +153,18 @@ export default function Day10N8N() {
     console.log('[Day10N8N] Mode:', mode);
 
     // Select prompts based on mode
-    const prompts = mode === 'machine' && machinePrompts ? {
-      seedImage: machinePrompts.seed,
-      editInstruction: machinePrompts.edit,
-      animation: machinePrompts.animation,
-    } : {
-      seedImage,
-      editInstruction,
-      animation,
-    };
+    const prompts =
+      mode === 'machine' && machinePrompts
+        ? {
+            seedImage: machinePrompts.seed,
+            editInstruction: machinePrompts.edit,
+            animation: machinePrompts.animation,
+          }
+        : {
+            seedImage,
+            editInstruction,
+            animation,
+          };
 
     console.log('[Day10N8N] Prompts:', {
       seedImage: prompts.seedImage.substring(0, 50) + '...',
@@ -222,7 +225,6 @@ export default function Day10N8N() {
       } else {
         throw new Error('Invalid response format from N8N');
       }
-
     } catch (err) {
       console.error('[Day10N8N] ========== WORKFLOW FAILED ==========');
       console.error('[Day10N8N] Error:', err);
@@ -241,21 +243,31 @@ export default function Day10N8N() {
 
   const getStageColor = (currentStage: PipelineStage) => {
     switch (currentStage) {
-      case 'idle': return 'text-slate-500';
-      case 'loading': return 'text-amber-400';
-      case 'processing': return 'text-amber-400';
-      case 'complete': return 'text-emerald-400';
-      case 'error': return 'text-red-400';
+      case 'idle':
+        return 'text-slate-500';
+      case 'loading':
+        return 'text-amber-400';
+      case 'processing':
+        return 'text-amber-400';
+      case 'complete':
+        return 'text-emerald-400';
+      case 'error':
+        return 'text-red-400';
     }
   };
 
   const getStageIcon = (currentStage: PipelineStage) => {
     switch (currentStage) {
-      case 'idle': return '○';
-      case 'loading': return '◐';
-      case 'processing': return '◉';
-      case 'complete': return '✓';
-      case 'error': return '✕';
+      case 'idle':
+        return '○';
+      case 'loading':
+        return '◐';
+      case 'processing':
+        return '◉';
+      case 'complete':
+        return '✓';
+      case 'error':
+        return '✕';
     }
   };
 
@@ -265,12 +277,8 @@ export default function Day10N8N() {
       <div className="border-b border-slate-800 bg-slate-900/50 px-6 py-4">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="font-mono text-2xl font-bold text-slate-100">
-              N8N PIPELINE
-            </h1>
-            <p className="font-mono text-xs text-slate-500">
-              ORCHESTRATION • DAY 10
-            </p>
+            <h1 className="font-mono text-2xl font-bold text-slate-100">N8N PIPELINE</h1>
+            <p className="font-mono text-xs text-slate-500">ORCHESTRATION • DAY 10</p>
           </div>
           <div className="flex items-center gap-3">
             <div className={`font-mono text-sm ${getStageColor(stage)}`}>
@@ -282,7 +290,6 @@ export default function Day10N8N() {
 
       <div className="flex-1 overflow-y-auto">
         <div className="mx-auto max-w-5xl space-y-1 p-6">
-
           {/* STAGE 1: INPUT */}
           <section className="rounded-lg border border-slate-800 bg-slate-900/30 p-6">
             <div className="mb-4 flex items-center gap-3">
@@ -394,7 +401,13 @@ export default function Day10N8N() {
                 {/* Human Prompts Button */}
                 <button
                   onClick={() => handleGenerate('human')}
-                  disabled={stage === 'processing' || stage === 'loading' || !seedImage || !editInstruction || !animation}
+                  disabled={
+                    stage === 'processing' ||
+                    stage === 'loading' ||
+                    !seedImage ||
+                    !editInstruction ||
+                    !animation
+                  }
                   className="rounded border border-blue-600 bg-blue-600 px-6 py-4 font-mono text-sm font-bold uppercase tracking-wider text-slate-950 transition-all hover:bg-blue-500 disabled:cursor-not-allowed disabled:border-slate-700 disabled:bg-slate-800 disabled:text-slate-600"
                 >
                   {stage === 'processing' || stage === 'loading' ? (
@@ -477,7 +490,10 @@ export default function Day10N8N() {
                   </h3>
                   <div className="grid grid-cols-2 gap-4">
                     {result.images.map((img, idx) => (
-                      <div key={idx} className="group relative overflow-hidden rounded border border-slate-700 bg-slate-800">
+                      <div
+                        key={idx}
+                        className="group relative overflow-hidden rounded border border-slate-700 bg-slate-800"
+                      >
                         <img
                           src={img}
                           alt={`Generated image ${idx + 1}`}
@@ -505,11 +521,7 @@ export default function Day10N8N() {
                     Generated Video
                   </h3>
                   <div className="group relative overflow-hidden rounded border border-slate-700 bg-slate-800">
-                    <video
-                      src={result.video}
-                      controls
-                      className="aspect-video w-full"
-                    />
+                    <video src={result.video} controls className="aspect-video w-full" />
                     <div className="absolute left-2 top-2 rounded bg-slate-950/70 px-2 py-1 font-mono text-xs text-slate-300">
                       VIDEO
                     </div>

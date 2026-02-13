@@ -33,7 +33,7 @@ export function getVoices(): Voice[] {
  * Get voice name by ID
  */
 export function getVoiceName(voiceId: string): string {
-  const voice = DEFAULT_VOICES.find(v => v.voiceId === voiceId);
+  const voice = DEFAULT_VOICES.find((v) => v.voiceId === voiceId);
   return voice?.name ?? 'Unknown';
 }
 
@@ -77,7 +77,11 @@ export async function checkHealth(): Promise<TTSHealth> {
     const message = error instanceof Error ? error.message : String(error);
     console.log(`[ElevenLabs] Health check error: ${message}`);
 
-    if (message.includes('401') || message.includes('Unauthorized') || message.includes('authentication')) {
+    if (
+      message.includes('401') ||
+      message.includes('Unauthorized') ||
+      message.includes('authentication')
+    ) {
       return {
         configured: true,
         authenticated: false,
@@ -112,10 +116,7 @@ async function streamToBuffer(stream: ReadableStream<Uint8Array>): Promise<Buffe
 /**
  * Generate speech from text
  */
-export async function generateSpeech(
-  text: string,
-  voiceId: string
-): Promise<GenerateSpeechResult> {
+export async function generateSpeech(text: string, voiceId: string): Promise<GenerateSpeechResult> {
   const startTime = Date.now();
   const apiKey = getApiKey();
 
@@ -164,7 +165,9 @@ export async function generateSpeech(
     const buffer = await streamToBuffer(audioStream);
     const base64 = buffer.toString('base64');
 
-    console.log(`[ElevenLabs] Generate: Success! Audio size = ${buffer.length} bytes, Duration = ${durationMs}ms`);
+    console.log(
+      `[ElevenLabs] Generate: Success! Audio size = ${buffer.length} bytes, Duration = ${durationMs}ms`
+    );
 
     return {
       success: true,

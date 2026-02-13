@@ -22,8 +22,8 @@ router.get('/', async (req, res) => {
       health.fal.authenticated && health.kie.authenticated
         ? 'healthy'
         : health.fal.authenticated || health.kie.authenticated
-        ? 'degraded'
-        : 'unhealthy';
+          ? 'degraded'
+          : 'unhealthy';
 
     res.json({
       status,

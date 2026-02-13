@@ -39,9 +39,11 @@ Day 8 (Thumbnail Generator) currently creates thumbnails via **client-side canva
 ### Task 1: Create TypeScript Types
 
 **Files to create:**
+
 - `server/src/tools/thumbnails/types.ts`
 
 **Files to modify:**
+
 - `shared/src/index.ts`
 
 **What to implement:**
@@ -53,25 +55,25 @@ Define the `ThumbnailConfiguration` interface that captures ALL design settings:
 
 export interface ThumbnailConfiguration {
   // Template
-  template: string;           // "bold-statement", "gradient-minimal", etc.
+  template: string; // "bold-statement", "gradient-minimal", etc.
 
   // Text content
-  headline?: string;          // Primary text
-  subtitle?: string;          // Secondary text
-  callToAction?: string;      // CTA text
+  headline?: string; // Primary text
+  subtitle?: string; // Secondary text
+  callToAction?: string; // CTA text
 
   // Colors (hex strings)
-  backgroundColor: string;    // e.g., "#1e293b"
-  textColor: string;          // e.g., "#ffffff"
-  accentColor?: string;       // e.g., "#3b82f6"
+  backgroundColor: string; // e.g., "#1e293b"
+  textColor: string; // e.g., "#ffffff"
+  accentColor?: string; // e.g., "#3b82f6"
 
   // Typography
   fontSize: {
-    headline: number;         // e.g., 64
-    subtitle: number;         // e.g., 32
-    cta: number;              // e.g., 24
+    headline: number; // e.g., 64
+    subtitle: number; // e.g., 32
+    cta: number; // e.g., 24
   };
-  fontFamily: string;         // e.g., "Inter", "Roboto"
+  fontFamily: string; // e.g., "Inter", "Roboto"
   textAlign: 'left' | 'center' | 'right';
 
   // Layout
@@ -86,13 +88,13 @@ export interface ThumbnailConfiguration {
 
   // Dimensions
   dimensions: {
-    width: number;            // 1920
-    height: number;           // 1080
+    width: number; // 1920
+    height: number; // 1080
   };
 }
 
 export interface SaveThumbnailRequest {
-  imageData: string;                    // base64 PNG (with or without data URI prefix)
+  imageData: string; // base64 PNG (with or without data URI prefix)
   configuration: ThumbnailConfiguration;
 }
 
@@ -103,6 +105,7 @@ export interface SaveThumbnailResponse {
 ```
 
 **Also create:**
+
 ```typescript
 // server/src/tools/thumbnails/types.ts
 
@@ -110,6 +113,7 @@ export * from '../../../shared/src/index.js';
 ```
 
 **Testing:**
+
 - TypeScript compilation succeeds
 - No type errors in client or server
 - Configuration interface covers all Day 8 settings
@@ -119,12 +123,14 @@ export * from '../../../shared/src/index.js';
 ### Task 2: Server-Side Thumbnail Save Function
 
 **Files to create:**
+
 - `server/src/tools/thumbnails/save-to-catalog.ts`
 - `server/src/tools/thumbnails/index.ts`
 
 **What to implement:**
 
 Create the core function that:
+
 1. Accepts base64 image data + configuration JSON
 2. Decodes base64 to PNG buffer
 3. Saves PNG file to `assets/catalog/thumbnails/`
@@ -169,16 +175,16 @@ export async function saveThumbnailToCatalog(
     type: 'thumbnail',
     filename,
     url: `/assets/catalog/thumbnails/${filename}`,
-    provider: 'client',        // Client-side canvas rendering
-    model: 'canvas',           // HTML5 Canvas API
+    provider: 'client', // Client-side canvas rendering
+    model: 'canvas', // HTML5 Canvas API
     prompt: configuration.headline || configuration.subtitle || '(no text)',
     status: 'ready',
     createdAt: new Date().toISOString(),
     completedAt: new Date().toISOString(),
-    estimatedCost: 0,          // Free - client-side rendering
+    estimatedCost: 0, // Free - client-side rendering
     generationTimeMs: Date.now() - startTime,
     metadata: {
-      configuration,           // FULL config for exact recreation
+      configuration, // FULL config for exact recreation
       template: configuration.template,
       headline: configuration.headline,
       subtitle: configuration.subtitle,
@@ -190,7 +196,9 @@ export async function saveThumbnailToCatalog(
   // Add to catalog
   await catalog.addAsset(asset);
 
-  console.log(`[Thumbnails] Saved to catalog: ${id} (${template}, ${(buffer.length / 1024).toFixed(0)}KB)`);
+  console.log(
+    `[Thumbnails] Saved to catalog: ${id} (${template}, ${(buffer.length / 1024).toFixed(0)}KB)`
+  );
   return asset;
 }
 ```
@@ -203,6 +211,7 @@ export * from './types.js';
 ```
 
 **Testing:**
+
 - Function accepts base64 string with/without data URI prefix
 - PNG file created in correct directory
 - File is valid (can be opened in image viewer)
@@ -215,6 +224,7 @@ export * from './types.js';
 ### Task 3: Server API Endpoint
 
 **Files to modify:**
+
 - `server/src/index.ts`
 
 **What to implement:**
@@ -236,14 +246,14 @@ app.post('/api/thumbnails/save', async (req, res) => {
     if (!imageData || typeof imageData !== 'string') {
       return res.status(400).json({
         success: false,
-        error: 'Missing or invalid imageData (must be base64 string)'
+        error: 'Missing or invalid imageData (must be base64 string)',
       });
     }
 
     if (!configuration || typeof configuration !== 'object') {
       return res.status(400).json({
         success: false,
-        error: 'Missing or invalid configuration object'
+        error: 'Missing or invalid configuration object',
       });
     }
 
@@ -251,7 +261,7 @@ app.post('/api/thumbnails/save', async (req, res) => {
     if (!configuration.template) {
       return res.status(400).json({
         success: false,
-        error: 'Configuration missing required field: template'
+        error: 'Configuration missing required field: template',
       });
     }
 
@@ -260,14 +270,13 @@ app.post('/api/thumbnails/save', async (req, res) => {
 
     res.json({
       success: true,
-      asset
+      asset,
     });
-
   } catch (error) {
     console.error('[Thumbnails] Save failed:', error);
     res.status(500).json({
       success: false,
-      error: error instanceof Error ? error.message : 'Unknown error'
+      error: error instanceof Error ? error.message : 'Unknown error',
     });
   }
 });
@@ -275,6 +284,7 @@ app.post('/api/thumbnails/save', async (req, res) => {
 
 **Payload size note:**
 Express already configured for 50MB limit (from FR-11), so no changes needed:
+
 ```typescript
 // Already exists in server/src/index.ts
 app.use(express.json({ limit: '50mb' }));
@@ -282,6 +292,7 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 ```
 
 **Testing:**
+
 - POST with valid data → 200 response with asset
 - POST without imageData → 400 error
 - POST without configuration → 400 error
@@ -294,6 +305,7 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 ### Task 4: Client-Side Save Integration
 
 **Files to modify:**
+
 - `client/src/components/tools/Day8Thumbnail.tsx`
 
 **What to implement:**
@@ -367,7 +379,6 @@ const handleSaveToLibrary = async () => {
 
     // Success feedback
     alert('✓ Thumbnail saved to library!');
-
   } catch (error) {
     console.error('[Day8] Save failed:', error);
     alert(`Failed to save thumbnail: ${error instanceof Error ? error.message : 'Unknown error'}`);
@@ -378,8 +389,11 @@ const handleSaveToLibrary = async () => {
 ```
 
 **Button UI:**
+
 ```tsx
-{/* Action Buttons */}
+{
+  /* Action Buttons */
+}
 <div className="flex gap-3">
   {/* Existing button - unchanged */}
   <button
@@ -397,10 +411,11 @@ const handleSaveToLibrary = async () => {
   >
     {isSaving ? 'Saving...' : 'Save to Library'}
   </button>
-</div>
+</div>;
 ```
 
 **Testing:**
+
 - Button appears next to "Export PNG"
 - Button disabled while saving
 - Clicking button saves to server
@@ -414,6 +429,7 @@ const handleSaveToLibrary = async () => {
 ### Task 5: History UI (MANDATORY)
 
 **Files to modify:**
+
 - `client/src/components/tools/Day8Thumbnail.tsx`
 
 **What to implement:**
@@ -431,8 +447,8 @@ const loadThumbnailHistory = async () => {
     const data = await response.json();
 
     // Sort by creation date (newest first)
-    const sorted = data.assets.sort((a: Asset, b: Asset) =>
-      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    const sorted = data.assets.sort(
+      (a: Asset, b: Asset) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
 
     setThumbnailHistory(sorted);
@@ -448,12 +464,13 @@ useEffect(() => {
 ```
 
 **History UI JSX:**
+
 ```tsx
-{/* History Section - Add after action buttons */}
+{
+  /* History Section - Add after action buttons */
+}
 <div className="border-t border-slate-700 pt-6 mt-6">
-  <h3 className="text-lg font-semibold text-slate-200 mb-4">
-    Thumbnail History
-  </h3>
+  <h3 className="text-lg font-semibold text-slate-200 mb-4">Thumbnail History</h3>
 
   {thumbnailHistory.length === 0 ? (
     <div className="text-center py-8">
@@ -479,12 +496,8 @@ useEffect(() => {
           <p className="text-sm font-medium text-slate-200 truncate">
             {asset.metadata.headline || asset.metadata.subtitle || '(Untitled)'}
           </p>
-          <p className="text-xs text-slate-400 mb-1">
-            Template: {asset.metadata.template}
-          </p>
-          <p className="text-xs text-slate-500">
-            {new Date(asset.createdAt).toLocaleString()}
-          </p>
+          <p className="text-xs text-slate-400 mb-1">Template: {asset.metadata.template}</p>
+          <p className="text-xs text-slate-500">{new Date(asset.createdAt).toLocaleString()}</p>
 
           {/* Actions */}
           <div className="flex gap-2 mt-3">
@@ -506,10 +519,11 @@ useEffect(() => {
       ))}
     </div>
   )}
-</div>
+</div>;
 ```
 
 **Testing:**
+
 - History section displays below generation form
 - Grid responsive (1 col mobile, 2 tablet, 3 desktop)
 - Empty state shows when no thumbnails
@@ -525,6 +539,7 @@ useEffect(() => {
 ### Task 6: Configuration Reuse Logic
 
 **Files to modify:**
+
 - `client/src/components/tools/Day8Thumbnail.tsx`
 
 **What to implement:**
@@ -585,6 +600,7 @@ const checkForUnsavedChanges = (): boolean => {
 ```
 
 **Testing:**
+
 - Click "Reuse Configuration" → All settings restored
 - Template selector updates
 - Text fields populate with saved values
@@ -604,12 +620,14 @@ const checkForUnsavedChanges = (): boolean => {
 ### Base64 Transfer Pattern
 
 **Why base64?**
+
 - Canvas API provides `toDataURL()` method (returns base64)
 - Standard pattern for client-side image export
 - Works with `fetch()` JSON body (no multipart/form-data needed)
 - Easy to decode on server (`Buffer.from(base64, 'base64')`)
 
 **Flow:**
+
 ```
 Client Canvas → canvas.toDataURL('image/png')
   ↓
@@ -627,6 +645,7 @@ fs.writeFile(path, buffer) → Disk
 ### Configuration Storage Strategy
 
 **Store EVERYTHING needed to recreate thumbnail:**
+
 - Template ID (which design template was used)
 - All text content (headline, subtitle, CTA)
 - All colors (background, text, accent)
@@ -639,6 +658,7 @@ fs.writeFile(path, buffer) → Disk
 ### State Management
 
 **No global state needed** - component-local state is fine:
+
 - `useState` for all design settings (already exists in Day8Thumbnail)
 - `useState` for history list (new)
 - `useState` for saving state (new)
@@ -647,10 +667,12 @@ fs.writeFile(path, buffer) → Disk
 ### API Integration
 
 **Catalog API (already exists):**
+
 - `GET /api/catalog/filter?type=thumbnail` - List thumbnails
 - `DELETE /api/catalog/:id` - Delete thumbnail (optional)
 
 **New endpoint:**
+
 - `POST /api/thumbnails/save` - Save thumbnail + configuration
 
 **No additional endpoints needed.**
@@ -687,6 +709,7 @@ client/src/components/tools/Day8Thumbnail.tsx   (+200 lines - save button + hist
 ## Testing Checklist
 
 ### Persistence
+
 - [ ] Create thumbnail design in Day 8
 - [ ] Click "Save to Library" button
 - [ ] PNG file created in `assets/catalog/thumbnails/`
@@ -698,6 +721,7 @@ client/src/components/tools/Day8Thumbnail.tsx   (+200 lines - save button + hist
 - [ ] Asset model is `'canvas'`
 
 ### Configuration Storage
+
 - [ ] Template ID saved in metadata
 - [ ] Headline text saved (if entered)
 - [ ] Subtitle text saved (if entered)
@@ -714,6 +738,7 @@ client/src/components/tools/Day8Thumbnail.tsx   (+200 lines - save button + hist
 - [ ] Configuration complete enough to recreate exact thumbnail
 
 ### History UI
+
 - [ ] History section displays below generation form
 - [ ] Empty state shown when no thumbnails saved
 - [ ] History loads on page mount
@@ -734,6 +759,7 @@ client/src/components/tools/Day8Thumbnail.tsx   (+200 lines - save button + hist
 - [ ] Hover effect on cards (border color change)
 
 ### Reuse Functionality
+
 - [ ] Click "Reuse Configuration" button
 - [ ] If current work modified → Confirmation dialog appears
 - [ ] Confirmation message clear: "This will replace your current design..."
@@ -756,6 +782,7 @@ client/src/components/tools/Day8Thumbnail.tsx   (+200 lines - save button + hist
 - [ ] User can modify loaded config and save as new thumbnail
 
 ### Download Behavior
+
 - [ ] "Export PNG" button still works (download only, no save)
 - [ ] "Save to Library" button saves to server AND downloads
 - [ ] Downloaded filename matches server filename
@@ -764,6 +791,7 @@ client/src/components/tools/Day8Thumbnail.tsx   (+200 lines - save button + hist
 - [ ] PNG transparency preserved (if applicable)
 
 ### API
+
 - [ ] POST /api/thumbnails/save with valid data → 200 + asset
 - [ ] Response includes `success: true`
 - [ ] Response includes full `asset` object
@@ -777,6 +805,7 @@ client/src/components/tools/Day8Thumbnail.tsx   (+200 lines - save button + hist
 - [ ] Server logs show saved thumbnail details
 
 ### Edge Cases
+
 - [ ] Save empty/default thumbnail (no custom text) → Works
 - [ ] Save thumbnail with very long headline (200+ chars) → Truncates in UI
 - [ ] Save thumbnail with 10+ layers → All layers saved
@@ -790,6 +819,7 @@ client/src/components/tools/Day8Thumbnail.tsx   (+200 lines - save button + hist
 - [ ] Reuse config with default state → No confirmation needed
 
 ### Browser Compatibility
+
 - [ ] Chrome/Edge - Save works
 - [ ] Firefox - Save works
 - [ ] Safari - Save works
@@ -802,6 +832,7 @@ client/src/components/tools/Day8Thumbnail.tsx   (+200 lines - save button + hist
 ## Success Criteria
 
 **Feature Complete:**
+
 - [ ] Day 8 (Thumbnails) has same persistence + history UI as Days 4, 5, 6, 7, 10
 - [ ] FR-17 asset persistence series 100% complete (all 6 generation tools)
 - [ ] Users can save thumbnails to library with one click
@@ -809,6 +840,7 @@ client/src/components/tools/Day8Thumbnail.tsx   (+200 lines - save button + hist
 - [ ] All thumbnail data persistent across sessions
 
 **Data Quality:**
+
 - [ ] 100% of thumbnails saved via "Save to Library" persisted to catalog
 - [ ] Zero data loss on page refresh or browser close
 - [ ] All configuration parameters captured completely
@@ -816,6 +848,7 @@ client/src/components/tools/Day8Thumbnail.tsx   (+200 lines - save button + hist
 - [ ] Configuration JSON valid and complete
 
 **User Experience:**
+
 - [ ] "Save to Library" and "Export PNG" both work intuitively
 - [ ] History UI feels consistent with other tools (Days 4, 5, 6, 7, 10)
 - [ ] "Reuse Configuration" saves time (no manual re-entry)
@@ -824,6 +857,7 @@ client/src/components/tools/Day8Thumbnail.tsx   (+200 lines - save button + hist
 - [ ] Responsive design works on all devices
 
 **Integration:**
+
 - [ ] Thumbnails queryable via catalog API
 - [ ] Ready for Day 11 Story Builder to select thumbnails
 - [ ] Ready for FR-18 Asset Browser to display thumbnails
@@ -848,7 +882,7 @@ app.post('/api/thumbnails/save', async (req, res) => {
     if (!imageData || typeof imageData !== 'string') {
       return res.status(400).json({
         success: false,
-        error: 'Missing or invalid imageData (must be base64 string)'
+        error: 'Missing or invalid imageData (must be base64 string)',
       });
     }
 
@@ -856,14 +890,14 @@ app.post('/api/thumbnails/save', async (req, res) => {
     if (!configuration || typeof configuration !== 'object') {
       return res.status(400).json({
         success: false,
-        error: 'Missing or invalid configuration object'
+        error: 'Missing or invalid configuration object',
       });
     }
 
     if (!configuration.template) {
       return res.status(400).json({
         success: false,
-        error: 'Configuration missing required field: template'
+        error: 'Configuration missing required field: template',
       });
     }
 
@@ -872,14 +906,13 @@ app.post('/api/thumbnails/save', async (req, res) => {
 
     res.json({
       success: true,
-      asset
+      asset,
     });
-
   } catch (error) {
     console.error('[Thumbnails] Save failed:', error);
     res.status(500).json({
       success: false,
-      error: error instanceof Error ? error.message : 'Unknown error'
+      error: error instanceof Error ? error.message : 'Unknown error',
     });
   }
 });
@@ -951,7 +984,6 @@ const handleSaveToLibrary = async () => {
     link.click();
 
     alert('✓ Thumbnail saved to library!');
-
   } catch (error) {
     console.error('[Day8] Save failed:', error);
     alert(`Failed to save: ${error instanceof Error ? error.message : 'Unknown error'}`);
@@ -964,11 +996,11 @@ const handleSaveToLibrary = async () => {
 ### Complete History UI Component
 
 ```tsx
-{/* History Section */}
+{
+  /* History Section */
+}
 <div className="border-t border-slate-700 pt-6 mt-6">
-  <h3 className="text-lg font-semibold text-slate-200 mb-4">
-    Thumbnail History
-  </h3>
+  <h3 className="text-lg font-semibold text-slate-200 mb-4">Thumbnail History</h3>
 
   {thumbnailHistory.length === 0 ? (
     <div className="text-center py-8">
@@ -992,12 +1024,8 @@ const handleSaveToLibrary = async () => {
           <p className="text-sm font-medium text-slate-200 truncate">
             {asset.metadata.headline || asset.metadata.subtitle || '(Untitled)'}
           </p>
-          <p className="text-xs text-slate-400 mb-1">
-            Template: {asset.metadata.template}
-          </p>
-          <p className="text-xs text-slate-500">
-            {new Date(asset.createdAt).toLocaleString()}
-          </p>
+          <p className="text-xs text-slate-400 mb-1">Template: {asset.metadata.template}</p>
+          <p className="text-xs text-slate-500">{new Date(asset.createdAt).toLocaleString()}</p>
 
           <div className="flex gap-2 mt-3">
             <button
@@ -1018,7 +1046,7 @@ const handleSaveToLibrary = async () => {
       ))}
     </div>
   )}
-</div>
+</div>;
 ```
 
 ---
@@ -1028,11 +1056,13 @@ const handleSaveToLibrary = async () => {
 ### 1. Base64 Size Limits
 
 **Already handled** - Express configured for 50MB in FR-11:
+
 ```typescript
 app.use(express.json({ limit: '50mb' }));
 ```
 
 Typical thumbnail sizes:
+
 - 1280x720: ~500KB-1MB base64
 - 1920x1080: ~1-3MB base64
 
@@ -1045,6 +1075,7 @@ No configuration changes needed.
 **Must capture ALL configuration**, not just visible canvas pixels:
 
 The PNG image alone isn't enough - you need the configuration JSON to enable editing. When user clicks "Reuse Configuration", they should be able to:
+
 - Change the headline text
 - Swap the background color
 - Adjust font sizes
@@ -1057,16 +1088,19 @@ This requires storing the **input state**, not just the **output image**.
 ### 3. Unsaved Work Warning
 
 **When to show confirmation dialog:**
+
 - User clicks "Reuse Configuration"
 - AND current state differs from defaults
 - THEN show: "This will replace your current design. Continue?"
 
 **When NOT to show:**
+
 - Current state is default/empty
 - User just loaded the page
 - Configuration being loaded matches current state
 
 **Implementation tip:**
+
 ```typescript
 const hasUnsavedChanges = (): boolean => {
   // Compare to defaults
@@ -1082,11 +1116,13 @@ const hasUnsavedChanges = (): boolean => {
 ### 4. Download vs Save Behavior
 
 **"Export PNG"** - Quick download, no server interaction:
+
 - Use case: User wants PNG file right now
 - Doesn't persist to catalog
 - Faster (no network request)
 
 **"Save to Library"** - Persistent storage + download:
+
 - Use case: User wants to save for later reuse
 - Persists to catalog
 - Also downloads (convenience)
@@ -1129,17 +1165,19 @@ layers: [
       fontSize: 32,
       color: '#ffffff',
       // ... more properties
-    }
-  }
-]
+    },
+  },
+];
 ```
 
 Ensure:
+
 - Circular references don't exist (JSON.stringify will fail)
 - All layer properties are serializable
 - Style objects are plain objects, not class instances
 
 **Test with:**
+
 ```typescript
 JSON.parse(JSON.stringify(configuration)); // Should not throw
 ```
@@ -1149,16 +1187,19 @@ JSON.parse(JSON.stringify(configuration)); // Should not throw
 ### 7. Template Dependency
 
 **Configuration references template by ID:**
+
 ```typescript
-configuration.template = 'bold-statement'
+configuration.template = 'bold-statement';
 ```
 
 **What if template doesn't exist when loading?**
+
 - Template was deleted
 - Template renamed
 - Different version of Day 8
 
 **Solution:**
+
 ```typescript
 const handleReuseConfiguration = (asset: Asset) => {
   const config = asset.metadata.configuration;
@@ -1182,6 +1223,7 @@ const handleReuseConfiguration = (asset: Asset) => {
 ### 8. Color Format Consistency
 
 **Always store colors as hex strings:**
+
 - `#1e293b` ✓ Correct
 - `rgb(30, 41, 59)` ✗ Avoid
 - `hsl(217, 33%, 17%)` ✗ Avoid
@@ -1189,6 +1231,7 @@ const handleReuseConfiguration = (asset: Asset) => {
 **Why?** Consistency across tools, easier to validate, works with all color pickers.
 
 **Normalization:**
+
 ```typescript
 const normalizeColor = (color: string): string => {
   // Convert rgb() or hsl() to hex if needed
@@ -1205,13 +1248,15 @@ const normalizeColor = (color: string): string => {
 ### 9. Font Availability
 
 **Don't save font files**, just font names:
+
 ```typescript
-fontFamily: 'Inter' // ✓ Font name only
+fontFamily: 'Inter'; // ✓ Font name only
 ```
 
 **Assumption:** System fonts or web fonts loaded via CDN.
 
 **If font not available when loading:**
+
 - Browser will fall back to system default
 - User can change font after loading config
 
@@ -1234,6 +1279,7 @@ fontFamily: 'Inter' // ✓ Font name only
 ```
 
 This ensures:
+
 - All preview cards same height (grid alignment)
 - No distorted images
 - Consistent visual appearance
@@ -1325,6 +1371,7 @@ A: **PNG** - maintains transparency, better quality for graphics/text, lossless 
 **Q: What if the configuration references a template that's been deleted?**
 
 A: Fall back to default template + show warning to user:
+
 ```typescript
 if (!templateExists) {
   alert(`Template "${config.template}" not found. Using default.`);
@@ -1337,6 +1384,7 @@ if (!templateExists) {
 **Q: Should "Export PNG" also save to library?**
 
 A: **No** - keep them separate. Users might want:
+
 - Quick export without saving (testing, one-off)
 - Save without immediate download (building library)
 
@@ -1347,6 +1395,7 @@ Two buttons = maximum flexibility.
 **Q: How to handle 4K thumbnails (3840x2160)?**
 
 A: Current approach supports up to 50MB payload, so 4K works. But recommend:
+
 - Validate dimensions on server
 - Warn if > 1920x1080
 - Optionally resize to max dimensions
@@ -1359,6 +1408,7 @@ For FR-19: **Support 1920x1080**, larger sizes optional enhancement.
 **Q: Base64 vs direct file upload (multipart/form-data)?**
 
 A: **Base64 is fine** because:
+
 - Canvas API returns base64 natively (`toDataURL()`)
 - Simpler client code (JSON body, not FormData)
 - Already working pattern in codebase
@@ -1371,6 +1421,7 @@ Multipart upload would be ~30% more efficient (no base64 overhead), but not wort
 **Q: Should we compress the PNG before saving?**
 
 A: **Optional enhancement** - start with uncompressed:
+
 - Simplest implementation
 - User gets exact canvas output
 - File sizes acceptable (<3MB)
@@ -1382,6 +1433,7 @@ If needed later, can add server-side compression using `sharp` library. Not requ
 **Q: What if user has 100+ saved thumbnails? Will history UI be slow?**
 
 A: Current approach loads all thumbnails on mount. If performance becomes an issue:
+
 - Add pagination (20 thumbnails per page)
 - Add infinite scroll
 - Add lazy loading for images
@@ -1393,6 +1445,7 @@ For FR-19: **Load all thumbnails** (simpler), paginate in future if needed.
 **Q: Should we support thumbnail editing (load and modify existing thumbnail)?**
 
 A: **Already supported** via "Reuse Configuration":
+
 1. Click "Reuse Configuration"
 2. Modify settings
 3. Click "Save to Library" again
@@ -1405,6 +1458,7 @@ No "Edit" feature needed - reuse + save-as-new is the pattern.
 **Q: Do we need a "Delete" button in history?**
 
 A: **Not required for FR-19** - nice-to-have. Users can:
+
 - Use FR-18 Asset Browser to delete (when implemented)
 - Manually delete files from `assets/catalog/thumbnails/`
 

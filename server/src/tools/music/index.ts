@@ -46,9 +46,7 @@ export async function checkMusicHealth(): Promise<{
 /**
  * Generate music with the specified provider
  */
-export async function generateMusic(
-  request: MusicGenerationRequest
-): Promise<GeneratedTrack> {
+export async function generateMusic(request: MusicGenerationRequest): Promise<GeneratedTrack> {
   console.log(`[Music] Generating with provider: ${request.provider}`);
 
   if (request.provider === 'fal') {
@@ -70,9 +68,7 @@ export async function listLibraryTracks(): Promise<SavedTrack[]> {
 /**
  * Save a track to the library
  */
-export async function saveTrackToLibrary(
-  track: GeneratedTrack
-): Promise<SavedTrack> {
+export async function saveTrackToLibrary(track: GeneratedTrack): Promise<SavedTrack> {
   if (!track.audioBase64) {
     throw new Error('Track has no audio data to save');
   }

@@ -50,9 +50,15 @@ type OverflowMode = 'wrap' | 'scale' | 'scroll';
 // ============================================
 
 type PresetPosition =
-  | 'top-left' | 'top-center' | 'top-right'
-  | 'middle-left' | 'middle-center' | 'middle-right'
-  | 'bottom-left' | 'bottom-center' | 'bottom-right'
+  | 'top-left'
+  | 'top-center'
+  | 'top-right'
+  | 'middle-left'
+  | 'middle-center'
+  | 'middle-right'
+  | 'bottom-left'
+  | 'bottom-center'
+  | 'bottom-right'
   | 'custom';
 
 interface TextPanel {
@@ -106,8 +112,8 @@ const createDefaultTextPanel = (id: string): TextPanel => ({
   bgColor: 'black',
   textColor: 'yellow',
   position: 'top-left',
-  customX: 2.5,  // percentage (maps to ~30px at 1280)
-  customY: 4.2,  // percentage (maps to ~30px at 720)
+  customX: 2.5, // percentage (maps to ~30px at 1280)
+  customY: 4.2, // percentage (maps to ~30px at 720)
   fontFamily: 'BebasNeue',
   fontSize: 72,
   paddingX: 24,
@@ -118,9 +124,33 @@ const createDefaultTextPanel = (id: string): TextPanel => ({
 const initialConfig: ThumbnailConfig = {
   mainImageUrl: null,
   textPanels: [
-    { ...createDefaultTextPanel('panel-1'), enabled: true, text: 'CLAUDE CODE', fontFamily: 'BebasNeue', fontSize: 72, position: 'top-left' },
-    { ...createDefaultTextPanel('panel-2'), enabled: true, text: '12 DAYS', fontFamily: 'BebasNeue', fontSize: 72, bgColor: 'black', textColor: 'white', position: 'top-left', customY: 11 },
-    { ...createDefaultTextPanel('panel-3'), enabled: false, text: 'PANEL 3', fontFamily: 'Oswald', fontSize: 64, position: 'bottom-left' },
+    {
+      ...createDefaultTextPanel('panel-1'),
+      enabled: true,
+      text: 'CLAUDE CODE',
+      fontFamily: 'BebasNeue',
+      fontSize: 72,
+      position: 'top-left',
+    },
+    {
+      ...createDefaultTextPanel('panel-2'),
+      enabled: true,
+      text: '12 DAYS',
+      fontFamily: 'BebasNeue',
+      fontSize: 72,
+      bgColor: 'black',
+      textColor: 'white',
+      position: 'top-left',
+      customY: 11,
+    },
+    {
+      ...createDefaultTextPanel('panel-3'),
+      enabled: false,
+      text: 'PANEL 3',
+      fontFamily: 'Oswald',
+      fontSize: 64,
+      position: 'bottom-left',
+    },
   ],
   overlay: {
     enabled: false,
@@ -149,10 +179,26 @@ interface LayerStackProps {
   config: ThumbnailConfig;
 }
 
-function LayerStack({ selectedLayer, onSelectLayer, visibility, onToggleVisibility, config }: LayerStackProps) {
+function LayerStack({
+  selectedLayer,
+  onSelectLayer,
+  visibility,
+  onToggleVisibility,
+  config,
+}: LayerStackProps) {
   const layers: { id: LayerId; name: string; icon: string; hasContent: boolean }[] = [
-    { id: 'overlay', name: 'Overlay Image', icon: '◈', hasContent: config.overlay.enabled && !!config.overlay.imageUrl },
-    { id: 'text-panels', name: 'Text Panels', icon: '▤', hasContent: config.textPanels.some(p => p.enabled) },
+    {
+      id: 'overlay',
+      name: 'Overlay Image',
+      icon: '◈',
+      hasContent: config.overlay.enabled && !!config.overlay.imageUrl,
+    },
+    {
+      id: 'text-panels',
+      name: 'Text Panels',
+      icon: '▤',
+      hasContent: config.textPanels.some((p) => p.enabled),
+    },
     { id: 'main-image', name: 'Main Image', icon: '◻', hasContent: !!config.mainImageUrl },
     { id: 'background', name: 'Background', icon: '▨', hasContent: true },
   ];
@@ -202,7 +248,9 @@ function LayerStack({ selectedLayer, onSelectLayer, visibility, onToggleVisibili
             {/* Layer Icon */}
             <span
               className={`text-lg ${
-                selectedLayer === layer.id ? 'text-amber-400' : 'text-slate-500 group-hover:text-slate-300'
+                selectedLayer === layer.id
+                  ? 'text-amber-400'
+                  : 'text-slate-500 group-hover:text-slate-300'
               }`}
             >
               {layer.icon}
@@ -211,7 +259,9 @@ function LayerStack({ selectedLayer, onSelectLayer, visibility, onToggleVisibili
             {/* Layer Name */}
             <span
               className={`flex-1 text-left text-sm ${
-                selectedLayer === layer.id ? 'text-white font-medium' : 'text-slate-400 group-hover:text-white'
+                selectedLayer === layer.id
+                  ? 'text-white font-medium'
+                  : 'text-slate-400 group-hover:text-white'
               }`}
             >
               {layer.name}
@@ -232,9 +282,7 @@ function LayerStack({ selectedLayer, onSelectLayer, visibility, onToggleVisibili
 
       {/* Exploded View Hint */}
       <div className="px-4 py-2 border-t border-slate-700/50 bg-slate-900/50">
-        <p className="text-[10px] text-slate-500 text-center">
-          Layer 4 (top) → Layer 1 (bottom)
-        </p>
+        <p className="text-[10px] text-slate-500 text-center">Layer 4 (top) → Layer 1 (bottom)</p>
       </div>
     </div>
   );
@@ -316,19 +364,22 @@ function PreviewCanvas({ config, visibility, onUpdatePanel }: PreviewCanvasProps
   };
 
   // Handle drag move
-  const handleDragMove = useCallback((e: MouseEvent) => {
-    if (!draggingPanel || !containerRef.current || !onUpdatePanel) return;
+  const handleDragMove = useCallback(
+    (e: MouseEvent) => {
+      if (!draggingPanel || !containerRef.current || !onUpdatePanel) return;
 
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = ((e.clientX - rect.left - dragOffset.x) / rect.width) * 100;
-    const y = ((e.clientY - rect.top - dragOffset.y) / rect.height) * 100;
+      const rect = containerRef.current.getBoundingClientRect();
+      const x = ((e.clientX - rect.left - dragOffset.x) / rect.width) * 100;
+      const y = ((e.clientY - rect.top - dragOffset.y) / rect.height) * 100;
 
-    // Clamp to canvas bounds (with some padding)
-    const clampedX = Math.max(0, Math.min(95, x));
-    const clampedY = Math.max(0, Math.min(95, y));
+      // Clamp to canvas bounds (with some padding)
+      const clampedX = Math.max(0, Math.min(95, x));
+      const clampedY = Math.max(0, Math.min(95, y));
 
-    onUpdatePanel(draggingPanel, { customX: clampedX, customY: clampedY });
-  }, [draggingPanel, dragOffset, onUpdatePanel]);
+      onUpdatePanel(draggingPanel, { customX: clampedX, customY: clampedY });
+    },
+    [draggingPanel, dragOffset, onUpdatePanel]
+  );
 
   // Handle drag end
   const handleDragEnd = useCallback(() => {
@@ -376,17 +427,15 @@ function PreviewCanvas({ config, visibility, onUpdatePanel }: PreviewCanvasProps
             {/* Dark brown base */}
             <div className="absolute inset-0" style={{ backgroundColor: BRAND.darkBrown }} />
             {/* Light brown diagonal stripe */}
-            <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 1280 720">
+            <svg
+              className="absolute inset-0 w-full h-full"
+              preserveAspectRatio="none"
+              viewBox="0 0 1280 720"
+            >
               {/* Light brown diagonal stripe - from (750,0) to (1150,720) */}
-              <polygon
-                points="750,0 1280,0 1280,720 1150,720"
-                fill={BRAND.lightBrown}
-              />
+              <polygon points="750,0 1280,0 1280,720 1150,720" fill={BRAND.lightBrown} />
               {/* Dark brown bottom-right corner - edge parallel to main diagonal (slope 720/400 = 1.8) */}
-              <polygon
-                points="1180,720 1280,540 1280,720"
-                fill={BRAND.darkBrown}
-              />
+              <polygon points="1180,720 1280,540 1280,720" fill={BRAND.darkBrown} />
             </svg>
           </div>
         )}
@@ -419,7 +468,8 @@ function PreviewCanvas({ config, visibility, onUpdatePanel }: PreviewCanvasProps
 
                 // Apply font transform
                 const font = FONTS[panel.fontFamily];
-                const displayText = font.transform === 'uppercase' ? panel.text.toUpperCase() : panel.text;
+                const displayText =
+                  font.transform === 'uppercase' ? panel.text.toUpperCase() : panel.text;
 
                 return (
                   <div
@@ -434,7 +484,9 @@ function PreviewCanvas({ config, visibility, onUpdatePanel }: PreviewCanvasProps
                       fontWeight: font.weight,
                       padding: `${scaledPaddingY}px ${scaledPaddingX}px`,
                     }}
-                    onMouseDown={onUpdatePanel ? (e) => handleDragStart(e, panel.id, panel) : undefined}
+                    onMouseDown={
+                      onUpdatePanel ? (e) => handleDragStart(e, panel.id, panel) : undefined
+                    }
                   >
                     <span
                       className="tracking-wide whitespace-nowrap"
@@ -466,7 +518,7 @@ function PreviewCanvas({ config, visibility, onUpdatePanel }: PreviewCanvasProps
         )}
 
         {/* Empty State */}
-        {!config.mainImageUrl && !config.textPanels.some(p => p.enabled) && (
+        {!config.mainImageUrl && !config.textPanels.some((p) => p.enabled) && (
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center">
               <div className="text-6xl mb-4 opacity-20">🖼</div>
@@ -497,32 +549,42 @@ interface ImageDropZoneProps {
   compact?: boolean;
 }
 
-function ImageDropZone({ label, imageUrl, onImageSelect, onClear, shots = [], compact = false }: ImageDropZoneProps) {
+function ImageDropZone({
+  label,
+  imageUrl,
+  onImageSelect,
+  onClear,
+  shots = [],
+  compact = false,
+}: ImageDropZoneProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [showShotPicker, setShowShotPicker] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      setIsDragging(false);
 
-    const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        if (event.target?.result) {
-          onImageSelect(event.target.result as string);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          if (event.target?.result) {
+            onImageSelect(event.target.result as string);
+          }
+        };
+        reader.readAsDataURL(file);
+      }
 
-    // Check for URL in text data
-    const url = e.dataTransfer.getData('text/plain');
-    if (url && (url.startsWith('http') || url.startsWith('data:'))) {
-      onImageSelect(url);
-    }
-  }, [onImageSelect]);
+      // Check for URL in text data
+      const url = e.dataTransfer.getData('text/plain');
+      if (url && (url.startsWith('http') || url.startsWith('data:'))) {
+        onImageSelect(url);
+      }
+    },
+    [onImageSelect]
+  );
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -708,7 +770,9 @@ function TextPanelEditor({ panels, onChange }: TextPanelEditorProps) {
                 <label className="block text-xs text-slate-500 mb-1">Font</label>
                 <select
                   value={panel.fontFamily}
-                  onChange={(e) => updatePanel(panel.id, { fontFamily: e.target.value as FontFamily })}
+                  onChange={(e) =>
+                    updatePanel(panel.id, { fontFamily: e.target.value as FontFamily })
+                  }
                   className="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white text-sm focus:outline-none focus:border-amber-500"
                 >
                   {fontOptions.map((opt) => (
@@ -740,7 +804,9 @@ function TextPanelEditor({ panels, onChange }: TextPanelEditorProps) {
                 <label className="block text-xs text-slate-500 mb-1">Text Overflow</label>
                 <select
                   value={panel.overflow}
-                  onChange={(e) => updatePanel(panel.id, { overflow: e.target.value as OverflowMode })}
+                  onChange={(e) =>
+                    updatePanel(panel.id, { overflow: e.target.value as OverflowMode })
+                  }
                   className="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white text-sm focus:outline-none focus:border-amber-500"
                 >
                   {overflowOptions.map((opt) => (
@@ -761,7 +827,9 @@ function TextPanelEditor({ panels, onChange }: TextPanelEditorProps) {
                         key={opt.value}
                         onClick={() => updatePanel(panel.id, { bgColor: opt.value })}
                         className={`w-6 h-6 rounded border-2 transition-all ${
-                          panel.bgColor === opt.value ? 'border-amber-400 scale-110' : 'border-slate-600'
+                          panel.bgColor === opt.value
+                            ? 'border-amber-400 scale-110'
+                            : 'border-slate-600'
                         }`}
                         style={{ backgroundColor: opt.color }}
                         title={opt.label}
@@ -777,7 +845,9 @@ function TextPanelEditor({ panels, onChange }: TextPanelEditorProps) {
                         key={opt.value}
                         onClick={() => updatePanel(panel.id, { textColor: opt.value })}
                         className={`w-6 h-6 rounded border-2 transition-all ${
-                          panel.textColor === opt.value ? 'border-amber-400 scale-110' : 'border-slate-600'
+                          panel.textColor === opt.value
+                            ? 'border-amber-400 scale-110'
+                            : 'border-slate-600'
                         }`}
                         style={{ backgroundColor: opt.color }}
                         title={opt.label}
@@ -792,7 +862,9 @@ function TextPanelEditor({ panels, onChange }: TextPanelEditorProps) {
                 <label className="block text-xs text-slate-500 mb-1">Position</label>
                 <select
                   value={panel.position}
-                  onChange={(e) => updatePanel(panel.id, { position: e.target.value as PresetPosition })}
+                  onChange={(e) =>
+                    updatePanel(panel.id, { position: e.target.value as PresetPosition })
+                  }
                   className="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white text-sm focus:outline-none focus:border-amber-500"
                 >
                   {positionOptions.map((opt) => (
@@ -894,7 +966,9 @@ function OverlayEditor({ overlay, onChange, shots }: OverlayEditorProps) {
             <label className="block text-xs text-slate-500 mb-1">Position</label>
             <select
               value={overlay.position}
-              onChange={(e) => onChange({ ...overlay, position: e.target.value as OverlayConfig['position'] })}
+              onChange={(e) =>
+                onChange({ ...overlay, position: e.target.value as OverlayConfig['position'] })
+              }
               className="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white text-sm focus:outline-none focus:border-amber-500"
             >
               {positionOptions.map((opt) => (
@@ -976,7 +1050,8 @@ function ConfigPanel({ selectedLayer, config, onChange, shots }: ConfigPanelProp
               shots={shots}
             />
             <p className="text-xs text-slate-500 italic">
-              The main image fills the center of the thumbnail. It will be scaled to fit while maintaining aspect ratio.
+              The main image fills the center of the thumbnail. It will be scaled to fit while
+              maintaining aspect ratio.
             </p>
           </div>
         );
@@ -1096,7 +1171,10 @@ function renderScaledText(
 // Canvas Rendering Function
 // ============================================
 
-async function renderToCanvas(config: ThumbnailConfig, visibility: LayerVisibility): Promise<HTMLCanvasElement> {
+async function renderToCanvas(
+  config: ThumbnailConfig,
+  visibility: LayerVisibility
+): Promise<HTMLCanvasElement> {
   const WIDTH = 1280;
   const HEIGHT = 720;
 
@@ -1107,8 +1185,8 @@ async function renderToCanvas(config: ThumbnailConfig, visibility: LayerVisibili
 
   // Preload all fonts used in text panels
   const fontsToLoad = config.textPanels
-    .filter(p => p.enabled)
-    .map(p => {
+    .filter((p) => p.enabled)
+    .map((p) => {
       const font = FONTS[p.fontFamily];
       return document.fonts.load(`${font.weight} ${p.fontSize}px ${font.family}`);
     });
@@ -1158,7 +1236,7 @@ async function renderToCanvas(config: ThumbnailConfig, visibility: LayerVisibili
 
   // Layer 3: Text Panels
   if (visibility['text-panels']) {
-    const enabledPanels = config.textPanels.filter(p => p.enabled);
+    const enabledPanels = config.textPanels.filter((p) => p.enabled);
     for (let i = 0; i < enabledPanels.length; i++) {
       const panel = enabledPanels[i];
       const offset = i * 50; // Stack offset for preset positions
@@ -1178,7 +1256,7 @@ async function renderToCanvas(config: ThumbnailConfig, visibility: LayerVisibili
       const textWidth = textMetrics.width;
 
       // Calculate max width for text (canvas width minus margins and padding)
-      const maxTextWidth = WIDTH - 60 - (paddingX * 2); // 30px margin each side
+      const maxTextWidth = WIDTH - 60 - paddingX * 2; // 30px margin each side
 
       // Determine box dimensions based on overflow mode
       let boxWidth = Math.min(textWidth + paddingX * 2, WIDTH - 60);
@@ -1187,11 +1265,12 @@ async function renderToCanvas(config: ThumbnailConfig, visibility: LayerVisibili
       // For wrap mode, estimate height (will be precise when rendering)
       if (panel.overflow === 'wrap' && textWidth > maxTextWidth) {
         const estimatedLines = Math.ceil(textWidth / maxTextWidth);
-        boxHeight = (fontSize * 1.2 * estimatedLines) + paddingY * 2;
+        boxHeight = fontSize * 1.2 * estimatedLines + paddingY * 2;
       }
 
       // Calculate position
-      let x = 0, y = 0;
+      let x = 0,
+        y = 0;
       const pos = panel.position;
 
       if (pos === 'custom') {
@@ -1265,7 +1344,8 @@ async function renderToCanvas(config: ThumbnailConfig, visibility: LayerVisibili
   if (visibility.overlay && config.overlay.enabled && config.overlay.imageUrl) {
     const img = await loadImage(config.overlay.imageUrl);
     const size = 120 * config.overlay.scale;
-    let x = 0, y = 0;
+    let x = 0,
+      y = 0;
 
     switch (config.overlay.position) {
       case 'bottom-right':
@@ -1414,9 +1494,7 @@ export function Day8Thumbnail() {
       canvas.toBlob(async (blob) => {
         if (blob) {
           try {
-            await navigator.clipboard.write([
-              new ClipboardItem({ 'image/png': blob })
-            ]);
+            await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
             // Brief visual feedback could be added here
           } catch (clipboardError) {
             console.error('Clipboard write failed:', clipboardError);
@@ -1434,9 +1512,9 @@ export function Day8Thumbnail() {
 
   // Handler for updating individual text panels (used by drag-and-drop)
   const handleUpdatePanel = useCallback((id: string, updates: Partial<TextPanel>) => {
-    setConfig(prev => ({
+    setConfig((prev) => ({
       ...prev,
-      textPanels: prev.textPanels.map(p => p.id === id ? { ...p, ...updates } : p)
+      textPanels: prev.textPanels.map((p) => (p.id === id ? { ...p, ...updates } : p)),
     }));
   }, []);
 

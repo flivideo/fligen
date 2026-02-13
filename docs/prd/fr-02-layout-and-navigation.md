@@ -12,6 +12,7 @@ As a user of FliGen, I want a consistent layout with sidebar navigation so that 
 ## Problem
 
 The Day 1 harness provides a centered landing page, but as we add tools (Days 2-12), we need:
+
 - A way to navigate between tools
 - A consistent layout structure each tool can use
 - Shared UI areas (header, status bar)
@@ -22,6 +23,7 @@ Without this foundation, each day would require building navigation from scratch
 ## Solution
 
 Implement a collapsible sidebar layout with:
+
 - Fixed header with current tool name and global settings
 - Collapsible sidebar showing all 12 days/tools
 - Main content area split into input and output panels
@@ -117,26 +119,26 @@ Use CSS custom properties for theming:
 ```css
 :root {
   /* Backgrounds */
-  --bg-primary: #0f172a;      /* slate-900 */
-  --bg-surface: #1e293b;      /* slate-800 */
+  --bg-primary: #0f172a; /* slate-900 */
+  --bg-surface: #1e293b; /* slate-800 */
   --bg-surface-hover: #334155; /* slate-700 */
 
   /* Text */
   --text-primary: #ffffff;
-  --text-secondary: #94a3b8;   /* slate-400 */
-  --text-muted: #64748b;       /* slate-500 */
+  --text-secondary: #94a3b8; /* slate-400 */
+  --text-muted: #64748b; /* slate-500 */
 
   /* Accent */
-  --accent-start: #60a5fa;     /* blue-400 */
-  --accent-end: #a855f7;       /* purple-500 */
+  --accent-start: #60a5fa; /* blue-400 */
+  --accent-end: #a855f7; /* purple-500 */
 
   /* Status */
-  --status-success: #4ade80;   /* green-400 */
-  --status-warning: #facc15;   /* yellow-400 */
-  --status-error: #f87171;     /* red-400 */
+  --status-success: #4ade80; /* green-400 */
+  --status-warning: #facc15; /* yellow-400 */
+  --status-error: #f87171; /* red-400 */
 
   /* Borders */
-  --border-subtle: #334155;    /* slate-700 */
+  --border-subtle: #334155; /* slate-700 */
 }
 ```
 
@@ -173,36 +175,115 @@ src/
 interface DayTool {
   day: number;
   name: string;
-  shortName: string;      // For collapsed sidebar
-  icon: string;           // Emoji or icon component
+  shortName: string; // For collapsed sidebar
+  icon: string; // Emoji or icon component
   status: 'pending' | 'active' | 'complete';
-  route: string;          // e.g., '#day-4'
+  route: string; // e.g., '#day-4'
 }
 
 const DAYS: DayTool[] = [
-  { day: 1, name: 'FliGen Harness', shortName: 'Harness', icon: '🏗️', status: 'complete', route: '#day-1' },
-  { day: 2, name: 'Kybernesis', shortName: 'Brain', icon: '🧠', status: 'pending', route: '#day-2' },
-  { day: 3, name: 'Claude Agent SDK', shortName: 'SDK', icon: '🤖', status: 'pending', route: '#day-3' },
-  { day: 4, name: 'Image Generator', shortName: 'Image', icon: '🖼️', status: 'pending', route: '#day-4' },
-  { day: 5, name: 'Text-to-Speech', shortName: 'TTS', icon: '🔊', status: 'pending', route: '#day-5' },
-  { day: 6, name: 'Video Animation', shortName: 'Video', icon: '🎬', status: 'pending', route: '#day-6' },
-  { day: 7, name: 'Music Generator', shortName: 'Music', icon: '🎵', status: 'pending', route: '#day-7' },
-  { day: 8, name: 'Thumbnail Generator', shortName: 'Thumb', icon: '🎨', status: 'pending', route: '#day-8' },
+  {
+    day: 1,
+    name: 'FliGen Harness',
+    shortName: 'Harness',
+    icon: '🏗️',
+    status: 'complete',
+    route: '#day-1',
+  },
+  {
+    day: 2,
+    name: 'Kybernesis',
+    shortName: 'Brain',
+    icon: '🧠',
+    status: 'pending',
+    route: '#day-2',
+  },
+  {
+    day: 3,
+    name: 'Claude Agent SDK',
+    shortName: 'SDK',
+    icon: '🤖',
+    status: 'pending',
+    route: '#day-3',
+  },
+  {
+    day: 4,
+    name: 'Image Generator',
+    shortName: 'Image',
+    icon: '🖼️',
+    status: 'pending',
+    route: '#day-4',
+  },
+  {
+    day: 5,
+    name: 'Text-to-Speech',
+    shortName: 'TTS',
+    icon: '🔊',
+    status: 'pending',
+    route: '#day-5',
+  },
+  {
+    day: 6,
+    name: 'Video Animation',
+    shortName: 'Video',
+    icon: '🎬',
+    status: 'pending',
+    route: '#day-6',
+  },
+  {
+    day: 7,
+    name: 'Music Generator',
+    shortName: 'Music',
+    icon: '🎵',
+    status: 'pending',
+    route: '#day-7',
+  },
+  {
+    day: 8,
+    name: 'Thumbnail Generator',
+    shortName: 'Thumb',
+    icon: '🎨',
+    status: 'pending',
+    route: '#day-8',
+  },
   { day: 9, name: 'Interop', shortName: 'Interop', icon: '🔗', status: 'pending', route: '#day-9' },
-  { day: 10, name: 'N8N/ComfyUI', shortName: 'N8N', icon: '⚙️', status: 'pending', route: '#day-10' },
-  { day: 11, name: 'Story Builder', shortName: 'Story', icon: '📖', status: 'pending', route: '#day-11' },
-  { day: 12, name: '12 Days Song', shortName: 'Song', icon: '🎄', status: 'pending', route: '#day-12' },
+  {
+    day: 10,
+    name: 'N8N/ComfyUI',
+    shortName: 'N8N',
+    icon: '⚙️',
+    status: 'pending',
+    route: '#day-10',
+  },
+  {
+    day: 11,
+    name: 'Story Builder',
+    shortName: 'Story',
+    icon: '📖',
+    status: 'pending',
+    route: '#day-11',
+  },
+  {
+    day: 12,
+    name: '12 Days Song',
+    shortName: 'Song',
+    icon: '🎄',
+    status: 'pending',
+    route: '#day-12',
+  },
 ];
 ```
 
 ### Reference Patterns
 
 **From FliHub:**
+
 - Hash-based tab navigation pattern
 - HeaderDropdown component for menus
 - Status indicators with tooltips
 
 **From FliDeck:**
+
 - Sidebar with collapsible sections
 - Display mode persistence (localStorage)
 - Keyboard navigation patterns
@@ -220,6 +301,7 @@ const DAYS: DayTool[] = [
 ## Visual Reference
 
 ### Expanded Sidebar
+
 ```
 ┌──────────────────────────────────────────────────────────┐
 │ FliGen › Day 4 - Image Generator              [⚙] [◀]  │
@@ -244,6 +326,7 @@ const DAYS: DayTool[] = [
 ```
 
 ### Collapsed Sidebar
+
 ```
 ┌──────────────────────────────────────────────────────────┐
 │ FliGen › Day 4 - Image Generator              [⚙] [▶]  │
@@ -290,6 +373,7 @@ const DAYS: DayTool[] = [
 ---
 
 **Related Documents:**
+
 - [FR-1: Initial Harness](fr-01-initial-harness.md)
 - [Backlog](../backlog.md)
 - [Planning Index](../index.md)

@@ -32,11 +32,11 @@ fligen/
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `npm install` | Install all dependencies |
-| `npm run dev` | Start client + server |
-| `npm run build` | Build all packages |
+| Command         | Description              |
+| --------------- | ------------------------ |
+| `npm install`   | Install all dependencies |
+| `npm run dev`   | Start client + server    |
+| `npm run build` | Build all packages       |
 
 ## Documentation
 

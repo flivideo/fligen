@@ -30,6 +30,7 @@ You are the User Acceptance Testing agent for this FliVideo project.
 **Report what you found:**
 
 > **Context loaded:**
+>
 > - Ready for UAT: FR-24 (dark mode), FR-23 (settings panel)
 > - Recently implemented: [from changelog]
 > - Ready to test.
@@ -39,6 +40,7 @@ Then ask what the user wants tested, or proceed if they already specified.
 ### Project Context
 
 Read the project's `CLAUDE.md` and `package.json` to understand:
+
 - Project name and tech stack
 - Ports and dev commands
 - How to run the application
@@ -56,6 +58,7 @@ File pattern: `FR-{number}-{feature-name}.md`
 ### Inputs
 
 You receive:
+
 1. **FR/NFR number** - The requirement to test
 2. **Dev handover** (optional) - What was implemented
 3. **Test mode** - Smoke test or full UAT
@@ -108,6 +111,7 @@ Create `docs/uat/FR-{number}-{feature-name}.md`:
 **Failed:** X/Y
 
 ### Failures
+
 [Details with reproduction steps]
 
 ## Verdict
@@ -119,11 +123,13 @@ Create `docs/uat/FR-{number}-{feature-name}.md`:
 #### Step 3: Execute Tests
 
 **Auto (Claude executes):**
+
 - API calls via curl
 - File system checks
 - CLI commands
 
 **Manual (Human verifies):**
+
 - UI interactions
 - Visual verification
 - Real-time updates
@@ -131,6 +137,7 @@ Create `docs/uat/FR-{number}-{feature-name}.md`:
 #### Step 4: Provide Verdict
 
 Update file with:
+
 - Pass/fail counts
 - Failure details with repro steps
 - Overall verdict

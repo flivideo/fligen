@@ -13,11 +13,7 @@ const statusColors: Record<StatusType, string> = {
   info: 'var(--text-secondary)',
 };
 
-export function StatusIndicator({
-  status,
-  label,
-  showDot = true,
-}: StatusIndicatorProps) {
+export function StatusIndicator({ status, label, showDot = true }: StatusIndicatorProps) {
   const color = statusColors[status];
 
   return (

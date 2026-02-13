@@ -12,6 +12,7 @@ FliGen has **inconsistent data persistence** across tools. We treat it like a **
 ### The Problem
 
 **Before Day 11 (Story Builder)**, we need to track:
+
 1. Every asset generated (images, audio, videos, thumbnails)
 2. All generation parameters (prompts, providers, models, settings)
 3. Full history with regeneration tracking
@@ -65,12 +66,14 @@ assets/
 **Location:** `assets/projects/{projectCode}/`
 
 **Saved:**
+
 - ✅ Project metadata (code, timestamps)
 - ✅ FliHub reference (chapter, segment IDs)
 - ✅ Human prompts (all three)
 - ✅ Source transcripts (optional)
 
 **Missing:**
+
 - ❌ Machine prompts (FR-15 just added these - not saved yet!)
 
 **Verdict:** This is our **best example** of data persistence. Use this pattern.
@@ -82,6 +85,7 @@ assets/
 **Location:** `assets/shot-list/`
 
 **Saved:**
+
 - ✅ `index.json` with full metadata per shot:
   ```json
   {
@@ -98,6 +102,7 @@ assets/
   ```
 
 **Missing:**
+
 - ❌ Original generation parameters before adding to shot list
 - ❌ History of ALL generated images (only saved when added to shot list)
 
@@ -110,6 +115,7 @@ assets/
 **Location:** `assets/video-scenes/`
 
 **Saved:**
+
 - ✅ Provider, model, duration
 - ✅ Start/end shot references
 - ✅ Status tracking (pending/completed/failed)
@@ -118,15 +124,18 @@ assets/
 - ✅ Full regeneration history (all attempts logged)
 
 **Missing:**
+
 - ❌ **Animation prompt** (critical!)
 - ❌ Unique filenames per generation (currently overwrites)
 
 **Issues:**
+
 - **Duplicate entries**: Same filename "001-002.mp4" for 11 different generation attempts
 - **File overwriting**: Last successful generation overwrites previous file
 - **Lost videos**: Earlier successful videos are lost when regenerated
 
 **Example from `index.json`:**
+
 ```json
 // 11 entries ALL with filename "001-002.mp4"
 // But only ONE actual file exists (latest)
@@ -145,12 +154,14 @@ assets/
 **Location:** `assets/music-library/`
 
 **Saved:**
+
 - ✅ Provider (fal/kie)
 - ✅ Prompt
 - ✅ Lyrics (if provided)
 - ✅ Audio files (music-001.mp3, music-002.mp3, music-003.mp3)
 
 **Missing:**
+
 - ❌ Style tags
 - ❌ Model version
 - ❌ Output format
@@ -160,14 +171,16 @@ assets/
 - ❌ **Meaningful track names** (all say "Track 1")
 
 **Critical Issue:**
+
 - **8.5MB JSON file** - Storing base64-encoded audio INSIDE index.json instead of just referencing files
 - This is a **serious architectural problem**
 
 **Example:**
+
 ```json
 {
-  "name": "Track 1",  // ← User complaint: all tracks named this
-  "audioBase64": "SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF...",  // ← 2MB+ base64 string!
+  "name": "Track 1", // ← User complaint: all tracks named this
+  "audioBase64": "SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF...", // ← 2MB+ base64 string!
   "provider": "kie",
   "prompt": "ช้าง ช้าง ช้าง..."
 }
@@ -182,9 +195,11 @@ assets/
 **Location:** None
 
 **Saved:**
+
 - ❌ Nothing (only in-memory during session)
 
 **Missing:**
+
 - ❌ Generated images
 - ❌ Prompts
 - ❌ Provider selection
@@ -194,6 +209,7 @@ assets/
 - ❌ ANY history whatsoever
 
 **How it works:**
+
 1. User generates image → displays in UI
 2. User can add to shot list → THEN it gets saved (see Day 6 above)
 3. User doesn't add → **lost forever when page refreshes**
@@ -207,10 +223,12 @@ assets/
 **Location:** `assets/fox-story/audio/` (hard-coded demo path)
 
 **Saved:**
+
 - ⚠️ One audio file: `narration.mp3`
 - ❌ NO metadata file
 
 **Missing:**
+
 - ❌ Voice selection (which ElevenLabs voice was used?)
 - ❌ Narration text
 - ❌ Generation timestamp
@@ -227,6 +245,7 @@ assets/
 **Location:** Not yet audited (probably nothing)
 
 **Expected Missing:**
+
 - ❌ Generated thumbnails
 - ❌ Composition settings
 - ❌ Text overlays used
@@ -242,9 +261,11 @@ assets/
 **Location:** None
 
 **Saved:**
+
 - ❌ Nothing
 
 **Missing:**
+
 - ❌ The two generated images from N8N
 - ❌ The generated video from N8N
 - ❌ Input prompts (seed, edit, animation)
@@ -263,6 +284,7 @@ assets/
 ### 1. **No Unified Asset Management**
 
 Each tool has **different persistence patterns**:
+
 - Projects: Separate JSON files per project ✅
 - Shot list: Single index.json with file refs ✅
 - Music: Index.json with base64 audio (bad!) ⚠️
@@ -281,12 +303,14 @@ Each tool has **different persistence patterns**:
 Example: `shot-001` → `shot-002` = `001-002.mp4`
 
 **But:** Regenerating overwrites the file!
+
 - First generation: `001-002.mp4` (provider: kie, model: veo3)
 - Second generation: `001-002.mp4` (provider: fal, model: kling-o1) ← **overwrites first**
 
 **Result:** Lost videos, lost work, lost money.
 
 **Solution:**
+
 ```
 001-002-{timestamp}.mp4
 // OR
@@ -303,17 +327,19 @@ video-scenes/{video-id}.mp4  (index.json maps id to metadata)
 
 ```json
 {
-  "audioBase64": "SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjYw..."  // 2MB+ string!
+  "audioBase64": "SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjYw..." // 2MB+ string!
 }
 ```
 
 **Problems:**
+
 - JSON file is huge and slow to parse
 - Duplicates audio data (file exists separately)
 - Memory bloat when loading
 - Git diffs are useless
 
 **Solution:**
+
 ```json
 {
   "audioUrl": "/assets/music-library/music-001.mp3",
@@ -327,17 +353,20 @@ video-scenes/{video-id}.mp4  (index.json maps id to metadata)
 ### 4. **Missing Generation History**
 
 **Day 4 (Images):**
+
 - Generate 10 images → only see last one
 - No way to go back
 - No record of prompts used
 - Can't compare results
 
 **Day 5 (TTS):**
+
 - Generate 5 narrations with different voices → only latest one exists
 - No record of which voice was best
 - Can't A/B test
 
 **Day 10 (N8N):**
+
 - Generate workflow results → gone when page refreshes
 - No way to compare human vs machine prompt results
 - No history of what worked
@@ -349,12 +378,14 @@ video-scenes/{video-id}.mp4  (index.json maps id to metadata)
 **Problem:** Assets exist in isolation.
 
 Example:
+
 - Shot-001.jpg exists in shot-list
 - Video 001-002.mp4 uses shot-001 and shot-002
 - But video doesn't link back to actual shot metadata
 - If shot-001 is regenerated, video is orphaned
 
 **Need:**
+
 - Asset graph/relationships
 - Dependency tracking
 - Cascade updates
@@ -366,6 +397,7 @@ Example:
 To build stories from assets, we need:
 
 ### 1. **Complete Asset Catalog**
+
 - All images ever generated (not just shot list)
 - All videos with full metadata
 - All audio tracks
@@ -373,6 +405,7 @@ To build stories from assets, we need:
 - Timestamps, costs, providers, models
 
 ### 2. **Searchable History**
+
 - Filter by prompt keywords
 - Filter by provider/model
 - Filter by date range
@@ -380,18 +413,21 @@ To build stories from assets, we need:
 - Filter by asset type
 
 ### 3. **Asset Relationships**
+
 - Which shots were used in which videos?
 - Which prompts generated which images?
 - Which machine prompts came from which human prompts?
 - Which N8N workflow generated which assets?
 
 ### 4. **Versioning**
+
 - Track regenerations
 - Compare versions
 - Revert to previous versions
 - Cost tracking per version
 
 ### 5. **Export/Import**
+
 - Export story timeline with all assets
 - Share projects with full history
 - Archive completed work
@@ -404,10 +440,10 @@ To build stories from assets, we need:
 
 ```typescript
 interface Asset {
-  id: string;                    // Unique asset ID
+  id: string; // Unique asset ID
   type: 'image' | 'video' | 'audio' | 'thumbnail';
-  filename: string;              // Unique filename
-  url: string;                   // Server URL
+  filename: string; // Unique filename
+  url: string; // Server URL
 
   // Generation metadata
   provider: 'fal' | 'kie' | 'elevenlabs' | 'n8n';
@@ -423,8 +459,8 @@ interface Asset {
   completedAt?: string;
 
   // Relationships
-  parentId?: string;             // If regenerated from another asset
-  sourceAssetIds?: string[];     // Assets used to create this (e.g., video uses two images)
+  parentId?: string; // If regenerated from another asset
+  sourceAssetIds?: string[]; // Assets used to create this (e.g., video uses two images)
 
   // Tool-specific metadata
   metadata: Record<string, any>; // Provider-specific fields
@@ -483,10 +519,10 @@ interface Asset {
   "createdAt": "2025-12-30T12:47:51.389Z",
   "completedAt": "2025-12-30T12:48:35.756Z",
 
-  "parentId": "asset_vid_1767098720775",  // Previous attempt that failed
+  "parentId": "asset_vid_1767098720775", // Previous attempt that failed
   "sourceAssetIds": [
-    "asset_img_shot_001",  // Start frame
-    "asset_img_shot_002"   // End frame
+    "asset_img_shot_001", // Start frame
+    "asset_img_shot_002" // End frame
   ],
 
   "metadata": {
@@ -619,6 +655,7 @@ interface Asset {
 **Current state:** FliGen is a **stateless demo app** with ephemeral data.
 
 **What we need:** **Production asset management system** with:
+
 - Complete history
 - Searchable catalog
 - Proper versioning

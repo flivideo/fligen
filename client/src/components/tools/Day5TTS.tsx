@@ -114,12 +114,24 @@ function AudioPlayer({
           className="w-12 h-12 flex items-center justify-center rounded-full bg-blue-600 hover:bg-blue-500 transition-colors"
         >
           {isPlaying ? (
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
               <rect x="6" y="4" width="4" height="16" />
               <rect x="14" y="4" width="4" height="16" />
             </svg>
           ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
               <polygon points="5,3 19,12 5,21" />
             </svg>
           )}
@@ -145,7 +157,8 @@ function AudioPlayer({
       {/* Stats */}
       <div className="text-sm text-slate-400">
         <span className="text-slate-300 font-medium">Voice:</span> {voiceName} |{' '}
-        <span className="text-slate-300 font-medium">Generation:</span> {(durationMs / 1000).toFixed(1)}s |{' '}
+        <span className="text-slate-300 font-medium">Generation:</span>{' '}
+        {(durationMs / 1000).toFixed(1)}s |{' '}
         <span className="text-slate-300 font-medium">Model:</span> {model}
       </div>
     </div>
@@ -191,7 +204,7 @@ export function Day5TTS() {
       // Query for both 'audio' (old) and 'narration' (new) types for backward compatibility
       const [audioResponse, narrationResponse] = await Promise.all([
         fetch(`${SERVER_URL}/api/catalog/filter?type=audio`),
-        fetch(`${SERVER_URL}/api/catalog/filter?type=narration`)
+        fetch(`${SERVER_URL}/api/catalog/filter?type=narration`),
       ]);
 
       const audioData = await audioResponse.json();
@@ -202,9 +215,11 @@ export function Day5TTS() {
 
       // Combine and sort
       const allAudio = [...ttsAudio, ...(narrationData.assets || [])];
-      setAudioHistory(allAudio.sort((a: any, b: any) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      ));
+      setAudioHistory(
+        allAudio.sort(
+          (a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        )
+      );
     } catch (error) {
       console.error('[Day5] Failed to load history:', error);
     }
@@ -343,7 +358,8 @@ export function Day5TTS() {
               className="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white text-sm focus:outline-none focus:border-blue-500"
             />
             <p className="text-xs text-slate-500">
-              Give this narration a descriptive name. If left empty, it will use the filename + voice name.
+              Give this narration a descriptive name. If left empty, it will use the filename +
+              voice name.
             </p>
           </div>
         </ToolPanel>
@@ -427,11 +443,7 @@ export function Day5TTS() {
               {audioHistory.map((asset: any) => (
                 <div key={asset.id} className="bg-slate-900 rounded-lg border border-slate-700 p-4">
                   <div className="flex items-center gap-4 mb-3">
-                    <audio
-                      controls
-                      src={`${SERVER_URL}${asset.url}`}
-                      className="flex-1"
-                    />
+                    <audio controls src={`${SERVER_URL}${asset.url}`} className="flex-1" />
                   </div>
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1 min-w-0">
@@ -468,7 +480,12 @@ export function Day5TTS() {
                             className="text-slate-400 hover:text-blue-400 transition-colors"
                             title="Rename"
                           >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-3.5 w-3.5"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                            >
                               <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                             </svg>
                           </button>
@@ -487,7 +504,8 @@ export function Day5TTS() {
 
                       {/* Metadata */}
                       <p className="text-xs text-slate-500">
-                        {new Date(asset.createdAt).toLocaleString()} • {asset.metadata.characterCount} chars
+                        {new Date(asset.createdAt).toLocaleString()} •{' '}
+                        {asset.metadata.characterCount} chars
                       </p>
                     </div>
                     <button
@@ -511,7 +529,7 @@ export function Day5TTS() {
               <code className="px-1 py-0.5 bg-slate-700 rounded">server/.env</code>:
             </p>
             <pre className="bg-slate-950 p-3 rounded text-xs overflow-x-auto">
-{`# ElevenLabs TTS API
+              {`# ElevenLabs TTS API
 # Get your API key from: https://elevenlabs.io
 ELEVENLABS_API_KEY=your_api_key_here`}
             </pre>

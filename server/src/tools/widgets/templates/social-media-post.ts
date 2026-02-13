@@ -154,14 +154,18 @@ export function renderSocialMediaPost(params: Record<string, any>): string {
       </div>
     </div>
     <div class="post-text">${post_text}</div>
-    ${comments || retweets || likes || views ? `
+    ${
+      comments || retweets || likes || views
+        ? `
     <div class="engagement">
       ${comments ? `<div class="engagement-item">💬 ${formatNumber(comments)}</div>` : ''}
       ${retweets ? `<div class="engagement-item">🔁 ${formatNumber(retweets)}</div>` : ''}
       ${likes ? `<div class="engagement-item">❤️ ${formatNumber(likes)}</div>` : ''}
       ${views ? `<div class="engagement-item">📊 ${formatNumber(views)}</div>` : ''}
     </div>
-    ` : ''}
+    `
+        : ''
+    }
   </div>
 </body>
 </html>`;

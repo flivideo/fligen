@@ -42,7 +42,11 @@ export function Day9PromptIntake() {
   const [statusC, setStatusC] = useState<ImportStatus>({ loading: false, error: null });
 
   // Save/Load status
-  const [saveStatus, setSaveStatus] = useState<{ loading: boolean; error: string | null; success: boolean }>({
+  const [saveStatus, setSaveStatus] = useState<{
+    loading: boolean;
+    error: string | null;
+    success: boolean;
+  }>({
     loading: false,
     error: null,
     success: false,
@@ -176,7 +180,11 @@ export function Day9PromptIntake() {
     }
 
     if (!flihubProjectCode || !chapter) {
-      setSaveStatus({ loading: false, error: 'FliHub project code and chapter are required', success: false });
+      setSaveStatus({
+        loading: false,
+        error: 'FliHub project code and chapter are required',
+        success: false,
+      });
       return;
     }
 
@@ -200,9 +208,21 @@ export function Day9PromptIntake() {
         sourceTranscripts:
           sourceA || sourceB || sourceC
             ? {
-                a: sourceA || { segmentId: segmentA, text: '', fetchedAt: new Date().toISOString() },
-                b: sourceB || { segmentId: segmentB, text: '', fetchedAt: new Date().toISOString() },
-                c: sourceC || { segmentId: segmentC, text: '', fetchedAt: new Date().toISOString() },
+                a: sourceA || {
+                  segmentId: segmentA,
+                  text: '',
+                  fetchedAt: new Date().toISOString(),
+                },
+                b: sourceB || {
+                  segmentId: segmentB,
+                  text: '',
+                  fetchedAt: new Date().toISOString(),
+                },
+                c: sourceC || {
+                  segmentId: segmentC,
+                  text: '',
+                  fetchedAt: new Date().toISOString(),
+                },
               }
             : undefined,
       };
@@ -221,7 +241,7 @@ export function Day9PromptIntake() {
         await loadProjectsList();
         // Clear success message after 3 seconds
         setTimeout(() => {
-          setSaveStatus(prev => ({ ...prev, success: false }));
+          setSaveStatus((prev) => ({ ...prev, success: false }));
         }, 3000);
       } else {
         setSaveStatus({ loading: false, error: data.error || 'Save failed', success: false });
@@ -298,225 +318,255 @@ export function Day9PromptIntake() {
       <div className="max-w-4xl mx-auto space-y-4">
         <ToolPanel title="DAY 9: PROMPT INTAKE">
           <div className="space-y-6">
-        {/* FliHub Status */}
-        {fliHubOnline !== null && (
-          <div
-            className={`p-3 rounded-lg text-sm ${
-              fliHubOnline
-                ? 'bg-green-900/30 border border-green-700/50 text-green-300'
-                : 'bg-yellow-900/30 border border-yellow-700/50 text-yellow-300'
-            }`}
-          >
-            {fliHubOnline ? (
-              <span>✓ FliHub online (port 5101)</span>
-            ) : (
-              <span>⚠ FliHub offline - manual entry only</span>
+            {/* FliHub Status */}
+            {fliHubOnline !== null && (
+              <div
+                className={`p-3 rounded-lg text-sm ${
+                  fliHubOnline
+                    ? 'bg-green-900/30 border border-green-700/50 text-green-300'
+                    : 'bg-yellow-900/30 border border-yellow-700/50 text-yellow-300'
+                }`}
+              >
+                {fliHubOnline ? (
+                  <span>✓ FliHub online (port 5101)</span>
+                ) : (
+                  <span>⚠ FliHub offline - manual entry only</span>
+                )}
+              </div>
             )}
-          </div>
-        )}
 
-        {/* FliHub Source */}
-        <section>
-          <h3 className="text-sm font-semibold text-slate-300 mb-3 uppercase tracking-wide">FliHub Source</h3>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm text-slate-400 mb-1">FliHub Project Code</label>
-              <input
-                type="text"
-                value={flihubProjectCode}
-                onChange={e => setFlihubProjectCode(e.target.value)}
-                placeholder="c04-12-days-of-claudmas-09"
-                className="w-full bg-slate-800 border border-slate-600 rounded px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500"
-              />
-            </div>
-            <div>
-              <label className="block text-sm text-slate-400 mb-1">Chapter</label>
-              <input
-                type="text"
-                value={chapter}
-                onChange={e => setChapter(e.target.value)}
-                placeholder="3"
-                className="w-full bg-slate-800 border border-slate-600 rounded px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500"
-              />
-            </div>
-          </div>
-        </section>
+            {/* FliHub Source */}
+            <section>
+              <h3 className="text-sm font-semibold text-slate-300 mb-3 uppercase tracking-wide">
+                FliHub Source
+              </h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm text-slate-400 mb-1">FliHub Project Code</label>
+                  <input
+                    type="text"
+                    value={flihubProjectCode}
+                    onChange={(e) => setFlihubProjectCode(e.target.value)}
+                    placeholder="c04-12-days-of-claudmas-09"
+                    className="w-full bg-slate-800 border border-slate-600 rounded px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-slate-400 mb-1">Chapter</label>
+                  <input
+                    type="text"
+                    value={chapter}
+                    onChange={(e) => setChapter(e.target.value)}
+                    placeholder="3"
+                    className="w-full bg-slate-800 border border-slate-600 rounded px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+              </div>
+            </section>
 
-        {/* FliGen Output Project */}
-        <section>
-          <h3 className="text-sm font-semibold text-slate-300 mb-3 uppercase tracking-wide">FliGen Project Name</h3>
-          <div>
-            <label className="block text-sm text-slate-400 mb-1">Project Code (for output folder)</label>
-            <input
-              type="text"
-              value={projectCode}
-              onChange={e => setProjectCode(e.target.value)}
-              placeholder="VSS-001"
-              className="w-full bg-slate-800 border border-slate-600 rounded px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500"
-            />
-          </div>
-        </section>
+            {/* FliGen Output Project */}
+            <section>
+              <h3 className="text-sm font-semibold text-slate-300 mb-3 uppercase tracking-wide">
+                FliGen Project Name
+              </h3>
+              <div>
+                <label className="block text-sm text-slate-400 mb-1">
+                  Project Code (for output folder)
+                </label>
+                <input
+                  type="text"
+                  value={projectCode}
+                  onChange={(e) => setProjectCode(e.target.value)}
+                  placeholder="VSS-001"
+                  className="w-full bg-slate-800 border border-slate-600 rounded px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500"
+                />
+              </div>
+            </section>
 
-        {/* Segments */}
-        <section>
-          <h3 className="text-sm font-semibold text-slate-300 mb-3 uppercase tracking-wide">Segments</h3>
-          <div className="grid grid-cols-3 gap-4">
-            <div>
-              <label className="block text-sm text-slate-400 mb-1">Segment A (Seed)</label>
-              <input
-                type="number"
-                value={segmentA}
-                onChange={e => setSegmentA(parseInt(e.target.value, 10) || 1)}
-                min="1"
-                className="w-full bg-slate-800 border border-slate-600 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500"
-              />
-            </div>
-            <div>
-              <label className="block text-sm text-slate-400 mb-1">Segment B (Edit)</label>
-              <input
-                type="number"
-                value={segmentB}
-                onChange={e => setSegmentB(parseInt(e.target.value, 10) || 2)}
-                min="1"
-                className="w-full bg-slate-800 border border-slate-600 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500"
-              />
-            </div>
-            <div>
-              <label className="block text-sm text-slate-400 mb-1">Segment C (Animate)</label>
-              <input
-                type="number"
-                value={segmentC}
-                onChange={e => setSegmentC(parseInt(e.target.value, 10) || 3)}
-                min="1"
-                className="w-full bg-slate-800 border border-slate-600 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500"
-              />
-            </div>
-          </div>
-          <div className="mt-4">
-            <button
-              onClick={importAllTranscripts}
-              disabled={statusA.loading || statusB.loading || statusC.loading || !fliHubOnline || !flihubProjectCode || !chapter}
-              className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-700 disabled:text-slate-500 text-white rounded font-medium transition-colors"
-            >
-              {statusA.loading || statusB.loading || statusC.loading ? 'Importing...' : 'Import All Prompts from FliHub'}
-            </button>
-          </div>
-        </section>
-
-        <hr className="border-slate-700" />
-
-        {/* Prompt A */}
-        <section>
-          <div className="mb-2">
-            <label className="text-sm font-medium text-slate-300">HUMAN PROMPT A (Seed Image)</label>
-          </div>
-          <textarea
-            value={promptA}
-            onChange={e => setPromptA(e.target.value)}
-            placeholder="Enter or import seed image prompt..."
-            rows={4}
-            className="w-full bg-slate-800 border border-slate-600 rounded px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500 resize-none"
-          />
-          {statusA.error && <p className="text-sm text-red-400 mt-1">{statusA.error}</p>}
-        </section>
-
-        {/* Prompt B */}
-        <section>
-          <div className="mb-2">
-            <label className="text-sm font-medium text-slate-300">HUMAN PROMPT B (Edit Instruction)</label>
-          </div>
-          <textarea
-            value={promptB}
-            onChange={e => setPromptB(e.target.value)}
-            placeholder="Enter or import edit instruction prompt..."
-            rows={4}
-            className="w-full bg-slate-800 border border-slate-600 rounded px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500 resize-none"
-          />
-          {statusB.error && <p className="text-sm text-red-400 mt-1">{statusB.error}</p>}
-        </section>
-
-        {/* Prompt C */}
-        <section>
-          <div className="mb-2">
-            <label className="text-sm font-medium text-slate-300">HUMAN PROMPT C (Animation)</label>
-          </div>
-          <textarea
-            value={promptC}
-            onChange={e => setPromptC(e.target.value)}
-            placeholder="Enter or import animation prompt..."
-            rows={4}
-            className="w-full bg-slate-800 border border-slate-600 rounded px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500 resize-none"
-          />
-          {statusC.error && <p className="text-sm text-red-400 mt-1">{statusC.error}</p>}
-        </section>
-
-        <hr className="border-slate-700" />
-
-        {/* Action Buttons */}
-        <section>
-          <div className="flex justify-between items-start gap-4">
-            {/* Load Project */}
-            <div className="flex-1">
-              <div className="flex gap-2">
-                <select
-                  value={selectedProject}
-                  onChange={e => setSelectedProject(e.target.value)}
-                  className="flex-1 bg-slate-800 border border-slate-600 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500"
-                >
-                  <option value="">Select project...</option>
-                  {projects.map(p => (
-                    <option key={p.projectCode} value={p.projectCode}>
-                      {p.projectCode}
-                    </option>
-                  ))}
-                </select>
+            {/* Segments */}
+            <section>
+              <h3 className="text-sm font-semibold text-slate-300 mb-3 uppercase tracking-wide">
+                Segments
+              </h3>
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm text-slate-400 mb-1">Segment A (Seed)</label>
+                  <input
+                    type="number"
+                    value={segmentA}
+                    onChange={(e) => setSegmentA(parseInt(e.target.value, 10) || 1)}
+                    min="1"
+                    className="w-full bg-slate-800 border border-slate-600 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-slate-400 mb-1">Segment B (Edit)</label>
+                  <input
+                    type="number"
+                    value={segmentB}
+                    onChange={(e) => setSegmentB(parseInt(e.target.value, 10) || 2)}
+                    min="1"
+                    className="w-full bg-slate-800 border border-slate-600 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-slate-400 mb-1">Segment C (Animate)</label>
+                  <input
+                    type="number"
+                    value={segmentC}
+                    onChange={(e) => setSegmentC(parseInt(e.target.value, 10) || 3)}
+                    min="1"
+                    className="w-full bg-slate-800 border border-slate-600 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+              </div>
+              <div className="mt-4">
                 <button
-                  onClick={loadProject}
-                  disabled={loadStatus.loading || !selectedProject}
-                  className="px-4 py-2 bg-slate-700 hover:bg-slate-600 disabled:bg-slate-800 disabled:text-slate-500 text-white rounded transition-colors"
+                  onClick={importAllTranscripts}
+                  disabled={
+                    statusA.loading ||
+                    statusB.loading ||
+                    statusC.loading ||
+                    !fliHubOnline ||
+                    !flihubProjectCode ||
+                    !chapter
+                  }
+                  className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-700 disabled:text-slate-500 text-white rounded font-medium transition-colors"
                 >
-                  {loadStatus.loading ? 'Loading...' : 'Load Project'}
+                  {statusA.loading || statusB.loading || statusC.loading
+                    ? 'Importing...'
+                    : 'Import All Prompts from FliHub'}
                 </button>
               </div>
-              {loadStatus.error && <p className="text-sm text-red-400 mt-1">{loadStatus.error}</p>}
-            </div>
+            </section>
 
-            {/* Save Project */}
-            <div className="flex-1 text-right">
-              <button
-                onClick={saveProject}
-                disabled={saveStatus.loading}
-                className="px-6 py-2 bg-green-600 hover:bg-green-700 disabled:bg-slate-700 disabled:text-slate-500 text-white rounded font-medium transition-colors"
-              >
-                {saveStatus.loading ? 'Saving...' : 'Save Project'}
-              </button>
-              {saveStatus.success && <p className="text-sm text-green-400 mt-1">✓ Project saved successfully</p>}
-              {saveStatus.error && <p className="text-sm text-red-400 mt-1">{saveStatus.error}</p>}
-            </div>
-          </div>
-        </section>
+            <hr className="border-slate-700" />
 
-        {/* Info Panel */}
-        <section className="bg-slate-800/50 border border-slate-700 rounded-lg p-4">
-          <h4 className="text-sm font-semibold text-slate-300 mb-2">About Prompt Intake</h4>
-          <p className="text-sm text-slate-400 leading-relaxed">
-            This tool creates a canonical project structure for video generation workflows. Record your prompts
-            verbally in FliHub, then import them here. Save creates a project folder at{' '}
-            <code className="text-blue-400">/assets/projects/{'<projectCode>'}/</code> with three JSON files that Day
-            10 (Prompt Refinery) can consume directly.
-          </p>
-          <div className="mt-3 text-xs text-slate-500">
-            <p>
-              <strong>Prompt A:</strong> Seed image (text-to-image)
-            </p>
-            <p>
-              <strong>Prompt B:</strong> Edit instruction (image-to-image)
-            </p>
-            <p>
-              <strong>Prompt C:</strong> Animation (image-to-video)
-            </p>
-          </div>
-        </section>
+            {/* Prompt A */}
+            <section>
+              <div className="mb-2">
+                <label className="text-sm font-medium text-slate-300">
+                  HUMAN PROMPT A (Seed Image)
+                </label>
+              </div>
+              <textarea
+                value={promptA}
+                onChange={(e) => setPromptA(e.target.value)}
+                placeholder="Enter or import seed image prompt..."
+                rows={4}
+                className="w-full bg-slate-800 border border-slate-600 rounded px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500 resize-none"
+              />
+              {statusA.error && <p className="text-sm text-red-400 mt-1">{statusA.error}</p>}
+            </section>
+
+            {/* Prompt B */}
+            <section>
+              <div className="mb-2">
+                <label className="text-sm font-medium text-slate-300">
+                  HUMAN PROMPT B (Edit Instruction)
+                </label>
+              </div>
+              <textarea
+                value={promptB}
+                onChange={(e) => setPromptB(e.target.value)}
+                placeholder="Enter or import edit instruction prompt..."
+                rows={4}
+                className="w-full bg-slate-800 border border-slate-600 rounded px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500 resize-none"
+              />
+              {statusB.error && <p className="text-sm text-red-400 mt-1">{statusB.error}</p>}
+            </section>
+
+            {/* Prompt C */}
+            <section>
+              <div className="mb-2">
+                <label className="text-sm font-medium text-slate-300">
+                  HUMAN PROMPT C (Animation)
+                </label>
+              </div>
+              <textarea
+                value={promptC}
+                onChange={(e) => setPromptC(e.target.value)}
+                placeholder="Enter or import animation prompt..."
+                rows={4}
+                className="w-full bg-slate-800 border border-slate-600 rounded px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500 resize-none"
+              />
+              {statusC.error && <p className="text-sm text-red-400 mt-1">{statusC.error}</p>}
+            </section>
+
+            <hr className="border-slate-700" />
+
+            {/* Action Buttons */}
+            <section>
+              <div className="flex justify-between items-start gap-4">
+                {/* Load Project */}
+                <div className="flex-1">
+                  <div className="flex gap-2">
+                    <select
+                      value={selectedProject}
+                      onChange={(e) => setSelectedProject(e.target.value)}
+                      className="flex-1 bg-slate-800 border border-slate-600 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500"
+                    >
+                      <option value="">Select project...</option>
+                      {projects.map((p) => (
+                        <option key={p.projectCode} value={p.projectCode}>
+                          {p.projectCode}
+                        </option>
+                      ))}
+                    </select>
+                    <button
+                      onClick={loadProject}
+                      disabled={loadStatus.loading || !selectedProject}
+                      className="px-4 py-2 bg-slate-700 hover:bg-slate-600 disabled:bg-slate-800 disabled:text-slate-500 text-white rounded transition-colors"
+                    >
+                      {loadStatus.loading ? 'Loading...' : 'Load Project'}
+                    </button>
+                  </div>
+                  {loadStatus.error && (
+                    <p className="text-sm text-red-400 mt-1">{loadStatus.error}</p>
+                  )}
+                </div>
+
+                {/* Save Project */}
+                <div className="flex-1 text-right">
+                  <button
+                    onClick={saveProject}
+                    disabled={saveStatus.loading}
+                    className="px-6 py-2 bg-green-600 hover:bg-green-700 disabled:bg-slate-700 disabled:text-slate-500 text-white rounded font-medium transition-colors"
+                  >
+                    {saveStatus.loading ? 'Saving...' : 'Save Project'}
+                  </button>
+                  {saveStatus.success && (
+                    <p className="text-sm text-green-400 mt-1">✓ Project saved successfully</p>
+                  )}
+                  {saveStatus.error && (
+                    <p className="text-sm text-red-400 mt-1">{saveStatus.error}</p>
+                  )}
+                </div>
+              </div>
+            </section>
+
+            {/* Info Panel */}
+            <section className="bg-slate-800/50 border border-slate-700 rounded-lg p-4">
+              <h4 className="text-sm font-semibold text-slate-300 mb-2">About Prompt Intake</h4>
+              <p className="text-sm text-slate-400 leading-relaxed">
+                This tool creates a canonical project structure for video generation workflows.
+                Record your prompts verbally in FliHub, then import them here. Save creates a
+                project folder at{' '}
+                <code className="text-blue-400">/assets/projects/{'<projectCode>'}/</code> with
+                three JSON files that Day 10 (Prompt Refinery) can consume directly.
+              </p>
+              <div className="mt-3 text-xs text-slate-500">
+                <p>
+                  <strong>Prompt A:</strong> Seed image (text-to-image)
+                </p>
+                <p>
+                  <strong>Prompt B:</strong> Edit instruction (image-to-image)
+                </p>
+                <p>
+                  <strong>Prompt C:</strong> Animation (image-to-video)
+                </p>
+              </div>
+            </section>
           </div>
         </ToolPanel>
       </div>

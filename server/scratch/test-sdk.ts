@@ -21,8 +21,8 @@ async function testSDK() {
       prompt: 'Say hello in exactly 5 words',
       options: {
         systemPrompt: 'You are helpful and concise.',
-        maxTurns: 1
-      }
+        maxTurns: 1,
+      },
     })) {
       messageCount++;
       console.log(`\n📨 Message #${messageCount}:`, JSON.stringify(message, null, 2));
@@ -33,7 +33,11 @@ async function testSDK() {
 
         if ('content' in message) {
           content = message.content;
-        } else if ('message' in message && typeof message.message === 'object' && 'content' in message.message) {
+        } else if (
+          'message' in message &&
+          typeof message.message === 'object' &&
+          'content' in message.message
+        ) {
           content = message.message.content;
         }
 
@@ -62,14 +66,15 @@ async function testSDK() {
     } else {
       console.log('\n✅ SDK is working! Got response from Claude via Max subscription!\n');
     }
-
   } catch (error: any) {
     console.error('❌ SDK Test Failed:');
     console.error('Error:', error.message);
 
-    if (error.message?.includes('authentication') ||
-        error.message?.includes('auth') ||
-        error.message?.includes('login')) {
+    if (
+      error.message?.includes('authentication') ||
+      error.message?.includes('auth') ||
+      error.message?.includes('login')
+    ) {
       console.error('\n💡 Run: claude login (authenticate with your Max subscription)');
     }
 

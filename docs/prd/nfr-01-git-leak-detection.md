@@ -127,17 +127,20 @@ Add documentation section to CLAUDE.md about the gitleaks integration.
 ## Completion Notes
 
 **What was done:**
+
 - Created `.gitleaksignore` file in project root with example patterns
 - Created pre-commit hook at `.git/hooks/pre-commit` matching FliDeck reference
 - Made hook executable with `chmod +x`
 - Added "Git Leak Detection (gitleaks)" section to CLAUDE.md
 
 **Files changed:**
+
 - `.gitleaksignore` (new)
 - `.git/hooks/pre-commit` (new)
 - `CLAUDE.md` (modified - added gitleaks documentation)
 
 **Testing notes:**
+
 - Stage a file with test secret (e.g., `OPENAI_API_KEY=sk-test123`)
 - Run `git commit` - should be blocked with clear error
 - Remove secret and commit should succeed

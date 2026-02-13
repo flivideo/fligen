@@ -10,7 +10,7 @@ export {
   type ApiEndpoint,
   API_ENDPOINTS,
   getEndpointGroups,
-  getEndpointById
+  getEndpointById,
 } from './apiRegistry';
 
 export interface HealthResponse {
@@ -463,11 +463,14 @@ export interface BatchCreateResponse {
 export interface CostEstimate {
   total_prompts: number;
   total_cost: number;
-  cost_breakdown: Record<string, {
-    count: number;
-    cost_per_image: number;
-    total: number;
-  }>;
+  cost_breakdown: Record<
+    string,
+    {
+      count: number;
+      cost_per_image: number;
+      total: number;
+    }
+  >;
   estimated_time_seconds: number;
 }
 

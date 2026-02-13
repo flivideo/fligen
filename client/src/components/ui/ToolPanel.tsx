@@ -8,9 +8,7 @@ interface ToolPanelProps {
 
 export function ToolPanel({ title, children, className = '' }: ToolPanelProps) {
   return (
-    <div
-      className={`bg-slate-800 rounded-lg border border-slate-700 overflow-hidden ${className}`}
-    >
+    <div className={`bg-slate-800 rounded-lg border border-slate-700 overflow-hidden ${className}`}>
       <div className="px-4 py-2 border-b border-slate-700 bg-slate-800/50">
         <h3 className="text-sm font-medium text-slate-400">{title}</h3>
       </div>

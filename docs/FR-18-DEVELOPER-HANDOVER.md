@@ -9,6 +9,7 @@ Build a unified visual asset browser that allows users to browse, search, filter
 ## What You're Building
 
 A dedicated "Asset Library" page with:
+
 - **Grid view** of all assets with thumbnails
 - **Filters** for type, provider, date range, tags, and status
 - **Search** across prompts, filenames, and tags
@@ -35,9 +36,11 @@ This is the **centralized management UI** for the asset catalog infrastructure b
 ### Task 1: Create AssetCard Component
 
 **Files to create:**
+
 - `client/src/components/tools/AssetCard.tsx`
 
 **What to implement:**
+
 ```tsx
 interface AssetCardProps {
   asset: Asset;
@@ -48,6 +51,7 @@ interface AssetCardProps {
 ```
 
 **Features:**
+
 - Aspect-square thumbnail display
 - Type icon (🖼️ for images, 🎬 for videos, 🎵 for audio)
 - Filename/custom name display (truncated)
@@ -57,11 +61,13 @@ interface AssetCardProps {
 - Hover effect (border color change to amber)
 
 **Thumbnail logic:**
+
 - Images/thumbnails: Use `asset.url` directly
 - Videos: Use placeholder or generate video thumbnail
 - Audio: Use placeholder icon/waveform
 
 **Testing:**
+
 - Renders images correctly
 - Shows placeholders for video/audio
 - Checkbox appears only in selection mode
@@ -74,9 +80,11 @@ interface AssetCardProps {
 ### Task 2: Create AssetDetailPanel Component
 
 **Files to create:**
+
 - `client/src/components/tools/AssetDetailPanel.tsx`
 
 **What to implement:**
+
 ```tsx
 interface AssetDetailPanelProps {
   asset: Asset;
@@ -87,6 +95,7 @@ interface AssetDetailPanelProps {
 ```
 
 **Layout:**
+
 - Fixed position panel sliding in from right (width: 24rem / 384px)
 - Sticky header with type, filename, close button
 - Preview section (image/video/audio player)
@@ -100,16 +109,19 @@ interface AssetDetailPanelProps {
 - Sticky footer with action buttons
 
 **Actions:**
+
 - **Download**: Create `<a>` element with `asset.url` and `download` attribute
 - **Copy URL**: Use `navigator.clipboard.writeText()` with full URL
 - **Delete**: Show confirmation dialog, call `onDelete()`, close panel
 
 **Tag editing:**
+
 - Display existing tags as chips with X button
 - Input field to add new tags (Enter key to add)
 - Update via API: `PUT /api/catalog/:id/tags`
 
 **Testing:**
+
 - Panel slides in smoothly
 - Preview works for all asset types (image, video, audio)
 - All metadata displays correctly
@@ -123,9 +135,11 @@ interface AssetDetailPanelProps {
 ### Task 3: Create AssetBrowser Component
 
 **Files to create:**
+
 - `client/src/components/tools/AssetBrowser.tsx`
 
 **What to implement:**
+
 ```tsx
 interface AssetBrowserProps {
   filterType?: 'image' | 'video' | 'audio' | 'thumbnail';
@@ -135,6 +149,7 @@ interface AssetBrowserProps {
 ```
 
 **State management:**
+
 ```tsx
 const [assets, setAssets] = useState<Asset[]>([]);
 const [filters, setFilters] = useState({
@@ -152,6 +167,7 @@ const [pageSize] = useState(20);
 ```
 
 **API integration:**
+
 ```typescript
 const loadAssets = async () => {
   const params = new URLSearchParams();
@@ -168,10 +184,11 @@ const loadAssets = async () => {
   let filtered = data.assets;
   if (filters.search) {
     const search = filters.search.toLowerCase();
-    filtered = filtered.filter(a =>
-      a.prompt.toLowerCase().includes(search) ||
-      a.filename.toLowerCase().includes(search) ||
-      a.metadata.customName?.toLowerCase().includes(search)
+    filtered = filtered.filter(
+      (a) =>
+        a.prompt.toLowerCase().includes(search) ||
+        a.filename.toLowerCase().includes(search) ||
+        a.metadata.customName?.toLowerCase().includes(search)
     );
   }
 
@@ -180,6 +197,7 @@ const loadAssets = async () => {
 ```
 
 **Layout structure:**
+
 ```
 Header (title + filters)
   ↓
@@ -191,6 +209,7 @@ Detail Panel (conditional, slides over)
 ```
 
 **Filter UI:**
+
 - Search input (debounced 300ms)
 - Type dropdown (All, Images, Videos, Audio, Thumbnails)
 - Provider dropdown (All, FAL.AI, KIE.AI, ElevenLabs, N8N)
@@ -198,16 +217,19 @@ Detail Panel (conditional, slides over)
 - Tag multi-select
 
 **Grid responsive breakpoints:**
+
 - Mobile: 1 column
 - Tablet: 2-3 columns
 - Desktop: 4-6 columns
 
 **Selection mode:**
+
 - If `selectionMode={true}`, show checkboxes on cards
 - "Select All" button in header
 - "Add Selected to Story" button (calls `onSelect()` with array)
 
 **Testing:**
+
 - Assets load on mount
 - Filters update results
 - Search filters locally
@@ -221,9 +243,11 @@ Detail Panel (conditional, slides over)
 ### Task 4: Add Tag Update API Endpoint
 
 **Files to modify:**
+
 - `server/src/index.ts`
 
 **What to implement:**
+
 ```typescript
 app.put('/api/catalog/:id/tags', async (req, res) => {
   const { tags } = req.body;
@@ -243,6 +267,7 @@ app.put('/api/catalog/:id/tags', async (req, res) => {
 ```
 
 **Testing:**
+
 - PUT request updates tags
 - Returns updated asset
 - Returns 404 if asset not found
@@ -254,21 +279,25 @@ app.put('/api/catalog/:id/tags', async (req, res) => {
 ### Task 5: Integrate into App Navigation
 
 **Files to modify:**
+
 - `client/src/App.tsx`
 
 **What to implement:**
 
 Add route:
+
 ```tsx
 <Route path="/library" element={<AssetBrowser />} />
 ```
 
 Add navigation button to sidebar/header:
+
 ```tsx
 <NavButton to="/library" icon="📚" label="Asset Library" />
 ```
 
 **Testing:**
+
 - Route accessible at `/library`
 - Navigation button visible
 - Clicking button navigates to library
@@ -289,6 +318,7 @@ AssetBrowser (parent)
 ```
 
 **Data flow:**
+
 1. AssetBrowser fetches assets from catalog API
 2. AssetBrowser applies filters and search
 3. AssetCard receives asset prop, renders thumbnail
@@ -298,6 +328,7 @@ AssetBrowser (parent)
 ### State Management Approach
 
 **Local state only** - No global state/context needed:
+
 - `useState` for assets, filters, selection, pagination
 - `useEffect` for loading assets when filters change
 - Parent-child prop drilling for callbacks
@@ -307,19 +338,23 @@ AssetBrowser (parent)
 ### API Integration
 
 **Existing endpoints (from FR-16):**
+
 - `GET /api/catalog/filter?type=X&provider=Y&startDate=Z&endDate=W&tags=A,B`
 - `DELETE /api/catalog/:id`
 
 **New endpoint (Task 4):**
+
 - `PUT /api/catalog/:id/tags` - Update tags
 
 **Client-side search:**
+
 - API doesn't support full-text search on prompt/filename
 - Filter locally after fetching results
 
 ### UI/UX Patterns
 
 **Grid layout:**
+
 ```css
 display: grid;
 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -327,6 +362,7 @@ gap: 1rem;
 ```
 
 **Detail panel slide-in:**
+
 ```css
 position: fixed;
 right: 0;
@@ -338,16 +374,19 @@ transition: transform 0.3s ease;
 ```
 
 **Debounced search:**
+
 ```typescript
 const debouncedSearch = useMemo(
-  () => debounce((value: string) => {
-    setFilters(prev => ({ ...prev, search: value }));
-  }, 300),
+  () =>
+    debounce((value: string) => {
+      setFilters((prev) => ({ ...prev, search: value }));
+    }, 300),
   []
 );
 ```
 
 **Pagination:**
+
 ```typescript
 const startIndex = (page - 1) * pageSize;
 const endIndex = startIndex + pageSize;
@@ -386,6 +425,7 @@ client/src/utils/formatters.ts      (date formatting helpers)
 ## Testing Checklist
 
 ### UI Rendering
+
 - [ ] Grid displays assets correctly (images, videos, audio, thumbnails)
 - [ ] Grid responsive (1 col mobile, 2-3 tablet, 4-6 desktop)
 - [ ] Empty state shows when no assets ("No assets found")
@@ -395,6 +435,7 @@ client/src/utils/formatters.ts      (date formatting helpers)
 - [ ] Asset cards show provider and date
 
 ### Filters
+
 - [ ] Type filter works (All, Images, Videos, Audio, Thumbnails)
 - [ ] Provider filter works (All, FAL.AI, KIE.AI, ElevenLabs, N8N)
 - [ ] Date range filter works (Last 24h, Last 7d, Last 30d, Custom)
@@ -405,6 +446,7 @@ client/src/utils/formatters.ts      (date formatting helpers)
 - [ ] Multiple filters combine correctly (AND logic)
 
 ### Pagination
+
 - [ ] Shows 20 assets per page by default
 - [ ] Page navigation works (Prev/Next buttons)
 - [ ] Current page indicator correct
@@ -413,6 +455,7 @@ client/src/utils/formatters.ts      (date formatting helpers)
 - [ ] Pagination resets when filters change
 
 ### Detail Panel
+
 - [ ] Clicking asset opens detail panel
 - [ ] Panel slides in smoothly from right
 - [ ] Close button closes panel
@@ -423,6 +466,7 @@ client/src/utils/formatters.ts      (date formatting helpers)
 - [ ] Panel scrolls if content too tall
 
 ### Actions
+
 - [ ] Download button downloads file
 - [ ] Downloaded filename matches asset filename
 - [ ] Copy URL button copies full URL to clipboard
@@ -432,6 +476,7 @@ client/src/utils/formatters.ts      (date formatting helpers)
 - [ ] Delete updates grid (asset disappears)
 
 ### Tags
+
 - [ ] Existing tags display as chips
 - [ ] Can remove tags (X button)
 - [ ] Can add new tags (input field)
@@ -441,6 +486,7 @@ client/src/utils/formatters.ts      (date formatting helpers)
 - [ ] Empty tags input doesn't create empty tag
 
 ### Selection Mode
+
 - [ ] Checkboxes appear when `selectionMode={true}`
 - [ ] Clicking checkbox toggles selection
 - [ ] Clicking card (not checkbox) still opens detail panel
@@ -451,6 +497,7 @@ client/src/utils/formatters.ts      (date formatting helpers)
 - [ ] Selection preserved when pagination changes (optional)
 
 ### Edge Cases
+
 - [ ] Empty catalog (no assets) - shows empty state
 - [ ] Single asset - grid renders correctly
 - [ ] 1000+ assets - performance acceptable (< 2s load)
@@ -462,6 +509,7 @@ client/src/utils/formatters.ts      (date formatting helpers)
 - [ ] Invalid asset IDs - 404 handled gracefully
 
 ### Responsive
+
 - [ ] Mobile (320px width) - 1 column grid
 - [ ] Mobile - detail panel full-screen overlay
 - [ ] Tablet (768px) - 2-3 column grid
@@ -475,6 +523,7 @@ client/src/utils/formatters.ts      (date formatting helpers)
 ## Success Criteria
 
 **Performance:**
+
 - [ ] Grid loads in < 2 seconds (100 assets)
 - [ ] Filters apply in < 500ms
 - [ ] Search responds in < 300ms (debounced)
@@ -482,6 +531,7 @@ client/src/utils/formatters.ts      (date formatting helpers)
 - [ ] Pagination instant (< 100ms)
 
 **Usability:**
+
 - [ ] User can find any asset in < 10 seconds
 - [ ] All actions work (download, delete, tag, copy URL)
 - [ ] Mobile experience acceptable
@@ -489,11 +539,13 @@ client/src/utils/formatters.ts      (date formatting helpers)
 - [ ] Clear visual feedback for all interactions
 
 **Integration:**
+
 - [ ] Ready for Day 11 Story Builder (selection mode works)
 - [ ] Can be used standalone as `/library` page
 - [ ] Can be embedded in other components with filters
 
 **Code Quality:**
+
 - [ ] TypeScript types complete and accurate
 - [ ] No console errors or warnings
 - [ ] Components reusable and well-structured
@@ -508,6 +560,7 @@ client/src/utils/formatters.ts      (date formatting helpers)
 **Problem:** Videos don't have automatic thumbnails.
 
 **Solutions:**
+
 1. **Quick:** Use placeholder image (e.g., `/placeholder-video-thumb.jpg`)
 2. **Better:** Generate thumbnail on server when video saved (extract first frame)
 3. **Best:** Use video's `poster` attribute with base64 thumbnail in metadata
@@ -521,6 +574,7 @@ client/src/utils/formatters.ts      (date formatting helpers)
 **Problem:** Audio files have no visual representation.
 
 **Solutions:**
+
 1. **Quick:** Use static icon placeholder
 2. **Better:** Show waveform image (generate on server)
 3. **Best:** Interactive waveform player (library like WaveSurfer.js)
@@ -534,6 +588,7 @@ client/src/utils/formatters.ts      (date formatting helpers)
 **Problem:** Client-side search on 1000+ assets may be slow.
 
 **Solution:**
+
 - Use `useMemo` to cache filtered results
 - Only re-filter when assets or search term changes
 - Consider adding server-side search in future (FR-16 enhancement)
@@ -543,10 +598,11 @@ const filteredAssets = useMemo(() => {
   if (!filters.search) return assets;
 
   const search = filters.search.toLowerCase();
-  return assets.filter(a =>
-    a.prompt.toLowerCase().includes(search) ||
-    a.filename.toLowerCase().includes(search) ||
-    a.metadata.customName?.toLowerCase().includes(search)
+  return assets.filter(
+    (a) =>
+      a.prompt.toLowerCase().includes(search) ||
+      a.filename.toLowerCase().includes(search) ||
+      a.metadata.customName?.toLowerCase().includes(search)
   );
 }, [assets, filters.search]);
 ```
@@ -556,6 +612,7 @@ const filteredAssets = useMemo(() => {
 ### Tag Persistence
 
 **Tags update flow:**
+
 1. User adds/removes tag in AssetDetailPanel
 2. Component calls `onTagsUpdate(newTags)`
 3. Parent (AssetBrowser) calls API: `PUT /api/catalog/:id/tags`
@@ -576,7 +633,7 @@ const handleTagsUpdate = async (assetId: string, newTags: string[]) => {
   const { asset } = await response.json();
 
   // Update both arrays
-  setAssets(prev => prev.map(a => a.id === assetId ? asset : a));
+  setAssets((prev) => prev.map((a) => (a.id === assetId ? asset : a)));
   setSelectedAsset(asset);
 };
 ```
@@ -590,6 +647,7 @@ const handleTagsUpdate = async (assetId: string, newTags: string[]) => {
 **Mobile:** Detail panel should be full-screen overlay (grid hidden).
 
 **Implementation:**
+
 ```css
 /* Desktop */
 @media (min-width: 768px) {
@@ -613,6 +671,7 @@ const handleTagsUpdate = async (assetId: string, newTags: string[]) => {
 **Optional enhancement:** Save filter state to localStorage or URL query params.
 
 **Benefits:**
+
 - User returns to same filtered view after page refresh
 - Shareable URLs with filters (e.g., `/library?type=image&provider=fal`)
 
@@ -623,6 +682,7 @@ const handleTagsUpdate = async (assetId: string, newTags: string[]) => {
 ### Selection Mode Integration with Day 11
 
 **Day 11 Story Builder usage:**
+
 ```tsx
 function StoryBuilder() {
   const [timelineAssets, setTimelineAssets] = useState<Asset[]>([]);
@@ -635,7 +695,7 @@ function StoryBuilder() {
       <AssetBrowser
         selectionMode={true}
         onSelect={(assets) => {
-          setTimelineAssets(prev => [...prev, ...assets]);
+          setTimelineAssets((prev) => [...prev, ...assets]);
         }}
       />
     </div>
@@ -650,6 +710,7 @@ Ensure `onSelect` callback receives **array of selected assets** with full `Asse
 ### Empty States
 
 **No assets at all:**
+
 ```tsx
 if (assets.length === 0 && !filters.search && !filters.type) {
   return (
@@ -664,6 +725,7 @@ if (assets.length === 0 && !filters.search && !filters.type) {
 ```
 
 **No matches for filters:**
+
 ```tsx
 if (assets.length === 0 && (filters.search || filters.type || filters.provider)) {
   return (
@@ -721,7 +783,7 @@ const [imageLoading, setImageLoading] = useState(true);
     onLoad={() => setImageLoading(false)}
     className={imageLoading ? 'opacity-0' : 'opacity-100 transition-opacity'}
   />
-</div>
+</div>;
 ```
 
 ---
