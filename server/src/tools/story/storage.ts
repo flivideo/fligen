@@ -19,7 +19,6 @@ export async function saveStoryToCatalog(
   // We just need to move it to the catalog and add metadata
 
   const id = catalog.generateAssetId('video');
-  const filename = path.basename(result.outputPath);
 
   // Move file from video-scenes to catalog/stories
   const assetsDir = path.resolve(process.cwd(), '..', 'assets');

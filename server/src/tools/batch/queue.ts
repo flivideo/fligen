@@ -7,7 +7,7 @@
 import { fal } from '@fal-ai/client';
 import { saveImageToCatalog } from '../image/save-to-catalog.js';
 import { getModelCost } from '../image/types.js';
-import type { BatchJob, PromptRequest, BatchOptions, PromptResult } from './types';
+import type { BatchJob, PromptRequest, BatchOptions } from './types';
 
 // Simple in-memory storage (MVP)
 const jobs = new Map<string, BatchJob>();

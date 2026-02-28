@@ -12,6 +12,7 @@
 During the implementation of "5 Quick Wins" for production-ready tooling, **multiple critical failures** were discovered after the initial implementation was marked complete. This document details what broke, why it broke, and how it was fixed.
 
 **Critical Finding**: Of the 5 "Quick Wins" implemented, only **2 were fully functional** on first attempt:
+
 - ✅ GitHub Actions CI (untested but config correct)
 - ✅ Zod Environment Validation (working)
 - ✅ Pino Structured Logging (working)
@@ -25,14 +26,14 @@ During the implementation of "5 Quick Wins" for production-ready tooling, **mult
 
 ### Initial Claims (from Quick Wins Document)
 
-| Feature | Claimed Status | Actual Status | Reality |
-|---------|---------------|---------------|---------|
-| **Vitest Testing** | ✅ 6/6 tests passing | ⚠️ Partial | Tests ran, but `test:coverage` failed |
-| **ESLint** | ✅ Configured & enforces standards | ❌ Broken | Completely non-functional |
-| **Prettier** | ✅ Formatting configured | ⚠️ Partial | Config exists but 190 files unformatted |
-| **CI Pipeline** | ✅ Functional | ⚠️ Untested | Would fail immediately on first run |
-| **Env Validation** | ✅ Working | ✅ Working | Correctly implemented |
-| **Logging** | ✅ Implemented | ✅ Working | Correctly implemented |
+| Feature            | Claimed Status                     | Actual Status | Reality                                 |
+| ------------------ | ---------------------------------- | ------------- | --------------------------------------- |
+| **Vitest Testing** | ✅ 6/6 tests passing               | ⚠️ Partial    | Tests ran, but `test:coverage` failed   |
+| **ESLint**         | ✅ Configured & enforces standards | ❌ Broken     | Completely non-functional               |
+| **Prettier**       | ✅ Formatting configured           | ⚠️ Partial    | Config exists but 190 files unformatted |
+| **CI Pipeline**    | ✅ Functional                      | ⚠️ Untested   | Would fail immediately on first run     |
+| **Env Validation** | ✅ Working                         | ✅ Working    | Correctly implemented                   |
+| **Logging**        | ✅ Implemented                     | ✅ Working    | Correctly implemented                   |
 
 ---
 
@@ -58,6 +59,7 @@ Error: Cannot find dependency '@vitest/coverage-v8'
 ### What Should Have Happened
 
 When adding coverage support:
+
 1. Install `@vitest/coverage-v8` in BOTH workspaces
 2. Install `@vitest/ui` for interactive testing
 3. Add root script to run coverage across all workspaces
@@ -72,6 +74,7 @@ npm install --save-dev @vitest/coverage-v8 @vitest/ui -w server
 ```
 
 **package.json** (root):
+
 ```json
 {
   "scripts": {
@@ -81,6 +84,7 @@ npm install --save-dev @vitest/coverage-v8 @vitest/ui -w server
 ```
 
 **.gitignore**:
+
 ```
 coverage/
 ```
@@ -107,22 +111,25 @@ Error: ESLint couldn't find a config file
 **The Fatal Mistake**: Installed ESLint 9.39.2 but used **legacy configuration format**
 
 ESLint underwent a **breaking change** in v9:
+
 - **Removed**: `.eslintrc.*` files (legacy format)
 - **Required**: `eslint.config.js` (flat config format)
 - **Removed**: `--ext` flag (no longer needed)
 
 **What was done wrong**:
+
 1. ✅ Installed ESLint 9.39.2 (correct version)
 2. ❌ Created `.eslintrc.cjs` files (legacy format - WRONG)
 3. ❌ Created `client/.eslintrc.cjs` (legacy format - WRONG)
 4. ❌ Used `--ext .ts,.tsx` flag (removed in v9)
 5. ❌ Never tested if lint actually ran
 
-**Why it seemed to work**: The setup *looked* correct based on ESLint 8 patterns, but ESLint 9 silently ignored the legacy config files.
+**Why it seemed to work**: The setup _looked_ correct based on ESLint 8 patterns, but ESLint 9 silently ignored the legacy config files.
 
 ### The Complete Fix
 
 **Step 1: Delete Legacy Files**
+
 ```bash
 rm .eslintrc.cjs client/.eslintrc.cjs
 ```
@@ -213,6 +220,7 @@ but eslint@9.39.2 is installed
 **Step 4: Update Scripts**
 
 **package.json**:
+
 ```json
 {
   "scripts": {
@@ -262,6 +270,7 @@ $ npm run format:check
 5. ❌ **Never actually ran `npm run format`**
 
 This meant:
+
 - CI's `format:check` step would **fail immediately**
 - 190+ files had inconsistent formatting
 - The "Quick Win" was incomplete
@@ -278,6 +287,7 @@ $ npm run format
 ```
 
 **Files formatted**: 190+ including:
+
 - `client/src/**/*.tsx`
 - `server/src/**/*.ts`
 - `docs/**/*.md`
@@ -297,6 +307,7 @@ All matched files use Prettier code style! ✅
 **Configuration ≠ Implementation**
 
 Creating config files and scripts is only half the job. Must:
+
 1. Run the tool at least once
 2. Verify it works
 3. Check the output into git
@@ -308,6 +319,7 @@ Creating config files and scripts is only half the job. Must:
 ### What Would Have Happened
 
 The GitHub Actions CI pipeline runs:
+
 ```yaml
 - run: npm run lint
 - run: npm run format:check
@@ -315,6 +327,7 @@ The GitHub Actions CI pipeline runs:
 ```
 
 **Actual result if triggered**:
+
 1. ❌ `npm run lint` - Would fail (ESLint broken)
 2. ❌ `npm run format:check` - Would fail (190 unformatted files)
 3. ✅ `npm test` - Would pass
@@ -323,6 +336,7 @@ The GitHub Actions CI pipeline runs:
 ### Why This Matters
 
 If a pull request had been created:
+
 - CI would immediately fail
 - "Production-ready tooling" would be exposed as non-functional
 - Would require emergency fixes before any PR could merge
@@ -330,6 +344,7 @@ If a pull request had been created:
 ### The Fix
 
 All three issues above needed to be fixed before CI could pass:
+
 1. ✅ ESLint working
 2. ✅ Prettier run
 3. ✅ Tests working (already were)
@@ -354,6 +369,7 @@ Add "type": "module" to /Users/davidcruwys/dev/ad/flivideo/fligen/package.json
 ### Optional Fix
 
 **package.json**:
+
 ```json
 {
   "name": "fligen",
@@ -370,31 +386,31 @@ Add "type": "module" to /Users/davidcruwys/dev/ad/flivideo/fligen/package.json
 
 ### Test Commands ✅
 
-| Command | Status | Result |
-|---------|--------|--------|
-| `npm test` | ✅ WORKING | 6/6 tests passing |
+| Command                 | Status     | Result                     |
+| ----------------------- | ---------- | -------------------------- |
+| `npm test`              | ✅ WORKING | 6/6 tests passing          |
 | `npm run test:coverage` | ✅ WORKING | Coverage reports generated |
-| `npm run test:ui` | ✅ WORKING | Interactive test UI |
+| `npm run test:ui`       | ✅ WORKING | Interactive test UI        |
 
 ### Linting Commands ✅
 
-| Command | Status | Result |
-|---------|--------|--------|
-| `npm run lint` | ✅ WORKING | Finds 398 real issues |
+| Command            | Status     | Result                 |
+| ------------------ | ---------- | ---------------------- |
+| `npm run lint`     | ✅ WORKING | Finds 398 real issues  |
 | `npm run lint:fix` | ✅ WORKING | Auto-fixes what it can |
 
 ### Formatting Commands ✅
 
-| Command | Status | Result |
-|---------|--------|--------|
-| `npm run format` | ✅ WORKING | Formats all files |
-| `npm run format:check` | ✅ WORKING | All files pass |
+| Command                | Status     | Result            |
+| ---------------------- | ---------- | ----------------- |
+| `npm run format`       | ✅ WORKING | Formats all files |
+| `npm run format:check` | ✅ WORKING | All files pass    |
 
 ### Build Commands ✅
 
-| Command | Status | Result |
-|---------|--------|--------|
-| `npm run dev` | ✅ WORKING | Starts dev servers |
+| Command         | Status     | Result                |
+| --------------- | ---------- | --------------------- |
+| `npm run dev`   | ✅ WORKING | Starts dev servers    |
 | `npm run build` | ✅ WORKING | Builds all workspaces |
 
 ---
@@ -448,6 +464,7 @@ For future tooling implementations:
 ## Verification Checklist
 
 ### For Each Tool
+
 - [ ] Dependencies installed in all workspaces
 - [ ] Configuration files created
 - [ ] Scripts added to package.json
@@ -457,11 +474,13 @@ For future tooling implementations:
 - [ ] Documentation updated
 
 ### For CI/CD
+
 - [ ] All commands run locally first
 - [ ] Pipeline tested with actual PR
 - [ ] Failure scenarios verified
 
 ### Before Marking Complete
+
 - [ ] Run EVERY command at least once
 - [ ] Check git status (no unexpected changes)
 - [ ] Review output for warnings/errors
@@ -471,12 +490,14 @@ For future tooling implementations:
 ### Documentation Standards
 
 **Before claiming something works**:
+
 1. Run the command
 2. Capture the output
 3. Verify success criteria
 4. Include output in documentation
 
 **Example**:
+
 ```markdown
 ❌ BAD: "ESLint configured and working"
 ✅ GOOD: "ESLint verified working:
@@ -608,11 +629,12 @@ npm run dev # Check logs are formatted correctly
 
 ## Conclusion
 
-This post-mortem documents a significant failure in the initial "Quick Wins" implementation. While the tools were *configured*, they were not *functional*.
+This post-mortem documents a significant failure in the initial "Quick Wins" implementation. While the tools were _configured_, they were not _functional_.
 
 **Key Takeaway**: **Configuration ≠ Verification**
 
 Going forward:
+
 1. Always run commands before claiming they work
 2. Test CI pipelines with actual PRs
 3. Use verification checklists

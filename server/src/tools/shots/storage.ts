@@ -159,7 +159,7 @@ export async function removeShot(id: string): Promise<boolean> {
     const filePath = path.join(SHOTS_DIR, shot.filename);
     await fs.unlink(filePath);
     console.log(`[Shots] Deleted file ${filePath}`);
-  } catch (error) {
+  } catch (_error) {
     console.log(`[Shots] Warning: Could not delete file for ${id}`);
   }
 

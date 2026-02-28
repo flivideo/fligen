@@ -6,7 +6,7 @@ import type { Socket } from 'socket.io';
 import type { ServerToClientEvents, ClientToServerEvents } from '@fligen/shared';
 import { getSession, setSession, getAbortController } from './session.js';
 import { createLocalDocsServer } from '../tools/local-docs/index.js';
-import { createKybernesisServer, isKybernesisConfigured } from '../tools/kybernesis/index.js';
+import { createKybernesisServer } from '../tools/kybernesis/index.js';
 
 type TypedSocket = Socket<ClientToServerEvents, ServerToClientEvents>;
 

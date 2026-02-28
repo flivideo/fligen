@@ -117,7 +117,7 @@ export function ConfigModal({ isOpen, onClose }: ConfigModalProps) {
         )}
 
         <p className="text-xs text-slate-500">
-          Settings are stored in your browser's local storage.
+          Settings are stored in your browser&apos;s local storage.
         </p>
       </div>
 

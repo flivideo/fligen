@@ -75,7 +75,7 @@ export async function assembleVideo(request: AssemblyRequest): Promise<AssemblyR
     console.log('[Story Assembler] Executing FFmpeg command:', ffmpegCommand);
 
     // Execute FFmpeg
-    const { stdout, stderr } = await execAsync(ffmpegCommand);
+    const { stderr } = await execAsync(ffmpegCommand);
 
     if (stderr && !stderr.includes('frame=') && !stderr.includes('time=')) {
       console.warn('[Story Assembler] FFmpeg stderr:', stderr);

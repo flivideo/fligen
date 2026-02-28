@@ -14,8 +14,6 @@ export async function saveAudioToCatalog(
   metadata: Record<string, any> = {},
   customName?: string
 ): Promise<Asset> {
-  const startTime = Date.now();
-
   // Generate unique ID and filename
   const id = catalog.generateAssetId('narration');
   const filename = catalog.generateFilename('narration', 'elevenlabs', model, 'mp3');

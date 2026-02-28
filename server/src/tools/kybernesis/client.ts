@@ -1,7 +1,7 @@
 // Kybernesis MCP client
 // Makes MCP protocol calls to the Kybernesis second brain service
 
-import type { SearchResponse, StoreResponse, KybernesisConfig, MemoryResult } from './types.js';
+import type { StoreResponse, KybernesisConfig } from './types.js';
 
 const DEFAULT_CONFIG: Omit<KybernesisConfig, 'apiKey'> = {
   baseUrl: 'https://api.kybernesis.ai',

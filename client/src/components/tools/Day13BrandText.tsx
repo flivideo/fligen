@@ -136,7 +136,7 @@ export default function Day13BrandText() {
       await exportAndDownload(canvasRef.current, config.templateId, fullText, transparent);
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 2000);
-    } catch (error) {
+    } catch (_error) {
       setErrorMessage('Export failed');
       setTimeout(() => setErrorMessage(null), 3000);
     }

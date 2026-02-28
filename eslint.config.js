@@ -8,7 +8,14 @@ import globals from 'globals';
 export default [
   // Ignore patterns
   {
-    ignores: ['**/dist/**', '**/build/**', '**/node_modules/**', '**/coverage/**'],
+    ignores: [
+      '**/dist/**',
+      '**/build/**',
+      '**/node_modules/**',
+      '**/coverage/**',
+      '.worktrees/**',
+      'server/scratch/**',
+    ],
   },
 
   // Base config for all files
@@ -35,7 +42,12 @@ export default [
     rules: {
       ...js.configs.recommended.rules,
       ...typescript.configs.recommended.rules,
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      'no-undef': 'off', // TypeScript handles this
+      'no-unused-vars': 'off', // Use TypeScript-aware version below
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' },
+      ],
       '@typescript-eslint/no-explicit-any': 'warn',
       'no-console': 'off',
     },

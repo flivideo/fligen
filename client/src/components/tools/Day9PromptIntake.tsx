@@ -64,26 +64,6 @@ export function Day9PromptIntake() {
   // FliHub health
   const [fliHubOnline, setFliHubOnline] = useState<boolean | null>(null);
 
-  // Check FliHub health on mount
-  useEffect(() => {
-    checkFliHubHealth();
-  }, []);
-
-  // Load projects list on mount
-  useEffect(() => {
-    loadProjectsList();
-  }, []);
-
-  async function checkFliHubHealth() {
-    try {
-      const response = await fetch(`${SERVER_URL}/api/flihub/health`);
-      const data = await response.json();
-      setFliHubOnline(data.status === 'ok');
-    } catch {
-      setFliHubOnline(false);
-    }
-  }
-
   async function loadProjectsList() {
     try {
       const response = await fetch(`${SERVER_URL}/api/projects`);
@@ -93,6 +73,22 @@ export function Day9PromptIntake() {
       console.error('Failed to load projects:', error);
     }
   }
+
+  // Check FliHub health on mount
+  useEffect(() => {
+    fetch(`${SERVER_URL}/api/flihub/health`)
+      .then((res) => res.json())
+      .then((data) => setFliHubOnline(data.status === 'ok'))
+      .catch(() => setFliHubOnline(false));
+  }, []);
+
+  // Load projects list on mount
+  useEffect(() => {
+    fetch(`${SERVER_URL}/api/projects`)
+      .then((res) => res.json())
+      .then((data) => setProjects(data.projects || []))
+      .catch((error) => console.error('Failed to load projects:', error));
+  }, []);
 
   async function importAllTranscripts() {
     if (!flihubProjectCode) {

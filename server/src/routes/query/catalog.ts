@@ -5,7 +5,6 @@
 
 import { Router } from 'express';
 import * as catalog from '../../tools/catalog/index.js';
-import type { Asset } from '@fligen/shared';
 
 const router = Router();
 

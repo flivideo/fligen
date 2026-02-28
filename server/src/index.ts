@@ -32,17 +32,12 @@ import {
   generateTransitionVideo,
   getVideoStatus,
   listVideoTasks,
-  isKieConfigured as isKieVideoConfigured,
-  isFalConfigured as isFalVideoConfigured,
-  saveVideoToCatalog,
 } from './tools/video/index.js';
 import type { VideoModel } from './tools/video/index.js';
 import {
   checkMusicHealth,
   generateMusic,
   listLibraryTracks,
-  saveTrackToLibrary,
-  deleteLibraryTrack,
   saveMusicToCatalog,
   isFalConfigured as isFalMusicConfigured,
   isKieConfigured as isKieMusicConfigured,
@@ -53,15 +48,14 @@ import { saveProject, loadProject, listProjects, projectExists } from './tools/p
 import type {
   SaveProjectRequest,
   ProjectData,
-  SourceTranscript,
   RefinePromptsRequest,
   RefinePromptsResponse,
+  Asset,
 } from '@fligen/shared';
 import { SYSTEM_PROMPTS, refinePrompts } from './tools/prompts/index.js';
 import { assembleVideo, saveStoryToCatalog } from './tools/story/index.js';
 import type { AssemblyRequest, AssemblyResponse } from '@fligen/shared';
 import * as catalog from './tools/catalog/index.js';
-import type { Asset } from '@fligen/shared';
 import {
   WIDGET_TEMPLATES,
   getTemplate,
@@ -766,7 +760,7 @@ function cleanPrompt(text: string): string {
       // Remove newlines and carriage returns
       .replace(/[\r\n]+/g, ' ')
       // Remove all punctuation
-      .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()'"?]/g, '')
+      .replace(/[.,/#!$%^&*;:{}=\-_`~()'"?]/g, '')
       // Collapse multiple spaces into single space
       .replace(/\s+/g, ' ')
       // Trim whitespace
@@ -797,7 +791,7 @@ app.post('/api/n8n/workflow', async (req, res) => {
     }
 
     // Anonymize webhook URL for logging
-    const anonymizedUrl = webhookUrl.replace(/\/webhook\/[^\/]+$/, '/webhook/***');
+    const anonymizedUrl = webhookUrl.replace(/\/webhook\/[^/]+$/, '/webhook/***');
 
     console.log('[API] /api/n8n/workflow - triggering N8N workflow');
     console.log('[API] Webhook URL:', anonymizedUrl);

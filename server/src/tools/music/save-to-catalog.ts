@@ -12,8 +12,6 @@ export async function saveMusicToCatalog(
   track: GeneratedTrack,
   audioData: Buffer | string
 ): Promise<Asset> {
-  const startTime = Date.now();
-
   const id = catalog.generateAssetId('music');
   const filename = catalog.generateFilename('music', track.provider, track.model, 'mp3');
 

@@ -112,7 +112,7 @@ export default function ApiExplorer() {
         if (param.dataType === 'array' || param.dataType === 'object') {
           try {
             body[param.name] = typeof value === 'string' ? JSON.parse(value) : value;
-          } catch (e) {
+          } catch (_e) {
             body[param.name] = value;
           }
         } else {

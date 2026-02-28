@@ -26,7 +26,7 @@ async function loadCatalog(): Promise<WidgetCatalog> {
   try {
     const data = await fs.readFile(CATALOG_FILE, 'utf-8');
     return JSON.parse(data);
-  } catch (error) {
+  } catch (_error) {
     // If catalog doesn't exist, return empty
     return { widgets: [] };
   }
@@ -137,7 +137,7 @@ export async function getWidget(
   try {
     const html = await fs.readFile(htmlPath, 'utf-8');
     return { config, html };
-  } catch (error) {
+  } catch (_error) {
     return null;
   }
 }
@@ -163,13 +163,13 @@ export async function deleteWidget(id: string): Promise<boolean> {
 
   try {
     await fs.unlink(htmlPath);
-  } catch (error) {
+  } catch (_error) {
     // Ignore if file doesn't exist
   }
 
   try {
     await fs.unlink(configPath);
-  } catch (error) {
+  } catch (_error) {
     // Ignore if file doesn't exist
   }
 

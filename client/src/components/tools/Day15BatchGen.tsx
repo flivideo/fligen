@@ -193,8 +193,8 @@ export function Day15BatchGen() {
             <h4 className="mb-2 text-sm font-semibold text-slate-300">CSV Format</h4>
             <pre className="text-xs text-slate-400">
               a,category,filename,prompt,provider,model{'\n'}
-              1,design,img-001,"Your prompt here",kie,flux-kontext-pro{'\n'}
-              1,design,img-002,"Another prompt",fal,flux-schnell
+              1,design,img-001,&quot;Your prompt here&quot;,kie,flux-kontext-pro{'\n'}
+              1,design,img-002,&quot;Another prompt&quot;,fal,flux-schnell
             </pre>
             <p className="mt-2 text-xs text-slate-500">
               • a=1: Process | a=0: Skip | a=9: Already processed

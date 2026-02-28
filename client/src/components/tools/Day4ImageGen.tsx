@@ -119,7 +119,7 @@ function ComparisonCell({
         <div className="aspect-square bg-slate-900 rounded mb-3 flex items-center justify-center">
           <div className="text-slate-500 text-sm">Waiting...</div>
         </div>
-        <div className="text-slate-500 text-sm">Click "Generate All" to start</div>
+        <div className="text-slate-500 text-sm">Click &quot;Generate All&quot; to start</div>
       </div>
     );
   }

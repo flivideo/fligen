@@ -7,19 +7,20 @@
 
 ## Verification Status
 
-| Quick Win | Config Exists | Actually Tested | Working | Evidence |
-|-----------|---------------|-----------------|---------|----------|
-| Vitest Testing | ✅ | ✅ | ✅ | 6/6 tests passing |
-| ESLint + Prettier | ✅ | ✅ | ✅ | Lint finds issues, format passes |
-| GitHub Actions CI | ✅ | ✅ | ✅ | All commands work including build |
-| Zod Env Validation | ✅ | ✅ | ✅ | Catches invalid env, server starts with valid |
-| Pino Logging | ✅ | ⚠️ Partial | ⚠️ Likely OK | Server works, logs not visually confirmed |
+| Quick Win          | Config Exists | Actually Tested | Working      | Evidence                                      |
+| ------------------ | ------------- | --------------- | ------------ | --------------------------------------------- |
+| Vitest Testing     | ✅            | ✅              | ✅           | 6/6 tests passing                             |
+| ESLint + Prettier  | ✅            | ✅              | ✅           | Lint finds issues, format passes              |
+| GitHub Actions CI  | ✅            | ✅              | ✅           | All commands work including build             |
+| Zod Env Validation | ✅            | ✅              | ✅           | Catches invalid env, server starts with valid |
+| Pino Logging       | ✅            | ⚠️ Partial      | ⚠️ Likely OK | Server works, logs not visually confirmed     |
 
 ---
 
 ## Test #1: Vitest Testing ✅
 
 ### What to verify
+
 - [ ] Tests run: `npm test`
 - [ ] Coverage works: `npm run test:coverage`
 - [ ] UI works: `npm run test:ui`
@@ -48,6 +49,7 @@ Coverage enabled with v8
 ## Test #2: ESLint + Prettier ✅
 
 ### What to verify
+
 - [ ] Lint runs: `npm run lint`
 - [ ] Lint finds real issues (not just passes silently)
 - [ ] Lint fix works: `npm run lint:fix`
@@ -76,6 +78,7 @@ All matched files use Prettier code style!
 ## Test #3: GitHub Actions CI ⚠️
 
 ### What to verify
+
 - [ ] Workflow file syntax is valid
 - [ ] All commands in workflow work locally:
   - [ ] `npm ci`
@@ -116,6 +119,7 @@ $ npm test
 ### Evidence - Workflow Syntax
 
 Checked `.github/workflows/ci.yml`:
+
 - ✅ Valid YAML syntax
 - ✅ Uses standard actions (checkout@v4, setup-node@v4)
 - ✅ Runs on push/PR to main branch
@@ -123,6 +127,7 @@ Checked `.github/workflows/ci.yml`:
 - ❓ Never triggered in actual GitHub
 
 **Status**: ⚠️ PARTIALLY VERIFIED
+
 - Local commands work ✅
 - Workflow syntax looks correct ✅
 - Never run in actual GitHub Actions ❌
@@ -134,6 +139,7 @@ Checked `.github/workflows/ci.yml`:
 ## Test #4: Zod Environment Validation ❓
 
 ### What to verify
+
 - [ ] Server starts with valid env vars
 - [ ] Server rejects invalid env vars
 - [ ] Helper flags work (isDevelopment, isProduction, isTest)
@@ -142,12 +148,14 @@ Checked `.github/workflows/ci.yml`:
 ### Code Review Evidence
 
 **File**: `server/src/config/env.ts`
+
 - ✅ Zod schema defined
 - ✅ safeParse() used
 - ✅ Error handling present
 - ✅ Helper flags exported
 
 **File**: `server/src/index.ts`
+
 - ✅ env imported (line 1)
 - ✅ env.PORT used (line 78)
 - ✅ env.CLIENT_URL used (line 79)
@@ -155,6 +163,7 @@ Checked `.github/workflows/ci.yml`:
 ### Runtime Testing
 
 **Test 1: Valid environment**
+
 ```bash
 $ npm run dev
 ✅ TESTED - Server starts successfully
@@ -165,6 +174,7 @@ $ npm run dev
 ```
 
 **Test 2: Invalid environment**
+
 ```bash
 $ PORT=invalid node -e "import('./server/dist/config/env.js')"
 ✅ TESTED - Validation works correctly:
@@ -183,6 +193,7 @@ ENV VALIDATION ERROR: Invalid environment variables
 ```
 
 **Test 3: Missing optional vars**
+
 ```bash
 $ npm run dev
 ✅ TESTED - Works fine:
@@ -199,6 +210,7 @@ $ npm run dev
 ## Test #5: Pino Structured Logging ❓
 
 ### What to verify
+
 - [ ] Server logs are structured (not plain console.log)
 - [ ] Development shows pretty output
 - [ ] Request logging includes request IDs
@@ -207,17 +219,20 @@ $ npm run dev
 ### Code Review Evidence
 
 **File**: `server/src/config/logger.ts`
+
 - ✅ Pino logger configured
 - ✅ Pretty transport for development
 - ✅ JSON output for production
 - ✅ Log levels set based on environment
 
 **File**: `server/src/middleware/requestLogger.ts`
+
 - ✅ pino-http middleware created
 - ✅ Request ID generation (UUID)
 - ✅ Automatic HTTP status -> log level mapping
 
 **File**: `server/src/index.ts`
+
 - ✅ logger imported (line 2)
 - ✅ addRequestId middleware added (line 93)
 - ✅ httpLogger middleware added (line 94)
@@ -225,6 +240,7 @@ $ npm run dev
 ### Runtime Testing
 
 **Test 1: Server startup logs**
+
 ```bash
 $ npm run dev
 ⚠️ PARTIALLY TESTED:
@@ -234,6 +250,7 @@ $ npm run dev
 ```
 
 **What works (verified)**:
+
 - Server imports logger correctly (code review confirmed)
 - Server uses log.info() for startup (line 1427 in index.ts)
 - Server uses log.info/error for shutdown (lines 1449-1465)
@@ -241,12 +258,14 @@ $ npm run dev
 
 **What needs manual verification**:
 Run `npm run dev` manually and verify you see:
+
 - Pretty formatted logs (not plain console.log)
 - Startup message with ASCII box
 - Port information
 - Provider status
 
 **Test 2: Request logging**
+
 ```bash
 $ curl http://localhost:5401/api/query/health
 ⚠️ RESPONSE WORKS, LOGS NOT CAPTURED
@@ -255,6 +274,7 @@ $ curl http://localhost:5401/api/query/health
 ```
 
 **Manual test needed**:
+
 1. Run `npm run dev`
 2. Make request: `curl http://localhost:5401/api/query/health`
 3. Verify you see log entry with:
@@ -265,6 +285,7 @@ $ curl http://localhost:5401/api/query/health
    - Response time
 
 **Test 3: Log levels**
+
 ```bash
 ❌ NOT TESTED
 Manual testing needed for different status codes
@@ -273,6 +294,7 @@ Manual testing needed for different status codes
 **Status**: ⚠️ PARTIALLY VERIFIED
 
 **What's confirmed**:
+
 - ✅ Code is correct (logger configured, middleware added)
 - ✅ Server starts and responds to requests
 - ❌ Log output format not captured in automated tests
@@ -284,6 +306,7 @@ Manual testing needed for different status codes
 ## Overall Status
 
 ### Verified Working ✅
+
 1. **Vitest Testing** - Fully tested and working
    - Tests run: ✅
    - Coverage works: ✅
@@ -309,6 +332,7 @@ Manual testing needed for different status codes
    - Uses env values correctly: ✅
 
 ### Partially Verified ⚠️
+
 5. **Pino Structured Logging** - Code correct, server works, logs not visually confirmed
    - Code review shows correct setup: ✅
    - Server starts: ✅
@@ -321,6 +345,7 @@ Manual testing needed for different status codes
 ## Next Steps
 
 ### Completed ✅
+
 1. ~~Test Zod Env Validation~~ - DONE, verified working
 2. ~~Test Build Command~~ - DONE, works correctly
 3. ~~Verify all CI commands~~ - DONE, all pass
@@ -328,43 +353,47 @@ Manual testing needed for different status codes
 ### Remaining Manual Verification
 
 **1. Verify Pino Logging Output** (5 minutes)
-   ```bash
-   # Start server
-   npm run dev
 
-   # You should see pretty-formatted logs like:
-   # [timestamp] INFO: ┌─────────────────────────────────────┐
-   # [timestamp] INFO: │  FliGen Server                      │
-   # [timestamp] INFO: │  Port: 5401                         │
-   # [timestamp] INFO: └─────────────────────────────────────┘
+```bash
+# Start server
+npm run dev
 
-   # In another terminal, make a request:
-   curl http://localhost:5401/api/query/health
+# You should see pretty-formatted logs like:
+# [timestamp] INFO: ┌─────────────────────────────────────┐
+# [timestamp] INFO: │  FliGen Server                      │
+# [timestamp] INFO: │  Port: 5401                         │
+# [timestamp] INFO: └─────────────────────────────────────┘
 
-   # You should see a log entry with:
-   # - Request ID (UUID)
-   # - Method: GET
-   # - Path: /api/query/health
-   # - Status: 200
-   # - Response time in ms
-   ```
+# In another terminal, make a request:
+curl http://localhost:5401/api/query/health
 
-   **What to verify**:
-   - [ ] Logs are pretty-formatted (not raw JSON)
-   - [ ] Each request has a unique ID
-   - [ ] HTTP status and response time are logged
-   - [ ] No plain `console.log` output
+# You should see a log entry with:
+# - Request ID (UUID)
+# - Method: GET
+# - Path: /api/query/health
+# - Status: 200
+# - Response time in ms
+```
+
+**What to verify**:
+
+- [ ] Logs are pretty-formatted (not raw JSON)
+- [ ] Each request has a unique ID
+- [ ] HTTP status and response time are logged
+- [ ] No plain `console.log` output
 
 **2. Optional: Test CI in GitHub** (10 minutes)
-   - Create test branch
-   - Make trivial change (add comment to README)
-   - Create PR
-   - Verify workflow runs successfully
-   - Document results
+
+- Create test branch
+- Make trivial change (add comment to README)
+- Create PR
+- Verify workflow runs successfully
+- Document results
 
 ### Documentation Updates
 
 After testing:
+
 - [ ] Update this checklist with actual test results
 - [ ] Add screenshots/output examples to post-mortem
 - [ ] Create "Verified Working" section in Quick Wins doc
@@ -377,6 +406,7 @@ After testing:
 **"Configuration ≠ Verification"**
 
 Having the code and config files is NOT the same as verifying it works. Every Quick Win must be:
+
 1. Code written ✅
 2. Config created ✅
 3. **Actually run and tested** ⭐ CRITICAL

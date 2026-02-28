@@ -8,7 +8,6 @@ import type {
   KieCreditResponse,
   CompareResult,
   ModelTier,
-  ModelConfig,
 } from './types.js';
 import { MODELS } from './types.js';
 
@@ -135,7 +134,7 @@ export async function checkHealth(): Promise<ProviderHealth> {
   }
 
   try {
-    const credits = await checkCredits();
+    await checkCredits();
     console.log('[KIE.AI] Health check: Authenticated');
     return {
       configured: true,

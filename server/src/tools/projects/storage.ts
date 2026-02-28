@@ -42,7 +42,7 @@ function validateProjectCode(projectCode: string): { valid: boolean; error?: str
   }
 
   // Check for invalid filename characters
-  const invalidChars = /[<>:"|?*\/\\]/;
+  const invalidChars = /[<>:"|?*/\\]/;
   if (invalidChars.test(projectCode)) {
     return { valid: false, error: 'Project code contains invalid characters' };
   }
