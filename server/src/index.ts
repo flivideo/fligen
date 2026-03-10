@@ -1,3 +1,4 @@
+import { execSync } from 'child_process';
 import { env } from './config/env.js';
 import { log } from './config/logger.js';
 import { addRequestId, httpLogger } from './middleware/requestLogger.js';
@@ -1390,7 +1391,22 @@ io.on('connection', async (socket) => {
 await catalog.initCatalog();
 console.log('[Catalog] Asset catalog initialized');
 
+function cleanupPort(port: number | string): void {
+  try {
+    const result = execSync(`lsof -ti:${port} 2>/dev/null || true`, { encoding: 'utf-8' });
+    const pids = result.trim().split('\n').filter(Boolean);
+    if (pids.length > 0) {
+      log.info(`Cleaning up port ${port}: killing PIDs ${pids.join(', ')}`);
+      for (const pid of pids) {
+        try { execSync(`kill -9 ${pid} 2>/dev/null || true`); } catch { /* already gone */ }
+      }
+      execSync('sleep 0.5');
+    }
+  } catch { /* lsof unavailable, continue */ }
+}
+
 // Start server
+cleanupPort(PORT);
 httpServer.listen(PORT, () => {
   const kybernesisStatus = isKybernesisConfigured()
     ? '✓ Kybernesis configured'
