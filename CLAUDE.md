@@ -53,6 +53,35 @@ npm run dev              # Start both server and client concurrently
 npm run build            # Build all workspaces
 ```
 
+## Dev Server Management
+
+Before starting any dev server, check if it is already running:
+
+```bash
+lsof -i :5400 | grep LISTEN
+lsof -i :5401 | grep LISTEN
+```
+
+If a process is listed, the service is UP — do not restart it, do not change ports. Never kill a running dev server unless explicitly asked.
+
+**To start persistently** (survives terminal close):
+
+```bash
+./start.sh           # builds shared, port-checks, then launches via Overmind
+overmind start       # direct launch (assumes shared already built)
+```
+
+**Overmind commands:**
+
+```bash
+overmind connect client  # attach to client logs (Ctrl+B D to detach)
+overmind connect server  # attach to server logs
+overmind restart client  # restart just the client
+overmind stop            # stop all processes
+```
+
+---
+
 ## Architecture
 
 **Monorepo Structure** (npm workspaces):
