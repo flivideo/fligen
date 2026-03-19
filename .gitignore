@@ -31,3 +31,11 @@ vite.config.ts.timestamp-*
 
 # Git worktrees
 .worktrees/
+
+# Runtime generated assets (catalog data, generated images/videos/audio)
+assets/catalog/
+assets/video-scenes/
+
+# Playwright test screenshots
+*.png
+*.jpeg
