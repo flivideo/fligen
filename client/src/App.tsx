@@ -15,6 +15,7 @@ import Day11StoryBuilder from './components/tools/Day11StoryBuilder';
 import Day13BrandText from './components/tools/Day13BrandText';
 import { Day14Widget } from './components/tools/Day14Widget';
 import { Day15BatchGen } from './components/tools/Day15BatchGen';
+import Day16AspectRatio from './components/tools/Day16AspectRatio';
 import ApiExplorer from './components/tools/ApiExplorer';
 import { AssetBrowser } from './components/tools/AssetBrowser';
 
@@ -167,6 +168,8 @@ function AppContent() {
             <Day14Widget />
           ) : currentDay === 15 ? (
             <Day15BatchGen />
+          ) : currentDay === 16 ? (
+            <Day16AspectRatio />
           ) : (
             <div className="h-full overflow-auto p-4">
               <div className="max-w-2xl mx-auto">

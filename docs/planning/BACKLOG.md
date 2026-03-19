@@ -1,14 +1,13 @@
 # Project Backlog — FliGen
 
 **Last updated**: 2026-03-19
-**Total**: 32 | Pending: 2 | In Progress: 0 | Done: 30 | Deferred: 0 | Rejected: 0
+**Total**: 32 | Pending: 0 | In Progress: 0 | Done: 32 | Deferred: 0 | Rejected: 0
 
 ---
 
 ## Pending
 
-- [ ] B022 — FR-21: Thumbnail Typography Enhancements | Priority: low
-- [ ] B025 — FR-24: Aspect Ratio Calculator | Priority: low
+*(none)*
 
 ---
 
@@ -50,6 +49,8 @@
 - [x] B032 — TESTS: Add behaviour tests — 38 passing (was 8); assembler.test.ts + catalog.test.ts | Completed: fix-blockers
 - [x] B020 — FR-19: Thumbnail Persistence & History — Save to Catalog + history grid UI | Completed: story-and-thumbnails
 - [x] B021 — FR-20: Story Builder - Video Assembly (FFmpeg pipeline) — assembly endpoint + client URL fix | Completed: story-and-thumbnails
+- [x] B022 — FR-21: Thumbnail Typography Enhancements — BebasNeue/Oswald/Roboto fonts, 72-200px range, wrap/scale/scroll overflow | Completed: pre-existing (FONTS in types.ts)
+- [x] B025 — FR-24: Aspect Ratio Calculator — Day 16, bidirectional calc, presets, platform table, localStorage history | Completed: aspect-ratio
 
 ---
 

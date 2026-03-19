@@ -111,7 +111,7 @@
       "name": "Story Builder",
       "shortName": "Story",
       "icon": "📖",
-      "status": "next",
+      "status": "complete",
       "route": "#day-11",
       "purpose": "Video assembly",
       "apisTech": ["FFmpeg", "Video concatenation", "Audio layering"]
@@ -155,6 +155,16 @@
       "route": "#day-15",
       "purpose": "CSV batch image generation",
       "apisTech": ["FAL.AI", "KIE.AI", "CSV Upload", "Queue Management"]
+    },
+    {
+      "day": 16,
+      "name": "Aspect Ratio Calculator",
+      "shortName": "AspectRatio",
+      "icon": "📐",
+      "status": "complete",
+      "route": "/aspect-ratio",
+      "purpose": "Bidirectional aspect ratio calculator with platform presets and visual comparison",
+      "apisTech": ["React", "localStorage"]
     }
   ],
   "settings": [
