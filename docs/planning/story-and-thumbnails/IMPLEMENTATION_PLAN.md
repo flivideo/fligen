@@ -5,19 +5,14 @@
 **Target**: FFmpeg assembly end-to-end working in browser; thumbnails saved to catalog with history UI; build clean; tests passing
 
 ## Summary
-- Total: 8 | Complete: 4 | In Progress: 0 | Pending: 4 | Failed: 0
+- Total: 8 | Complete: 7 | In Progress: 0 | Pending: 1 | Failed: 0
 
 ---
 
 ## Pending
 
-### Wave 2 — Server endpoints + toBlob fix (run in parallel — no file conflicts)
-- [~] story-history-route — Add GET /api/story/history to story.ts router using getStoriesFromCatalog(); returns Asset[]
-- [~] thumbnail-server-route — Create server/src/routes/thumbnail.ts (POST /save + GET /history); mount at /api/thumbnail in index.ts; add catalog/stories/ and catalog/thumbnails/ to initCatalog pre-creation
-- [~] fix-toBlob-race — Promisify canvas.toBlob in ThumbnailExport.tsx; await blob before finally block runs; fix unmount race in both handleExport and handleCopyToClipboard
-
 ### Wave 3 — FR-19 client (single unit — tightly coupled components)
-- [ ] thumbnail-fr19-client — Implement ThumbnailHistory (props: Asset[], rendering); add Save to Catalog button in ThumbnailExport (POST /api/thumbnail/save); wire history state + refresh in Day8Thumbnail.tsx
+- [~] thumbnail-fr19-client — Implement ThumbnailHistory (props: Asset[], rendering); add Save to Catalog button in ThumbnailExport (POST /api/thumbnail/save); wire history state + refresh in Day8Thumbnail.tsx
 
 ---
 
@@ -33,6 +28,9 @@
 - [x] dedupe-story-types — MusicConfig/NarrationConfig/AssemblyRequest removed from story/types.ts; imported from @fligen/shared in assembler.ts, storage.ts, test files; AssemblyResult + AssemblyProgress kept local; 38 tests pass
 - [x] fix-story-contracts — 'story' added to Asset.type union; AssemblyResponse uses assetUrl+assetId; saveStoryToCatalog uses type:'story'; getStoriesFromCatalog filters by type:'story'; story.ts route returns asset.url+asset.id; catalog tests updated; 38 tests pass
 - [x] fix-story-client — Day11StoryBuilder: download URL, filename, video preview src all use result.assetUrl; catalogId → assetId; video dropdown filter confirmed correct; 42 tests pass (38 server + 4 client)
+- [x] story-history-route — GET /api/story/history added to story.ts; getStoriesFromCatalog imported; 38 tests pass
+- [x] thumbnail-server-route — server/src/routes/thumbnail.ts created (POST /save + GET /history); mounted at /api/thumbnail in index.ts; catalog/stories/ added to initCatalog; 38 tests pass
+- [x] fix-toBlob-race — canvas.toBlob promisified in handleExport + handleCopyToClipboard; finally runs after blob handled; nested catch removed; TODO comments removed; 4 client tests pass
 
 ---
 

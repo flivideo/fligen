@@ -71,20 +71,21 @@ export function ThumbnailExport({
     try {
       const canvas = await renderToCanvas(config, visibility);
 
-      // TODO FR-19: fix toBlob race on unmount
-      // Convert to blob and download
-      canvas.toBlob((blob) => {
-        if (blob) {
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = `thumbnail-${Date.now()}.png`;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-        }
-      }, 'image/png');
+      const blob = await new Promise<Blob>((resolve, reject) => {
+        canvas.toBlob((b) => {
+          if (b) resolve(b);
+          else reject(new Error('canvas.toBlob returned null'));
+        }, 'image/png');
+      });
+
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `thumbnail-${Date.now()}.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
     } catch (error) {
       console.error('Export failed:', error);
       alert('Export failed. Please try again.');
@@ -98,19 +99,14 @@ export function ThumbnailExport({
     try {
       const canvas = await renderToCanvas(config, visibility);
 
-      // TODO FR-19: fix toBlob race on unmount
-      // Convert to blob and copy to clipboard
-      canvas.toBlob(async (blob) => {
-        if (blob) {
-          try {
-            await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-            // Brief visual feedback could be added here
-          } catch (clipboardError) {
-            console.error('Clipboard write failed:', clipboardError);
-            alert('Failed to copy to clipboard. Your browser may not support this feature.');
-          }
-        }
-      }, 'image/png');
+      const blob = await new Promise<Blob>((resolve, reject) => {
+        canvas.toBlob((b) => {
+          if (b) resolve(b);
+          else reject(new Error('canvas.toBlob returned null'));
+        }, 'image/png');
+      });
+
+      await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
     } catch (error) {
       console.error('Copy to clipboard failed:', error);
       alert('Failed to copy to clipboard. Please try again.');

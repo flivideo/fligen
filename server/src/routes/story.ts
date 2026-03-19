@@ -4,7 +4,7 @@
  */
 
 import { Router } from 'express';
-import { assembleVideo, saveStoryToCatalog } from '../tools/story/index.js';
+import { assembleVideo, saveStoryToCatalog, getStoriesFromCatalog } from '../tools/story/index.js';
 import type { AssemblyRequest, AssemblyResponse } from '@fligen/shared';
 
 const router = Router();
@@ -43,6 +43,17 @@ router.post('/assemble', async (req, res) => {
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     console.error('[API] /api/story/assemble - error:', message);
+    res.status(500).json({ error: message });
+  }
+});
+
+router.get('/history', async (_req, res) => {
+  try {
+    const stories = await getStoriesFromCatalog();
+    res.json({ stories });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('[API] /api/story/history - error:', message);
     res.status(500).json({ error: message });
   }
 });

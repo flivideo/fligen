@@ -31,6 +31,7 @@ import catalogRouter from './routes/catalog.js';
 import n8nRouter, { isN8nConfigured } from './routes/n8n.js';
 import batchRouter from './routes/batch.js';
 import queryRouter from './routes/query/index.js';
+import thumbnailRouter from './routes/thumbnail.js';
 
 const PORT = env.PORT;
 const CLIENT_URL = env.CLIENT_URL;
@@ -79,6 +80,7 @@ app.use('/api/catalog', catalogRouter);
 app.use('/api/n8n', n8nRouter);
 app.use('/api/image', batchRouter);      // FR-25 batch routes
 app.use('/api/query', queryRouter);      // FR-25 query routes
+app.use('/api/thumbnail', thumbnailRouter);
 
 // Socket.io
 io.on('connection', async (socket) => {

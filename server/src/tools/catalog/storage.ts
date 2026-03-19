@@ -28,6 +28,7 @@ export async function initCatalog(): Promise<void> {
   await fs.mkdir(path.join(CATALOG_DIR, 'narration'), { recursive: true });
   await fs.mkdir(path.join(CATALOG_DIR, 'thumbnails'), { recursive: true });
   await fs.mkdir(path.join(CATALOG_DIR, 'n8n'), { recursive: true });
+  await fs.mkdir(path.join(CATALOG_DIR, 'stories'), { recursive: true });
 
   const exists = await fs
     .access(INDEX_FILE)
