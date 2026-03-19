@@ -35,6 +35,7 @@ export function calcWidth(height: number, ratioW: number, ratioH: number): numbe
 }
 
 export function dimsToRatio(width: number, height: number): { ratio: string; decimal: number } {
+  if (!width || !height) return { ratio: 'N/A', decimal: 0 };
   const d = gcd(width, height);
   return { ratio: `${width / d}:${height / d}`, decimal: parseFloat((width / height).toFixed(3)) };
 }

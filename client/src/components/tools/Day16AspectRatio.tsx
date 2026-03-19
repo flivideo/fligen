@@ -35,7 +35,7 @@ export default function Day16AspectRatio() {
           onCalculate={calc.calculate}
           onSwap={calc.swapDimensions}
         />
-        <VisualPreview width={calc.width} height={calc.height} />
+        <VisualPreview width={calc.width} height={calc.height} computedRatio={calc.computedRatio} />
       </div>
 
       <PlatformRecommendations onSelect={calc.applyResolution} />

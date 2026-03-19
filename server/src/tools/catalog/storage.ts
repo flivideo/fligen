@@ -7,6 +7,15 @@ const ASSETS_DIR = path.resolve(process.cwd(), '..', 'assets');
 const CATALOG_DIR = path.join(ASSETS_DIR, 'catalog');
 const INDEX_FILE = path.join(CATALOG_DIR, 'index.json');
 
+const TYPE_DIRS: Record<Asset['type'], string> = {
+  image: 'images',
+  video: 'videos',
+  music: 'music',
+  narration: 'narration',
+  thumbnail: 'thumbnails',
+  story: 'stories',
+};
+
 // Serialised write queue — prevents concurrent load→mutate→save races
 let writeQueue: Promise<void> = Promise.resolve();
 
@@ -122,7 +131,7 @@ export async function deleteAsset(id: string): Promise<boolean> {
     const asset = catalog.assets[index];
 
     // Delete file
-    const filePath = path.join(CATALOG_DIR, asset.type + 's', asset.filename);
+    const filePath = path.join(CATALOG_DIR, TYPE_DIRS[asset.type], asset.filename);
     await fs.unlink(filePath).catch(() => {}); // Ignore errors
 
     // Remove from catalog

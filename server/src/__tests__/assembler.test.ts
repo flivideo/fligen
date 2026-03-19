@@ -106,6 +106,45 @@ describe('buildFFmpegArgs', () => {
     expect(filterValue).not.toContain('afade');
   });
 
+  it('throws when a video path contains path traversal', () => {
+    expect(() =>
+      buildFFmpegArgs(
+        {
+          videos: ['/assets/../../../etc/passwd'],
+          music: { file: '/assets/catalog/music/track.mp3', volume: 0.8 },
+        },
+        '/tmp/out.mp4'
+      )
+    ).toThrow(/path traversal/i);
+  });
+
+  it('throws when music path contains path traversal', () => {
+    expect(() =>
+      buildFFmpegArgs(
+        {
+          videos: ['/assets/catalog/videos/clip.mp4'],
+          music: { file: '/assets/../../../etc/passwd', volume: 0.8 },
+        },
+        '/tmp/out.mp4'
+      )
+    ).toThrow(/path traversal/i);
+  });
+
+  it('includes zoompan filter when enableZoom is true and targetDuration > 0', () => {
+    const args = buildFFmpegArgs(
+      {
+        videos: ['/assets/catalog/videos/clip.mp4'],
+        music: { file: '/assets/catalog/music/track.mp3', volume: 0.8 },
+        targetDuration: 10,
+        enableZoom: true,
+      },
+      '/tmp/out.mp4'
+    );
+    const filterComplex = args[args.indexOf('-filter_complex') + 1];
+    expect(filterComplex).toContain('zoompan');
+    expect(filterComplex).toContain('tpad');
+  });
+
   it('paths with spaces are passed as discrete string args — no shell quoting wrapping', () => {
     const req: AssemblyRequest = {
       videos: ['/assets/catalog/videos/my clip.mp4'],

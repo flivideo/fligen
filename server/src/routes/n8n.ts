@@ -10,6 +10,14 @@ import type { Asset } from '@fligen/shared';
 
 const router = Router();
 
+// Validate that a URL supplied by an external webhook is https://.
+// Prevents SSRF via file://, http://169.254.169.254/…, or internal hosts.
+function assertHttpsUrl(url: string, field: string): void {
+  if (!url.startsWith('https://')) {
+    throw new Error(`${field} must be an https:// URL (got: ${url.slice(0, 40)})`);
+  }
+}
+
 // Check if N8N webhook is configured
 function isN8nConfigured(): boolean {
   return !!process.env.N8N_WEBHOOK_URL;
@@ -151,6 +159,7 @@ router.post('/workflow', async (req, res) => {
 
         // Save Image 1 (start frame) to workflow folder
         if (data.image1) {
+          assertHttpsUrl(data.image1, 'data.image1');
           const imageBuffer = await fetch(data.image1).then((r) => r.arrayBuffer());
           const filename = 'image-start.png';
           const filePath = path.join(workflowFolder, filename);
@@ -182,6 +191,7 @@ router.post('/workflow', async (req, res) => {
 
         // Save Image 2 (end frame) to workflow folder
         if (data.image2) {
+          assertHttpsUrl(data.image2, 'data.image2');
           const imageBuffer = await fetch(data.image2).then((r) => r.arrayBuffer());
           const filename = 'image-end.png';
           const filePath = path.join(workflowFolder, filename);
@@ -214,6 +224,7 @@ router.post('/workflow', async (req, res) => {
 
         // Save Video to workflow folder
         if (data.video) {
+          assertHttpsUrl(data.video, 'data.video');
           const videoBuffer = await fetch(data.video).then((r) => r.arrayBuffer());
           const filename = 'video.mp4';
           const filePath = path.join(workflowFolder, filename);

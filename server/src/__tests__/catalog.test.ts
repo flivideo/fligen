@@ -57,7 +57,7 @@ vi.mock('fs/promises', () => {
 });
 
 // Import AFTER mocking so the module picks up the mocked fs
-import { filterAssets, addAsset, initCatalog, getAllAssets } from '../tools/catalog/storage.js';
+import { filterAssets, addAsset, initCatalog, getAllAssets, loadCatalog } from '../tools/catalog/storage.js';
 import { saveStoryToCatalog } from '../tools/story/storage.js';
 import type { Asset } from '@fligen/shared';
 import type { AssemblyRequest } from '@fligen/shared';
@@ -177,6 +177,27 @@ describe('filterAssets', () => {
     // f1 < Jun → included; f2 == Jun → included; f3 > Jun → excluded
     expect(result).toHaveLength(2);
     expect(result.map((a) => a.id).sort()).toEqual(['f1', 'f2'].sort());
+  });
+});
+
+// ---------------------------------------------------------------------------
+// addAsset tests
+// ---------------------------------------------------------------------------
+
+describe('addAsset', () => {
+  it('serialises concurrent addAsset calls — both assets persist in catalog', async () => {
+    await initCatalog();
+
+    const asset1 = makeAsset({ id: 'concurrent-1', filename: 'concurrent-1.png' });
+    const asset2 = makeAsset({ id: 'concurrent-2', filename: 'concurrent-2.png' });
+
+    // Fire both simultaneously — the write queue must serialise them
+    await Promise.all([addAsset(asset1), addAsset(asset2)]);
+
+    const catalog = await loadCatalog();
+    const ids = catalog.assets.map((a: Asset) => a.id);
+    expect(ids).toContain(asset1.id);
+    expect(ids).toContain(asset2.id);
   });
 });
 

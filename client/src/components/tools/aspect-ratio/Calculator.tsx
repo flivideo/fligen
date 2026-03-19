@@ -38,7 +38,10 @@ export default function Calculator({
           <input
             type="number"
             value={width}
-            onChange={e => onWidthChange(Number(e.target.value))}
+            onChange={e => {
+              const v = Number(e.target.value);
+              if (v > 0) onWidthChange(v);
+            }}
             onBlur={handleWidthBlur}
             className={inputClass}
             min={1}
@@ -49,7 +52,10 @@ export default function Calculator({
           <input
             type="number"
             value={height}
-            onChange={e => onHeightChange(Number(e.target.value))}
+            onChange={e => {
+              const v = Number(e.target.value);
+              if (v > 0) onHeightChange(v);
+            }}
             onBlur={handleHeightBlur}
             className={inputClass}
             min={1}

@@ -1,9 +1,10 @@
 interface Props {
   width: number;
   height: number;
+  computedRatio: { ratio: string; decimal: number };
 }
 
-export default function VisualPreview({ width, height }: Props) {
+export default function VisualPreview({ width, height, computedRatio }: Props) {
   const aspectRatio = `${width} / ${height}`;
   const isPortrait = height > width;
 
@@ -35,8 +36,8 @@ export default function VisualPreview({ width, height }: Props) {
         </div>
       </div>
       <p className="text-center text-sm text-slate-300">
-        Ratio: <span className="text-yellow-400 font-semibold">{width}:{height}</span>
-        {' '}· Decimal: <span className="text-yellow-400 font-semibold">{(width / height).toFixed(3)}</span>
+        Ratio: <span className="text-yellow-400 font-semibold">{computedRatio.ratio}</span>
+        {' '}· Decimal: <span className="text-yellow-400 font-semibold">{computedRatio.decimal}</span>
       </p>
     </div>
   );

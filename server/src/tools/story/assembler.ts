@@ -61,9 +61,10 @@ export async function assembleVideo(request: AssemblyRequest): Promise<AssemblyR
 
     // Generate output filename
     const timestamp = Date.now();
-    const outputName = request.outputName
-      ? `${request.outputName}-${timestamp}.mp4`
-      : `story-${timestamp}.mp4`;
+    // Sanitise outputName — strip path separators and limit to safe characters
+    const rawOutputName = request.outputName ?? '';
+    const safeOutputName = rawOutputName.replace(/[^A-Za-z0-9_-]/g, '').slice(0, 100) || 'story';
+    const outputName = `${safeOutputName}-${timestamp}.mp4`;
 
     const outputPath = path.join(VIDEO_SCENES_DIR, outputName);
 
