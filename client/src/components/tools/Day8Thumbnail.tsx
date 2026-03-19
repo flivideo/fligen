@@ -1,4 +1,5 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import type { Asset } from '@fligen/shared';
 import { useShots } from '../../hooks/useShots';
 import {
   type TextPanel,
@@ -87,6 +88,21 @@ export function Day8Thumbnail() {
   const [selectedLayer, setSelectedLayer] = useState<LayerId>('main-image');
   const [visibility, setVisibility] = useState<LayerVisibility>(initialVisibility);
   const [isExporting, setIsExporting] = useState(false);
+  const [historyAssets, setHistoryAssets] = useState<Asset[]>([]);
+
+  const fetchHistory = async () => {
+    try {
+      const res = await fetch('http://localhost:5401/api/thumbnail/history');
+      const data = await res.json();
+      setHistoryAssets(data.assets || []);
+    } catch (err) {
+      console.error('[Thumbnail] Failed to fetch history:', err);
+    }
+  };
+
+  useEffect(() => {
+    fetchHistory();
+  }, []);
 
   const handleToggleVisibility = (layer: LayerId) => {
     setVisibility((prev) => ({ ...prev, [layer]: !prev[layer] }));
@@ -138,10 +154,11 @@ export function Day8Thumbnail() {
               isExporting={isExporting}
               setIsExporting={setIsExporting}
               onReset={handleReset}
+              onSave={fetchHistory}
             />
 
-            {/* History (FR-19 placeholder) */}
-            <ThumbnailHistory />
+            {/* History (FR-19) */}
+            <ThumbnailHistory assets={historyAssets} />
           </div>
 
           {/* Right: Layer Stack + Config */}

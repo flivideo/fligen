@@ -1,14 +1,12 @@
 # Project Backlog — FliGen
 
 **Last updated**: 2026-03-19
-**Total**: 32 | Pending: 4 | In Progress: 0 | Done: 28 | Deferred: 0 | Rejected: 0
+**Total**: 32 | Pending: 2 | In Progress: 0 | Done: 30 | Deferred: 0 | Rejected: 0
 
 ---
 
 ## Pending
 
-- [ ] B020 — FR-19: Thumbnail Persistence & History | Priority: medium
-- [ ] B021 — FR-20: Story Builder - Video Assembly (FFmpeg pipeline) | Priority: medium
 - [ ] B022 — FR-21: Thumbnail Typography Enhancements | Priority: low
 - [ ] B025 — FR-24: Aspect Ratio Calculator | Priority: low
 
@@ -50,6 +48,8 @@
 - [x] B030 — STRUCTURAL: Extract routes from index.ts (1,487→197 lines) into 10 route files | Completed: fix-blockers
 - [x] B031 — STRUCTURAL: Split Day8Thumbnail.tsx (1,577→168 lines) into 5 sub-components | Completed: fix-blockers
 - [x] B032 — TESTS: Add behaviour tests — 38 passing (was 8); assembler.test.ts + catalog.test.ts | Completed: fix-blockers
+- [x] B020 — FR-19: Thumbnail Persistence & History — Save to Catalog + history grid UI | Completed: story-and-thumbnails
+- [x] B021 — FR-20: Story Builder - Video Assembly (FFmpeg pipeline) — assembly endpoint + client URL fix | Completed: story-and-thumbnails
 
 ---
 

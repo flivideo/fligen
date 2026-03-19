@@ -5,14 +5,13 @@
 **Target**: FFmpeg assembly end-to-end working in browser; thumbnails saved to catalog with history UI; build clean; tests passing
 
 ## Summary
-- Total: 8 | Complete: 7 | In Progress: 0 | Pending: 1 | Failed: 0
+- Total: 8 | Complete: 8 | In Progress: 0 | Pending: 0 | Failed: 0
 
 ---
 
 ## Pending
 
-### Wave 3 — FR-19 client (single unit — tightly coupled components)
-- [~] thumbnail-fr19-client — Implement ThumbnailHistory (props: Asset[], rendering); add Save to Catalog button in ThumbnailExport (POST /api/thumbnail/save); wire history state + refresh in Day8Thumbnail.tsx
+*(none — campaign complete)*
 
 ---
 
@@ -31,6 +30,7 @@
 - [x] story-history-route — GET /api/story/history added to story.ts; getStoriesFromCatalog imported; 38 tests pass
 - [x] thumbnail-server-route — server/src/routes/thumbnail.ts created (POST /save + GET /history); mounted at /api/thumbnail in index.ts; catalog/stories/ added to initCatalog; 38 tests pass
 - [x] fix-toBlob-race — canvas.toBlob promisified in handleExport + handleCopyToClipboard; finally runs after blob handled; nested catch removed; TODO comments removed; 4 client tests pass
+- [x] thumbnail-fr19-client — ThumbnailHistory implemented (grid + empty state + hover timestamps); ThumbnailExport: isSaving state + handleSave + green Save to Catalog button; Day8Thumbnail: historyAssets state + fetchHistory on mount + onSave refresh; 42 tests pass
 
 ---
 
