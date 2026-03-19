@@ -198,10 +198,10 @@ describe('saveStoryToCatalog', () => {
     outputName: 'my-story',
   };
 
-  it('saved asset has type: video', async () => {
+  it('saved asset has type: story', async () => {
     await initCatalog();
     const asset = await saveStoryToCatalog(assemblyResult, assemblyRequest);
-    expect(asset.type).toBe('video');
+    expect(asset.type).toBe('story');
   });
 
   it('saved asset has status: ready', async () => {
@@ -219,9 +219,10 @@ describe('saveStoryToCatalog', () => {
     expect(found).toBeDefined();
   });
 
-  it('saved asset metadata.type is story', async () => {
+  it('saved asset type field (not metadata) identifies it as story', async () => {
     await initCatalog();
     const asset = await saveStoryToCatalog(assemblyResult, assemblyRequest);
-    expect(asset.metadata?.type).toBe('story');
+    expect(asset.type).toBe('story');
+    expect(asset.metadata?.type).toBeUndefined();
   });
 });

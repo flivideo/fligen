@@ -215,7 +215,7 @@ export interface RefinePromptsResponse {
 
 export interface Asset {
   id: string;
-  type: 'image' | 'video' | 'music' | 'narration' | 'thumbnail';
+  type: 'image' | 'video' | 'music' | 'narration' | 'thumbnail' | 'story';
   filename: string;
   url: string;
   provider: string;
@@ -268,9 +268,9 @@ export interface AssemblyRequest {
 
 export interface AssemblyResponse {
   success: boolean;
-  outputPath: string;
-  duration: number; // seconds
-  catalogId: string;
+  assetUrl: string;    // served HTTP path: /assets/catalog/stories/filename.mp4
+  assetId: string;     // catalog asset id
+  duration: number;
   error?: string;
 }
 

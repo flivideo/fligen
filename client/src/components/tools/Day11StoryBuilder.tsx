@@ -170,7 +170,7 @@ export default function Day11StoryBuilder() {
     if (!assembledVideo) return;
 
     try {
-      const url = `http://localhost:5401/${assembledVideo.outputPath}`;
+      const url = `http://localhost:5401${assembledVideo.assetUrl}`;
 
       // Fetch the video file
       const response = await fetch(url);
@@ -180,7 +180,7 @@ export default function Day11StoryBuilder() {
       const downloadUrl = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = downloadUrl;
-      link.download = assembledVideo.outputPath.split('/').pop() || 'story.mp4';
+      link.download = assembledVideo.assetUrl.split('/').pop() || 'story.mp4';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -502,13 +502,13 @@ export default function Day11StoryBuilder() {
             <h3 className="text-xl font-semibold text-white mb-4">Your Story</h3>
             <div className="bg-slate-800/30 border border-slate-700/30 rounded-lg p-6">
               <video
-                src={`http://localhost:5401/${assembledVideo.outputPath}`}
+                src={`http://localhost:5401${assembledVideo.assetUrl}`}
                 controls
                 className="w-full rounded-lg mb-4"
               />
               <div className="flex items-center justify-between text-sm text-slate-400 mb-4">
                 <span>Duration: {assembledVideo.duration.toFixed(1)}s</span>
-                <span className="text-xs opacity-50">{assembledVideo.catalogId}</span>
+                <span className="text-xs opacity-50">{assembledVideo.assetId}</span>
               </div>
               <button
                 onClick={handleDownload}

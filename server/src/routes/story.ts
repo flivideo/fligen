@@ -30,13 +30,13 @@ router.post('/assemble', async (req, res) => {
     }
 
     // Save to catalog
-    await saveStoryToCatalog(result, assemblyRequest);
+    const asset = await saveStoryToCatalog(result, assemblyRequest);
 
     const response: AssemblyResponse = {
       success: true,
-      outputPath: result.outputPath,
+      assetUrl: asset.url,
+      assetId: asset.id,
       duration: result.duration,
-      catalogId: result.catalogId,
     };
 
     res.json(response);

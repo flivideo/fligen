@@ -19,12 +19,12 @@ export async function saveStoryToCatalog(
   // The video file is already saved by the assembler
   // We just need to move it to the catalog and add metadata
 
-  const id = catalog.generateAssetId('video');
+  const id = catalog.generateAssetId('story');
 
   // Move file from video-scenes to catalog/stories
   const assetsDir = path.resolve(process.cwd(), '..', 'assets');
   const oldPath = path.join(assetsDir, result.outputPath);
-  const newFilename = catalog.generateFilename('video', 'ffmpeg', 'assembled', 'mp4');
+  const newFilename = catalog.generateFilename('story', 'ffmpeg', 'assembled', 'mp4');
   const newPath = path.join(assetsDir, 'catalog', 'stories', newFilename);
 
   // Ensure catalog/stories directory exists
@@ -35,7 +35,7 @@ export async function saveStoryToCatalog(
 
   const asset: Asset = {
     id,
-    type: 'video',
+    type: 'story',
     filename: newFilename,
     url: `/assets/catalog/stories/${newFilename}`,
     provider: 'ffmpeg',
@@ -48,7 +48,6 @@ export async function saveStoryToCatalog(
     generationTimeMs: Date.now() - startTime,
     metadata: {
       duration: result.duration,
-      type: 'story',
       sourceVideos: request.videos,
       music: {
         file: request.music.file,
@@ -81,7 +80,7 @@ export async function getStoriesFromCatalog(): Promise<Asset[]> {
   try {
     const allAssets = await catalog.getAllAssets();
 
-    return allAssets.filter((asset) => asset.type === 'video' && asset.metadata?.type === 'story');
+    return allAssets.filter((asset) => asset.type === 'story');
   } catch (error) {
     console.error('[Story Storage] Error reading catalog:', error);
     return [];
