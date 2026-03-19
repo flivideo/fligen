@@ -6,6 +6,19 @@
 
 ---
 
+## Pre-conditions
+
+**B027–B032 resolved** by the `fix-blockers` campaign (2026-03-19). Build clean, 38 tests passing.
+
+Two new issues surfaced by the post-campaign audit must be resolved before this campaign ships (not before it starts):
+
+1. **Path traversal in `assembler.ts` `resolveAssetPath`** — `path.join` without prefix assertion; `../../` escapes assets tree. Fix: `path.resolve` + `startsWith(ASSETS_DIR)` guard. This function's call surface expands directly as story routes add more user-supplied paths.
+2. **Write-queue concurrency test missing** — add `Promise.all([addAsset(...), addAsset(...)])` test to `catalog.test.ts` before any concurrent catalog feature ships.
+
+These can be done as the first work units of this campaign or as a pre-flight — agent's choice.
+
+---
+
 ## Suggested Work Units
 
 ### High Priority
@@ -31,7 +44,7 @@
 - FFmpeg availability: verify with `which ffmpeg` before building — may need brew install
 - Catalog save pattern: copy `server/src/tools/image/save-to-catalog.ts` — same pattern for thumbnails
 - AGENTS.md: `docs/planning/AGENTS.md` — read before starting any work unit
-- Baseline: build CLEAN, 8 tests passing as of 2026-03-19
+- Baseline: build CLEAN, 38 tests passing as of 2026-03-19 (fix-blockers campaign complete)
 
 ---
 

@@ -1,7 +1,7 @@
 # Project Backlog — FliGen
 
 **Last updated**: 2026-03-19
-**Total**: 26 | Pending: 4 | In Progress: 0 | Done: 22 | Deferred: 0 | Rejected: 0
+**Total**: 32 | Pending: 4 | In Progress: 0 | Done: 28 | Deferred: 0 | Rejected: 0
 
 ---
 
@@ -44,6 +44,12 @@
 - [x] B023 — FR-22: Brand Text Generator HTML (canvas pixel glyphs, Day 13) | Completed: day-13
 - [x] B024 — FR-23: Widget Generator (HTML template system, Day 14) | Completed: day-14
 - [x] B026 — FR-25: Batch Generation and Query API (CSV queue, Day 15) | Completed: day-15
+- [x] B027 — BLOCKER: Fix catalog/storage.ts concurrent write corruption — enqueueWrite helper | Completed: fix-blockers
+- [x] B028 — BLOCKER: Fix story/assembler.ts shell injection — buildFFmpegArgs() returns string[]; execFileAsync | Completed: fix-blockers
+- [x] B029 — BLOCKER: Fix server/src/index.ts unvalidated PID in cleanupPort | Completed: fix-blockers
+- [x] B030 — STRUCTURAL: Extract routes from index.ts (1,487→197 lines) into 10 route files | Completed: fix-blockers
+- [x] B031 — STRUCTURAL: Split Day8Thumbnail.tsx (1,577→168 lines) into 5 sub-components | Completed: fix-blockers
+- [x] B032 — TESTS: Add behaviour tests — 38 passing (was 8); assembler.test.ts + catalog.test.ts | Completed: fix-blockers
 
 ---
 

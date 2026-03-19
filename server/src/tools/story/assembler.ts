@@ -1,12 +1,12 @@
 // Story Builder - FFmpeg Video Assembly
 
-import { exec } from 'child_process';
+import { execFile } from 'child_process';
 import { promisify } from 'util';
 import * as path from 'path';
 import * as fs from 'fs';
 import { AssemblyRequest, AssemblyResult } from './types.js';
 
-const execAsync = promisify(exec);
+const execFileAsync = promisify(execFile);
 
 const ASSETS_DIR = path.join(process.cwd(), '..', 'assets');
 const VIDEO_SCENES_DIR = path.join(ASSETS_DIR, 'video-scenes');
@@ -69,13 +69,13 @@ export async function assembleVideo(request: AssemblyRequest): Promise<AssemblyR
       fs.mkdirSync(VIDEO_SCENES_DIR, { recursive: true });
     }
 
-    // Build FFmpeg command
-    const ffmpegCommand = buildFFmpegCommand(request, outputPath);
+    // Build FFmpeg args
+    const ffmpegArgs = buildFFmpegArgs(request, outputPath);
 
-    console.log('[Story Assembler] Executing FFmpeg command:', ffmpegCommand);
+    console.log('[Story Assembler] Executing FFmpeg command:', 'ffmpeg', ffmpegArgs.join(' '));
 
     // Execute FFmpeg
-    const { stderr } = await execAsync(ffmpegCommand);
+    const { stderr } = await execFileAsync('ffmpeg', ffmpegArgs);
 
     if (stderr && !stderr.includes('frame=') && !stderr.includes('time=')) {
       console.warn('[Story Assembler] FFmpeg stderr:', stderr);
@@ -106,9 +106,9 @@ export async function assembleVideo(request: AssemblyRequest): Promise<AssemblyR
 }
 
 /**
- * Builds the FFmpeg command based on the request
+ * Builds the FFmpeg args array based on the request
  */
-function buildFFmpegCommand(request: AssemblyRequest, outputPath: string): string {
+export function buildFFmpegArgs(request: AssemblyRequest, outputPath: string): string[] {
   const { videos, music, narration, targetDuration, enableZoom, enableFadeOut } = request;
 
   // Helper to resolve asset paths
@@ -121,30 +121,30 @@ function buildFFmpegCommand(request: AssemblyRequest, outputPath: string): strin
   const videoPaths = videos.map((v) => resolveAssetPath(v));
   const musicPath = resolveAssetPath(music.file);
 
-  let cmd = 'ffmpeg';
+  const args: string[] = [];
 
   // Add video inputs
   videoPaths.forEach((video) => {
-    cmd += ` -i "${video}"`;
+    args.push('-i', video);
   });
 
   // Add music input with optional trimming
   if (music.startTime !== undefined || music.endTime !== undefined) {
     if (music.startTime !== undefined) {
-      cmd += ` -ss ${music.startTime}`;
+      args.push('-ss', String(music.startTime));
     }
     if (music.endTime !== undefined) {
-      cmd += ` -to ${music.endTime}`;
+      args.push('-to', String(music.endTime));
     }
   }
-  cmd += ` -i "${musicPath}"`;
+  args.push('-i', musicPath);
 
   // Add narration input if enabled
   const narrationEnabled = narration?.enabled && narration?.file;
   let narrationPath: string | undefined;
   if (narrationEnabled) {
     narrationPath = resolveAssetPath(narration!.file);
-    cmd += ` -i "${narrationPath}"`;
+    args.push('-i', narrationPath);
   }
 
   // Build filter_complex
@@ -200,25 +200,25 @@ function buildFFmpegCommand(request: AssemblyRequest, outputPath: string): strin
     filterComplex += `[amix]acopy[a]`;
   }
 
-  cmd += ` -filter_complex "${filterComplex}"`;
-  cmd += ` -map "[v]" -map "[a]"`;
+  args.push('-filter_complex', filterComplex);
+  args.push('-map', '[v]', '-map', '[a]');
 
   // Output settings
-  cmd += ` -c:v libx264 -preset fast -crf 23`;
-  cmd += ` -c:a aac -b:a 192k`;
+  args.push('-c:v', 'libx264', '-preset', 'fast', '-crf', '23');
+  args.push('-c:a', 'aac', '-b:a', '192k');
 
   // Duration control
   if (targetDuration !== undefined && targetDuration > 0) {
     // Use exact target duration
-    cmd += ` -t ${targetDuration}`;
+    args.push('-t', String(targetDuration));
   } else {
     // Stop encoding when shortest stream ends (video)
-    cmd += ` -shortest`;
+    args.push('-shortest');
   }
 
-  cmd += ` -y "${outputPath}"`;
+  args.push('-y', outputPath);
 
-  return cmd;
+  return args;
 }
 
 /**
@@ -226,8 +226,13 @@ function buildFFmpegCommand(request: AssemblyRequest, outputPath: string): strin
  */
 async function getVideoDuration(filePath: string): Promise<number> {
   try {
-    const cmd = `ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "${filePath}"`;
-    const { stdout } = await execAsync(cmd);
+    const args = [
+      '-v', 'error',
+      '-show_entries', 'format=duration',
+      '-of', 'default=noprint_wrappers=1:nokey=1',
+      filePath,
+    ];
+    const { stdout } = await execFileAsync('ffprobe', args);
     return parseFloat(stdout.trim());
   } catch (error) {
     console.error('[Story Assembler] Error getting duration:', error);

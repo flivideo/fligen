@@ -7,6 +7,19 @@ const ASSETS_DIR = path.resolve(process.cwd(), '..', 'assets');
 const CATALOG_DIR = path.join(ASSETS_DIR, 'catalog');
 const INDEX_FILE = path.join(CATALOG_DIR, 'index.json');
 
+// Serialised write queue — prevents concurrent load→mutate→save races
+let writeQueue: Promise<void> = Promise.resolve();
+
+function enqueueWrite<T>(operation: () => Promise<T>): Promise<T> {
+  const result = writeQueue.then(operation);
+  // Keep the chain alive even if operation rejects
+  writeQueue = result.then(
+    () => {},
+    () => {}
+  );
+  return result;
+}
+
 // Initialize catalog
 export async function initCatalog(): Promise<void> {
   await fs.mkdir(path.join(CATALOG_DIR, 'images'), { recursive: true });
@@ -44,21 +57,25 @@ async function saveCatalog(catalog: AssetCatalog): Promise<void> {
 
 // Add asset
 export async function addAsset(asset: Asset): Promise<Asset> {
-  const catalog = await loadCatalog();
-  catalog.assets.push(asset);
-  await saveCatalog(catalog);
-  return asset;
+  return enqueueWrite(async () => {
+    const catalog = await loadCatalog();
+    catalog.assets.push(asset);
+    await saveCatalog(catalog);
+    return asset;
+  });
 }
 
 // Update asset
 export async function updateAsset(id: string, updates: Partial<Asset>): Promise<Asset | null> {
-  const catalog = await loadCatalog();
-  const index = catalog.assets.findIndex((a) => a.id === id);
-  if (index === -1) return null;
+  return enqueueWrite(async () => {
+    const catalog = await loadCatalog();
+    const index = catalog.assets.findIndex((a) => a.id === id);
+    if (index === -1) return null;
 
-  catalog.assets[index] = { ...catalog.assets[index], ...updates };
-  await saveCatalog(catalog);
-  return catalog.assets[index];
+    catalog.assets[index] = { ...catalog.assets[index], ...updates };
+    await saveCatalog(catalog);
+    return catalog.assets[index];
+  });
 }
 
 // Get asset by ID
@@ -96,20 +113,22 @@ export async function filterAssets(filter: {
 
 // Delete asset
 export async function deleteAsset(id: string): Promise<boolean> {
-  const catalog = await loadCatalog();
-  const index = catalog.assets.findIndex((a) => a.id === id);
-  if (index === -1) return false;
+  return enqueueWrite(async () => {
+    const catalog = await loadCatalog();
+    const index = catalog.assets.findIndex((a) => a.id === id);
+    if (index === -1) return false;
 
-  const asset = catalog.assets[index];
+    const asset = catalog.assets[index];
 
-  // Delete file
-  const filePath = path.join(CATALOG_DIR, asset.type + 's', asset.filename);
-  await fs.unlink(filePath).catch(() => {}); // Ignore errors
+    // Delete file
+    const filePath = path.join(CATALOG_DIR, asset.type + 's', asset.filename);
+    await fs.unlink(filePath).catch(() => {}); // Ignore errors
 
-  // Remove from catalog
-  catalog.assets.splice(index, 1);
-  await saveCatalog(catalog);
-  return true;
+    // Remove from catalog
+    catalog.assets.splice(index, 1);
+    await saveCatalog(catalog);
+    return true;
+  });
 }
 
 // Generate unique asset ID

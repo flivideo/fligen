@@ -1,24 +1,14 @@
+// Real behaviour tests have moved to dedicated files:
+//   assembler.test.ts  — buildFFmpegArgs() (pure function, no I/O)
+//   catalog.test.ts    — filterAssets() and saveStoryToCatalog()
+//
+// This file is intentionally minimal.  Add integration tests here
+// (e.g. HTTP endpoint smoke tests via supertest) as the project grows.
+
 import { describe, it, expect } from 'vitest';
 
-describe('Server Tests', () => {
-  it('example test - math works', () => {
-    expect(1 + 1).toBe(2);
-  });
-
-  it('example test - strings work', () => {
-    expect('hello').toBe('hello');
+describe('Server smoke test', () => {
+  it('process is Node.js', () => {
+    expect(typeof process.version).toBe('string');
   });
 });
-
-// TODO: Add integration tests for API endpoints
-// Example:
-// import supertest from 'supertest';
-// import { app } from '../index';
-//
-// describe('Health Check', () => {
-//   it('GET /health returns ok', async () => {
-//     const response = await supertest(app).get('/health');
-//     expect(response.status).toBe(200);
-//     expect(response.body.status).toBe('ok');
-//   });
-// });
