@@ -4,12 +4,22 @@ import { execFile } from 'child_process';
 import { promisify } from 'util';
 import * as path from 'path';
 import * as fs from 'fs';
-import { AssemblyRequest, AssemblyResult } from './types.js';
+import type { AssemblyRequest } from '@fligen/shared';
+import { AssemblyResult } from './types.js';
 
 const execFileAsync = promisify(execFile);
 
-const ASSETS_DIR = path.join(process.cwd(), '..', 'assets');
+const ASSETS_DIR = path.resolve(process.cwd(), '..', 'assets');
 const VIDEO_SCENES_DIR = path.join(ASSETS_DIR, 'video-scenes');
+
+function resolveAssetPath(urlPath: string): string {
+  const relativePath = urlPath.replace(/^\/assets\//, '');
+  const resolvedPath = path.resolve(ASSETS_DIR, relativePath);
+  if (!resolvedPath.startsWith(ASSETS_DIR + path.sep)) {
+    throw new Error(`Path traversal detected: ${urlPath}`);
+  }
+  return resolvedPath;
+}
 
 /**
  * Assembles multiple videos with music and optional narration using FFmpeg
@@ -26,13 +36,6 @@ export async function assembleVideo(request: AssemblyRequest): Promise<AssemblyR
     if (!request.music?.file) {
       throw new Error('Music file is required');
     }
-
-    // Helper to resolve asset paths (strips /assets/ prefix and resolves relative to project root)
-    const resolveAssetPath = (urlPath: string): string => {
-      // Strip leading /assets/ if present
-      const relativePath = urlPath.replace(/^\/assets\//, '');
-      return path.join(ASSETS_DIR, relativePath);
-    };
 
     // Ensure all files exist
     for (const video of request.videos) {
@@ -110,12 +113,6 @@ export async function assembleVideo(request: AssemblyRequest): Promise<AssemblyR
  */
 export function buildFFmpegArgs(request: AssemblyRequest, outputPath: string): string[] {
   const { videos, music, narration, targetDuration, enableZoom, enableFadeOut } = request;
-
-  // Helper to resolve asset paths
-  const resolveAssetPath = (urlPath: string): string => {
-    const relativePath = urlPath.replace(/^\/assets\//, '');
-    return path.join(ASSETS_DIR, relativePath);
-  };
 
   // Convert URL paths to absolute file paths
   const videoPaths = videos.map((v) => resolveAssetPath(v));

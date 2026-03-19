@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { buildFFmpegArgs } from '../tools/story/assembler.js';
-import type { AssemblyRequest } from '../tools/story/types.js';
+import type { AssemblyRequest } from '@fligen/shared';
 
 // Pure function — no I/O, no mocks needed.
 // All path values use /assets/ prefix so resolveAssetPath strips it and joins to ASSETS_DIR.

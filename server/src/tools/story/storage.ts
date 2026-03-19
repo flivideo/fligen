@@ -4,7 +4,8 @@ import * as catalog from '../catalog/index.js';
 import fs from 'fs/promises';
 import path from 'path';
 import type { Asset } from '@fligen/shared';
-import { AssemblyRequest, AssemblyResult } from './types.js';
+import type { AssemblyRequest } from '@fligen/shared';
+import { AssemblyResult } from './types.js';
 
 /**
  * Saves assembled video to the unified catalog

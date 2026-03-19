@@ -5,18 +5,14 @@
 **Target**: FFmpeg assembly end-to-end working in browser; thumbnails saved to catalog with history UI; build clean; tests passing
 
 ## Summary
-- Total: 8 | Complete: 0 | In Progress: 0 | Pending: 8 | Failed: 0
+- Total: 8 | Complete: 2 | In Progress: 0 | Pending: 6 | Failed: 0
 
 ---
 
 ## Pending
 
-### Wave 0 — Pre-flight (run in parallel — no file conflicts)
-- [ ] fix-path-traversal — Extract `resolveAssetPath` to module scope in assembler.ts; add `startsWith(ASSETS_DIR)` prefix assertion; apply to both call sites; throw 400 if path escapes
-- [ ] dedupe-story-types — Remove MusicConfig/NarrationConfig/AssemblyRequest from server/src/tools/story/types.ts (duplicates of shared); import from @fligen/shared; keep AssemblyResult + AssemblyProgress as internal-only types
-
 ### Wave 1 — Contract alignment (sequential — both touch shared/src/index.ts)
-- [ ] fix-story-contracts — Add 'story' to Asset.type union in shared; add assetUrl+assetId fields to AssemblyResponse in shared; update saveStoryToCatalog to use type:'story'; update getStoriesFromCatalog to filter by type:'story' directly
+- [~] fix-story-contracts — Add 'story' to Asset.type union in shared; add assetUrl+assetId fields to AssemblyResponse in shared; update saveStoryToCatalog to use type:'story'; update getStoriesFromCatalog to filter by type:'story' directly
 - [ ] fix-story-client — Update story.ts route to capture asset returned by saveStoryToCatalog and return asset.url + asset.id in AssemblyResponse; update Day11StoryBuilder to use result.assetUrl for video src and download link (fixes 404)
 
 ### Wave 2 — Server endpoints + toBlob fix (run in parallel — no file conflicts)
@@ -37,7 +33,8 @@
 
 ## Complete
 
-*(coordinator moves items here with [x], adds outcome notes)*
+- [x] fix-path-traversal — resolveAssetPath extracted to module scope; ASSETS_DIR uses path.resolve; startsWith prefix assertion added; both call sites use module fn; 38 tests pass
+- [x] dedupe-story-types — MusicConfig/NarrationConfig/AssemblyRequest removed from story/types.ts; imported from @fligen/shared in assembler.ts, storage.ts, test files; AssemblyResult + AssemblyProgress kept local; 38 tests pass
 
 ---
 

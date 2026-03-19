@@ -60,7 +60,8 @@ vi.mock('fs/promises', () => {
 import { filterAssets, addAsset, initCatalog, getAllAssets } from '../tools/catalog/storage.js';
 import { saveStoryToCatalog } from '../tools/story/storage.js';
 import type { Asset } from '@fligen/shared';
-import type { AssemblyRequest, AssemblyResult } from '../tools/story/types.js';
+import type { AssemblyRequest } from '@fligen/shared';
+import type { AssemblyResult } from '../tools/story/types.js';
 
 // ---------------------------------------------------------------------------
 // Helpers
