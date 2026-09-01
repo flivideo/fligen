@@ -26,15 +26,33 @@ READY_TIMEOUT=90
 # assuming. A port that merely ACCEPTS a connection is not proof the app is serving.
 HEALTH_PATHS=("/api/health" "/health" "/api/system/health")
 
+# Probe BOTH hosts: a vite dev server may bind ::1 only, so 127.0.0.1 refuses while localhost
+# succeeds (AWB Gen 3 does exactly this). Checking one host reports a healthy app as down.
+# What we are actually asking is "is the server answering?", NOT "did it return 200".
+#
+# Two traps, both hit for real while building this:
+#   - a vite dev server may bind ::1 only, so 127.0.0.1 refuses while localhost succeeds
+#     (AWB Gen 3), so probe both hosts;
+#   - polling once a second trips an app's own rate limiter, and DeckHand then answers 429 on
+#     EVERY path. `curl -f` calls that a failure and the app is reported DOWN while it is
+#     serving perfectly. A 429 — or a 404 — is proof the server is up.
+# So: any HTTP status at all means UP. Only a connection failure (code 000) means DOWN.
 healthy() {
-  local p
-  for p in "${HEALTH_PATHS[@]}"; do
-    curl -fsS --max-time 3 "http://127.0.0.1:${SERVER_PORT}${p}" >/dev/null 2>&1 && return 0
+  local p h code
+  for h in localhost 127.0.0.1; do
+    for p in "${HEALTH_PATHS[@]}"; do
+      code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 3 "http://${h}:${SERVER_PORT}${p}" 2>/dev/null)
+      [ -n "$code" ] && [ "$code" != "000" ] && return 0
+    done
   done
   return 1
 }
 
-client_up() { curl -fsS --max-time 3 -o /dev/null "$URL" 2>/dev/null; }
+client_up() {
+  local code
+  code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 3 "$URL" 2>/dev/null)
+  [ -n "$code" ] && [ "$code" != "000" ]
+}
 daemon_up() { [ -S "$SOCK" ] && overmind ps >/dev/null 2>&1; }
 
 clear_stale_socket() {
