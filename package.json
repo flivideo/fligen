@@ -10,6 +10,12 @@
   ],
   "scripts": {
     "dev": "concurrently -k -n server,client -c blue,green \"npm run dev -w server\" \"npm run dev -w client\"",
+    "app": "bash scripts/app.sh start",
+    "app:stop": "bash scripts/app.sh stop",
+    "app:restart": "bash scripts/app.sh restart",
+    "app:status": "bash scripts/app.sh status",
+    "app:open": "bash scripts/app.sh open",
+    "app:logs": "bash scripts/app.sh logs",
     "build": "npm run build -w shared && npm run build -w server && npm run build -w client",
     "start": "npm start -w server",
     "test": "npm test -w client && npm test -w server",

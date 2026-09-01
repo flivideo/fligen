@@ -39,3 +39,6 @@ assets/video-scenes/
 # Playwright test screenshots
 *.png
 *.jpeg
+
+.logs/
+.overmind.sock
